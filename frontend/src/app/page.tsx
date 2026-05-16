@@ -60,7 +60,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="overflow-hidden px-6 py-20 lg:py-32 text-center">
+      <section className="overflow-hidden px-6 py-24 lg:py-32 text-center">
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeUp}>
             <span
@@ -79,14 +79,14 @@ export default function LandingPage() {
               Escuela de Asesores
             </h1>
 
-            <p className="text-xl mb-3" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
+            <p className="text-xl mb-6" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
               Formamos Líderes, No Vendedores.
             </p>
-            <p className="text-lg mb-12" style={{ color: 'var(--color-text-muted)' }}>
+            <p className="text-lg mb-6" style={{ color: 'var(--color-text-muted)' }}>
               Transformamos Vidas, No Solo Negocios.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
               <Link href="/register" className="btn-primary gap-2">
                 Comenzar — 5 días gratis
                 <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
@@ -107,19 +107,16 @@ export default function LandingPage() {
       <div className="gold-divider" />
 
       {/* Agentes IA */}
-      <section className="overflow-hidden px-6 py-20 lg:py-32">
+      <section className="overflow-hidden px-6 py-24 lg:py-32">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            {...fadeUp}
-            className="text-center mb-16"
-          >
+          <motion.div {...fadeUp} className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Nunca estás solo/a</h2>
-            <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
+            <p className="text-lg max-w-2xl mx-auto mb-6" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
               La primera plataforma donde todo tu proceso — aprender, crecer y vender — es asistido por inteligencia artificial las 24 horas.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {agents.map((agent, i) => (
               <motion.div
                 key={agent.name}
@@ -139,10 +136,10 @@ export default function LandingPage() {
                 >
                   {agent.icon}
                 </div>
-                <h3 className="text-lg font-semibold mb-3" style={{ color: 'var(--color-gold)' }}>
+                <h3 className="text-lg font-semibold mb-4" style={{ color: 'var(--color-gold)' }}>
                   {agent.name}
                 </h3>
-                <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
+                <p className="mb-6" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
                   {agent.description}
                 </p>
               </motion.div>
@@ -154,14 +151,17 @@ export default function LandingPage() {
       <div className="gold-divider" />
 
       {/* Beneficios */}
-      <section className="overflow-hidden px-6 py-20 lg:py-32">
+      <section className="overflow-hidden px-6 py-24 lg:py-32">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div {...fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Por qué elegir Escuela de Asesores
             </h2>
+            <p className="text-lg mb-12" style={{ color: 'var(--color-text-muted)' }}>
+              Todo lo que necesitas para destacar como asesor de élite.
+            </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left mb-12">
               {features.map((f, i) => (
                 <motion.div
                   key={i}
@@ -181,10 +181,12 @@ export default function LandingPage() {
               ))}
             </div>
 
-            <Link href="/register" className="btn-primary gap-2">
-              Comenzar mi formación
-              <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-            </Link>
+            <div className="mt-8">
+              <Link href="/register" className="btn-primary gap-2">
+                Comenzar mi formación
+                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -192,16 +194,16 @@ export default function LandingPage() {
       <div className="gold-divider" />
 
       {/* Fundadora */}
-      <section className="overflow-hidden px-6 py-20 lg:py-32">
+      <section className="overflow-hidden px-6 py-24 lg:py-32">
         <div className="max-w-2xl mx-auto text-center">
           <motion.div {...fadeUp}>
-            <p className="text-4xl font-script mb-3" style={{ color: 'var(--color-gold)' }}>
+            <p className="text-4xl font-script mb-4" style={{ color: 'var(--color-gold)' }}>
               Yami Mansilla
             </p>
             <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)', letterSpacing: '0.2em' }}>
               VISIONARIA · EMPRESARIA · CAPACITADORA
             </p>
-            <p className="text-lg italic" style={{ color: 'var(--color-text-muted)' }}>
+            <p className="text-lg italic mb-6" style={{ color: 'var(--color-text-muted)' }}>
               "No sigo tendencias, las creo."
             </p>
           </motion.div>
