@@ -1,0 +1,218 @@
+'use client'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { BookOpen, Award, BarChart2, ChevronRight, Check, Brain, Target, TrendingUp } from 'lucide-react'
+
+const agents = [
+  {
+    icon: <Brain className="w-5 h-5" strokeWidth={1.5} />,
+    name: 'IA Coach',
+    description: 'Acompaña tu aprendizaje 24/7 con guía personalizada en cada paso del proceso.',
+  },
+  {
+    icon: <Target className="w-5 h-5" strokeWidth={1.5} />,
+    name: 'IA Mentalidad',
+    description: 'Trabaja tus bloqueos y miedos para que nada detenga tu crecimiento.',
+  },
+  {
+    icon: <TrendingUp className="w-5 h-5" strokeWidth={1.5} />,
+    name: 'IA Consultiva',
+    description: 'Te asiste en cada venta y cierre con estrategias probadas en tiempo real.',
+  }
+]
+
+const features = [
+  { icon: <BookOpen className="w-5 h-5" strokeWidth={1.5} />, label: 'Acceso inmediato a los 3 agentes IA desde día 1' },
+  { icon: <Award className="w-5 h-5" strokeWidth={1.5} />, label: 'Certificación Neuroventas + B.I.I.A.' },
+  { icon: <BarChart2 className="w-5 h-5" strokeWidth={1.5} />, label: 'Métricas de rendimiento semanales' },
+  { icon: <Check className="w-5 h-5" strokeWidth={1.5} />, label: '5 días de acceso gratuito completo' },
+  { icon: <Check className="w-5 h-5" strokeWidth={1.5} />, label: 'Ranking de élite actualizado a diario' },
+  { icon: <Check className="w-5 h-5" strokeWidth={1.5} />, label: 'Sin apps — funciona en cualquier dispositivo' },
+]
+
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const }
+}
+
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen" style={{ background: 'var(--color-bg)', color: 'var(--color-text)' }}>
+
+      {/* Nav */}
+      <nav className="px-6 py-4" style={{ borderBottom: '1px solid var(--color-separator)' }}>
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <span className="text-lg font-bold" style={{ letterSpacing: '0.08em' }}>ESCUELA DE ASESORES</span>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/login"
+              className="text-sm transition-colors hover:opacity-80"
+              style={{ color: 'var(--color-text-muted)' }}
+            >
+              Iniciar sesión
+            </Link>
+            <Link href="/register" className="btn-primary text-sm">
+              Comenzar gratis
+            </Link>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <section className="overflow-hidden px-6 py-20 lg:py-32 text-center">
+        <div className="max-w-4xl mx-auto">
+          <motion.div {...fadeUp}>
+            <span
+              className="inline-block text-xs font-medium mb-8 px-4 py-2 rounded-full"
+              style={{
+                color: 'var(--color-gold)',
+                border: '1px solid var(--color-gold-border)',
+                background: 'rgba(196,151,42,0.08)',
+                letterSpacing: '0.15em'
+              }}
+            >
+              ROMPE TODOS LOS ESQUEMAS
+            </span>
+
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+              Escuela de Asesores
+            </h1>
+
+            <p className="text-xl mb-3" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
+              Formamos Líderes, No Vendedores.
+            </p>
+            <p className="text-lg mb-12" style={{ color: 'var(--color-text-muted)' }}>
+              Transformamos Vidas, No Solo Negocios.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="/register" className="btn-primary gap-2">
+                Comenzar — 5 días gratis
+                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+              </Link>
+              <Link
+                href="/login"
+                className="flex items-center gap-1 text-sm transition-colors hover:opacity-80"
+                style={{ color: 'var(--color-text-muted)' }}
+              >
+                Ya tengo cuenta
+                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="gold-divider" />
+
+      {/* Agentes IA */}
+      <section className="overflow-hidden px-6 py-20 lg:py-32">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            {...fadeUp}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Nunca estás solo/a</h2>
+            <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
+              La primera plataforma donde todo tu proceso — aprender, crecer y vender — es asistido por inteligencia artificial las 24 horas.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {agents.map((agent, i) => (
+              <motion.div
+                key={agent.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                whileHover={{ y: -4 }}
+                className="card"
+              >
+                <div
+                  className="w-10 h-10 rounded flex items-center justify-center mb-6"
+                  style={{
+                    background: 'rgba(196,151,42,0.1)',
+                    color: 'var(--color-gold)',
+                    border: '1px solid var(--color-gold-border)'
+                  }}
+                >
+                  {agent.icon}
+                </div>
+                <h3 className="text-lg font-semibold mb-3" style={{ color: 'var(--color-gold)' }}>
+                  {agent.name}
+                </h3>
+                <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
+                  {agent.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="gold-divider" />
+
+      {/* Beneficios */}
+      <section className="overflow-hidden px-6 py-20 lg:py-32">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div {...fadeUp}>
+            <h2 className="text-3xl md:text-4xl font-bold mb-12">
+              Por qué elegir Escuela de Asesores
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-12">
+              {features.map((f, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.08, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="flex items-start gap-3 p-6"
+                  style={{
+                    background: 'var(--color-bg-card)',
+                    border: '1px solid var(--color-gold-border)',
+                    borderRadius: '6px'
+                  }}
+                >
+                  <span style={{ color: 'var(--color-gold)' }} className="mt-0.5 flex-shrink-0">{f.icon}</span>
+                  <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{f.label}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            <Link href="/register" className="btn-primary gap-2">
+              Comenzar mi formación
+              <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <div className="gold-divider" />
+
+      {/* Fundadora */}
+      <section className="overflow-hidden px-6 py-20 lg:py-32">
+        <div className="max-w-2xl mx-auto text-center">
+          <motion.div {...fadeUp}>
+            <p className="text-4xl font-script mb-3" style={{ color: 'var(--color-gold)' }}>
+              Yami Mansilla
+            </p>
+            <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)', letterSpacing: '0.2em' }}>
+              VISIONARIA · EMPRESARIA · CAPACITADORA
+            </p>
+            <p className="text-lg italic" style={{ color: 'var(--color-text-muted)' }}>
+              "No sigo tendencias, las creo."
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-6 py-8 text-center text-sm" style={{ borderTop: '1px solid var(--color-separator)', color: 'var(--color-text-muted)' }}>
+        <p>© 2026 Escuela de Asesores. Todos los derechos reservados.</p>
+      </footer>
+
+    </div>
+  )
+}

@@ -1,0 +1,75 @@
+import Fastify from 'fastify'
+import cors from '@fastify/cors'
+import helmet from '@fastify/helmet'
+import jwt from '@fastify/jwt'
+import rateLimit from '@fastify/rate-limit'
+import sensible from '@fastify/sensible'
+import multipart from '@fastify/multipart'
+import * as Sentry from '@sentry/node'
+import { prismaPlugin } from './plugins/prisma.js'
+import { redisPlugin } from './plugins/redis.js'
+import { authRoutes } from './routes/auth.js'
+import { subscriptionRoutes } from './routes/subscription.js'
+import { agentRoutes } from './routes/agents.js'
+import { metricsRoutes } from './routes/metrics.js'
+import { rankingRoutes } from './routes/ranking.js'
+import { certificateRoutes } from './routes/certificates.js'
+import { adminAgentRoutes } from './routes/admin/agents.js'
+import { adminCourseRoutes } from './routes/admin/courses.js'
+import { healthRoutes } from './routes/health.js'
+
+export async function buildApp(opts = {}) {
+  const app = Fastify({
+    logger: process.env.NODE_ENV !== 'test' ? {
+      level: 'info',
+      transport: { target: 'pino-pretty' }
+    } : false,
+    ...opts
+  })
+
+  if (process.env.SENTRY_DSN) {
+    Sentry.init({ dsn: process.env.SENTRY_DSN, environment: process.env.NODE_ENV })
+  }
+
+  await app.register(helmet, {
+    contentSecurityPolicy: false
+  })
+
+  await app.register(cors, {
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    credentials: true
+  })
+
+  await app.register(rateLimit, {
+    max: 100,
+    timeWindow: '1 minute'
+  })
+
+  await app.register(sensible)
+  await app.register(multipart, { limits: { fileSize: 10 * 1024 * 1024 } })
+
+  await app.register(jwt, {
+    secret: process.env.JWT_SECRET || 'dev-secret-min-32-chars-change-in-prod',
+    sign: { expiresIn: process.env.JWT_EXPIRES_IN || '15m' }
+  })
+
+  await app.register(prismaPlugin)
+  await app.register(redisPlugin)
+
+  app.addHook('onError', (request, reply, error, done) => {
+    if (process.env.SENTRY_DSN) Sentry.captureException(error)
+    done()
+  })
+
+  await app.register(healthRoutes)
+  await app.register(authRoutes, { prefix: '/api/auth' })
+  await app.register(subscriptionRoutes, { prefix: '/api/subscription' })
+  await app.register(agentRoutes, { prefix: '/api/agents' })
+  await app.register(metricsRoutes, { prefix: '/api/metrics' })
+  await app.register(rankingRoutes, { prefix: '/api/ranking' })
+  await app.register(certificateRoutes, { prefix: '/api/certificates' })
+  await app.register(adminAgentRoutes, { prefix: '/api/admin/agents' })
+  await app.register(adminCourseRoutes, { prefix: '/api/admin/courses' })
+
+  return app
+}

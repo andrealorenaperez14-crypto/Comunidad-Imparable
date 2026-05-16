@@ -1,0 +1,221 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             String          @id @default(cuid())
+  email          String          @unique
+  dni            String          @unique
+  passwordHash   String
+  role           String          // 'ADMIN' | 'STUDENT' | 'CLIENT'
+  clientId       String
+  client         Client          @relation(fields: [clientId], references: [id])
+  profile        Profile?
+  subscriptions  Subscription[]
+  iaInteractions IAInteraction[]
+  iaMetrics      IAMetric[]
+  certificates   Certificate[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@index([clientId])
+  @@index([email])
+  @@index([dni])
+}
+
+model Profile {
+  id          String    @id @default(cuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+  firstName   String
+  lastName    String
+  avatarUrl   String?
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Client {
+  id                 String          @id @default(cuid())
+  name               String
+  domain             String          @unique
+  branding           Json
+  settings           Json
+  subscriptionStatus String          @default("ACTIVE")
+  users              User[]
+  iaAgents           IAAgent[]
+  coursesContent     CourseContent[]
+  rankings           Ranking[]
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@index([domain])
+}
+
+model Subscription {
+  id              String    @id @default(cuid())
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  planType        String    // 'TRIAL' | '30_DAYS' | 'VITALICIO'
+  status          String    // 'ACTIVE' | 'TRIAL' | 'SUSPENDED' | 'EXPIRED'
+  createdAt       DateTime  @default(now())
+  activeUntil     DateTime
+  suspensionDate  DateTime?
+  lastPaymentDate DateTime?
+  updatedAt       DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([activeUntil])
+  @@index([status])
+}
+
+model IAAgent {
+  id            String          @id @default(cuid())
+  clientId      String
+  client        Client          @relation(fields: [clientId], references: [id])
+  type          String          // 'COACH' | 'MENTALIDAD' | 'CONSULTIVA'
+  name          String
+  description   String
+  icon          String
+  systemPrompt  String          @db.Text
+  instructions  String          @db.Text
+  knowledgeBase String          @db.Text
+  metricsConfig Json
+  primaryApiKey String          @db.Text
+  backupApiKey  String          @db.Text
+  published     Boolean         @default(false)
+  publishedDate DateTime?
+  interactions  IAInteraction[]
+  metrics       IAMetric[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@index([clientId])
+  @@unique([clientId, type])
+}
+
+model IAInteraction {
+  id        String   @id @default(cuid())
+  agentId   String
+  agent     IAAgent  @relation(fields: [agentId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  message   String   @db.Text
+  response  String   @db.Text
+  modelUsed String
+  tokens    Int      @default(0)
+  cost      Float    @default(0)
+  duration  Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([agentId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model IAMetric {
+  id                    String    @id @default(cuid())
+  agentId               String
+  agent                 IAAgent   @relation(fields: [agentId], references: [id])
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id])
+  totalQuestions        Int       @default(0)
+  avgResolutionTime     Int       @default(0)
+  problemResolutionRate Float     @default(0)
+  totalSessions         Int       @default(0)
+  avgSessionDuration    Int       @default(0)
+  completionRate        Float     @default(0)
+  engagementScore       Float     @default(0)
+  habitStreak           Int       @default(0)
+  status                String    @default("BUENO")
+  reportContent         String?   @db.Text
+  alertMessage          String?
+  lastReportDate        DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([agentId])
+  @@index([userId])
+  @@unique([agentId, userId])
+}
+
+model Ranking {
+  id             String   @id @default(cuid())
+  clientId       String
+  client         Client   @relation(fields: [clientId], references: [id])
+  position       Int
+  userId         String
+  totalScore     Float
+  gainPercentage Float
+  daysInTop10    Int      @default(0)
+  lastUpdated    DateTime @default(now())
+  createdAt      DateTime @default(now())
+
+  @@index([clientId])
+  @@index([clientId, position])
+  @@unique([clientId, position])
+}
+
+model RankingHistory {
+  id             String   @id @default(cuid())
+  clientId       String
+  userId         String
+  position       Int
+  totalScore     Float
+  gainPercentage Float
+  date           DateTime @default(now())
+
+  @@index([clientId, date])
+  @@index([userId])
+}
+
+model Certificate {
+  id           String    @id @default(cuid())
+  serialNumber String    @unique
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  courseId     String
+  courseName   String
+  issueDate    DateTime  @default(now())
+  validityDate DateTime?
+  pdfUrl       String    @default("")
+  status       String    @default("ISSUED")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([serialNumber])
+}
+
+model CourseContent {
+  id          String   @id @default(cuid())
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id])
+  type        String   // 'FREE' | 'PAID'
+  title       String
+  description String   @db.Text
+  content     String   @db.Text
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([clientId, type])
+}
+
+model StudentsPrevious {
+  id                 String   @id @default(cuid())
+  dni                String   @unique
+  clientId           String
+  lastEmail          String
+  lastMetrics        Json
+  completedCourses   Int      @default(0)
+  certificatesIssued Int      @default(0)
+  lastActive         DateTime
+  archivedAt         DateTime @default(now())
+}
