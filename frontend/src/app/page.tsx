@@ -215,9 +215,6 @@ export default function LandingPage() {
       >
         <div className="container py-8">
           <p>© 2026 Escuela de Asesores. Todos los derechos reservados.</p>
-          <p className="text-xs" style={{ opacity: 0.5, fontFamily: 'var(--font-body)', marginTop: '0.75rem', marginBottom: 0 }}>
-            Desarrollado por Núcleo Estratégico IA
-          </p>
         </div>
       </footer>
 

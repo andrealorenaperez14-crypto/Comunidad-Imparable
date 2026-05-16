@@ -1,9 +1,9 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
-import { Users, TrendingUp, TrendingDown, Minus, Loader2, Search } from 'lucide-react'
+import { Users, TrendingUp, Loader2, Search } from 'lucide-react'
 import { useState } from 'react'
 import { metricsApi } from '@/lib/api'
-import { getStatusBg, formatPercent } from '@/lib/utils'
+import { getStatusBg } from '@/lib/utils'
 
 export default function AlumnosPage() {
   const [search, setSearch] = useState('')
@@ -17,70 +17,81 @@ export default function AlumnosPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <Users className="w-7 h-7 text-blue-400" />
+          <h1 className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
+            <Users className="w-7 h-7" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
             Alumnos
           </h1>
-          <p className="text-gray-400 mt-1">Gestión y seguimiento de estudiantes</p>
+          <p style={{ color: 'var(--color-text-muted)' }}>Gestión y seguimiento de estudiantes</p>
         </div>
       </div>
 
-      {/* Search */}
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
           placeholder="Buscar alumno por nombre o email..."
-          className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 pl-11 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500"
+          className="w-full rounded-xl px-4 py-3 pl-11 focus:outline-none"
+          style={{
+            background: 'var(--color-bg-card)',
+            border: '1px solid var(--color-separator)',
+            color: 'var(--color-text)'
+          }}
+          onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+          onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
         />
       </div>
 
-      {/* Stats summary */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-white">{stats?.totalStudents ?? '—'}</p>
-          <p className="text-gray-400 text-sm mt-1">Total alumnos</p>
+        <div className="card text-center">
+          <p className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>{stats?.totalStudents ?? '—'}</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>Total alumnos</p>
         </div>
-        <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-emerald-400">{stats?.activeSubscriptions ?? '—'}</p>
-          <p className="text-gray-400 text-sm mt-1">Activos</p>
+        <div className="card text-center" style={{ borderColor: 'var(--color-gold-border)' }}>
+          <p className="text-2xl font-bold" style={{ color: 'var(--color-gold)' }}>{stats?.activeSubscriptions ?? '—'}</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>Activos</p>
         </div>
-        <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-center">
-          <p className="text-2xl font-bold text-amber-400">{stats?.alertStudents ?? '—'}</p>
-          <p className="text-gray-400 text-sm mt-1">Con alertas</p>
+        <div className="card text-center">
+          <p className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>{stats?.alertStudents ?? '—'}</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>Con alertas</p>
         </div>
       </div>
 
-      {/* Alerts list */}
       {isLoading ? (
         <div className="flex justify-center py-12">
-          <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+          <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-gold)' }} />
         </div>
       ) : (
         <div>
-          <h2 className="text-lg font-semibold text-white mb-4">Alumnos con alertas</h2>
+          <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--color-text)' }}>Alumnos con alertas</h2>
 
           {!stats?.recentAlerts?.length ? (
-            <div className="text-center py-12 bg-white/5 border border-white/10 rounded-2xl">
-              <TrendingUp className="w-12 h-12 text-emerald-500 mx-auto mb-3" />
-              <p className="text-emerald-400 font-medium">¡Sin alertas activas!</p>
-              <p className="text-gray-500 text-sm mt-1">Todos los alumnos tienen buen rendimiento.</p>
+            <div className="card text-center">
+              <TrendingUp className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+              <p className="font-medium" style={{ color: 'var(--color-gold)' }}>Sin alertas activas</p>
+              <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>Todos los alumnos tienen buen rendimiento.</p>
             </div>
           ) : (
             <div className="space-y-2">
               {stats.recentAlerts
                 .filter((a: any) => !search || a.studentName.toLowerCase().includes(search.toLowerCase()))
                 .map((alert: any, idx: number) => (
-                  <div key={idx} className="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-xl hover:border-amber-500/30 transition-all">
-                    <div className="w-10 h-10 bg-gradient-to-br from-amber-500/20 to-red-500/20 rounded-full flex items-center justify-center">
-                      <span className="text-amber-400 font-bold text-sm">
+                  <div
+                    key={idx}
+                    className="flex items-center gap-4 p-4 rounded-xl transition-all"
+                    style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center"
+                      style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}
+                    >
+                      <span className="font-bold text-sm" style={{ color: 'var(--color-gold)' }}>
                         {alert.studentName[0]?.toUpperCase()}
                       </span>
                     </div>
                     <div className="flex-1">
-                      <p className="text-white font-medium">{alert.studentName}</p>
-                      <p className="text-gray-400 text-sm">
+                      <p className="font-medium" style={{ color: 'var(--color-text)' }}>{alert.studentName}</p>
+                      <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
                         {alert.agentName} · {alert.alertMessage || 'Rendimiento bajo'}
                       </p>
                     </div>

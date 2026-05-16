@@ -4,10 +4,17 @@ import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
-import { Save, Upload, Eye, EyeOff, Loader2, ArrowLeft, FileText, Trash2 } from 'lucide-react'
+import { Save, Upload, Eye, EyeOff, Loader2, ArrowLeft, CheckCircle, XCircle } from 'lucide-react'
 import Link from 'next/link'
 import { adminAgentApi } from '@/lib/api'
 import { ChatInterface } from '@/components/chat/ChatInterface'
+
+const inputClass = 'w-full rounded-xl px-4 py-3 focus:outline-none transition-all'
+const inputStyle = {
+  background: 'var(--color-bg)',
+  border: '1px solid var(--color-separator)',
+  color: 'var(--color-text)'
+}
 
 export default function AgentEditorPage() {
   const { id } = useParams<{ id: string }>()
@@ -16,6 +23,7 @@ export default function AgentEditorPage() {
   const [showBackupKey, setShowBackupKey] = useState(false)
   const [activeTab, setActiveTab] = useState<'config' | 'preview' | 'logs'>('config')
   const [uploadStatus, setUploadStatus] = useState('')
+  const [uploadOk, setUploadOk] = useState<boolean | null>(null)
 
   const { data: agents } = useQuery({
     queryKey: ['admin-agents'],
@@ -46,19 +54,22 @@ export default function AgentEditorPage() {
     }
 
     setUploadStatus('Cargando...')
+    setUploadOk(null)
     try {
       await adminAgentApi.uploadKnowledge(id, formData)
-      setUploadStatus('✅ Archivo(s) cargado(s) correctamente')
+      setUploadStatus('Archivo(s) cargado(s) correctamente')
+      setUploadOk(true)
       queryClient.invalidateQueries({ queryKey: ['admin-agents'] })
     } catch {
-      setUploadStatus('❌ Error al cargar el archivo')
+      setUploadStatus('Error al cargar el archivo')
+      setUploadOk(false)
     }
   }
 
   if (!agent) {
     return (
       <div className="flex justify-center py-16">
-        <Loader2 className="w-8 h-8 text-blue-500 animate-spin" />
+        <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-gold)' }} />
       </div>
     )
   }
@@ -66,27 +77,32 @@ export default function AgentEditorPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/admin/agentes" className="text-gray-400 hover:text-white transition-colors">
-          <ArrowLeft className="w-5 h-5" />
+        <Link href="/admin/agentes" className="transition-colors" style={{ color: 'var(--color-text-muted)' }}>
+          <ArrowLeft className="w-5 h-5" strokeWidth={1.5} />
         </Link>
         <div>
-          <h1 className="text-xl font-bold text-white flex items-center gap-2">
-            <span className="text-2xl">{agent.icon}</span>
+          <h1 className="text-xl font-bold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
             {agent.name}
           </h1>
-          <p className="text-gray-400 text-sm">{agent.type} · {agent.published ? '🟢 Publicado' : '⚫ Borrador'}</p>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+            {agent.type} · {agent.published ? 'Publicado' : 'Borrador'}
+          </p>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 bg-white/5 p-1 rounded-xl w-fit border border-white/10">
+      <div
+        className="flex gap-1 p-1 rounded-xl w-fit"
+        style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}
+      >
         {(['config', 'preview', 'logs'] as const).map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              activeTab === tab ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'
-            }`}
+            className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
+            style={activeTab === tab
+              ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+              : { color: 'var(--color-text-muted)' }
+            }
           >
             {tab === 'config' ? 'Configuración' : tab === 'preview' ? 'Vista previa' : 'Registros'}
           </button>
@@ -96,109 +112,119 @@ export default function AgentEditorPage() {
       {activeTab === 'config' && (
         <form onSubmit={handleSubmit(data => updateMutation.mutate(data))} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
-            {/* Basic info */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-              <h2 className="text-white font-semibold">Información básica</h2>
+            <div className="card space-y-4">
+              <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Información básica</h2>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Nombre del agente</label>
+                <label className="block text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>Nombre del agente</label>
                 <input
                   {...register('name')}
-                  className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                  className={inputClass}
+                  style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                  onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                 />
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Descripción</label>
+                <label className="block text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>Descripción</label>
                 <input
                   {...register('description')}
-                  className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-400 mb-2">Icono (emoji)</label>
-                <input
-                  {...register('icon')}
-                  className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500"
+                  className={inputClass}
+                  style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                  onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                 />
               </div>
             </div>
 
-            {/* API Keys */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-              <h2 className="text-white font-semibold">Claves de API</h2>
+            <div className="card space-y-4">
+              <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Claves de API</h2>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Clave primaria</label>
+                <label className="block text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>Clave primaria</label>
                 <div className="relative">
                   <input
                     {...register('primaryApiKey')}
                     type={showPrimaryKey ? 'text' : 'password'}
                     placeholder="Ingresa nueva clave (deja vacío para mantener)"
-                    className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 pr-12"
+                    className={`${inputClass} pr-12`}
+                    style={inputStyle}
+                    onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                    onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPrimaryKey(!showPrimaryKey)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                    className="absolute right-4 top-1/2 -translate-y-1/2"
+                    style={{ color: 'var(--color-text-muted)' }}
                   >
-                    {showPrimaryKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPrimaryKey ? <EyeOff className="w-4 h-4" strokeWidth={1.5} /> : <Eye className="w-4 h-4" strokeWidth={1.5} />}
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm text-gray-400 mb-2">Clave de respaldo</label>
+                <label className="block text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>Clave de respaldo</label>
                 <div className="relative">
                   <input
                     {...register('backupApiKey')}
                     type={showBackupKey ? 'text' : 'password'}
                     placeholder="Clave de respaldo"
-                    className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 pr-12"
+                    className={`${inputClass} pr-12`}
+                    style={inputStyle}
+                    onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                    onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                   />
                   <button
                     type="button"
                     onClick={() => setShowBackupKey(!showBackupKey)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                    className="absolute right-4 top-1/2 -translate-y-1/2"
+                    style={{ color: 'var(--color-text-muted)' }}
                   >
-                    {showBackupKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showBackupKey ? <EyeOff className="w-4 h-4" strokeWidth={1.5} /> : <Eye className="w-4 h-4" strokeWidth={1.5} />}
                   </button>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* System Prompt */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-            <h2 className="text-white font-semibold">Prompt del sistema</h2>
+          <div className="card space-y-4">
+            <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Prompt del sistema</h2>
             <textarea
               {...register('systemPrompt')}
               rows={8}
-              className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 resize-none font-mono text-sm"
+              className="w-full rounded-xl px-4 py-3 focus:outline-none resize-none font-mono text-sm transition-all"
+              style={inputStyle}
               placeholder="Define el comportamiento base del agente..."
+              onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+              onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
             />
           </div>
 
-          {/* Instructions */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-            <h2 className="text-white font-semibold">Instrucciones adicionales</h2>
+          <div className="card space-y-4">
+            <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Instrucciones adicionales</h2>
             <textarea
               {...register('instructions')}
               rows={5}
-              className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 resize-none text-sm"
+              className="w-full rounded-xl px-4 py-3 focus:outline-none resize-none text-sm transition-all"
+              style={inputStyle}
               placeholder="Instrucciones específicas de comportamiento..."
+              onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+              onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
             />
           </div>
 
-          {/* Knowledge Base */}
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
-            <h2 className="text-white font-semibold">Base de conocimiento</h2>
-            <p className="text-gray-400 text-sm">Sube archivos PDF, TXT o JSON para enriquecer al agente</p>
+          <div className="card space-y-4">
+            <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Base de conocimiento</h2>
+            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Sube archivos PDF, TXT o JSON para enriquecer al agente</p>
 
-            <label className="flex items-center gap-3 p-4 border-2 border-dashed border-white/20 rounded-xl cursor-pointer hover:border-blue-500/50 transition-all">
-              <Upload className="w-5 h-5 text-gray-400" />
-              <span className="text-gray-400 text-sm">Seleccionar archivos (PDF, TXT, JSON)</span>
+            <label
+              className="flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all"
+              style={{ border: '2px dashed var(--color-separator)' }}
+            >
+              <Upload className="w-5 h-5" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
+              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Seleccionar archivos (PDF, TXT, JSON)</span>
               <input
                 type="file"
                 multiple
@@ -209,25 +235,32 @@ export default function AgentEditorPage() {
             </label>
 
             {uploadStatus && (
-              <p className="text-sm text-gray-300">{uploadStatus}</p>
+              <p className="text-sm flex items-center gap-2" style={{ color: uploadOk === false ? '#F87171' : uploadOk ? '#4ADE80' : 'var(--color-text-muted)' }}>
+                {uploadOk === true && <CheckCircle className="w-4 h-4" strokeWidth={1.5} />}
+                {uploadOk === false && <XCircle className="w-4 h-4" strokeWidth={1.5} />}
+                {uploadStatus}
+              </p>
             )}
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting || updateMutation.isPending}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-semibold transition-all"
+            className="btn-primary flex items-center gap-2 disabled:opacity-50"
           >
             {(isSubmitting || updateMutation.isPending)
               ? <Loader2 className="w-5 h-5 animate-spin" />
-              : <Save className="w-5 h-5" />}
+              : <Save className="w-5 h-5" strokeWidth={1.5} />}
             Guardar cambios
           </button>
         </form>
       )}
 
       {activeTab === 'preview' && (
-        <div className="bg-[#0F1629] border border-white/10 rounded-2xl overflow-hidden" style={{ height: '70vh' }}>
+        <div
+          className="rounded-2xl overflow-hidden"
+          style={{ height: '70vh', border: '1px solid var(--color-separator)' }}
+        >
           <ChatInterface agent={agent} agentId={agent.id} />
         </div>
       )}
@@ -247,26 +280,41 @@ function AgentLogs({ agentId }: { agentId: string }) {
 
   return (
     <div className="space-y-3">
-      <h2 className="text-white font-semibold">Registro de interacciones</h2>
+      <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Registro de interacciones</h2>
 
       {isLoading ? (
         <div className="flex justify-center py-8">
-          <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />
+          <Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--color-gold)' }} />
         </div>
       ) : logs.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">No hay interacciones registradas aún.</div>
+        <div className="text-center py-8" style={{ color: 'var(--color-text-muted)' }}>No hay interacciones registradas aún.</div>
       ) : (
         logs.map((log: any) => (
-          <div key={log.id} className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3">
-            <div className="flex items-center justify-between text-xs text-gray-500">
+          <div key={log.id} className="card space-y-3">
+            <div className="flex items-center justify-between text-xs" style={{ color: 'var(--color-text-muted)' }}>
               <span>{log.studentName}</span>
               <span className="flex items-center gap-2">
-                <span className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">{log.modelUsed}</span>
+                <span
+                  className="px-2 py-0.5 rounded"
+                  style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)' }}
+                >
+                  {log.modelUsed}
+                </span>
                 {new Date(log.createdAt).toLocaleString('es-AR')}
               </span>
             </div>
-            <div className="bg-blue-500/10 rounded-lg px-3 py-2 text-sm text-blue-200">{log.message}</div>
-            <div className="bg-white/5 rounded-lg px-3 py-2 text-sm text-gray-300 line-clamp-3">{log.response}</div>
+            <div
+              className="rounded-lg px-3 py-2 text-sm"
+              style={{ background: 'rgba(196,151,42,0.05)', color: 'var(--color-text)', border: '1px solid var(--color-gold-border)' }}
+            >
+              {log.message}
+            </div>
+            <div
+              className="rounded-lg px-3 py-2 text-sm line-clamp-3"
+              style={{ background: 'var(--color-bg)', color: 'var(--color-text-muted)' }}
+            >
+              {log.response}
+            </div>
           </div>
         ))
       )}

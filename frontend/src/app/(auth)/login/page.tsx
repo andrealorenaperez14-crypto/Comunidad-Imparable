@@ -37,68 +37,87 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0F1629] flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--color-bg)' }}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-emerald-500 rounded-2xl mb-4">
-            <Brain className="w-8 h-8 text-white" />
+          <div
+            className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4"
+            style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}
+          >
+            <Brain className="w-8 h-8" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
           </div>
-          <h1 className="text-2xl font-bold text-white">Bienvenido de vuelta</h1>
-          <p className="text-gray-400 mt-1">Ingresa a tu cuenta para continuar</p>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>Bienvenido de vuelta</h1>
+          <p style={{ color: 'var(--color-text-muted)' }}>Ingresa a tu cuenta para continuar</p>
         </div>
 
-        {/* Form */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+        <div className="card">
           {error && (
-            <div className="bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-3 rounded-lg text-sm mb-6">
+            <div
+              className="px-4 py-3 rounded-lg text-sm mb-6"
+              style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#F87171' }}
+            >
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Email</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Email</label>
               <input
                 {...register('email')}
                 type="email"
                 autoComplete="email"
                 placeholder="tu@email.com"
-                className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-white/8 transition-all"
+                className="w-full rounded-xl px-4 py-3 transition-all focus:outline-none"
+                style={{
+                  background: 'var(--color-bg)',
+                  border: '1px solid var(--color-separator)',
+                  color: 'var(--color-text)'
+                }}
+                onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
               />
-              {errors.email && <p className="mt-1.5 text-xs text-red-400">{errors.email.message}</p>}
+              {errors.email && <p className="mt-1.5 text-xs" style={{ color: '#F87171' }}>{errors.email.message}</p>}
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Contraseña</label>
               <div className="relative">
                 <input
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:bg-white/8 transition-all pr-12"
+                  className="w-full rounded-xl px-4 py-3 transition-all focus:outline-none pr-12"
+                  style={{
+                    background: 'var(--color-bg)',
+                    border: '1px solid var(--color-separator)',
+                    color: 'var(--color-text)'
+                  }}
+                  onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                  onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 transition-colors"
+                  style={{ color: 'var(--color-text-muted)' }}
                   aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-5 h-5" strokeWidth={1.5} /> : <Eye className="w-5 h-5" strokeWidth={1.5} />}
                 </button>
               </div>
-              {errors.password && <p className="mt-1.5 text-xs text-red-400">{errors.password.message}</p>}
+              {errors.password && <p className="mt-1.5 text-xs" style={{ color: '#F87171' }}>{errors.password.message}</p>}
             </div>
 
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white py-3.5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2"
+              className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
@@ -110,9 +129,9 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-gray-400 mt-6 text-sm">
+        <p className="text-center mt-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
           ¿No tienes cuenta?{' '}
-          <Link href="/register" className="text-blue-400 hover:text-blue-300 font-medium">
+          <Link href="/register" className="font-medium" style={{ color: 'var(--color-gold)' }}>
             Regístrate gratis
           </Link>
         </p>

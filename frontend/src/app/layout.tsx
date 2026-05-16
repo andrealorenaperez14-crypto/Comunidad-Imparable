@@ -25,6 +25,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es" className="dark">
       <body className={`${cinzel.variable} ${greatVibes.variable} ${dmSans.variable}`}>
         <Providers>{children}</Providers>
+        <footer style={{
+          textAlign: 'center',
+          padding: '16px',
+          fontFamily: 'var(--font-body)',
+          fontSize: '12px',
+          color: 'var(--color-text-muted)',
+          opacity: 0.5,
+          borderTop: '1px solid var(--color-separator)'
+        }}>
+          Desarrollado por: Núcleo Estratégico IA
+        </footer>
       </body>
     </html>
   )
