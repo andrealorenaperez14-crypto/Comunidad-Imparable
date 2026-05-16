@@ -1,9 +1,6 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine AS builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci --only=production
-
-FROM base AS builder
 RUN npm ci
 COPY prisma ./prisma
 RUN npx prisma generate
@@ -12,6 +9,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/prisma ./prisma
+COPY package.json ./
 COPY src ./src
 
 EXPOSE 3001
