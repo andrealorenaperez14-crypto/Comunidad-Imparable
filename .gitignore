@@ -47,3 +47,5 @@ backend/prisma/migrations/**/
 .vercel
 .turbo
 *.local
+
+.vercel
