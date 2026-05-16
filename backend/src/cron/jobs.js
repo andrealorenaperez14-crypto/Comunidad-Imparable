@@ -1,5 +1,6 @@
 import cron from 'node-cron'
 import { recalcularRanking } from '../services/ranking.js'
+import { startKeepAlive } from './keepAlive.js'
 import {
   sendLowPerformanceEmailStudent,
   sendLowPerformanceEmailClient,
@@ -234,5 +235,6 @@ export function startCronJobs(fastify) {
     }
   })
 
+  startKeepAlive(fastify)
   fastify.log.info('Cron jobs iniciados')
 }
