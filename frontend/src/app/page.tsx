@@ -90,6 +90,7 @@ export default function LandingPage() {
                 width={120}
                 height={120}
                 className="mx-auto object-contain"
+                style={{ filter: 'drop-shadow(0 0 20px rgba(196,151,42,0.4))' }}
               />
             </motion.div>
 
@@ -139,7 +140,7 @@ export default function LandingPage() {
       <div className="gold-divider" />
 
       {/* Agentes IA */}
-      <section className="section">
+      <section className="section section-even">
         <div className="container">
           <motion.div {...fadeUp} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold">Nunca estás solo/a</h2>
@@ -230,7 +231,7 @@ export default function LandingPage() {
       <div className="gold-divider" />
 
       {/* Fundadora */}
-      <section className="section">
+      <section className="section section-even">
         <div className="container text-center">
           <motion.div {...fadeUp}>
             {/* Yami logo */}
