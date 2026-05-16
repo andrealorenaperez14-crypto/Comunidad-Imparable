@@ -213,6 +213,9 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="px-6 py-8 text-center text-sm" style={{ borderTop: '1px solid var(--color-separator)', color: 'var(--color-text-muted)' }}>
         <p>© 2026 Escuela de Asesores. Todos los derechos reservados.</p>
+        <p className="mt-3 text-xs" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-body)', opacity: 0.5 }}>
+          Desarrollado por Núcleo Estratégico IA
+        </p>
       </footer>
 
     </div>
