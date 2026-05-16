@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { BookOpen, Award, BarChart2, ChevronRight, Check, Brain, Target, TrendingUp } from 'lucide-react'
 
@@ -36,6 +37,12 @@ const fadeUp = {
   transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const }
 }
 
+const card3DHover = {
+  whileHover: { scale: 1.02, rotateX: 2, rotateY: 2, y: -4 },
+  transition: { duration: 0.3 },
+  style: { transformStyle: 'preserve-3d' as const, perspective: 1000 }
+}
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--color-bg)', color: 'var(--color-text)' }}>
@@ -52,9 +59,11 @@ export default function LandingPage() {
             >
               Iniciar sesión
             </Link>
-            <Link href="/register" className="btn-primary text-sm" style={{ marginTop: 0, marginBottom: 0 }}>
-              Comenzar gratis
-            </Link>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }}>
+              <Link href="/register" className="btn-primary text-sm" style={{ marginTop: 0, marginBottom: 0 }}>
+                Comenzar gratis
+              </Link>
+            </motion.div>
           </div>
         </div>
       </nav>
@@ -63,6 +72,21 @@ export default function LandingPage() {
       <section className="section text-center">
         <div className="container">
           <motion.div {...fadeUp}>
+            {/* Logo */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              className="inline-block mb-6"
+            >
+              <Image
+                src="/assets/client1/LOGO_SOLO_ESCUELA_DE_ASESORES.png"
+                alt="Escuela de Asesores"
+                width={120}
+                height={120}
+                className="mx-auto object-contain"
+              />
+            </motion.div>
+
             <span
               className="inline-block text-xs font-medium px-4 py-2 rounded-full"
               style={{
@@ -87,10 +111,12 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/register" className="btn-primary gap-2">
-                Comenzar — 5 días gratis
-                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-              </Link>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }}>
+                <Link href="/register" className="btn-primary gap-2">
+                  Comenzar — 5 días gratis
+                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+                </Link>
+              </motion.div>
               <Link
                 href="/login"
                 className="flex items-center gap-1 text-sm transition-colors hover:opacity-80"
@@ -123,7 +149,8 @@ export default function LandingPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                whileHover={{ y: -4 }}
+                whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2, y: -4 }}
+                style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
                 className="card"
               >
                 <div
@@ -168,12 +195,15 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                  className="flex items-start gap-3 p-6"
+                  whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2, y: -4 }}
                   style={{
+                    transformStyle: 'preserve-3d',
+                    perspective: 1000,
                     background: 'var(--color-bg-card)',
                     border: '1px solid var(--color-gold-border)',
                     borderRadius: '6px'
                   }}
+                  className="flex items-start gap-3 p-6"
                 >
                   <span style={{ color: 'var(--color-gold)' }} className="mt-0.5 flex-shrink-0">{f.icon}</span>
                   <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{f.label}</span>
@@ -181,10 +211,12 @@ export default function LandingPage() {
               ))}
             </div>
 
-            <Link href="/register" className="btn-primary gap-2">
-              Comenzar mi formación
-              <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-            </Link>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }} className="inline-block">
+              <Link href="/register" className="btn-primary gap-2">
+                Comenzar mi formación
+                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -195,6 +227,21 @@ export default function LandingPage() {
       <section className="section">
         <div className="container text-center">
           <motion.div {...fadeUp}>
+            {/* Yami logo */}
+            <motion.div
+              animate={{ rotateY: [0, 8, 0, -8, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              className="inline-block mb-6"
+            >
+              <Image
+                src="/assets/client1/LOGO_1_YAMI_MANSILLA.png"
+                alt="Yami Mansilla"
+                width={100}
+                height={100}
+                className="mx-auto object-contain"
+              />
+            </motion.div>
+
             <p className="text-4xl font-script" style={{ color: 'var(--color-gold)' }}>
               Yami Mansilla
             </p>
