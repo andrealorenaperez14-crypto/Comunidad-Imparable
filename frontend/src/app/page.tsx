@@ -3,6 +3,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { BookOpen, Award, BarChart2, ChevronRight, Check, Brain, Target, TrendingUp } from 'lucide-react'
+import { HeroParticles } from '@/components/HeroParticles'
+
+const GoldDivider = () => (
+  <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C4972A] to-transparent opacity-30" />
+)
 
 const agents = [
   {
@@ -75,8 +80,9 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="section text-center">
-        <div className="container">
+      <section className="section text-center" style={{ position: 'relative' }}>
+        <HeroParticles />
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <motion.div {...fadeUp}>
             {/* Logo */}
             <div className="flex justify-center w-full mb-4">
@@ -138,7 +144,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <div className="gold-divider" />
+      <GoldDivider />
 
       {/* Agentes IA */}
       <section className="section section-even">
@@ -183,7 +189,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <div className="gold-divider" />
+      <GoldDivider />
 
       {/* Beneficios */}
       <section className="section">
@@ -229,7 +235,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <div className="gold-divider" />
+      <GoldDivider />
 
       {/* Fundadora */}
       <section className="section section-even">
@@ -263,6 +269,8 @@ export default function LandingPage() {
           </motion.div>
         </div>
       </section>
+
+      <GoldDivider />
 
       {/* Footer */}
       <footer
