@@ -236,7 +236,7 @@ export default function LandingPage() {
         <div className="container text-center">
           <motion.div {...fadeUp}>
             {/* Yami logo */}
-            <div className="flex justify-center w-full mb-6">
+            <div className="flex justify-center w-full mb-10">
               <motion.div
                 animate={{ rotateY: [0, 8, 0, -8, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}

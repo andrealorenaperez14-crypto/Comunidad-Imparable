@@ -2,7 +2,12 @@ import { z } from 'zod'
 
 export const emailSchema = z.string().email('Email inválido')
 export const dniSchema = z.string().min(6, 'DNI inválido').max(20)
-export const passwordSchema = z.string().min(8, 'La contraseña debe tener al menos 8 caracteres')
+const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+export const passwordSchema = z.string()
+  .min(8, PASSWORD_MSG)
+  .regex(/[A-Z]/, PASSWORD_MSG)
+  .regex(/[0-9]/, PASSWORD_MSG)
+  .regex(/[!@#$%^&*]/, PASSWORD_MSG)
 
 export function validatePagination(query) {
   const page = Math.max(1, parseInt(query.page) || 1)

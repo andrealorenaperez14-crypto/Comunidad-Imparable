@@ -7,10 +7,16 @@ const loginSchema = z.object({
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres')
 })
 
+const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+
 const registerSchema = z.object({
   email: z.string().email('Email inválido'),
   dni: z.string().min(6, 'DNI inválido').max(20),
-  password: z.string().min(8, 'La contraseña debe tener al menos 8 caracteres'),
+  password: z.string()
+    .min(8, PASSWORD_MSG)
+    .regex(/[A-Z]/, PASSWORD_MSG)
+    .regex(/[0-9]/, PASSWORD_MSG)
+    .regex(/[!@#$%^&*]/, PASSWORD_MSG),
   firstName: z.string().min(1, 'El nombre es requerido'),
   lastName: z.string().min(1, 'El apellido es requerido'),
   clientId: z.string().optional()

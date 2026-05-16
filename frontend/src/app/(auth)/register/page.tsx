@@ -9,12 +9,18 @@ import { motion } from 'framer-motion'
 import { Brain, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
+const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+
 const schema = z.object({
   firstName: z.string().min(1, 'El nombre es requerido'),
   lastName: z.string().min(1, 'El apellido es requerido'),
   email: z.string().email('Email inválido'),
   dni: z.string().min(6, 'DNI inválido').max(20, 'DNI demasiado largo'),
-  password: z.string().min(8, 'Mínimo 8 caracteres'),
+  password: z.string()
+    .min(8, PASSWORD_MSG)
+    .regex(/[A-Z]/, PASSWORD_MSG)
+    .regex(/[0-9]/, PASSWORD_MSG)
+    .regex(/[!@#$%^&*]/, PASSWORD_MSG),
   confirmPassword: z.string(),
   terms: z.boolean().refine(v => v, 'Debes aceptar los términos')
 }).refine(data => data.password === data.confirmPassword, {
@@ -30,15 +36,35 @@ const inputStyle = {
   color: 'var(--color-text)'
 }
 
+function getStrength(pwd: string): { label: string; score: number } {
+  let score = 0
+  if (pwd.length >= 8)       score++
+  if (/[A-Z]/.test(pwd))    score++
+  if (/[0-9]/.test(pwd))    score++
+  if (/[!@#$%^&*]/.test(pwd)) score++
+  if (score <= 1) return { label: 'Débil',  score }
+  if (score <= 3) return { label: 'Media',  score }
+  return               { label: 'Fuerte', score }
+}
+
+const STRENGTH_COLOR: Record<string, string> = {
+  'Débil':  '#F87171',
+  'Media':  '#C4972A',
+  'Fuerte': '#4ADE80',
+}
+
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
+  const [passwordValue, setPasswordValue] = useState('')
   const router = useRouter()
   const { register: registerUser } = useAuth()
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema)
   })
+
+  const strength = passwordValue ? getStrength(passwordValue) : null
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -150,11 +176,12 @@ export default function RegisterPage() {
                 <input
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Mínimo 8 caracteres"
+                  placeholder="Mín. 8 car., mayúscula, número y símbolo"
                   className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all pr-12"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
+                  onChange={e => setPasswordValue(e.target.value)}
                 />
                 <button
                   type="button"
@@ -165,6 +192,29 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff className="w-4 h-4" strokeWidth={1.5} /> : <Eye className="w-4 h-4" strokeWidth={1.5} />}
                 </button>
               </div>
+
+              {/* Strength indicator */}
+              {strength && (
+                <div className="mt-2 space-y-1">
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4].map(i => (
+                      <div
+                        key={i}
+                        className="flex-1 h-1 rounded-full transition-all duration-300"
+                        style={{
+                          background: i <= strength.score
+                            ? STRENGTH_COLOR[strength.label]
+                            : 'var(--color-separator)'
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <p className="text-xs font-medium" style={{ color: STRENGTH_COLOR[strength.label] }}>
+                    {strength.label}
+                  </p>
+                </div>
+              )}
+
               {errors.password && <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.password.message}</p>}
             </div>
 
@@ -206,7 +256,7 @@ export default function RegisterPage() {
 
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={isSubmitting || (strength !== null && strength.label === 'Débil')}
               className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
