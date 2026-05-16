@@ -79,20 +79,21 @@ export default function LandingPage() {
         <div className="container">
           <motion.div {...fadeUp}>
             {/* Logo */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              className="inline-block mb-6"
-            >
-              <Image
-                src="/assets/client1/LOGO_SOLO_ESCUELA_DE_ASESORES.png"
-                alt="Escuela de Asesores"
-                width={120}
-                height={120}
-                className="mx-auto object-contain"
-                style={{ filter: 'drop-shadow(0 0 20px rgba(196,151,42,0.4))' }}
-              />
-            </motion.div>
+            <div className="flex justify-center w-full mb-4">
+              <motion.div
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <Image
+                  src="/assets/client1/LOGO_SOLO_ESCUELA_DE_ASESORES.png"
+                  alt="Escuela de Asesores"
+                  width={140}
+                  height={140}
+                  className="mx-auto block"
+                  style={{ filter: 'drop-shadow(0 0 20px rgba(196,151,42,0.4))' }}
+                />
+              </motion.div>
+            </div>
 
             <span
               className="inline-block text-xs font-medium px-4 py-2 rounded-full"
@@ -235,27 +236,20 @@ export default function LandingPage() {
         <div className="container text-center">
           <motion.div {...fadeUp}>
             {/* Yami logo */}
-            <motion.div
-              animate={{ rotateY: [0, 8, 0, -8, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-              className="inline-block mb-6"
-            >
-              <Image
-                src="/assets/client1/LOGO_1_YAMI_MANSILLA.png"
-                alt="Yami Mansilla"
-                width={100}
-                height={100}
-                className="mx-auto object-contain"
-              />
-            </motion.div>
-
-            <Image
-              src="/assets/client1/YAMI_MANSILLA_MARCA_PERSONAL.png"
-              alt="Yami Mansilla"
-              width={384}
-              height={384}
-              className="max-w-sm mx-auto rounded-lg object-contain mb-6"
-            />
+            <div className="flex justify-center w-full mb-6">
+              <motion.div
+                animate={{ rotateY: [0, 8, 0, -8, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <Image
+                  src="/assets/client1/LOGO_1_YAMI_MANSILLA.png"
+                  alt="Yami Mansilla"
+                  width={100}
+                  height={100}
+                  className="mx-auto block"
+                />
+              </motion.div>
+            </div>
 
             <p className="text-4xl font-script" style={{ color: 'var(--color-gold)' }}>
               Yami Mansilla
