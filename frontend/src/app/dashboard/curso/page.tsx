@@ -1,5 +1,6 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
+import Image from 'next/image'
 import { BookOpen, Lock, Loader2 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useAuth } from '@/hooks/useAuth'
@@ -61,6 +62,21 @@ export default function CursoPage() {
               <p className="text-sm mb-6" style={{ color: 'var(--color-text-muted)' }}>{item.description}</p>
             </div>
           ))}
+
+          {paidContent.length > 0 && (
+            <div className="text-center py-4">
+              <Image
+                src="/assets/client1/LOGO_NEUROVENTAS.png"
+                alt="Neuroventas"
+                width={200}
+                height={80}
+                className="h-20 w-auto object-contain mx-auto mb-4"
+              />
+              <h2 className="text-lg font-semibold" style={{ color: 'var(--color-gold)' }}>
+                Contenido Neuroventas
+              </h2>
+            </div>
+          )}
 
           {paidContent.map((item: any, idx: number) => (
             <div

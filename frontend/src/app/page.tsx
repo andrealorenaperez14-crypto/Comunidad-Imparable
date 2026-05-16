@@ -50,7 +50,13 @@ export default function LandingPage() {
       {/* Nav */}
       <nav style={{ borderBottom: '1px solid var(--color-separator)' }}>
         <div className="container flex items-center justify-between py-4">
-          <span className="text-lg font-bold" style={{ letterSpacing: '0.08em' }}>ESCUELA DE ASESORES</span>
+          <Image
+            src="/assets/client1/LOGO_y_nombre_ESCUELA_DE_ASESORES.png"
+            alt="Escuela de Asesores"
+            width={180}
+            height={40}
+            className="h-10 w-auto object-contain"
+          />
           <div className="flex items-center gap-4">
             <Link
               href="/login"
@@ -241,6 +247,14 @@ export default function LandingPage() {
                 className="mx-auto object-contain"
               />
             </motion.div>
+
+            <Image
+              src="/assets/client1/YAMI_MANSILLA_MARCA_PERSONAL.png"
+              alt="Yami Mansilla"
+              width={384}
+              height={384}
+              className="max-w-sm mx-auto rounded-lg object-contain mb-6"
+            />
 
             <p className="text-4xl font-script" style={{ color: 'var(--color-gold)' }}>
               Yami Mansilla
