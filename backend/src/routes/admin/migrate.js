@@ -16,37 +16,60 @@ export async function adminMigrateRoutes(fastify) {
     try {
       const client = await prisma.client.findFirst({ where: { domain: 'escueladigital.com' } })
       if (!client) return reply.status(404).send({ error: 'Client not found' })
-      log.push(`Client found: ${client.id}`)
+      log.push(`Client: ${client.id}`)
 
       const adminHash = await bcrypt.hash('Admin2026!EA', 12)
 
-      // Try to update old admin email→new email, or create fresh
-      const oldAdmin = await prisma.user.findUnique({ where: { email: 'admin@escueladigital.com' } })
-      if (oldAdmin) {
-        // Update in-place: change email + password (keeps all FK relations intact)
+      // If new admin email already exists, just update password+role
+      const newAdmin = await prisma.user.findUnique({ where: { email: 'andrealorenaperez14@gmail.com' } })
+      if (newAdmin) {
         await prisma.user.update({
-          where: { email: 'admin@escueladigital.com' },
-          data: { email: 'andrealorenaperez14@gmail.com', passwordHash: adminHash, dni: 'ADMIN001' }
-        })
-        log.push('Old admin email migrated → andrealorenaperez14@gmail.com')
-      } else {
-        // Already migrated or doesn't exist — upsert
-        await prisma.user.upsert({
           where: { email: 'andrealorenaperez14@gmail.com' },
-          update: { passwordHash: adminHash, role: 'ADMIN' },
-          create: {
-            email: 'andrealorenaperez14@gmail.com',
-            dni: 'ADMIN001',
-            passwordHash: adminHash,
-            role: 'ADMIN',
-            clientId: client.id,
-            profile: { create: { firstName: 'Andrea', lastName: 'Lorena' } }
-          }
+          data: { passwordHash: adminHash, role: 'ADMIN' }
         })
-        log.push('Admin upserted: andrealorenaperez14@gmail.com')
+        log.push('New admin found — password + role updated')
+
+        // Delete old admin with cascade if it still exists
+        const oldAdmin = await prisma.user.findUnique({ where: { email: 'admin@escueladigital.com' } })
+        if (oldAdmin) {
+          await prisma.$transaction([
+            prisma.profile.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.iAMetric.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.iAInteraction.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.subscription.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.rankingEntry.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.certificate.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.user.delete({ where: { id: oldAdmin.id } })
+          ])
+          log.push('Old admin@escueladigital.com deleted with cascade')
+        } else {
+          log.push('Old admin not found (already removed)')
+        }
+      } else {
+        // Migrate old admin email in-place
+        const oldAdmin = await prisma.user.findUnique({ where: { email: 'admin@escueladigital.com' } })
+        if (oldAdmin) {
+          await prisma.user.update({
+            where: { id: oldAdmin.id },
+            data: { email: 'andrealorenaperez14@gmail.com', passwordHash: adminHash, role: 'ADMIN', dni: 'ADMIN001' }
+          })
+          log.push('Old admin email migrated → andrealorenaperez14@gmail.com')
+        } else {
+          await prisma.user.create({
+            data: {
+              email: 'andrealorenaperez14@gmail.com',
+              dni: 'ADMIN001',
+              passwordHash: adminHash,
+              role: 'ADMIN',
+              clientId: client.id,
+              profile: { create: { firstName: 'Andrea', lastName: 'Lorena' } }
+            }
+          })
+          log.push('Admin created fresh')
+        }
       }
 
-      // Client user — pure upsert (no old email to migrate)
+      // Client user
       const clientHash = await bcrypt.hash('Cliente2026!EA', 12)
       await prisma.user.upsert({
         where: { email: 'escueladeasesoresmps@gmail.com' },
