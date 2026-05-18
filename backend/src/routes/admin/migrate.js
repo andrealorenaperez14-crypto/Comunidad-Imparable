@@ -37,7 +37,8 @@ export async function adminMigrateRoutes(fastify) {
             prisma.iAMetric.deleteMany({ where: { userId: oldAdmin.id } }),
             prisma.iAInteraction.deleteMany({ where: { userId: oldAdmin.id } }),
             prisma.subscription.deleteMany({ where: { userId: oldAdmin.id } }),
-            prisma.rankingEntry.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.ranking.deleteMany({ where: { userId: oldAdmin.id } }),
+            prisma.rankingHistory.deleteMany({ where: { userId: oldAdmin.id } }),
             prisma.certificate.deleteMany({ where: { userId: oldAdmin.id } }),
             prisma.user.delete({ where: { id: oldAdmin.id } })
           ])
