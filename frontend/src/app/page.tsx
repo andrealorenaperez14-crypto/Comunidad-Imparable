@@ -37,7 +37,7 @@ const features = [
 ]
 
 const fadeUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 1, y: 16 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const }
 }
@@ -54,24 +54,32 @@ export default function LandingPage() {
 
       {/* Nav */}
       <nav style={{ borderBottom: '1px solid var(--color-separator)' }}>
-        <div className="container flex items-center justify-between py-4">
+        <div className="container flex items-center justify-between py-4 gap-4">
+          {/* Logo: icono en mobile, logo completo en md+ */}
+          <Image
+            src="/assets/client1/LOGO_SOLO_ESCUELA_DE_ASESORES.png"
+            alt="Escuela de Asesores"
+            width={40}
+            height={40}
+            className="h-10 w-10 object-contain flex-shrink-0 md:hidden"
+          />
           <Image
             src="/assets/client1/LOGO_y_nombre_ESCUELA_DE_ASESORES.png"
             alt="Escuela de Asesores"
             width={180}
             height={40}
-            className="h-10 w-auto object-contain"
+            className="hidden md:block h-10 w-auto object-contain flex-shrink-0"
           />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 flex-shrink-0">
             <Link
               href="/login"
-              className="text-sm transition-colors hover:opacity-80"
-              style={{ color: 'var(--color-text-muted)' }}
+              className="text-sm transition-colors hover:opacity-80 hidden sm:block"
+              style={{ color: 'var(--color-text-muted)', minHeight: 'unset', minWidth: 'unset' }}
             >
               Iniciar sesión
             </Link>
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }}>
-              <Link href="/register" className="btn-primary text-sm" style={{ marginTop: 0, marginBottom: 0 }}>
+              <Link href="/register" className="btn-primary text-sm whitespace-nowrap" style={{ marginTop: 0, marginBottom: 0 }}>
                 Comenzar gratis
               </Link>
             </motion.div>
@@ -160,7 +168,7 @@ export default function LandingPage() {
             {agents.map((agent, i) => (
               <motion.div
                 key={agent.name}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 1, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                 whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2, y: -4 }}
@@ -206,7 +214,7 @@ export default function LandingPage() {
               {features.map((f, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 1, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.08, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
                   whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2, y: -4 }}
