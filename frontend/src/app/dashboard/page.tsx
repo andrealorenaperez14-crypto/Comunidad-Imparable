@@ -21,8 +21,8 @@ function MetricCard({ label, value, icon }: { label: string; value: string; icon
 }
 
 const agentCards = [
-  { href: '/dashboard/agente-consultivo', type: 'COACH',      icon: <Brain      className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Coach',      description: 'Acompaña tu aprendizaje 24/7' },
-  { href: '/dashboard/agente-mentor',     type: 'MENTALIDAD', icon: <Target     className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Mentalidad', description: 'Trabaja tus bloqueos y miedos' },
+  { href: '/dashboard/agente-consultivo', type: 'CONSULTIVO', icon: <Brain      className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Coach',      description: 'Acompaña tu aprendizaje 24/7' },
+  { href: '/dashboard/agente-mentor',     type: 'MENTOR',     icon: <Target     className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Mentalidad', description: 'Trabaja tus bloqueos y miedos' },
   { href: '/dashboard/agente-consultiva', type: 'CONSULTIVA', icon: <TrendingUp className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Consultiva', description: 'Te asiste en cada venta y cierre' },
 ]
 

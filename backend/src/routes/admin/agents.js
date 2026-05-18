@@ -3,7 +3,7 @@ import { encrypt, decrypt, maskApiKey } from '../../utils/encryption.js'
 import { z } from 'zod'
 
 const agentSchema = z.object({
-  type: z.enum(['COACH', 'MENTALIDAD', 'CONSULTIVA']),
+  type: z.enum(['CONSULTIVO', 'MENTOR', 'CONSULTIVA']),
   name: z.string().min(1),
   description: z.string().min(1),
   icon: z.string().default(''),
