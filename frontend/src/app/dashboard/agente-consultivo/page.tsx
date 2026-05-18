@@ -1,16 +1,16 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
-import { adminAgentApi } from '@/lib/api'
+import { agentApi } from '@/lib/api'
 import { ChatInterface } from '@/components/chat/ChatInterface'
 import { Loader2, AlertCircle } from 'lucide-react'
 
 export default function IaCoachPage() {
   const { data: agents, isLoading } = useQuery({
     queryKey: ['agents-list'],
-    queryFn: () => adminAgentApi.list().then(r => r.data)
+    queryFn: () => agentApi.list().then(r => r.data)
   })
 
-  const agent = agents?.find((a: any) => a.type === 'COACH' && a.published)
+  const agent = agents?.find((a: any) => a.type === 'CONSULTIVO' && a.published)
 
   if (isLoading) {
     return (

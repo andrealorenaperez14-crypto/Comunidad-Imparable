@@ -3,6 +3,14 @@ import { routeIaRequest } from '../services/iaRouter.js'
 import { updateMetricsAfterChat } from '../services/metrics.js'
 
 export async function agentRoutes(fastify) {
+  fastify.get('/', { preHandler: [requireAuth] }, async (request, reply) => {
+    const agents = await fastify.prisma.iAAgent.findMany({
+      where: { clientId: request.user.clientId, published: true },
+      select: { id: true, type: true, name: true, description: true, icon: true, published: true, publishedDate: true }
+    })
+    return agents
+  })
+
   fastify.post('/:agentId/chat', { preHandler: requireActiveSubscription }, async (request, reply) => {
     const { agentId } = request.params
     const { message } = request.body || {}

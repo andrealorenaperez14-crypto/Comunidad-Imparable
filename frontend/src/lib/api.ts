@@ -63,6 +63,7 @@ export const subscriptionApi = {
 
 // Agents (student)
 export const agentApi = {
+  list: () => api.get('/api/agents'),
   chat: (agentId: string, message: string) =>
     api.post(`/api/agents/${agentId}/chat`, { message }),
   metrics: (agentId: string) => api.get(`/api/agents/${agentId}/metrics`),
