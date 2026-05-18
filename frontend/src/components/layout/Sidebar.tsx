@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { motion } from 'framer-motion'
 import {
   LayoutDashboard, Brain, Target, TrendingUp, Trophy, Award, BookOpen,
-  LogOut, Menu, X, ChevronRight, BarChart2
+  LogOut, Menu, X, ChevronRight, BarChart2, Users
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
@@ -25,6 +25,7 @@ const adminNav = [
   { href: '/admin/agentes', icon: Brain, label: 'Agentes IA' },
   { href: '/admin/cursos', icon: BookOpen, label: 'Cursos' },
   { href: '/admin/alumnos', icon: Award, label: 'Alumnos' },
+  { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' }
 ]
 

@@ -146,6 +146,27 @@ export async function sendSuspensionExecutedEmail({ email, firstName, schoolName
   })
 }
 
+export async function sendPasswordResetEmail({ email, firstName, schoolName, otp }) {
+  await sendEmail({
+    to: email,
+    subject: `Código de verificación — ${schoolName}`,
+    html: `
+      <div style="font-family:sans-serif;max-width:480px;margin:0 auto">
+        <h2 style="color:#C4972A">Restablecer contraseña</h2>
+        <p>Hola ${firstName},</p>
+        <p>Recibimos una solicitud para restablecer tu contraseña en <strong>${schoolName}</strong>.</p>
+        <p>Tu código de verificación (válido por 15 minutos):</p>
+        <div style="background:#141414;border:1px solid rgba(196,151,42,0.3);border-radius:8px;padding:24px;text-align:center;margin:24px 0">
+          <span style="font-size:36px;font-weight:700;letter-spacing:0.3em;color:#C4972A">${otp}</span>
+        </div>
+        <p>Si no solicitaste este cambio, ignorá este email.</p>
+        <hr style="border-color:rgba(196,151,42,0.15)">
+        <small style="color:#8A8A7A">Este código expira en 15 minutos.</small>
+      </div>
+    `
+  })
+}
+
 export async function sendWeeklyReportEmail({ email, firstName, schoolName, metrics }) {
   const metricsHtml = metrics.map(m => `
     <tr>

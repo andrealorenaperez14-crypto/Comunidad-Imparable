@@ -8,7 +8,7 @@ import multipart from '@fastify/multipart'
 import * as Sentry from '@sentry/node'
 import { prismaPlugin } from './plugins/prisma.js'
 import { redisPlugin } from './plugins/redis.js'
-import { authRoutes } from './routes/auth.js'
+import { authRoutes, authPasswordRoutes } from './routes/auth.js'
 import { subscriptionRoutes } from './routes/subscription.js'
 import { agentRoutes } from './routes/agents.js'
 import { metricsRoutes } from './routes/metrics.js'
@@ -17,6 +17,7 @@ import { certificateRoutes } from './routes/certificates.js'
 import { adminAgentRoutes } from './routes/admin/agents.js'
 import { adminCourseRoutes } from './routes/admin/courses.js'
 import { adminClientRoutes } from './routes/admin/client.js'
+import { adminUserRoutes } from './routes/admin/users.js'
 import { healthRoutes } from './routes/health.js'
 
 export async function buildApp(opts = {}) {
@@ -64,6 +65,7 @@ export async function buildApp(opts = {}) {
 
   await app.register(healthRoutes)
   await app.register(authRoutes, { prefix: '/api/auth' })
+  await app.register(authPasswordRoutes, { prefix: '/api/auth' })
   await app.register(subscriptionRoutes, { prefix: '/api/subscription' })
   await app.register(agentRoutes, { prefix: '/api/agents' })
   await app.register(metricsRoutes, { prefix: '/api/metrics' })
@@ -72,6 +74,7 @@ export async function buildApp(opts = {}) {
   await app.register(adminAgentRoutes, { prefix: '/api/admin/agents' })
   await app.register(adminCourseRoutes, { prefix: '/api/admin/courses' })
   await app.register(adminClientRoutes, { prefix: '/api/admin/client' })
+  await app.register(adminUserRoutes, { prefix: '/api/admin/users' })
 
   return app
 }

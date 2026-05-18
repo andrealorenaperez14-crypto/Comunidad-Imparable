@@ -129,12 +129,19 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center mt-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
-          ¿No tienes cuenta?{' '}
-          <Link href="/register" className="font-medium" style={{ color: 'var(--color-gold)' }}>
-            Regístrate gratis
-          </Link>
-        </p>
+        <div className="text-center mt-6 space-y-2">
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+            <Link href="/forgot-password" style={{ color: 'var(--color-gold)', minHeight: 'unset', minWidth: 'unset' }}>
+              ¿Olvidaste tu contraseña?
+            </Link>
+          </p>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+            ¿No tienes cuenta?{' '}
+            <Link href="/register" className="font-medium" style={{ color: 'var(--color-gold)', minHeight: 'unset', minWidth: 'unset' }}>
+              Regístrate gratis
+            </Link>
+          </p>
+        </div>
       </motion.div>
     </div>
   )

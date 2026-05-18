@@ -46,7 +46,11 @@ export const authApi = {
     api.post('/api/auth/register', data),
   me: () => api.get('/api/auth/me'),
   logout: () => api.post('/api/auth/logout'),
-  refresh: (refreshToken: string) => api.post('/api/auth/refresh', { refreshToken })
+  refresh: (refreshToken: string) => api.post('/api/auth/refresh', { refreshToken }),
+  forgotPassword: (email: string) =>
+    api.post('/api/auth/forgot-password', { email }),
+  resetPassword: (email: string, otp: string, newPassword: string) =>
+    api.post('/api/auth/reset-password', { email, otp, newPassword })
 }
 
 // Subscription
@@ -99,6 +103,17 @@ export const metricsApi = {
 export const rankingApi = {
   top10: () => api.get('/api/ranking'),
   student: (studentId: string) => api.get(`/api/ranking/student/${studentId}`)
+}
+
+// Admin users
+export const adminUserApi = {
+  search: (q: string) => api.get(`/api/admin/users/search?q=${encodeURIComponent(q)}`),
+  resetPassword: (emailOrDni: string, newPassword: string, confirmPassword: string) =>
+    api.post('/api/admin/users/reset-password', { emailOrDni, newPassword, confirmPassword }),
+  resetStudentPassword: (userId: string, newPassword: string, confirmPassword: string) =>
+    api.post(`/api/admin/users/students/${userId}/reset-password`, { newPassword, confirmPassword }),
+  students: (q = '', page = 1) =>
+    api.get(`/api/admin/users/students?q=${encodeURIComponent(q)}&page=${page}`)
 }
 
 // Certificates

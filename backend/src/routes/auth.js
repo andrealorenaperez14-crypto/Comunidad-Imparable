@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { requireAuth } from '../middleware/auth.js'
+import { sendPasswordResetEmail } from '../services/email.js'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -210,4 +211,87 @@ async function getDefaultClientId(fastify) {
   const client = await fastify.prisma.client.findFirst()
   if (!client) throw new Error('No hay clientes configurados en el sistema.')
   return client.id
+}
+
+export async function authPasswordRoutes(fastify) {
+  const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+
+  fastify.post('/forgot-password', {
+    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } }
+  }, async (request, reply) => {
+    const { email } = request.body || {}
+    if (!email || typeof email !== 'string') {
+      return reply.status(400).send({ error: 'Email requerido.' })
+    }
+
+    const user = await fastify.prisma.user.findUnique({
+      where: { email: email.toLowerCase().trim() },
+      include: { profile: true, client: true }
+    })
+
+    // Responder siempre igual para no revelar si el email existe
+    const ok = { message: 'Si el email existe, recibirás un código de verificación.' }
+    if (!user) return reply.send(ok)
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString()
+    const key = `pwd_reset:${email.toLowerCase().trim()}`
+
+    try {
+      await fastify.redis.setex(key, 900, otp) // 15 min TTL
+    } catch {
+      // Redis no disponible — continuar con logging
+      fastify.log.warn('Redis no disponible para OTP reset')
+    }
+
+    await sendPasswordResetEmail({
+      email: user.email,
+      firstName: user.profile?.firstName || 'Usuario',
+      schoolName: user.client?.name || 'Escuela de Asesores',
+      otp
+    })
+
+    return reply.send(ok)
+  })
+
+  fastify.post('/reset-password', {
+    config: { rateLimit: { max: 10, timeWindow: '10 minutes' } }
+  }, async (request, reply) => {
+    const schema = z.object({
+      email:       z.string().email(),
+      otp:         z.string().length(6),
+      newPassword: z.string()
+        .min(8, PASSWORD_MSG)
+        .regex(/[A-Z]/, PASSWORD_MSG)
+        .regex(/[0-9]/, PASSWORD_MSG)
+        .regex(/[!@#$%^&*]/, PASSWORD_MSG)
+    })
+
+    const result = schema.safeParse(request.body)
+    if (!result.success) {
+      return reply.status(400).send({ error: result.error.errors[0].message })
+    }
+
+    const { email, otp, newPassword } = result.data
+    const key = `pwd_reset:${email.toLowerCase().trim()}`
+
+    let storedOtp
+    try {
+      storedOtp = await fastify.redis.get(key)
+    } catch {
+      return reply.status(503).send({ error: 'Servicio temporalmente no disponible.' })
+    }
+
+    if (!storedOtp || storedOtp !== otp) {
+      return reply.status(400).send({ error: 'Código inválido o expirado.' })
+    }
+
+    const user = await fastify.prisma.user.findUnique({ where: { email } })
+    if (!user) return reply.status(404).send({ error: 'Usuario no encontrado.' })
+
+    const passwordHash = await bcrypt.hash(newPassword, 12)
+    await fastify.prisma.user.update({ where: { id: user.id }, data: { passwordHash } })
+    await fastify.redis.del(key)
+
+    return reply.send({ message: 'Contraseña actualizada correctamente.' })
+  })
 }
