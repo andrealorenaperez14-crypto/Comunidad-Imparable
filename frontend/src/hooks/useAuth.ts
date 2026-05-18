@@ -41,7 +41,7 @@ export function useAuth() {
   return {
     user,
     token,
-    isLoading: !_hasHydrated || isLoading,
+    isLoading: !_hasHydrated || isLoading || (!!token && !user),
     isAuthenticated: !!token,
     isAdmin: user?.role === 'ADMIN',
     isStudent: user?.role === 'STUDENT',
