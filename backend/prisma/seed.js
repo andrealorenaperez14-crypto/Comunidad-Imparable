@@ -78,10 +78,13 @@ async function main() {
 
   console.log('✅ Client creado:', clientUser.email)
 
-  // Agente CONSULTIVO
+  // Agente CONSULTIVO — pipeline: Claude(primary) → Gemini(backup) → OpenAI
   const consultivo = await prisma.iAAgent.upsert({
     where: { clientId_type: { clientId: client.id, type: 'CONSULTIVO' } },
-    update: {},
+    update: {
+      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
+      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
+    },
     create: {
       clientId: client.id,
       type: 'CONSULTIVO',
@@ -96,17 +99,20 @@ async function main() {
         alertThresholdHigh: 0.9,
         reportingSchedule: 'weekly'
       },
-      primaryApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
-      backupApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
+      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
+      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
       published: true,
       publishedDate: new Date()
     }
   })
 
-  // Agente MENTOR
+  // Agente MENTOR — pipeline: Claude(primary) → Gemini(backup) → OpenAI
   const mentor = await prisma.iAAgent.upsert({
     where: { clientId_type: { clientId: client.id, type: 'MENTOR' } },
-    update: {},
+    update: {
+      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
+      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
+    },
     create: {
       clientId: client.id,
       type: 'MENTOR',
