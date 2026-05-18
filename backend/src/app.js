@@ -18,6 +18,7 @@ import { adminAgentRoutes } from './routes/admin/agents.js'
 import { adminCourseRoutes } from './routes/admin/courses.js'
 import { adminClientRoutes } from './routes/admin/client.js'
 import { adminUserRoutes } from './routes/admin/users.js'
+import { adminMigrateRoutes } from './routes/admin/migrate.js'
 import { healthRoutes } from './routes/health.js'
 
 export async function buildApp(opts = {}) {
@@ -75,6 +76,7 @@ export async function buildApp(opts = {}) {
   await app.register(adminCourseRoutes, { prefix: '/api/admin/courses' })
   await app.register(adminClientRoutes, { prefix: '/api/admin/client' })
   await app.register(adminUserRoutes, { prefix: '/api/admin/users' })
+  await app.register(adminMigrateRoutes)
 
   return app
 }

@@ -13,12 +13,12 @@ async function main() {
     where: { domain: 'escueladigital.com' },
     update: {},
     create: {
-      name: 'Escuela Digital Elite',
+      name: 'Escuela de Asesores',
       domain: 'escueladigital.com',
       branding: {
-        primaryColor: '#2563EB',
-        secondaryColor: '#10B981',
-        accentColor: '#F59E0B',
+        primaryColor: '#C4972A',
+        secondaryColor: '#141414',
+        accentColor: '#F5F0E8',
         logo: '/logo.svg',
         darkMode: true
       },
@@ -31,7 +31,7 @@ async function main() {
         actualiza_ranking: 'daily',
         X_ranking: 10,
         base_ingreso: 70,
-        nombre_escuela: 'Escuela Digital Elite'
+        nombre_escuela: 'Escuela de Asesores'
       },
       subscriptionStatus: 'ACTIVE'
     }
@@ -39,22 +39,44 @@ async function main() {
 
   console.log('✅ Cliente creado:', client.name)
 
+  // Eliminar credenciales viejas si existen
+  await prisma.user.deleteMany({
+    where: { email: { in: ['admin@escueladigital.com', 'admin@escueladeasesor.com'] } }
+  })
+
   // Admin
-  const adminPassword = await bcrypt.hash('Admin123!', 12)
+  const adminPassword = await bcrypt.hash('Admin2026!EA', 12)
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@escueladigital.com' },
-    update: {},
+    where: { email: 'andrealorenaperez14@gmail.com' },
+    update: { passwordHash: adminPassword },
     create: {
-      email: 'admin@escueladigital.com',
+      email: 'andrealorenaperez14@gmail.com',
       dni: 'ADMIN001',
       passwordHash: adminPassword,
       role: 'ADMIN',
       clientId: client.id,
-      profile: { create: { firstName: 'Andrea', lastName: 'Admin' } }
+      profile: { create: { firstName: 'Andrea', lastName: 'Lorena' } }
     }
   })
 
   console.log('✅ Admin creado:', admin.email)
+
+  // Client user
+  const clientPassword = await bcrypt.hash('Cliente2026!EA', 12)
+  const clientUser = await prisma.user.upsert({
+    where: { email: 'escueladeasesoresmps@gmail.com' },
+    update: { passwordHash: clientPassword },
+    create: {
+      email: 'escueladeasesoresmps@gmail.com',
+      dni: 'CLIENT001',
+      passwordHash: clientPassword,
+      role: 'CLIENT',
+      clientId: client.id,
+      profile: { create: { firstName: 'Escuela', lastName: 'de Asesores' } }
+    }
+  })
+
+  console.log('✅ Client creado:', clientUser.email)
 
   // Agente CONSULTIVO
   const consultivo = await prisma.iAAgent.upsert({
@@ -66,7 +88,7 @@ async function main() {
       name: 'Asistente Técnico',
       description: 'Responde tus preguntas técnicas sobre el contenido del curso',
       icon: '🔍',
-      systemPrompt: 'Eres un asistente técnico experto de Escuela Digital Elite. Tu rol es responder preguntas técnicas del curso de manera clara, precisa y en español latinoamericano. Sé conciso pero completo. Si no sabes algo, dilo honestamente.',
+      systemPrompt: 'Eres un asistente técnico experto de Escuela de Asesores. Tu rol es responder preguntas técnicas del curso de manera clara, precisa y en español latinoamericano. Sé conciso pero completo. Si no sabes algo, dilo honestamente.',
       instructions: 'Responde siempre en español. Usa ejemplos prácticos. Si la pregunta no está relacionada con el contenido del curso, redirige amablemente al usuario.',
       knowledgeBase: '[]',
       metricsConfig: {
@@ -91,7 +113,7 @@ async function main() {
       name: 'Mentor Personal',
       description: 'Tu guía de aprendizaje personalizado y coaching',
       icon: '🎯',
-      systemPrompt: 'Eres un mentor personal y coach de Escuela Digital Elite. Tu misión es acompañar al estudiante en su proceso de aprendizaje, motivarlo, ayudarlo a establecer hábitos de estudio y superar sus obstáculos. Eres empático, motivador y orientado a resultados. Habla siempre en español latinoamericano.',
+      systemPrompt: 'Eres un mentor personal y coach de Escuela de Asesores. Tu misión es acompañar al estudiante en su proceso de aprendizaje, motivarlo, ayudarlo a establecer hábitos de estudio y superar sus obstáculos. Eres empático, motivador y orientado a resultados. Habla siempre en español latinoamericano.',
       instructions: 'Mantén un tono positivo y alentador. Ayuda al estudiante a establecer metas concretas. Haz seguimiento de su progreso. Cuando detectes desmotivación, usa técnicas de coaching para reactivar el compromiso.',
       knowledgeBase: '[]',
       metricsConfig: {
@@ -116,7 +138,7 @@ async function main() {
         clientId: client.id, type: 'FREE', order: 1,
         title: 'Introducción al Curso',
         description: 'Bienvenida y overview del programa',
-        content: '# Bienvenida a Escuela Digital Elite\n\nEste curso está diseñado para profesionales que buscan...'
+        content: '# Bienvenida a Escuela de Asesores\n\nEste curso está diseñado para profesionales que buscan...'
       },
       {
         clientId: client.id, type: 'FREE', order: 2,
@@ -173,7 +195,6 @@ async function main() {
       }
     })
 
-    // Métricas para cada agente
     for (const agent of [consultivo, mentor]) {
       await prisma.iAMetric.upsert({
         where: { agentId_userId: { agentId: agent.id, userId: user.id } },
@@ -195,8 +216,9 @@ async function main() {
   console.log('✅ 5 estudiantes de muestra creados')
   console.log('\n🎉 Seed completado exitosamente!')
   console.log('\n📋 Credenciales de acceso:')
-  console.log('  Admin: admin@escueladigital.com / Admin123!')
-  console.log('  Estudiante: maria@ejemplo.com / Student123!')
+  console.log('  Admin:  andrealorenaperez14@gmail.com / Admin2026!EA')
+  console.log('  Client: escueladeasesoresmps@gmail.com / Cliente2026!EA')
+  console.log('  Alumno: maria@ejemplo.com / Student123!')
 }
 
 main()
