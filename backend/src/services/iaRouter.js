@@ -94,8 +94,14 @@ async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledge
 }
 
 export async function routeIaRequest(agent, message, userId) {
-  const primaryKey = agent.primaryApiKey ? decrypt(agent.primaryApiKey) : null
-  const backupKey = agent.backupApiKey ? decrypt(agent.backupApiKey) : null
+  let primaryKey = null
+  let backupKey = null
+  try {
+    primaryKey = agent.primaryApiKey ? decrypt(agent.primaryApiKey) : null
+    backupKey = agent.backupApiKey ? decrypt(agent.backupApiKey) : null
+  } catch {
+    // Keys can't be decrypted — proceed without them, fall back to env vars
+  }
   const knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
 
   const { systemPrompt, instructions, type } = agent
@@ -122,8 +128,8 @@ export async function routeIaRequest(agent, message, userId) {
   ]
 
   let pipeline
-  if (type === 'COACH') pipeline = coachPipeline
-  else if (type === 'MENTALIDAD') pipeline = mentalidadPipeline
+  if (type === 'CONSULTIVO') pipeline = coachPipeline
+  else if (type === 'MENTOR') pipeline = mentalidadPipeline
   else pipeline = consultivaPipeline
 
   for (const provider of pipeline) {

@@ -19,39 +19,44 @@ export async function agentRoutes(fastify) {
       return reply.status(400).send({ error: 'El mensaje no puede estar vacío.' })
     }
 
-    const agent = await fastify.prisma.iAAgent.findFirst({
-      where: { id: agentId, clientId: request.user.clientId, published: true }
-    })
+    try {
+      const agent = await fastify.prisma.iAAgent.findFirst({
+        where: { id: agentId, clientId: request.user.clientId, published: true }
+      })
 
-    if (!agent) {
-      return reply.status(404).send({ error: 'Agente IA no encontrado o no disponible.' })
-    }
+      if (!agent) {
+        return reply.status(404).send({ error: 'Agente IA no encontrado o no disponible.' })
+      }
 
-    const startTime = Date.now()
-    const result = await routeIaRequest(agent, message, request.user.id)
-    const duration = Date.now() - startTime
+      const startTime = Date.now()
+      const result = await routeIaRequest(agent, message, request.user.id)
+      const duration = Date.now() - startTime
 
-    const interaction = await fastify.prisma.iAInteraction.create({
-      data: {
-        agentId: agent.id,
-        userId: request.user.id,
-        message,
+      const interaction = await fastify.prisma.iAInteraction.create({
+        data: {
+          agentId: agent.id,
+          userId: request.user.id,
+          message,
+          response: result.response,
+          modelUsed: result.modelUsed,
+          tokens: result.tokens || 0,
+          cost: result.cost || 0,
+          duration
+        }
+      })
+
+      await updateMetricsAfterChat(fastify.prisma, agent, request.user.id, result, duration)
+
+      return reply.send({
         response: result.response,
         modelUsed: result.modelUsed,
-        tokens: result.tokens || 0,
-        cost: result.cost || 0,
+        interactionId: interaction.id,
         duration
-      }
-    })
-
-    await updateMetricsAfterChat(fastify.prisma, agent, request.user.id, result, duration)
-
-    return reply.send({
-      response: result.response,
-      modelUsed: result.modelUsed,
-      interactionId: interaction.id,
-      duration
-    })
+      })
+    } catch (err) {
+      fastify.log.error({ err: err.message, agentId }, 'Error en chat de agente IA')
+      return reply.status(500).send({ error: 'Error interno al procesar la consulta. Intenta de nuevo.' })
+    }
   })
 
   fastify.get('/:agentId/metrics', { preHandler: requireAuth }, async (request, reply) => {
