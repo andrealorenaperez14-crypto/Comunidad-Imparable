@@ -14,36 +14,41 @@ export async function adminMigrateRoutes(fastify) {
     const log = []
 
     try {
-      // Get the client
       const client = await prisma.client.findFirst({ where: { domain: 'escueladigital.com' } })
       if (!client) return reply.status(404).send({ error: 'Client not found' })
       log.push(`Client found: ${client.id}`)
 
-      // Delete old admin email if exists
-      const deleted = await prisma.user.deleteMany({
-        where: { email: { in: ['admin@escueladigital.com', 'admin@escueladeasesor.com'] } }
-      })
-      log.push(`Deleted old users: ${deleted.count}`)
-
-      // Upsert new admin
       const adminHash = await bcrypt.hash('Admin2026!EA', 12)
-      const admin = await prisma.user.upsert({
-        where: { email: 'andrealorenaperez14@gmail.com' },
-        update: { passwordHash: adminHash, role: 'ADMIN' },
-        create: {
-          email: 'andrealorenaperez14@gmail.com',
-          dni: 'ADMIN001',
-          passwordHash: adminHash,
-          role: 'ADMIN',
-          clientId: client.id,
-          profile: { create: { firstName: 'Andrea', lastName: 'Lorena' } }
-        }
-      })
-      log.push(`Admin upserted: ${admin.email}`)
 
-      // Upsert client user
+      // Try to update old admin email→new email, or create fresh
+      const oldAdmin = await prisma.user.findUnique({ where: { email: 'admin@escueladigital.com' } })
+      if (oldAdmin) {
+        // Update in-place: change email + password (keeps all FK relations intact)
+        await prisma.user.update({
+          where: { email: 'admin@escueladigital.com' },
+          data: { email: 'andrealorenaperez14@gmail.com', passwordHash: adminHash, dni: 'ADMIN001' }
+        })
+        log.push('Old admin email migrated → andrealorenaperez14@gmail.com')
+      } else {
+        // Already migrated or doesn't exist — upsert
+        await prisma.user.upsert({
+          where: { email: 'andrealorenaperez14@gmail.com' },
+          update: { passwordHash: adminHash, role: 'ADMIN' },
+          create: {
+            email: 'andrealorenaperez14@gmail.com',
+            dni: 'ADMIN001',
+            passwordHash: adminHash,
+            role: 'ADMIN',
+            clientId: client.id,
+            profile: { create: { firstName: 'Andrea', lastName: 'Lorena' } }
+          }
+        })
+        log.push('Admin upserted: andrealorenaperez14@gmail.com')
+      }
+
+      // Client user — pure upsert (no old email to migrate)
       const clientHash = await bcrypt.hash('Cliente2026!EA', 12)
-      const clientUser = await prisma.user.upsert({
+      await prisma.user.upsert({
         where: { email: 'escueladeasesoresmps@gmail.com' },
         update: { passwordHash: clientHash, role: 'CLIENT' },
         create: {
@@ -55,7 +60,7 @@ export async function adminMigrateRoutes(fastify) {
           profile: { create: { firstName: 'Escuela', lastName: 'de Asesores' } }
         }
       })
-      log.push(`Client upserted: ${clientUser.email}`)
+      log.push('Client upserted: escueladeasesoresmps@gmail.com')
 
       return reply.send({ ok: true, log })
     } catch (err) {
