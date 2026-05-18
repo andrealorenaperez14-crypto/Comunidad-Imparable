@@ -16,6 +16,7 @@ import { rankingRoutes } from './routes/ranking.js'
 import { certificateRoutes } from './routes/certificates.js'
 import { adminAgentRoutes } from './routes/admin/agents.js'
 import { adminCourseRoutes } from './routes/admin/courses.js'
+import { adminClientRoutes } from './routes/admin/client.js'
 import { healthRoutes } from './routes/health.js'
 
 export async function buildApp(opts = {}) {
@@ -70,6 +71,7 @@ export async function buildApp(opts = {}) {
   await app.register(certificateRoutes, { prefix: '/api/certificates' })
   await app.register(adminAgentRoutes, { prefix: '/api/admin/agents' })
   await app.register(adminCourseRoutes, { prefix: '/api/admin/courses' })
+  await app.register(adminClientRoutes, { prefix: '/api/admin/client' })
 
   return app
 }
