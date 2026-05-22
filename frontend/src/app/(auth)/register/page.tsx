@@ -83,101 +83,135 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-10" style={{ background: 'var(--color-bg)' }}>
+    <div className="min-h-screen flex items-center justify-center px-4 py-16" style={{ background: 'var(--color-bg)' }}>
       <motion.div
         initial={{ opacity: 1, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
       >
-        <div className="text-center mb-8">
+        {/* Header - MÁS ESPACIO */}
+        <div className="text-center mb-12">
           <div
-            className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-4"
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
             style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}
           >
             <Brain className="w-8 h-8" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
           </div>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>Crea tu cuenta</h1>
-          <p style={{ color: 'var(--color-text-muted)' }}>
+          <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--color-text)' }}>Crea tu cuenta</h1>
+          <p className="text-base leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
             <span className="font-medium" style={{ color: 'var(--color-gold)' }}>5 días gratis</span> con acceso completo
           </p>
         </div>
 
-        <div className="card">
+        {/* Card - MÁS PADDING */}
+        <div className="card p-8">
+          {/* Error message */}
           {error && (
             <div
-              className="px-4 py-3 rounded-lg text-sm mb-6"
+              className="px-5 py-4 rounded-lg text-sm mb-8 leading-relaxed"
               style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#F87171' }}
             >
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Form - MÁS SEPARACIÓN */}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+            {/* Name and Last Name - lado a lado con más espacio */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Nombre</label>
+                <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                  Nombre
+                </label>
                 <input
                   {...register('firstName')}
                   placeholder="María"
-                  className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all"
+                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                 />
-                {errors.firstName && <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.firstName.message}</p>}
+                {errors.firstName && (
+                  <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
               <div>
-                <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Apellido</label>
+                <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                  Apellido
+                </label>
                 <input
                   {...register('lastName')}
                   placeholder="García"
-                  className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all"
+                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
                 />
-                {errors.lastName && <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.lastName.message}</p>}
+                {errors.lastName && (
+                  <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                    {errors.lastName.message}
+                  </p>
+                )}
               </div>
             </div>
 
+            {/* Email */}
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Email</label>
+              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                Email
+              </label>
               <input
                 {...register('email')}
                 type="email"
                 placeholder="tu@email.com"
-                className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all"
+                className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
               />
-              {errors.email && <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.email.message}</p>}
+              {errors.email && (
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
+            {/* DNI */}
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>
+              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
                 DNI / Documento de identidad
               </label>
               <input
                 {...register('dni')}
                 placeholder="12345678"
-                className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all"
+                className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
               />
-              {errors.dni && <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.dni.message}</p>}
-              <p className="mt-1 text-xs" style={{ color: 'var(--color-text-muted)' }}>Usado como identificador único — no puede duplicarse</p>
+              {errors.dni && (
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                  {errors.dni.message}
+                </p>
+              )}
+              <p className="mt-2.5 text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
+                Usado como identificador único — no puede duplicarse
+              </p>
             </div>
 
+            {/* Password */}
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Contraseña</label>
+              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                Contraseña
+              </label>
               <div className="relative">
                 <input
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Mín. 8 car., mayúscula, número y símbolo"
-                  className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all pr-12"
+                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -186,21 +220,25 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1"
                   style={{ color: 'var(--color-text-muted)' }}
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" strokeWidth={1.5} /> : <Eye className="w-4 h-4" strokeWidth={1.5} />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" strokeWidth={1.5} />
+                  ) : (
+                    <Eye className="w-5 h-5" strokeWidth={1.5} />
+                  )}
                 </button>
               </div>
 
-              {/* Strength indicator */}
+              {/* Strength indicator - MÁS ESPACIO */}
               {strength && (
-                <div className="mt-2 space-y-1">
-                  <div className="flex gap-1">
+                <div className="mt-4 space-y-2">
+                  <div className="flex gap-1.5">
                     {[1, 2, 3, 4].map(i => (
                       <div
                         key={i}
-                        className="flex-1 h-1 rounded-full transition-all duration-300"
+                        className="flex-1 h-1.5 rounded-full transition-all duration-300"
                         style={{
                           background: i <= strength.score
                             ? STRENGTH_COLOR[strength.label]
@@ -209,55 +247,70 @@ export default function RegisterPage() {
                       />
                     ))}
                   </div>
-                  <p className="text-xs font-medium" style={{ color: STRENGTH_COLOR[strength.label] }}>
-                    {strength.label}
+                  <p className="text-xs font-medium leading-relaxed" style={{ color: STRENGTH_COLOR[strength.label] }}>
+                    Contraseña {strength.label.toLowerCase()}
                   </p>
                 </div>
               )}
 
-              {errors.password && <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.password.message}</p>}
+              {errors.password && (
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
+            {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Confirmar contraseña</label>
+              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                Confirmar contraseña
+              </label>
               <input
                 {...register('confirmPassword')}
                 type="password"
                 placeholder="Repite tu contraseña"
-                className="w-full rounded-xl px-4 py-3 focus:outline-none transition-all"
+                className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
               />
               {errors.confirmPassword && (
-                <p className="mt-1 text-xs" style={{ color: '#F87171' }}>{errors.confirmPassword.message}</p>
+                <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                  {errors.confirmPassword.message}
+                </p>
               )}
             </div>
 
-            <label className="flex items-start gap-3 cursor-pointer">
+            {/* Terms - MÁS ESPACIO */}
+            <label className="flex items-start gap-4 cursor-pointer pt-2">
               <input
                 {...register('terms')}
                 type="checkbox"
-                className="mt-1 w-4 h-4 rounded"
+                className="mt-1.5 w-5 h-5 rounded flex-shrink-0"
                 style={{ border: '1px solid var(--color-separator)', background: 'var(--color-bg)' }}
               />
-              <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+              <span className="text-sm leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
                 Acepto los{' '}
-                <Link href="/terminos" className="hover:underline" style={{ color: 'var(--color-gold)' }}>
+                <Link href="/terminos" className="hover:opacity-80 transition-opacity" style={{ color: 'var(--color-gold)' }}>
                   términos y condiciones
                 </Link>{' '}
                 y la{' '}
-                <Link href="/privacidad" className="hover:underline" style={{ color: 'var(--color-gold)' }}>
+                <Link href="/privacidad" className="hover:opacity-80 transition-opacity" style={{ color: 'var(--color-gold)' }}>
                   política de privacidad
                 </Link>
               </span>
             </label>
-            {errors.terms && <p className="text-xs" style={{ color: '#F87171' }}>{errors.terms.message}</p>}
+            {errors.terms && (
+              <p className="text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                {errors.terms.message}
+              </p>
+            )}
 
+            {/* Submit button - MÁS ALTURA */}
             <button
               type="submit"
               disabled={isSubmitting || (strength !== null && strength.label === 'Débil')}
-              className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-3.5 text-base font-medium mt-8"
             >
               {isSubmitting ? (
                 <>
@@ -274,9 +327,10 @@ export default function RegisterPage() {
           </form>
         </div>
 
-        <p className="text-center mt-6 text-sm" style={{ color: 'var(--color-text-muted)' }}>
+        {/* Footer - MÁS ESPACIO */}
+        <p className="text-center mt-10 text-sm leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
           ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="font-medium" style={{ color: 'var(--color-gold)' }}>
+          <Link href="/login" className="font-medium hover:opacity-80 transition-opacity" style={{ color: 'var(--color-gold)' }}>
             Iniciar sesión
           </Link>
         </p>
