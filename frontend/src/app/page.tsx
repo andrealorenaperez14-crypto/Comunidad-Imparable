@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { trackEvent } from '@/lib/analytics'
 
 
 const fadeUp = {
@@ -99,11 +100,21 @@ export default function HomePage() {
               fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
               fontWeight: 700,
               lineHeight: 1.25,
-              marginBottom: '2.5rem'
+              marginBottom: '1rem'
             }}>
               ¿Vas a seguir siendo un Vendedor Junior{' '}
               o das el salto a Asesor de Elite?
             </h1>
+            <p style={{
+              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              color: 'var(--color-text-muted)',
+              lineHeight: 1.7,
+              marginBottom: '2.5rem',
+              maxWidth: '620px',
+              margin: '0 auto 2.5rem'
+            }}>
+              Ayudamos a asesores a escalar a <strong style={{ color: 'var(--color-gold)' }}>$10k USD/mes</strong> implementando Neuroventas + IA sin depender de lanzamientos complejos.
+            </p>
           </motion.div>
 
           {/* Cards */}
@@ -121,7 +132,7 @@ export default function HomePage() {
                 key={id}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => setSelectedPath(id as 'junior' | 'elite')}
+                onClick={() => { setSelectedPath(id as 'junior' | 'elite'); trackEvent('path_selected', { path: id }) }}
                 style={{
                   padding: 'clamp(1.5rem,4vw,2rem)',
                   borderRadius: '0.75rem',
@@ -165,7 +176,7 @@ export default function HomePage() {
           {selectedPath && (
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
               <button
-                onClick={() => router.push(selectedPath === 'junior' ? '/register' : '/parte-2')}
+                onClick={() => { trackEvent('cta_clicked', { cta_type: selectedPath }); router.push(selectedPath === 'junior' ? '/register' : '/parte-2') }}
                 style={{
                   padding: '1rem 2.5rem',
                   background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
@@ -276,7 +287,7 @@ export default function HomePage() {
               textAlign: 'center'
             }}
           >
-            De 0 a más de 10.000 clientes
+            De cero a 10,000+ clientes. Sin pedir permiso.
           </motion.h2>
 
           <div style={{
@@ -365,11 +376,11 @@ export default function HomePage() {
             {/* Texto */}
             <motion.div {...fadeUp} style={{ textAlign: 'center' }}>
               <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
-                Crecí en Rosario, sin nada. A los 16 años trabajé por primera vez como asesor.
+                A los 16 trabajé como asesor sin saber nada.
                 Hoy, después de más de 10 mil clientes, sé exactamente la diferencia entre quien vende y quien no.
               </p>
               <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
-                No es don. No es suerte. Es MOVIMIENTO.
+                La diferencia no es talento. Es MÉTODO.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
@@ -506,7 +517,7 @@ export default function HomePage() {
               </div>
 
               <button
-                onClick={() => router.push('/parte-2')}
+                onClick={() => { trackEvent('final_cta_clicked'); router.push('/parte-2') }}
                 style={{
                   width: '100%',
                   padding: '1rem 2rem',
@@ -628,6 +639,72 @@ export default function HomePage() {
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
               CEO & Fundadora | Escuela de Asesores
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════ EL MOMENTO ES HOY ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
+        background: 'linear-gradient(135deg, rgba(196,151,42,0.12) 0%, rgba(0,0,0,0.6) 100%)',
+        borderTop: '1px solid rgba(196,151,42,0.3)',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <p style={{
+              fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              color: 'var(--color-gold)',
+              marginBottom: '1rem'
+            }}>
+              El momento es HOY
+            </p>
+            <h2 style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.4rem, 4vw, 2.6rem)',
+              fontWeight: 700,
+              lineHeight: 1.2,
+              marginBottom: '1.25rem'
+            }}>
+              Cada día que esperas,<br />
+              <span style={{ color: 'var(--color-gold)' }}>otro cierra su venta.</span>
+            </h2>
+            <p style={{
+              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              color: 'var(--color-text-muted)',
+              lineHeight: 1.7,
+              marginBottom: '2.5rem'
+            }}>
+              Empieza gratis hoy mismo o entra directo al programa Elite.<br />
+              El primer paso siempre es el más importante.
+            </p>
+            <button
+              onClick={() => { trackEvent('final_cta_clicked'); router.push('/register') }}
+              style={{
+                padding: 'clamp(1rem,3vw,1.25rem) clamp(2rem,5vw,3rem)',
+                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                color: '#000',
+                fontWeight: 700,
+                borderRadius: '0.75rem',
+                fontSize: 'clamp(0.95rem, 2.5vw, 1.15rem)',
+                letterSpacing: '0.07em',
+                boxShadow: '0 12px 40px rgba(196,151,42,0.5)',
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: '420px',
+                transition: 'opacity 0.2s'
+              }}
+            >
+              COMIENZA AHORA — GRATIS O $150
+            </button>
           </motion.div>
         </div>
       </section>
