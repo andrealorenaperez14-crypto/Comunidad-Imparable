@@ -41,7 +41,7 @@ async function main() {
 
   // Eliminar credenciales viejas si existen
   await prisma.user.deleteMany({
-    where: { email: { in: ['admin@escueladigital.com', 'admin@escueladeasesor.com'] } }
+    where: { email: { in: ['admin@escueladigital.com', 'admin@escueladeasesor.com', 'escueladeasesoresmps@gmail.com'] } }
   })
 
   // Admin
@@ -62,17 +62,17 @@ async function main() {
   console.log('✅ Admin creado:', admin.email)
 
   // Client user
-  const clientPassword = await bcrypt.hash('Cliente2026!EA', 12)
+  const clientPassword = await bcrypt.hash('Yami!2026', 12)
   const clientUser = await prisma.user.upsert({
-    where: { email: 'escueladeasesoresmps@gmail.com' },
+    where: { email: 'yamilamansilla154@gmail.com' },
     update: { passwordHash: clientPassword },
     create: {
-      email: 'escueladeasesoresmps@gmail.com',
+      email: 'yamilamansilla154@gmail.com',
       dni: 'CLIENT001',
       passwordHash: clientPassword,
       role: 'CLIENT',
       clientId: client.id,
-      profile: { create: { firstName: 'Escuela', lastName: 'de Asesores' } }
+      profile: { create: { firstName: 'Yamila', lastName: 'Mansilla' } }
     }
   })
 
@@ -223,7 +223,7 @@ async function main() {
   console.log('\n🎉 Seed completado exitosamente!')
   console.log('\n📋 Credenciales de acceso:')
   console.log('  Admin:  andrealorenaperez14@gmail.com / Admin2026!EA')
-  console.log('  Client: escueladeasesoresmps@gmail.com / Cliente2026!EA')
+  console.log('  Client: yamilamansilla154@gmail.com / Yami!2026')
   console.log('  Alumno: maria@ejemplo.com / Student123!')
 }
 
