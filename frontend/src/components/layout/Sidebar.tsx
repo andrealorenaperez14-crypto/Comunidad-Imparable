@@ -31,10 +31,10 @@ const adminNav = [
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { user, logout, isAdmin } = useAuth()
+  const { user, logout, isAdmin, isClient } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  const navItems = isAdmin ? adminNav : studentNav
+  const navItems = (isAdmin || isClient) ? adminNav : studentNav
 
   const NavContent = () => (
     <div className="flex flex-col h-full">
@@ -45,7 +45,7 @@ export function Sidebar() {
               {user?.schoolName || 'ESCUELA DE ASESORES'}
             </p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-              {isAdmin ? 'Panel Admin' : 'Mi Formación'}
+              {(isAdmin || isClient) ? 'Panel Admin' : 'Mi Formación'}
             </p>
           </div>
         </div>
