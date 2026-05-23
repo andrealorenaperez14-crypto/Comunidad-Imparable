@@ -36,106 +36,133 @@ export default function HomePage() {
   const router = useRouter()
 
   return (
-    <div className="w-full" style={{ background: 'var(--color-bg)', color: 'var(--color-text)' }}>
+    <div
+      style={{
+        width: '100%',
+        background: 'var(--color-bg)',
+        color: 'var(--color-text)',
+        textAlign: 'center',
+        overflowX: 'hidden'
+      }}
+    >
 
-      {/* ===== HERO / PATH SELECTOR ===== */}
-      <section className="min-h-screen w-full flex items-center justify-center px-4 sm:px-8 lg:px-12 py-20 relative">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.08) 0%, transparent 70%)' }}
-        />
+      {/* ══════════════════ HERO ══════════════════ */}
+      <section style={{
+        minHeight: '100svh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
+        position: 'relative'
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.09) 0%, transparent 70%)'
+        }} />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full max-w-4xl mx-auto text-center z-10"
+          style={{ width: '100%', maxWidth: '820px', margin: '0 auto', position: 'relative', zIndex: 10 }}
         >
           <motion.div {...fadeUp}>
-            <p
-              className="text-xs sm:text-sm uppercase tracking-widest mb-5"
-              style={{ color: 'var(--color-gold)' }}
-            >
+            <p style={{
+              fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.15em',
+              color: 'var(--color-gold)',
+              marginBottom: '1.25rem'
+            }}>
               Elige tu camino
             </p>
-            <h1
-              className="text-2xl sm:text-3xl md:text-4xl font-bold mb-10 leading-snug"
-              style={{ fontFamily: 'Cinzel, serif' }}
-            >
-              ¿Vas a seguir siendo un Vendedor Junior
-              <br className="hidden sm:block" />
-              {' '}o das el salto a Asesor de Elite?
+            <h1 style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
+              fontWeight: 700,
+              lineHeight: 1.25,
+              marginBottom: '2.5rem'
+            }}>
+              ¿Vas a seguir siendo un Vendedor Junior{' '}
+              o das el salto a Asesor de Elite?
             </h1>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
-            {/* Reto 3 Días */}
-            <motion.button
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => setSelectedPath('junior')}
-              className="w-full p-6 sm:p-8 rounded-xl border-2 transition-all text-center"
-              style={{
-                borderColor: selectedPath === 'junior' ? 'var(--color-gold)' : 'var(--color-gold-border)',
-                background: selectedPath === 'junior'
-                  ? 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(0,0,0,0.4) 100%)'
-                  : 'rgba(20,20,20,0.8)',
-                boxShadow: selectedPath === 'junior' ? '0 0 32px rgba(196,151,42,0.25)' : 'none'
-              }}
-            >
-              <h2
-                className="text-base sm:text-lg md:text-xl font-bold mb-3"
-                style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
+          {/* Cards */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+            gap: '1rem',
+            marginBottom: '2rem'
+          }}>
+            {[
+              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Junior: Vende copiando y pegando asistido por la IA', price: 'GRATIS' },
+              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional', price: '$150 USD' }
+            ].map(({ id, title, desc, price }) => (
+              <motion.button
+                key={id}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => setSelectedPath(id as 'junior' | 'elite')}
+                style={{
+                  padding: 'clamp(1.5rem,4vw,2rem)',
+                  borderRadius: '0.75rem',
+                  border: `2px solid ${selectedPath === id ? 'var(--color-gold)' : 'var(--color-gold-border)'}`,
+                  background: selectedPath === id
+                    ? 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(0,0,0,0.4) 100%)'
+                    : 'rgba(20,20,20,0.8)',
+                  boxShadow: selectedPath === id ? '0 0 32px rgba(196,151,42,0.25)' : 'none',
+                  textAlign: 'center',
+                  width: '100%',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
               >
-                Reto 3 Días
-              </h2>
-              <p className="text-sm sm:text-base leading-relaxed mb-5" style={{ color: 'var(--color-text-muted)' }}>
-                Asesor Junior: Vende copiando y pegando asistido por la IA
-              </p>
-              <div className="pt-4 border-t" style={{ borderColor: 'var(--color-gold-border)' }}>
-                <p className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--color-gold)' }}>GRATIS</p>
-              </div>
-            </motion.button>
-
-            {/* 30 Días Elite */}
-            <motion.button
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => setSelectedPath('elite')}
-              className="w-full p-6 sm:p-8 rounded-xl border-2 transition-all text-center"
-              style={{
-                borderColor: selectedPath === 'elite' ? 'var(--color-gold)' : 'var(--color-gold-border)',
-                background: selectedPath === 'elite'
-                  ? 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(0,0,0,0.4) 100%)'
-                  : 'rgba(20,20,20,0.8)',
-                boxShadow: selectedPath === 'elite' ? '0 0 32px rgba(196,151,42,0.25)' : 'none'
-              }}
-            >
-              <h2
-                className="text-base sm:text-lg md:text-xl font-bold mb-3"
-                style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-              >
-                En 30 Días
-              </h2>
-              <p className="text-sm sm:text-base leading-relaxed mb-5" style={{ color: 'var(--color-text-muted)' }}>
-                Conviértete en Asesor de Elite con aval internacional
-              </p>
-              <div className="pt-4 border-t" style={{ borderColor: 'var(--color-gold-border)' }}>
-                <p className="text-2xl sm:text-3xl font-bold" style={{ color: 'var(--color-gold)' }}>$150 USD</p>
-              </div>
-            </motion.button>
+                <h2 style={{
+                  fontFamily: 'Cinzel, serif',
+                  fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+                  fontWeight: 700,
+                  color: 'var(--color-gold)',
+                  marginBottom: '0.75rem'
+                }}>
+                  {title}
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
+                  color: 'var(--color-text-muted)',
+                  lineHeight: 1.6,
+                  marginBottom: '1.25rem'
+                }}>
+                  {desc}
+                </p>
+                <div style={{ borderTop: '1px solid var(--color-gold-border)', paddingTop: '1rem' }}>
+                  <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--color-gold)' }}>
+                    {price}
+                  </p>
+                </div>
+              </motion.button>
+            ))}
           </div>
 
           {selectedPath && (
             <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
               <button
                 onClick={() => router.push(selectedPath === 'junior' ? '/register' : '/parte-2')}
-                className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-xl text-base sm:text-lg transition-all hover:opacity-90 active:scale-95"
-                style={{ boxShadow: '0 8px 28px rgba(196,151,42,0.45)', letterSpacing: '0.07em' }}
+                style={{
+                  padding: '1rem 2.5rem',
+                  background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                  color: '#000',
+                  fontWeight: 700,
+                  borderRadius: '0.75rem',
+                  fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                  letterSpacing: '0.07em',
+                  boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
+                  cursor: 'pointer',
+                  transition: 'opacity 0.2s',
+                  width: '100%',
+                  maxWidth: '360px'
+                }}
               >
                 {selectedPath === 'junior' ? 'EMPEZAR RETO GRATIS' : 'ACCEDER A PARTE 2'}
               </button>
@@ -144,29 +171,34 @@ export default function HomePage() {
         </motion.div>
       </section>
 
-      {/* ===== 3 IAs ===== */}
-      <section
-        className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12"
-        style={{
-          background: 'linear-gradient(135deg, rgba(196,151,42,0.05) 0%, transparent 100%)',
-          borderTop: '1px solid rgba(196,151,42,0.2)',
-          borderBottom: '1px solid rgba(196,151,42,0.2)'
-        }}
-      >
-        <div className="max-w-5xl mx-auto">
-          <motion.div className="mb-12 text-center" {...fadeUp}>
-            <h2
-              className="text-xl sm:text-2xl md:text-3xl font-bold mb-3"
-              style={{ fontFamily: 'Cinzel, serif' }}
-            >
+      {/* ══════════════════ 3 IAs ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'linear-gradient(135deg, rgba(196,151,42,0.05) 0%, transparent 100%)',
+        borderTop: '1px solid rgba(196,151,42,0.2)',
+        borderBottom: '1px solid rgba(196,151,42,0.2)'
+      }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+          <motion.div {...fadeUp} style={{ marginBottom: '3rem' }}>
+            <h2 style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+              fontWeight: 700,
+              marginBottom: '0.75rem'
+            }}>
               Nunca estás solo
             </h2>
-            <p className="text-sm sm:text-base" style={{ color: 'var(--color-text-muted)' }}>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)' }}>
               Los 3 agentes IA que transformarán tu forma de trabajar y vender
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '1rem'
+          }}>
             {[
               { icon: <CoachIcon />, name: 'IA Coach', desc: 'Mentoría personalizada 24/7 en cada paso' },
               { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'Transforma tus creencias limitantes' },
@@ -178,22 +210,34 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ y: -5 }}
                 viewport={{ once: true }}
-                className="p-6 rounded-xl border text-center"
-                style={{ borderColor: 'var(--color-gold-border)', background: 'rgba(20,20,20,0.8)' }}
+                style={{
+                  padding: '1.5rem',
+                  borderRadius: '0.75rem',
+                  border: '1px solid var(--color-gold-border)',
+                  background: 'rgba(20,20,20,0.8)',
+                  textAlign: 'center'
+                }}
               >
-                <div
-                  className="w-11 h-11 mx-auto mb-4 flex items-center justify-center rounded-xl"
-                  style={{ background: 'rgba(196,151,42,0.15)', color: 'var(--color-gold)' }}
-                >
+                <div style={{
+                  width: '2.75rem', height: '2.75rem',
+                  margin: '0 auto 1rem',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  borderRadius: '0.625rem',
+                  background: 'rgba(196,151,42,0.15)',
+                  color: 'var(--color-gold)'
+                }}>
                   {a.icon}
                 </div>
-                <h3
-                  className="text-sm sm:text-base font-bold mb-2"
-                  style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-                >
+                <h3 style={{
+                  fontFamily: 'Cinzel, serif',
+                  fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
+                  fontWeight: 700,
+                  color: 'var(--color-gold)',
+                  marginBottom: '0.5rem'
+                }}>
                   {a.name}
                 </h3>
-                <p className="text-xs sm:text-sm leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
+                <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>
                   {a.desc}
                 </p>
               </motion.div>
@@ -202,18 +246,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== STATS ===== */}
-      <section className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto text-center">
+      {/* ══════════════════ STATS ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <motion.h2
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-12"
-            style={{ fontFamily: 'Cinzel, serif' }}
             {...fadeUp}
+            style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+              fontWeight: 700,
+              marginBottom: '3rem',
+              textAlign: 'center'
+            }}
           >
             De 0 a más de 10.000 clientes
           </motion.h2>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '1rem'
+          }}
+            className="lg-grid-4"
+          >
             {[
               { num: '+10,000', text: 'Clientes' },
               { num: '13', text: 'Años de experiencia' },
@@ -225,19 +280,18 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-4 sm:p-6 rounded-xl border text-center"
                 style={{
-                  borderColor: 'var(--color-gold-border)',
-                  background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, transparent 100%)'
+                  padding: 'clamp(1rem,3vw,1.5rem)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid var(--color-gold-border)',
+                  background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, transparent 100%)',
+                  textAlign: 'center'
                 }}
               >
-                <p
-                  className="text-2xl sm:text-3xl lg:text-4xl font-bold"
-                  style={{ color: 'var(--color-gold)' }}
-                >
+                <p style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)' }}>
                   {s.num}
                 </p>
-                <p className="text-xs sm:text-sm mt-2" style={{ color: 'var(--color-text-muted)' }}>
+                <p style={{ fontSize: 'clamp(0.7rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
                   {s.text}
                 </p>
               </motion.div>
@@ -246,52 +300,62 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== YAMI STORY ===== */}
-      <section className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto">
+      {/* ══════════════════ YAMI STORY ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
           <motion.h2
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-12 text-center"
-            style={{ fontFamily: 'Cinzel, serif' }}
             {...fadeUp}
+            style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+              fontWeight: 700,
+              marginBottom: '3rem',
+              textAlign: 'center'
+            }}
           >
-            Esto no es teoría.
-            <br />
+            Esto no es teoría.<br />
             <span style={{ color: 'var(--color-gold)' }}>Es mi vida</span>
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
-            {/* Imagen — arriba en mobile */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '2.5rem',
+            alignItems: 'center'
+          }}>
+            {/* Imagen */}
             <motion.div
-              className="flex justify-center order-1 md:order-2"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
+              style={{ display: 'flex', justifyContent: 'center' }}
             >
               <Image
                 src="/assets/client1/yami-gemini.png"
-                alt="Yami Mansilla CEO"
-                width={420}
-                height={520}
-                className="w-full max-w-xs sm:max-w-sm md:max-w-full h-auto rounded-xl"
-                style={{ boxShadow: '0 20px 48px rgba(196,151,42,0.2)' }}
+                alt="Yami Mansilla"
+                width={400}
+                height={500}
+                style={{
+                  width: '100%',
+                  maxWidth: '360px',
+                  height: 'auto',
+                  borderRadius: '0.75rem',
+                  boxShadow: '0 20px 48px rgba(196,151,42,0.2)'
+                }}
               />
             </motion.div>
 
-            {/* Texto — abajo en mobile */}
-            <motion.div
-              className="space-y-5 text-center md:text-left order-2 md:order-1"
-              {...fadeUp}
-            >
-              <p className="text-sm sm:text-base leading-relaxed">
+            {/* Texto */}
+            <motion.div {...fadeUp} style={{ textAlign: 'center' }}>
+              <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
                 Crecí en Rosario, sin nada. A los 16 años trabajé por primera vez como asesor.
-                Hoy, después de más de 10 mil clientes, sé exactamente la diferencia entre
-                quien vende y quien no.
+                Hoy, después de más de 10 mil clientes, sé exactamente la diferencia entre quien vende y quien no.
               </p>
-              <p className="text-base sm:text-lg font-bold" style={{ color: 'var(--color-gold)' }}>
+              <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
                 No es don. No es suerte. Es MOVIMIENTO.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
                 {[
                   { v: 'HONESTIDAD', e: 'Digo No cuando no sirve' },
                   { v: 'MOVIMIENTO', e: '3 llamadas, 5 prospectos, 1 venta' },
@@ -302,16 +366,18 @@ export default function HomePage() {
                     initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="p-4 rounded-lg border-l-4 text-center"
-                    style={{ borderColor: 'var(--color-gold)', background: 'rgba(196,151,42,0.05)' }}
+                    style={{
+                      padding: '1rem',
+                      borderRadius: '0.5rem',
+                      borderLeft: '4px solid var(--color-gold)',
+                      background: 'rgba(196,151,42,0.05)',
+                      textAlign: 'center'
+                    }}
                   >
-                    <p
-                      className="font-bold text-xs sm:text-sm mb-1"
-                      style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-                    >
+                    <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: '0.75rem', color: 'var(--color-gold)', marginBottom: '0.25rem' }}>
                       {v.v}
                     </p>
-                    <p className="text-xs sm:text-sm">{v.e}</p>
+                    <p style={{ fontSize: '0.75rem', lineHeight: 1.5 }}>{v.e}</p>
                   </motion.div>
                 ))}
               </div>
@@ -320,25 +386,23 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== 3 MÓDULOS ===== */}
-      <section
-        className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12"
-        style={{ background: 'rgba(196,151,42,0.03)' }}
-      >
-        <div className="max-w-5xl mx-auto text-center">
-          <motion.div className="mb-12" {...fadeUp}>
-            <h2
-              className="text-xl sm:text-2xl md:text-3xl font-bold"
-              style={{ fontFamily: 'Cinzel, serif' }}
-            >
+      {/* ══════════════════ 3 MÓDULOS ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'rgba(196,151,42,0.03)'
+      }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto', textAlign: 'center' }}>
+          <motion.div {...fadeUp} style={{ marginBottom: '3rem' }}>
+            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700 }}>
               Tu primer cierre en 3 días
             </h2>
-            <p className="text-sm sm:text-base italic mt-3" style={{ color: 'var(--color-gold)' }}>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', fontStyle: 'italic', color: 'var(--color-gold)', marginTop: '0.75rem' }}>
               Solo se aprende haciendo
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
             {[
               { d: '1', t: 'PROSPECCIÓN', label: 'Módulo 1' },
               { d: '2', t: 'DESCUBRIMIENTO', label: 'Módulo 2' },
@@ -349,20 +413,19 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-6 sm:p-8 rounded-xl border text-center"
                 style={{
-                  borderColor: 'var(--color-gold-border)',
+                  padding: 'clamp(1.5rem,3vw,2rem)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid var(--color-gold-border)',
                   background: i === 1
                     ? 'linear-gradient(135deg, rgba(196,151,42,0.12) 0%, transparent 100%)'
-                    : 'rgba(20,20,20,0.6)'
+                    : 'rgba(20,20,20,0.6)',
+                  textAlign: 'center'
                 }}
               >
-                <p className="text-xs sm:text-sm mb-2" style={{ color: 'var(--color-gold)' }}>{s.label}</p>
-                <p className="text-4xl sm:text-5xl font-bold mb-2" style={{ color: 'var(--color-gold)' }}>{s.d}</p>
-                <h4
-                  className="font-bold text-sm sm:text-base"
-                  style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-                >
+                <p style={{ fontSize: '0.75rem', color: 'var(--color-gold)', marginBottom: '0.5rem' }}>{s.label}</p>
+                <p style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '0.5rem' }}>{s.d}</p>
+                <h4 style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-gold)' }}>
                   {s.t}
                 </h4>
               </motion.div>
@@ -371,106 +434,107 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== PRICING ===== */}
-      <section
-        className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12"
-        style={{
-          background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(196,151,42,0.04) 100%)',
-          borderTop: '1px solid rgba(196,151,42,0.2)'
-        }}
-      >
-        <div className="max-w-lg mx-auto text-center">
+      {/* ══════════════════ PRICING ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(196,151,42,0.04) 100%)',
+        borderTop: '1px solid rgba(196,151,42,0.2)'
+      }}>
+        <div style={{ maxWidth: '480px', margin: '0 auto', textAlign: 'center' }}>
           <motion.div {...fadeUp}>
-            <h2
-              className="text-xl sm:text-2xl md:text-3xl font-bold mb-3"
-              style={{ fontFamily: 'Cinzel, serif' }}
-            >
+            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
               Después de 3 días
             </h2>
-            <p className="text-sm sm:text-base mb-10" style={{ color: 'var(--color-text-muted)' }}>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '2.5rem' }}>
               Si cerraste tu primer cliente, estás listo para Elite
             </p>
 
-            <div
-              className="p-8 sm:p-10 rounded-xl border-2 flex flex-col items-center"
-              style={{
-                borderColor: 'var(--color-gold)',
-                background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)'
-              }}
-            >
-              <h3
-                className="text-xl sm:text-2xl font-bold mb-2"
-                style={{ fontFamily: 'Cinzel, serif' }}
-              >
+            <div style={{
+              padding: 'clamp(2rem,5vw,2.5rem)',
+              borderRadius: '0.875rem',
+              border: '2px solid var(--color-gold)',
+              background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+              <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', fontWeight: 700, marginBottom: '0.5rem' }}>
                 ASESOR ELITE
               </h3>
-              <p className="text-base sm:text-lg font-bold mb-8" style={{ color: 'var(--color-gold)' }}>
+              <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '2rem' }}>
                 30 días de formación
               </p>
 
-              <div className="mb-8">
+              <div style={{ marginBottom: '2rem' }}>
                 <Image
                   src="/assets/client1/LOGO_NEUROVENTAS.png"
                   alt="Certificado Neuroventas"
-                  width={110}
-                  height={110}
+                  width={100}
+                  height={100}
                   style={{ objectFit: 'contain' }}
                 />
               </div>
 
-              <p className="text-sm sm:text-base mb-8 leading-relaxed">
+              <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', lineHeight: 1.7, marginBottom: '2rem' }}>
                 Certificación Internacional en Neuroventas + 15 módulos + Red de asesores
               </p>
 
-              <div
-                className="w-full mb-8 py-6 border-y text-center"
-                style={{ borderColor: 'var(--color-gold-border)' }}
-              >
-                <p
-                  className="text-3xl sm:text-4xl font-bold"
-                  style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-                >
+              <div style={{ width: '100%', borderTop: '1px solid var(--color-gold-border)', borderBottom: '1px solid var(--color-gold-border)', padding: '1.5rem 0', marginBottom: '2rem' }}>
+                <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
                   $150 USD
                 </p>
-                <p className="text-xs sm:text-sm mt-2" style={{ color: 'var(--color-text-muted)' }}>
-                  Precio lanzamiento
-                </p>
-                <p className="text-base sm:text-lg font-semibold mt-3">$20 USD/mes</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>Precio lanzamiento</p>
+                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>$20 USD/mes</p>
               </div>
 
               <button
                 onClick={() => router.push('/parte-2')}
-                className="w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-xl text-base sm:text-lg mb-4 transition-all hover:opacity-90 active:scale-95"
-                style={{ boxShadow: '0 8px 28px rgba(196,151,42,0.45)', letterSpacing: '0.07em' }}
+                style={{
+                  width: '100%',
+                  padding: '1rem 2rem',
+                  background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                  color: '#000',
+                  fontWeight: 700,
+                  borderRadius: '0.75rem',
+                  fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                  letterSpacing: '0.07em',
+                  boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
+                  cursor: 'pointer',
+                  marginBottom: '1rem'
+                }}
               >
                 ACCEDER A PARTE 2
               </button>
-              <p className="text-sm" style={{ color: 'var(--color-gold)' }}>
-                Gana $2000+ en 30 días
-              </p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Gana $2000+ en 30 días</p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== FAQ ===== */}
-      <section className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-3xl mx-auto">
+      {/* ══════════════════ FAQ ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
           <motion.h2
-            className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-12"
-            style={{ fontFamily: 'Cinzel, serif' }}
             {...fadeUp}
+            style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+              fontWeight: 700,
+              textAlign: 'center',
+              marginBottom: '3rem'
+            }}
           >
             Preguntas frecuentes
           </motion.h2>
 
-          <div className="space-y-3">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
               { q: '¿En 3 días puedo cerrar una venta?', a: 'Si sigues los pasos: Sí.' },
               { q: '¿Necesito experiencia previa?', a: 'No. Solo ganas, fe y disposición.' },
-              { q: '¿Cuánto puedo ganar?', a: '$100-500 por cliente. Tu objetivo es aprender.' },
+              { q: '¿Cuánto puedo ganar?', a: '$100–500 por cliente. Tu objetivo es aprender.' },
               { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí. En las noches. En Elite necesitas más dedicación.' },
-              { q: '¿Qué pasa si no cierro?', a: 'Si hiciste todo, el cliente dirá sí en 5-7 días.' },
+              { q: '¿Qué pasa si no cierro?', a: 'Si hiciste todo, el cliente dirá sí en 5–7 días.' },
               { q: '¿Qué horarios tienen las IAs?', a: 'Las 3 IAs atienden 24/7.' }
             ].map((f, i) => (
               <motion.div
@@ -478,31 +542,39 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="border rounded-xl overflow-hidden"
-                style={{ borderColor: 'var(--color-gold-border)' }}
+                style={{ border: '1px solid var(--color-gold-border)', borderRadius: '0.75rem', overflow: 'hidden' }}
               >
                 <button
                   onClick={() => setExpandedFaq(expandedFaq === i ? null : i)}
-                  className="w-full px-5 py-4 text-left font-semibold flex justify-between items-center text-sm sm:text-base transition-all"
-                  style={{ background: expandedFaq === i ? 'rgba(196,151,42,0.1)' : 'transparent' }}
+                  style={{
+                    width: '100%',
+                    padding: '1rem 1.25rem',
+                    textAlign: 'left',
+                    fontWeight: 600,
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    fontSize: 'clamp(0.85rem, 1.8vw, 1rem)',
+                    background: expandedFaq === i ? 'rgba(196,151,42,0.1)' : 'transparent',
+                    cursor: 'pointer',
+                    color: 'var(--color-text)'
+                  }}
                 >
                   <span>{f.q}</span>
-                  <span
-                    className="text-xl ml-4 flex-shrink-0"
-                    style={{ color: 'var(--color-gold)' }}
-                  >
+                  <span style={{ color: 'var(--color-gold)', fontSize: '1.25rem', flexShrink: 0, marginLeft: '1rem' }}>
                     {expandedFaq === i ? '−' : '+'}
                   </span>
                 </button>
                 {expandedFaq === i && (
-                  <div
-                    className="px-5 py-4 border-t text-sm sm:text-base leading-relaxed"
-                    style={{
-                      borderColor: 'var(--color-gold-border)',
-                      background: 'rgba(196,151,42,0.05)',
-                      color: 'var(--color-text-muted)'
-                    }}
-                  >
+                  <div style={{
+                    padding: '1rem 1.25rem',
+                    borderTop: '1px solid var(--color-gold-border)',
+                    background: 'rgba(196,151,42,0.05)',
+                    color: 'var(--color-text-muted)',
+                    fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
+                    lineHeight: 1.7,
+                    textAlign: 'left'
+                  }}>
                     {f.a}
                   </div>
                 )}
@@ -512,56 +584,51 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== CIERRE YAMI ===== */}
-      <section
-        className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12 text-center"
-        style={{ background: 'rgba(196,151,42,0.03)' }}
-      >
-        <div className="max-w-lg mx-auto">
+      {/* ══════════════════ CIERRE ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'rgba(196,151,42,0.03)',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '480px', margin: '0 auto' }}>
           <motion.div {...fadeUp}>
-            <div className="flex justify-center mb-8">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
               <Image
-                src="/assets/client1/LOGO_YAMI_MANSILLA.jpeg"
+                src="/assets/client1/YAMI_MANSILLA.jpeg"
                 alt="Yami Mansilla"
-                width={200}
-                height={200}
-                className="rounded-xl"
-                style={{
-                  objectFit: 'contain',
-                  filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))'
-                }}
+                width={180}
+                height={180}
+                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
               />
             </div>
-            <p
-              className="text-base sm:text-lg lg:text-xl font-bold mb-4 italic"
-              style={{ fontFamily: 'Georgia, serif', color: 'var(--color-gold)' }}
-            >
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
               "Todo lo que toco lo transformo en oro."
             </p>
-            <p className="font-bold text-sm sm:text-base" style={{ fontFamily: 'Cinzel, serif' }}>
+            <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
               Yami Mansilla
             </p>
-            <p className="text-xs sm:text-sm mt-2" style={{ color: 'var(--color-text-muted)' }}>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
               CEO & Fundadora | Escuela de Asesores
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* ===== FOOTER ===== */}
-      <footer
-        className="w-full py-8 px-4 sm:px-8 border-t text-center"
-        style={{ borderColor: 'var(--color-gold-border)', background: 'rgba(196,151,42,0.03)' }}
-      >
-        <div
-          className="flex flex-wrap justify-center gap-6 text-xs mb-4"
-          style={{ color: 'var(--color-text-muted)' }}
-        >
-          <Link href="#" className="hover:text-yellow-400 transition">Términos</Link>
-          <Link href="#" className="hover:text-yellow-400 transition">Privacidad</Link>
-          <Link href="#" className="hover:text-yellow-400 transition">Contacto</Link>
+      {/* ══════════════════ FOOTER ══════════════════ */}
+      <footer style={{
+        width: '100%',
+        padding: '2rem clamp(1rem,5vw,3rem)',
+        borderTop: '1px solid var(--color-gold-border)',
+        background: 'rgba(196,151,42,0.03)',
+        textAlign: 'center'
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          {['Términos', 'Privacidad', 'Contacto'].map((t) => (
+            <Link key={t} href="#" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{t}</Link>
+          ))}
         </div>
-        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           © 2026 Escuela de Asesores | Formamos Líderes, No Vendedores
         </p>
       </footer>

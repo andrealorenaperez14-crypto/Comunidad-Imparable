@@ -32,84 +32,113 @@ export default function Parte2() {
   ]
 
   return (
-    <div className="w-full" style={{ background: 'var(--color-bg)', color: 'var(--color-text)' }}>
+    <div style={{
+      width: '100%',
+      background: 'var(--color-bg)',
+      color: 'var(--color-text)',
+      textAlign: 'center',
+      overflowX: 'hidden'
+    }}>
 
-      {/* ===== HERO ===== */}
-      <section className="min-h-screen w-full flex items-center justify-center px-4 sm:px-8 lg:px-12 py-20 relative">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.08) 0%, transparent 70%)' }}
-        />
+      {/* ══════════════════ HERO ══════════════════ */}
+      <section style={{
+        minHeight: '100svh',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
+        position: 'relative'
+      }}>
+        <div style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none',
+          background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.09) 0%, transparent 70%)'
+        }} />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full max-w-2xl mx-auto text-center z-10"
+          style={{ width: '100%', maxWidth: '640px', margin: '0 auto', position: 'relative', zIndex: 10 }}
         >
           <motion.h1
-            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-5 leading-snug"
-            style={{ fontFamily: 'Cinzel, serif' }}
             {...fadeUp}
+            style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
+              fontWeight: 700,
+              lineHeight: 1.25,
+              marginBottom: '1.25rem'
+            }}
           >
             Asesor Elite Internacional
           </motion.h1>
 
           <motion.p
-            className="text-sm sm:text-base lg:text-lg mb-8 leading-relaxed"
-            style={{ color: 'var(--color-gold)' }}
             {...fadeUp}
+            style={{
+              fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
+              color: 'var(--color-gold)',
+              lineHeight: 1.7,
+              marginBottom: '2rem'
+            }}
           >
             30 días de formación. 15 módulos especializados.
-            <br className="hidden sm:block" />
-            Certificación Internacional en Neuroventas.
+            <br />Certificación Internacional en Neuroventas.
           </motion.p>
 
-          <motion.div className="flex flex-col items-center gap-5 mb-8" {...fadeUp}>
+          <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
             <div>
-              <p
-                className="text-2xl sm:text-3xl font-bold"
-                style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-              >
+              <p style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
                 En 30 días ganarás $2000+
               </p>
-              <p className="text-xs sm:text-sm mt-2" style={{ color: 'var(--color-text-muted)' }}>
+              <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
                 O tu dinero de vuelta garantizado
               </p>
             </div>
 
             <button
               onClick={() => router.push('/register')}
-              className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-xl text-base sm:text-lg transition-all hover:opacity-90 active:scale-95"
-              style={{ boxShadow: '0 8px 28px rgba(196,151,42,0.45)', letterSpacing: '0.07em' }}
+              style={{
+                padding: '1rem 2.5rem',
+                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                color: '#000',
+                fontWeight: 700,
+                borderRadius: '0.75rem',
+                fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                letterSpacing: '0.07em',
+                boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: '320px'
+              }}
             >
               ENTRA AHORA
             </button>
           </motion.div>
 
-          <p className="text-xs sm:text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
             Acceso inmediato · Soporte 24/7 · Certificado internacional
           </p>
         </motion.div>
       </section>
 
-      {/* ===== 15 MÓDULOS ===== */}
-      <section className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
+      {/* ══════════════════ 15 MÓDULOS ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+        <div style={{ maxWidth: '960px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
             <motion.h2
-              className="text-xl sm:text-2xl md:text-3xl font-bold"
-              style={{ fontFamily: 'Cinzel, serif' }}
               {...fadeUp}
+              style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700 }}
             >
               15 Módulos Especializados
             </motion.h2>
-            <p className="text-xs sm:text-sm mt-3" style={{ color: 'var(--color-text-muted)' }}>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.75rem' }}>
               Certificación Internacional en Neuroventas Aplicadas al Consumidor de Salud
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
             {modules.map((mod, i) => (
               <motion.div
                 key={i}
@@ -118,31 +147,27 @@ export default function Parte2() {
                 whileHover={{ y: -3 }}
                 viewport={{ once: true }}
                 onClick={() => setExpandedModule(expandedModule === i ? null : i)}
-                className="p-5 rounded-xl border cursor-pointer transition-all"
                 style={{
-                  borderColor: 'var(--color-gold-border)',
-                  background: expandedModule === i ? 'rgba(196,151,42,0.1)' : 'rgba(20,20,20,0.8)'
+                  padding: '1.125rem 1.25rem',
+                  borderRadius: '0.75rem',
+                  border: '1px solid var(--color-gold-border)',
+                  background: expandedModule === i ? 'rgba(196,151,42,0.1)' : 'rgba(20,20,20,0.8)',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  transition: 'all 0.2s'
                 }}
               >
-                <div className="flex items-baseline gap-3 mb-1">
-                  <p
-                    className="font-bold text-xs sm:text-sm flex-shrink-0"
-                    style={{ color: 'var(--color-gold)' }}
-                  >
-                    {mod.num}
-                  </p>
-                  <h3
-                    className="font-bold text-sm sm:text-base leading-snug"
-                    style={{ color: 'var(--color-gold)' }}
-                  >
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginBottom: '0.25rem' }}>
+                  <p style={{ fontWeight: 700, fontSize: '0.8rem', color: 'var(--color-gold)', flexShrink: 0 }}>{mod.num}</p>
+                  <h3 style={{ fontWeight: 700, fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)', color: 'var(--color-gold)', lineHeight: 1.35 }}>
                     {mod.title}
                   </h3>
                 </div>
                 {expandedModule === i && (
-                  <ul className="text-xs sm:text-sm mt-3 space-y-1.5 pl-7" style={{ color: 'var(--color-text-muted)' }}>
+                  <ul style={{ marginTop: '0.75rem', paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
                     {mod.topics.map((topic, j) => (
-                      <li key={j} className="flex gap-2">
-                        <span style={{ color: 'var(--color-gold)' }}>·</span> {topic}
+                      <li key={j} style={{ display: 'flex', gap: '0.5rem', fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
+                        <span style={{ color: 'var(--color-gold)', flexShrink: 0 }}>·</span> {topic}
                       </li>
                     ))}
                   </ul>
@@ -153,25 +178,25 @@ export default function Parte2() {
         </div>
       </section>
 
-      {/* ===== IAs ===== */}
-      <section
-        className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12"
-        style={{ background: 'rgba(196,151,42,0.03)' }}
-      >
-        <div className="max-w-4xl mx-auto text-center">
+      {/* ══════════════════ IAs ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'rgba(196,151,42,0.03)'
+      }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
           <motion.h2
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-12"
-            style={{ fontFamily: 'Cinzel, serif' }}
             {...fadeUp}
+            style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '3rem' }}
           >
             Acompañamiento Inteligente
           </motion.h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
             {[
               {
                 title: 'IA Coach',
-                desc: 'Mentoría personalizada. Responde dudas 24/7. Guía paso a paso. Acelera tu aprendizaje en cada módulo.',
+                desc: 'Mentoría personalizada. Responde dudas 24/7. Guía paso a paso. Acelera tu aprendizaje.',
                 features: ['Respuestas inmediatas', 'Tutoría personalizada', 'Clarificación de conceptos', 'Motivación diaria']
               },
               {
@@ -185,21 +210,23 @@ export default function Parte2() {
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="p-6 sm:p-8 rounded-xl border text-center"
-                style={{ borderColor: 'var(--color-gold-border)', background: 'rgba(20,20,20,0.8)' }}
+                style={{
+                  padding: 'clamp(1.5rem,3vw,2rem)',
+                  borderRadius: '0.75rem',
+                  border: '1px solid var(--color-gold-border)',
+                  background: 'rgba(20,20,20,0.8)',
+                  textAlign: 'center'
+                }}
               >
-                <h3
-                  className="text-lg sm:text-xl font-bold mb-3"
-                  style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-                >
+                <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
                   {ia.title}
                 </h3>
-                <p className="text-xs sm:text-sm mb-5 leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
+                <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
                   {ia.desc}
                 </p>
-                <ul className="text-xs sm:text-sm space-y-2" style={{ color: 'var(--color-text-muted)' }}>
+                <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {ia.features.map((f, j) => (
-                    <li key={j} className="flex gap-2 justify-center">
+                    <li key={j} style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
                       <span style={{ color: 'var(--color-gold)' }}>+</span> {f}
                     </li>
                   ))}
@@ -210,59 +237,70 @@ export default function Parte2() {
         </div>
       </section>
 
-      {/* ===== PRICING ===== */}
-      <section className="w-full py-20 sm:py-24 lg:py-32 px-4 sm:px-8 lg:px-12">
-        <div className="max-w-sm sm:max-w-md mx-auto text-center">
+      {/* ══════════════════ PRICING ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+        <div style={{ maxWidth: '440px', margin: '0 auto', textAlign: 'center' }}>
           <motion.h2
-            className="text-xl sm:text-2xl md:text-3xl font-bold mb-10"
-            style={{ fontFamily: 'Cinzel, serif' }}
             {...fadeUp}
+            style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '2.5rem' }}
           >
             Tu Inversión
           </motion.h2>
 
-          <div
-            className="p-8 sm:p-10 rounded-xl border-2"
-            style={{
-              borderColor: 'var(--color-gold)',
-              background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)'
-            }}
-          >
-            <p
-              className="text-4xl sm:text-5xl font-bold mb-3"
-              style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}
-            >
+          <div style={{
+            padding: 'clamp(2rem,5vw,2.5rem)',
+            borderRadius: '0.875rem',
+            border: '2px solid var(--color-gold)',
+            background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)'
+          }}>
+            <p style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.5rem' }}>
               $150 USD
             </p>
-            <p className="text-xs sm:text-sm mb-3" style={{ color: 'var(--color-text-muted)' }}>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
               15 módulos + IA Coach + IA Mentalidad por 30 días
             </p>
-            <p className="text-sm sm:text-base font-bold mb-8">Luego $20/mes (opcional)</p>
+            <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, marginBottom: '2rem' }}>
+              Luego $20/mes (opcional)
+            </p>
 
             <button
               onClick={() => router.push('/register')}
-              className="w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-xl text-base sm:text-lg mb-5 transition-all hover:opacity-90 active:scale-95"
-              style={{ boxShadow: '0 8px 28px rgba(196,151,42,0.45)', letterSpacing: '0.07em' }}
+              style={{
+                width: '100%',
+                padding: '1rem 2rem',
+                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                color: '#000',
+                fontWeight: 700,
+                borderRadius: '0.75rem',
+                fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
+                letterSpacing: '0.07em',
+                boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
+                cursor: 'pointer',
+                marginBottom: '1.25rem'
+              }}
             >
               CONFIRMAR ACCESO
             </button>
 
-            <p className="text-xs sm:text-sm" style={{ color: 'var(--color-gold)' }}>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-gold)' }}>
               Garantía 30 días: No satisfecho, devolvemos 100%
             </p>
           </div>
         </div>
       </section>
 
-      {/* ===== FOOTER ===== */}
-      <footer
-        className="w-full py-8 px-4 sm:px-8 border-t text-center"
-        style={{ borderColor: 'var(--color-gold-border)', background: 'rgba(196,151,42,0.03)' }}
-      >
-        <p className="text-xs mb-2" style={{ color: 'var(--color-text-muted)' }}>
+      {/* ══════════════════ FOOTER ══════════════════ */}
+      <footer style={{
+        width: '100%',
+        padding: '2rem clamp(1rem,5vw,3rem)',
+        borderTop: '1px solid var(--color-gold-border)',
+        background: 'rgba(196,151,42,0.03)',
+        textAlign: 'center'
+      }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
           Certificación Internacional en Neuroventas
         </p>
-        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Escuela de Asesores · Yami Mansilla
         </p>
       </footer>
