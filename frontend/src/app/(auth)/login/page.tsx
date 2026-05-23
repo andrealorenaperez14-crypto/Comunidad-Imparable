@@ -30,7 +30,8 @@ export default function LoginPage() {
     try {
       setError('')
       const result = await login(data.email, data.password)
-      router.push(result.user.role === 'ADMIN' ? '/admin' : '/dashboard')
+      const role = result.user.role
+      router.push(role === 'ADMIN' || role === 'CLIENT' ? '/admin' : '/dashboard')
     } catch (err: any) {
       setError(err.response?.data?.error || 'Error al iniciar sesión. Verifica tus credenciales.')
     }
