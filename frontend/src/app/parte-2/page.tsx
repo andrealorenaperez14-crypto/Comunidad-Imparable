@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
@@ -61,6 +62,16 @@ export default function Parte2() {
           transition={{ duration: 0.8 }}
           style={{ width: '100%', maxWidth: '640px', margin: '0 auto', position: 'relative', zIndex: 10 }}
         >
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+            <Image
+              src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.png"
+              alt="Escuela de Asesores"
+              width={220}
+              height={220}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
+
           <motion.h1
             {...fadeUp}
             style={{
@@ -91,9 +102,6 @@ export default function Parte2() {
             <div>
               <p style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
                 En 30 días ganarás $2000+
-              </p>
-              <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
-                O tu dinero de vuelta garantizado
               </p>
             </div>
 
@@ -251,8 +259,21 @@ export default function Parte2() {
             padding: 'clamp(2rem,5vw,2.5rem)',
             borderRadius: '0.875rem',
             border: '2px solid var(--color-gold)',
-            background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)'
+            background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
           }}>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <Image
+                src="/assets/client1/LOGO_NEUROVENTAS.png"
+                alt="Certificado Neuroventas"
+                width={100}
+                height={100}
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+
             <p style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.5rem' }}>
               $150 USD
             </p>
@@ -282,10 +303,45 @@ export default function Parte2() {
               CONFIRMAR ACCESO
             </button>
 
-            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-gold)' }}>
-              Garantía 30 días: No satisfecho, devolvemos 100%
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
+              Podés cancelar tu membresía en cualquier momento
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════════ CIERRE YAMI ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'rgba(196,151,42,0.03)',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '480px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+              <Image
+                src="/assets/client1/YAMI_MANSILLA.jpeg"
+                alt="Yami Mansilla"
+                width={260}
+                height={260}
+                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
+              />
+            </div>
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
+              "Todo lo que toco lo transformo en oro."
+            </p>
+            <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
+              Yami Mansilla
+            </p>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
+              CEO & Fundadora | Escuela de Asesores
+            </p>
+          </motion.div>
         </div>
       </section>
 
@@ -300,8 +356,11 @@ export default function Parte2() {
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
           Certificación Internacional en Neuroventas
         </p>
-        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
           Escuela de Asesores · Yami Mansilla
+        </p>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+          Desarrollado por: NUCLEO ESTRATEGICO IA
         </p>
       </footer>
 

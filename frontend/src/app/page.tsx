@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 
+
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
@@ -67,6 +68,16 @@ export default function HomePage() {
           transition={{ duration: 0.8 }}
           style={{ width: '100%', maxWidth: '820px', margin: '0 auto', position: 'relative', zIndex: 10 }}
         >
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+            <Image
+              src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.png"
+              alt="Escuela de Asesores"
+              width={220}
+              height={220}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
+
           <motion.div {...fadeUp}>
             <p style={{
               fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)',
@@ -597,8 +608,8 @@ export default function HomePage() {
               <Image
                 src="/assets/client1/YAMI_MANSILLA.jpeg"
                 alt="Yami Mansilla"
-                width={180}
-                height={180}
+                width={260}
+                height={260}
                 style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
               />
             </div>
@@ -628,8 +639,11 @@ export default function HomePage() {
             <Link key={t} href="#" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{t}</Link>
           ))}
         </div>
-        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
           © 2026 Escuela de Asesores | Formamos Líderes, No Vendedores
+        </p>
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+          Desarrollado por: NUCLEO ESTRATEGICO IA
         </p>
       </footer>
 
