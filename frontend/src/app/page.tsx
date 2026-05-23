@@ -1,195 +1,195 @@
 'use client'
-import Link from 'next/link'
+import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { BookOpen, Award, BarChart2, ChevronRight, Check, Brain, Target, TrendingUp } from 'lucide-react'
-import { HeroParticles } from '@/components/HeroParticles'
-
-const GoldDivider = () => (
-  <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C4972A] to-transparent opacity-30" />
-)
-
-const agents = [
-  {
-    icon: <Brain className="w-5 h-5" strokeWidth={1.5} />,
-    name: 'IA Coach',
-    description: 'Acompaña tu aprendizaje 24/7 con guía personalizada en cada paso del proceso.',
-  },
-  {
-    icon: <Target className="w-5 h-5" strokeWidth={1.5} />,
-    name: 'IA Mentalidad',
-    description: 'Trabaja tus bloqueos y miedos para que nada detenga tu crecimiento.',
-  },
-  {
-    icon: <TrendingUp className="w-5 h-5" strokeWidth={1.5} />,
-    name: 'IA Consultiva',
-    description: 'Te asiste en cada venta y cierre con estrategias probadas en tiempo real.',
-  }
-]
-
-const features = [
-  { icon: <BookOpen className="w-5 h-5" strokeWidth={1.5} />, label: 'Acceso inmediato a los 3 agentes IA desde día 1' },
-  { icon: <Award className="w-5 h-5" strokeWidth={1.5} />, label: 'Certificación Neuroventas + B.I.I.A.' },
-  { icon: <BarChart2 className="w-5 h-5" strokeWidth={1.5} />, label: 'Métricas de rendimiento semanales' },
-  { icon: <Check className="w-5 h-5" strokeWidth={1.5} />, label: '5 días de acceso gratuito completo' },
-  { icon: <Check className="w-5 h-5" strokeWidth={1.5} />, label: 'Ranking de élite actualizado a diario' },
-  { icon: <Check className="w-5 h-5" strokeWidth={1.5} />, label: 'Sin apps — funciona en cualquier dispositivo' },
-]
 
 const fadeUp = {
-  initial: { opacity: 1, y: 16 },
+  initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] as const }
+  transition: { duration: 0.5 }
 }
 
-const card3DHover = {
-  whileHover: { scale: 1.02, rotateX: 2, rotateY: 2, y: -4 },
-  transition: { duration: 0.3 },
-  style: { transformStyle: 'preserve-3d' as const, perspective: 1000 }
-}
+const CoachIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="6" r="4" stroke="currentColor" strokeWidth="1.5"/>
+    <path d="M12 11v8M8 14h8M6 19h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+)
 
-export default function LandingPage() {
+const MentalidadIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" fill="currentColor"/>
+  </svg>
+)
+
+const ConsultivaIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-8 h-8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="currentColor"/>
+  </svg>
+)
+
+export default function HomePage() {
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+  const [selectedPath, setSelectedPath] = useState<'junior' | 'elite' | null>(null)
+  const router = useRouter()
+
   return (
-    <div className="min-h-screen" style={{ background: 'var(--color-bg)', color: 'var(--color-text)' }}>
-
-      {/* Nav */}
-      <nav style={{ borderBottom: '1px solid var(--color-separator)' }}>
-        <div className="container flex items-center justify-between py-4 gap-4">
-          {/* Logo: icono en mobile, logo completo en md+ */}
-          <Image
-            src="/assets/client1/LOGO_SOLO_ESCUELA_DE_ASESORES.png"
-            alt="Escuela de Asesores"
-            width={40}
-            height={40}
-            className="h-10 w-10 object-contain flex-shrink-0 md:hidden"
-          />
-          <Image
-            src="/assets/client1/LOGO_y_nombre_ESCUELA_DE_ASESORES.png"
-            alt="Escuela de Asesores"
-            width={180}
-            height={40}
-            className="hidden md:block h-10 w-auto object-contain flex-shrink-0"
-          />
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <Link
-              href="/login"
-              className="text-sm transition-colors hover:opacity-80 hidden sm:block"
-              style={{ color: 'var(--color-text-muted)', minHeight: 'unset', minWidth: 'unset' }}
-            >
-              Iniciar sesión
-            </Link>
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }}>
-              <Link href="/register" className="btn-primary text-sm whitespace-nowrap" style={{ marginTop: 0, marginBottom: 0 }}>
-                Comenzar gratis
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <section className="section text-center" style={{ position: 'relative' }}>
-        <HeroParticles />
-        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
+    <div className="w-full mx-auto" style={{ background: 'var(--color-bg)', color: 'var(--color-text)' }}>
+      
+      {/* ===== PATH SELECTOR - ARRIBA DE TODO ===== */}
+      <section className="min-h-screen w-full flex items-center justify-center px-4 sm:px-6 py-20 relative">
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{ background: 'radial-gradient(circle at center, rgba(196,151,42,0.1) 0%, transparent 70%)' }}
+        />
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }} 
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl w-full text-center z-10"
+        >
           <motion.div {...fadeUp}>
-            {/* Logo */}
-            <div className="flex justify-center w-full mb-4">
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <Image
-                  src="/assets/client1/LOGO_SOLO_ESCUELA_DE_ASESORES.png"
-                  alt="Escuela de Asesores"
-                  width={140}
-                  height={140}
-                  className="mx-auto block"
-                  style={{ filter: 'drop-shadow(0 0 20px rgba(196,151,42,0.4))' }}
-                />
-              </motion.div>
-            </div>
+            <p className="text-sm sm:text-base mb-8 text-center" style={{ color: 'var(--color-text-muted)' }}>
+              Elige tu camino
+            </p>
+            <h1 
+              className="text-2xl sm:text-3xl md:text-3xl font-bold mb-12 text-center" 
+              style={{ fontFamily: 'Cinzel, serif' }}
+            >
+              Vas a seguir siendo un Vendedor Junior o das el salto a Asesor de Elite
+            </h1>
+          </motion.div>
 
-            <span
-              className="inline-block text-xs font-medium px-4 py-2 rounded-full"
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {/* BOTON 1: RETO 3 DIAS */}
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => setSelectedPath('junior')}
+              className="p-8 rounded-lg border-2 transition-all text-center"
               style={{
-                color: 'var(--color-gold)',
-                border: '1px solid var(--color-gold-border)',
-                background: 'rgba(196,151,42,0.08)',
-                letterSpacing: '0.15em'
+                borderColor: selectedPath === 'junior' ? 'var(--color-gold)' : 'var(--color-gold-border)',
+                background: selectedPath === 'junior' 
+                  ? 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(0,0,0,0.4) 100%)' 
+                  : 'rgba(20,20,20,0.8)',
+                boxShadow: selectedPath === 'junior' ? '0 0 30px rgba(196,151,42,0.3)' : 'none'
               }}
             >
-              ROMPE TODOS LOS ESQUEMAS
-            </span>
+              <h2 className="text-lg sm:text-xl font-bold mb-4 text-center" style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                Reto 3 Días
+              </h2>
+              <p className="text-xs sm:text-sm leading-relaxed text-center mb-4">
+                Asesor Junior: Vende copiando y pegando asistido por la IA
+              </p>
+              <div className="pt-4 border-t" style={{ borderColor: 'var(--color-gold-border)' }}>
+                <p className="text-2xl font-bold text-center" style={{ color: 'var(--color-gold)' }}>
+                  GRATIS
+                </p>
+              </div>
+            </motion.button>
 
-            <h1 className="text-4xl md:text-6xl font-bold">
-              Escuela de Asesores
-            </h1>
+            {/* BOTON 2: 30 DIAS ELITE */}
+            <motion.button
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => setSelectedPath('elite')}
+              className="p-8 rounded-lg border-2 transition-all text-center"
+              style={{
+                borderColor: selectedPath === 'elite' ? 'var(--color-gold)' : 'var(--color-gold-border)',
+                background: selectedPath === 'elite' 
+                  ? 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(0,0,0,0.4) 100%)' 
+                  : 'rgba(20,20,20,0.8)',
+                boxShadow: selectedPath === 'elite' ? '0 0 30px rgba(196,151,42,0.3)' : 'none'
+              }}
+            >
+              <h2 className="text-lg sm:text-xl font-bold mb-4 text-center" style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                En 30 Días
+              </h2>
+              <p className="text-xs sm:text-sm leading-relaxed text-center mb-4">
+                Conviértete en Asesor de Elite con aval internacional
+              </p>
+              <div className="pt-4 border-t" style={{ borderColor: 'var(--color-gold-border)' }}>
+                <p className="text-2xl font-bold text-center" style={{ color: 'var(--color-gold)' }}>
+                  $150 USD
+                </p>
+              </div>
+            </motion.button>
+          </div>
 
-            <p className="text-xl" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
-              Formamos Líderes, No Vendedores.
-            </p>
-            <p className="text-lg" style={{ color: 'var(--color-text-muted)' }}>
-              Transformamos Vidas, No Solo Negocios.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }}>
-                <Link href="/register" className="btn-primary gap-2">
-                  Comenzar — 5 días gratis
-                  <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-                </Link>
-              </motion.div>
-              <Link
-                href="/login"
-                className="flex items-center gap-1 text-sm transition-colors hover:opacity-80"
-                style={{ color: 'var(--color-text-muted)' }}
+          {selectedPath && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center"
+            >
+              <button
+                onClick={() => router.push(selectedPath === 'junior' ? '/register' : '/parte-2')}
+                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-lg hover:shadow-lg transition-all text-base sm:text-lg"
+                style={{ boxShadow: '0 10px 30px rgba(196,151,42,0.3)', letterSpacing: '0.05em' }}
               >
-                Ya tengo cuenta
-                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-              </Link>
-            </div>
-          </motion.div>
-        </div>
+                {selectedPath === 'junior' ? 'EMPEZAR RETO GRATIS' : 'ACCEDER A PARTE 2'}
+              </button>
+            </motion.div>
+          )}
+        </motion.div>
       </section>
 
-      <GoldDivider />
-
-      {/* Agentes IA */}
-      <section className="section section-even">
-        <div className="container">
-          <motion.div {...fadeUp} className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold">Nunca estás solo/a</h2>
-            <p className="text-lg" style={{ color: 'var(--color-text-muted)', lineHeight: '1.7', maxWidth: '42rem', margin: '0 auto 2rem' }}>
-              La primera plataforma donde todo tu proceso — aprender, crecer y vender — es asistido por inteligencia artificial las 24 horas.
+      {/* ===== 3 IAs ===== */}
+      <section 
+        className="w-full py-24 sm:py-32 px-4 sm:px-6"
+        style={{ 
+          background: 'linear-gradient(135deg, rgba(196,151,42,0.05) 0%, transparent 100%)',
+          borderTop: '1px solid rgba(196,151,42,0.2)',
+          borderBottom: '1px solid rgba(196,151,42,0.2)'
+        }}
+      >
+        <div className="max-w-4xl mx-auto">
+          <motion.div className="mb-16 text-center" {...fadeUp}>
+            <h2 className="text-2xl sm:text-2xl md:text-2xl font-bold mb-4 text-center" style={{ fontFamily: 'Cinzel, serif' }}>
+              Nunca estás solo
+            </h2>
+            <p className="text-xs sm:text-sm text-center" style={{ color: 'var(--color-text-muted)' }}>
+              Los 3 agentes IA que transformarán tu forma de trabajar y vender
             </p>
           </motion.div>
 
-          <div className="card-grid card-grid-3">
-            {agents.map((agent, i) => (
-              <motion.div
-                key={agent.name}
-                initial={{ opacity: 1, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2, y: -4 }}
-                style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
-                className="card"
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { icon: <CoachIcon />, name: 'IA Coach', desc: 'Mentoría personalizada 24/7 en cada paso' },
+              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'Transforma tus creencias limitantes' },
+              { icon: <ConsultivaIcon />, name: 'IA Consultiva', desc: '2000+ casos reales. Estrategias probadas' }
+            ].map((a, i) => (
+              <motion.div 
+                key={a.name}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -6 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-lg border text-center"
+                style={{ 
+                  borderColor: 'var(--color-gold-border)',
+                  background: 'rgba(20,20,20,0.8)'
+                }}
               >
-                <div
-                  className="w-10 h-10 rounded flex items-center justify-center"
+                <div 
+                  className="w-12 h-12 mx-auto mb-4 flex items-center justify-center rounded-lg"
                   style={{
-                    background: 'rgba(196,151,42,0.1)',
-                    color: 'var(--color-gold)',
-                    border: '1px solid var(--color-gold-border)'
+                    background: 'rgba(196,151,42,0.15)',
+                    color: 'var(--color-gold)'
                   }}
                 >
-                  {agent.icon}
+                  {a.icon}
                 </div>
-                <h3 className="text-lg font-semibold" style={{ color: 'var(--color-gold)' }}>
-                  {agent.name}
+                <h3 className="text-sm font-bold mb-2 text-center" style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                  {a.name}
                 </h3>
-                <p style={{ color: 'var(--color-text-muted)', lineHeight: '1.7' }}>
-                  {agent.description}
+                <p className="text-xs leading-relaxed text-center" style={{ color: 'var(--color-text-muted)' }}>
+                  {a.desc}
                 </p>
               </motion.div>
             ))}
@@ -197,97 +197,343 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <GoldDivider />
+      {/* ===== STATS ===== */}
+      <section className="w-full py-24 sm:py-32 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.h2 
+            className="text-2xl sm:text-2xl font-bold text-center mb-16"
+            style={{ fontFamily: 'Cinzel, serif' }}
+            {...fadeUp}
+          >
+            De 0 a más de 10.000 clientes
+          </motion.h2>
 
-      {/* Beneficios */}
-      <section className="section">
-        <div className="container text-center">
-          <motion.div {...fadeUp}>
-            <h2 className="text-3xl md:text-4xl font-bold">
-              Por qué elegir Escuela de Asesores
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              { num: '+10,000', text: 'Clientes' },
+              { num: '13', text: 'Años' },
+              { num: '1000+', text: 'Asesores Formados' },
+              { num: '$1500+', text: 'Dólares' }
+            ].map((s, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-4 sm:p-6 rounded-lg border text-center"
+                style={{ 
+                  borderColor: 'var(--color-gold-border)',
+                  background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, transparent 100%)'
+                }}
+              >
+                <p className="text-2xl sm:text-3xl font-bold text-center" style={{ color: 'var(--color-gold)' }}>
+                  {s.num}
+                </p>
+                <p className="text-xs sm:text-sm mt-2 text-center" style={{ color: 'var(--color-text-muted)' }}>
+                  {s.text}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== YAMI STORY ===== */}
+      <section className="w-full py-24 sm:py-32 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto">
+          <motion.h2 
+            className="text-2xl sm:text-2xl font-bold mb-16 text-center"
+            style={{ fontFamily: 'Cinzel, serif' }}
+            {...fadeUp}
+          >
+            Esto no es teoría.
+            <br />
+            <span style={{ color: 'var(--color-gold)' }}>Es mi vida</span>
+          </motion.h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Texto */}
+            <motion.div 
+              className="space-y-4 text-xs sm:text-sm leading-relaxed text-center"
+              {...fadeUp}
+            >
+              <p>
+                Crecí en Rosario, sin nada. A los 16 años trabajé por primera vez como asesor. Hoy, después de más de 10 mil clientes, sé exactamente la diferencia entre quien vende y quien no.
+              </p>
+              <p className="text-sm font-bold text-center" style={{ color: 'var(--color-gold)' }}>
+                No es don. No es suerte. Es MOVIMIENTO.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
+                {[
+                  { v: 'HONESTIDAD', e: 'Digo No cuando no sirve' },
+                  { v: 'MOVIMIENTO', e: '3 llamadas, 5 prospectos, 1 venta' },
+                  { v: 'SERVICIO', e: 'Un cliente son mil' }
+                ].map((v, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="p-4 rounded-lg border-l-4 text-center"
+                    style={{ 
+                      borderColor: 'var(--color-gold)',
+                      background: 'rgba(196,151,42,0.05)'
+                    }}
+                  >
+                    <p className="font-bold text-xs sm:text-sm mb-1 text-center" style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                      {v.v}
+                    </p>
+                    <p className="text-xs text-center">{v.e}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Imagen de Yami */}
+            <motion.div 
+              className="flex justify-center"
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <Image
+                src="/assets/client1/yami-gemini.png"
+                alt="Yami Mansilla CEO"
+                width={400}
+                height={500}
+                className="w-full h-auto rounded-lg"
+                style={{ boxShadow: '0 20px 40px rgba(196,151,42,0.2)' }}
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== 3 MODULOS ===== */}
+      <section className="w-full py-24 sm:py-32 px-4 sm:px-6" style={{ background: 'rgba(196,151,42,0.03)' }}>
+        <div className="max-w-4xl mx-auto">
+          <motion.div className="text-center mb-16" {...fadeUp}>
+            <h2 className="text-2xl sm:text-2xl font-bold text-center" style={{ fontFamily: 'Cinzel, serif' }}>
+              Tu primer cierre en 3 días
             </h2>
-            <p className="text-lg" style={{ color: 'var(--color-text-muted)' }}>
-              Todo lo que necesitas para destacar como asesor de élite.
+            <p className="text-xs sm:text-sm italic mt-3 text-center" style={{ color: 'var(--color-gold)' }}>
+              Solo se aprende haciendo
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { d: '1', t: 'PROSPECCIÓN', label: 'Modulo 1' },
+              { d: '2', t: 'DESCUBRIMIENTO', label: 'Modulo 2' },
+              { d: '3', t: 'CIERRE', label: 'Modulo 3' }
+            ].map((s, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="p-6 rounded-lg border text-center"
+                style={{ 
+                  borderColor: 'var(--color-gold-border)',
+                  background: i === 1 ? 'linear-gradient(135deg, rgba(196,151,42,0.1) 0%, transparent 100%)' : 'rgba(20,20,20,0.6)'
+                }}
+              >
+                <p className="text-xs mb-3 text-center" style={{ color: 'var(--color-gold)' }}>
+                  {s.label}
+                </p>
+                <p className="text-3xl font-bold mb-3 text-center" style={{ color: 'var(--color-gold)' }}>
+                  {s.d}
+                </p>
+                <h4 className="font-bold text-sm text-center" style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                  {s.t}
+                </h4>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PRICING ===== */}
+      <section 
+        className="w-full py-24 sm:py-32 px-4 sm:px-6"
+        style={{ 
+          background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(196,151,42,0.04) 100%)',
+          borderTop: '1px solid rgba(196,151,42,0.2)'
+        }}
+      >
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.div {...fadeUp}>
+            <h2 className="text-2xl sm:text-2xl font-bold mb-4 text-center" style={{ fontFamily: 'Cinzel, serif' }}>
+              Después de 3 días
+            </h2>
+            <p className="text-xs sm:text-sm mb-12 text-center" style={{ color: 'var(--color-text-muted)' }}>
+              Si cerraste tu primer cliente, estás listo para Elite
             </p>
 
-            <div className="card-grid card-grid-2 text-left" style={{ marginTop: '2rem' }}>
-              {features.map((f, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 1, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.08, duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-                  whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2, y: -4 }}
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    perspective: 1000,
-                    background: 'var(--color-bg-card)',
-                    border: '1px solid var(--color-gold-border)',
-                    borderRadius: '6px'
-                  }}
-                  className="flex items-start gap-3 p-6"
-                >
-                  <span style={{ color: 'var(--color-gold)' }} className="mt-0.5 flex-shrink-0">{f.icon}</span>
-                  <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{f.label}</span>
-                </motion.div>
-              ))}
-            </div>
+            <motion.div 
+              className="p-8 sm:p-10 rounded-lg border-2 mx-auto w-full"
+              style={{ 
+                borderColor: 'var(--color-gold)',
+                background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
+                maxWidth: '500px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                margin: '0 auto'
+              }}
+            >
+              <h3 className="text-2xl sm:text-2xl font-bold mb-3 text-center" style={{ fontFamily: 'Cinzel, serif' }}>
+                ASESOR ELITE
+              </h3>
+              <p className="text-lg font-bold mb-8 text-center" style={{ color: 'var(--color-gold)' }}>
+                30 días de formación
+              </p>
+              
+              {/* Logo Neuroventas */}
+              <div className="flex justify-center mb-8 w-full">
+                <div style={{ width: '120px', height: '120px', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <Image
+                    src="/assets/client1/LOGO_NEUROVENTAS.png"
+                    alt="Certificado Neuroventas"
+                    width={120}
+                    height={120}
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+              </div>
 
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: 'easeOut' }} className="inline-block">
-              <Link href="/register" className="btn-primary gap-2">
-                Comenzar mi formación
-                <ChevronRight className="w-4 h-4" strokeWidth={1.5} />
-              </Link>
+              <p className="text-xs sm:text-sm mb-8 leading-relaxed text-center">
+                Certificación Internacional en Neuroventas + 15 módulos + Red de asesores
+              </p>
+
+              <div className="mb-8 py-6 border-y w-full text-center" style={{ borderColor: 'var(--color-gold-border)' }}>
+                <p className="text-2xl sm:text-3xl font-bold text-center" style={{ color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                  $150 USD
+                </p>
+                <p className="text-xs sm:text-sm mt-2 text-center" style={{ color: 'var(--color-text-muted)' }}>
+                  Precio lanzamiento
+                </p>
+                <p className="text-base sm:text-lg font-semibold mt-3 text-center">
+                  $20 USD/mes
+                </p>
+              </div>
+
+              <button 
+                className="w-full px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold rounded-lg hover:shadow-lg transition-all text-base sm:text-lg mb-3"
+                style={{ boxShadow: '0 10px 30px rgba(196,151,42,0.3)', letterSpacing: '0.05em' }}
+              >
+                ACCEDER A PARTE 2
+              </button>
+              <p className="text-xs sm:text-sm text-center" style={{ color: 'var(--color-gold)' }}>
+                Gana $2000+ en 30 días
+              </p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      <GoldDivider />
+      {/* ===== FAQ ===== */}
+      <section className="w-full py-24 sm:py-32 px-4 sm:px-6">
+        <div className="max-w-3xl mx-auto">
+          <motion.h2 
+            className="text-2xl sm:text-2xl font-bold text-center mb-16"
+            style={{ fontFamily: 'Cinzel, serif' }}
+            {...fadeUp}
+          >
+            Preguntas frecuentes
+          </motion.h2>
 
-      {/* Fundadora */}
-      <section className="section section-even">
-        <div className="container text-center">
-          <motion.div {...fadeUp}>
-            {/* Yami logo */}
-            <div className="flex justify-center w-full mb-10">
-              <motion.div
-                animate={{ rotateY: [0, 8, 0, -8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          <div className="space-y-3">
+            {[
+              { q: 'En 3 días cierro', a: 'Si sigues los pasos: Sí.' },
+              { q: 'Necesito experiencia', a: 'No. Solo ganas, fe y disposición.' },
+              { q: 'Cuánto gano', a: '$100-500 por cliente. Tu objetivo es aprender.' },
+              { q: 'Mientras trabajo otro', a: 'Sí. En las noches. En Elite necesitas dedicación.' },
+              { q: 'Si no cierro', a: 'Si hiciste todo, el cliente dirá sí en 5-7 días.' },
+              { q: 'Horarios', a: 'Las 3 IAs atienden 24/7.' }
+            ].map((f, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="border rounded-lg overflow-hidden"
+                style={{ borderColor: 'var(--color-gold-border)' }}
               >
-                <Image
-                  src="/assets/client1/LOGO_1_YAMI_MANSILLA.png"
-                  alt="Yami Mansilla"
-                  width={100}
-                  height={100}
-                  className="mx-auto block"
-                />
+                <button 
+                  onClick={() => setExpandedFaq(expandedFaq === i ? null : i)} 
+                  className="w-full p-4 text-left font-bold flex justify-between items-center transition text-xs sm:text-sm"
+                  style={{ background: expandedFaq === i ? 'rgba(196,151,42,0.1)' : 'transparent' }}
+                >
+                  <span>{f.q}</span>
+                  <span className="text-2xl" style={{ color: 'var(--color-gold)' }}>
+                    {expandedFaq === i ? '−' : '+'}
+                  </span>
+                </button>
+                {expandedFaq === i && (
+                  <div 
+                    className="p-4 border-t text-xs sm:text-sm leading-relaxed text-center"
+                    style={{ 
+                      borderColor: 'var(--color-gold-border)',
+                      background: 'rgba(196,151,42,0.05)'
+                    }}
+                  >
+                    <p>{f.a}</p>
+                  </div>
+                )}
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== CIERRE CON YAMI LOGO ===== */}
+      <section className="w-full py-24 sm:py-32 px-4 sm:px-6" style={{ background: 'rgba(196,151,42,0.03)' }}>
+        <div className="max-w-2xl mx-auto text-center">
+          <motion.div {...fadeUp}>
+            <div className="mb-8 flex justify-center w-full">
+              <div style={{ width: '240px', height: '240px', position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <Image
+                  src="/assets/client1/LOGO_YAMI_MANSILLA.jpeg"
+                  alt="Yami Mansilla"
+                  width={240}
+                  height={240}
+                  style={{ objectFit: 'contain', filter: 'drop-shadow(0 15px 30px rgba(196,151,42,0.3))' }}
+                />
+              </div>
             </div>
 
-            <p className="text-4xl font-script" style={{ color: 'var(--color-gold)' }}>
+            <p className="text-base sm:text-lg md:text-lg font-bold mb-4 text-center" style={{ fontFamily: 'Georgia, serif', color: 'var(--color-gold)' }}>
+              "Todo lo que toco lo transformo en oro."
+            </p>
+            <p className="font-bold text-sm sm:text-base text-center" style={{ fontFamily: 'Cinzel, serif' }}>
               Yami Mansilla
             </p>
-            <p className="text-xs" style={{ color: 'var(--color-text-muted)', letterSpacing: '0.2em' }}>
-              VISIONARIA · EMPRESARIA · CAPACITADORA
-            </p>
-            <p className="text-lg italic" style={{ color: 'var(--color-text-muted)' }}>
-              "No sigo tendencias, las creo."
+            <p className="text-xs sm:text-sm mt-3 text-center" style={{ color: 'var(--color-text-muted)' }}>
+              CEO & Fundadora | Escuela de Asesores
             </p>
           </motion.div>
         </div>
       </section>
 
-      <GoldDivider />
-
-      {/* Footer */}
-      <footer
-        className="text-center text-sm"
-        style={{ borderTop: '1px solid var(--color-separator)', color: 'var(--color-text-muted)' }}
+      {/* ===== FOOTER ===== */}
+      <footer 
+        className="w-full py-10 px-4 sm:px-6 border-t text-center"
+        style={{ 
+          borderColor: 'var(--color-gold-border)',
+          background: 'rgba(196,151,42,0.03)'
+        }}
       >
-        <div className="container py-8">
-          <p>© 2026 Escuela de Asesores. Todos los derechos reservados.</p>
+        <div className="flex justify-center gap-6 text-xs mb-6" style={{ color: 'var(--color-text-muted)' }}>
+          <Link href="#" className="hover:text-yellow-400 transition text-center">Términos</Link>
+          <Link href="#" className="hover:text-yellow-400 transition text-center">Privacidad</Link>
+          <Link href="#" className="hover:text-yellow-400 transition text-center">Contacto</Link>
         </div>
+
+        <p className="text-xs text-center" style={{ color: 'var(--color-text-muted)' }}>
+          © 2026 Escuela de Asesores | Formamos Líderes, No Vendedores
+        </p>
       </footer>
 
     </div>
