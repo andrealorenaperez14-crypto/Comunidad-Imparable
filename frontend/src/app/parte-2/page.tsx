@@ -86,7 +86,7 @@ export default function Parte2() {
               alt="Escuela de Asesores"
               width={300}
               height={300}
-              style={{ objectFit: 'contain', width: 'clamp(180px, 40vw, 300px)', height: 'auto' }}
+              style={{ objectFit: 'contain', width: 'clamp(220px, 48vw, 380px)', height: 'auto' }}
             />
           </div>
 
@@ -446,7 +446,7 @@ export default function Parte2() {
                 alt="Yami Mansilla"
                 width={340}
                 height={340}
-                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(200px, 50vw, 340px)', height: 'auto' }}
+                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(260px, 55vw, 420px)', height: 'auto' }}
               />
             </div>
             <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
