@@ -707,7 +707,7 @@ export default function HomePage() {
               />
             </div>
             <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
-              "Todo lo que toco lo transformo en oro."
+              "Capacitación de Alto Impacto que Rompe todos los Esquemas"
             </p>
             <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
               Yami Mansilla
