@@ -66,8 +66,8 @@ export default function Parte2() {
             <Image
               src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.png"
               alt="Escuela de Asesores"
-              width={220}
-              height={220}
+              width={300}
+              height={300}
               style={{ objectFit: 'contain' }}
             />
           </div>
@@ -327,8 +327,8 @@ export default function Parte2() {
               <Image
                 src="/assets/client1/YAMI_MANSILLA.jpeg"
                 alt="Yami Mansilla"
-                width={260}
-                height={260}
+                width={340}
+                height={340}
                 style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
               />
             </div>

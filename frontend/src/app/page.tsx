@@ -14,20 +14,26 @@ const fadeUp = {
 
 const CoachIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="6" r="4" stroke="currentColor" strokeWidth="1.5"/>
-    <path d="M12 11v8M8 14h8M6 19h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M6 3h12v8a6 6 0 01-12 0V3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 7H3a1 1 0 000 2l1.5 3A4 4 0 008 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 7h3a1 1 0 010 2l-1.5 3A4 4 0 0116 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 17v4M8 21h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
   </svg>
 )
 
 const MentalidadIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" fill="currentColor"/>
+    <path d="M12 22c4 0 7-3.5 7-7.5 0-3-2-5.5-3.5-7-0.5 2-1 3.5-3 4.5 0-2.5-1-5-3-7C8 9.5 5 11 5 14.5c0 4 3 7.5 7 7.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 22c1.5 0 2.5-1 2.5-2.5S13 17 11.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
   </svg>
 )
 
 const ConsultivaIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="currentColor"/>
+    <path d="M2 9l3-5h14l3 5-10 11L2 9z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M2 9h20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M8 9l4-5M16 9l-4-5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d="M8 9l4 11M16 9l-4 11" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
@@ -72,8 +78,8 @@ export default function HomePage() {
             <Image
               src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.png"
               alt="Escuela de Asesores"
-              width={220}
-              height={220}
+              width={300}
+              height={300}
               style={{ objectFit: 'contain' }}
             />
           </div>
@@ -175,7 +181,7 @@ export default function HomePage() {
                   maxWidth: '360px'
                 }}
               >
-                {selectedPath === 'junior' ? 'EMPEZAR RETO GRATIS' : 'ACCEDER A PARTE 2'}
+                {selectedPath === 'junior' ? 'EMPEZAR RETO GRATIS' : 'QUIERO SER ASESOR de ELITE'}
               </button>
             </motion.div>
           )}
@@ -515,7 +521,7 @@ export default function HomePage() {
                   marginBottom: '1rem'
                 }}
               >
-                ACCEDER A PARTE 2
+                QUIERO SER ASESOR de ELITE
               </button>
               <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Gana $2000+ en 30 días</p>
             </div>
@@ -608,8 +614,8 @@ export default function HomePage() {
               <Image
                 src="/assets/client1/YAMI_MANSILLA.jpeg"
                 alt="Yami Mansilla"
-                width={260}
-                height={260}
+                width={340}
+                height={340}
                 style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
               />
             </div>
