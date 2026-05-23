@@ -81,7 +81,7 @@ export default function HomePage() {
               alt="Escuela de Asesores"
               width={300}
               height={300}
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'contain', width: 'clamp(180px, 40vw, 300px)', height: 'auto' }}
             />
           </div>
 
@@ -109,7 +109,6 @@ export default function HomePage() {
               fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
               color: 'var(--color-text-muted)',
               lineHeight: 1.7,
-              marginBottom: '2.5rem',
               maxWidth: '620px',
               margin: '0 auto 2.5rem'
             }}>
@@ -371,11 +370,9 @@ export default function HomePage() {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
             gap: '1rem'
-          }}
-            className="lg-grid-4"
-          >
+          }}>
             {[
               { num: '+10,000', text: 'Clientes' },
               { num: '13', text: 'Años de experiencia' },
@@ -706,7 +703,7 @@ export default function HomePage() {
                 alt="Yami Mansilla"
                 width={340}
                 height={340}
-                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
+                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(200px, 50vw, 340px)', height: 'auto' }}
               />
             </div>
             <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>

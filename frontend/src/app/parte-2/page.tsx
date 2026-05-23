@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { trackEvent } from '@/lib/analytics'
@@ -85,7 +86,7 @@ export default function Parte2() {
               alt="Escuela de Asesores"
               width={300}
               height={300}
-              style={{ objectFit: 'contain' }}
+              style={{ objectFit: 'contain', width: 'clamp(180px, 40vw, 300px)', height: 'auto' }}
             />
           </div>
 
@@ -121,7 +122,6 @@ export default function Parte2() {
               fontSize: 'clamp(0.82rem, 1.8vw, 1rem)',
               color: 'var(--color-text-muted)',
               lineHeight: 1.7,
-              marginBottom: '2rem',
               maxWidth: '520px',
               margin: '0 auto 2rem'
             }}
@@ -446,7 +446,7 @@ export default function Parte2() {
                 alt="Yami Mansilla"
                 width={340}
                 height={340}
-                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))' }}
+                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(200px, 50vw, 340px)', height: 'auto' }}
               />
             </div>
             <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
@@ -536,11 +536,13 @@ export default function Parte2() {
         background: 'rgba(196,151,42,0.03)',
         textAlign: 'center'
       }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+          {['Términos', 'Privacidad', 'Contacto'].map((t) => (
+            <Link key={t} href="#" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{t}</Link>
+          ))}
+        </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
-          Certificación Internacional en Neuroventas
-        </p>
-        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
-          Escuela de Asesores · Yami Mansilla
+          Certificación Internacional en Neuroventas · Escuela de Asesores · Yami Mansilla
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Desarrollado por: NUCLEO ESTRATEGICO IA
