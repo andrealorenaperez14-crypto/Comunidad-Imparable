@@ -3,6 +3,23 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { trackEvent } from '@/lib/analytics'
+
+const CoachIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 3h12v8a6 6 0 01-12 0V3z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M6 7H3a1 1 0 000 2l1.5 3A4 4 0 008 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M18 7h3a1 1 0 010 2l-1.5 3A4 4 0 0116 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 17v4M8 21h8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+)
+
+const MentalidadIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 22c4 0 7-3.5 7-7.5 0-3-2-5.5-3.5-7-0.5 2-1 3.5-3 4.5 0-2.5-1-5-3-7C8 9.5 5 11 5 14.5c0 4 3 7.5 7 7.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 22c1.5 0 2.5-1 2.5-2.5S13 17 11.5 17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+  </svg>
+)
 
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
@@ -91,22 +108,31 @@ export default function Parte2() {
               fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
               color: 'var(--color-gold)',
               lineHeight: 1.7,
-              marginBottom: '2rem'
+              marginBottom: '1rem'
             }}
           >
             30 días de formación. 15 módulos especializados.
             <br />Certificación Internacional en Neuroventas.
           </motion.p>
 
-          <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', marginBottom: '2rem' }}>
-            <div>
-              <p style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
-                En 30 días ganarás $2000+
-              </p>
-            </div>
+          <motion.p
+            {...fadeUp}
+            style={{
+              fontSize: 'clamp(0.82rem, 1.8vw, 1rem)',
+              color: 'var(--color-text-muted)',
+              lineHeight: 1.7,
+              marginBottom: '2rem',
+              maxWidth: '520px',
+              margin: '0 auto 2rem'
+            }}
+          >
+            El programa que convierte asesores en profesionales de alto valor.<br />
+            <strong style={{ color: 'var(--color-gold)' }}>$2000+ en 30 días</strong> — o seguís como estás.
+          </motion.p>
 
+          <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
             <button
-              onClick={() => router.push('/register')}
+              onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_hero' }); router.push('/register') }}
               style={{
                 padding: '1rem 2.5rem',
                 background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
@@ -118,16 +144,15 @@ export default function Parte2() {
                 boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
                 cursor: 'pointer',
                 width: '100%',
-                maxWidth: '320px'
+                maxWidth: '360px'
               }}
             >
-              ENTRA AHORA
+              QUIERO SER ASESOR de ELITE
             </button>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
+              Acceso inmediato · Soporte 24/7 · Certificado internacional
+            </p>
           </motion.div>
-
-          <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
-            Acceso inmediato · Soporte 24/7 · Certificado internacional
-          </p>
         </motion.div>
       </section>
 
@@ -203,11 +228,13 @@ export default function Parte2() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
             {[
               {
+                icon: <CoachIcon />,
                 title: 'IA Coach',
                 desc: 'Mentoría personalizada. Responde dudas 24/7. Guía paso a paso. Acelera tu aprendizaje.',
                 features: ['Respuestas inmediatas', 'Tutoría personalizada', 'Clarificación de conceptos', 'Motivación diaria']
               },
               {
+                icon: <MentalidadIcon />,
                 title: 'IA Mentalidad',
                 desc: 'Trabaja tus bloqueos. Transformación emocional. Confianza profesional. Mentalidad de campeón.',
                 features: ['Sesiones de mentalidad', 'Bloqueos identificados', 'Ejercicios prácticos', 'Transformación interna']
@@ -217,6 +244,7 @@ export default function Parte2() {
                 key={i}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -5 }}
                 viewport={{ once: true }}
                 style={{
                   padding: 'clamp(1.5rem,3vw,2rem)',
@@ -226,6 +254,16 @@ export default function Parte2() {
                   textAlign: 'center'
                 }}
               >
+                <div style={{
+                  width: '2.75rem', height: '2.75rem',
+                  margin: '0 auto 1rem',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  borderRadius: '0.625rem',
+                  background: 'rgba(196,151,42,0.15)',
+                  color: 'var(--color-gold)'
+                }}>
+                  {ia.icon}
+                </div>
                 <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
                   {ia.title}
                 </h3>
@@ -285,7 +323,7 @@ export default function Parte2() {
             </p>
 
             <button
-              onClick={() => router.push('/register')}
+              onClick={() => { trackEvent('final_cta_clicked'); router.push('/register') }}
               style={{
                 width: '100%',
                 padding: '1rem 2rem',
@@ -300,7 +338,7 @@ export default function Parte2() {
                 marginBottom: '1.25rem'
               }}
             >
-              CONFIRMAR ACCESO
+              QUIERO SER ASESOR de ELITE
             </button>
 
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
@@ -341,6 +379,72 @@ export default function Parte2() {
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
               CEO & Fundadora | Escuela de Asesores
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════ EL MOMENTO ES HOY ══════════════════ */}
+      <section style={{
+        width: '100%',
+        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
+        background: 'linear-gradient(135deg, rgba(196,151,42,0.12) 0%, rgba(0,0,0,0.6) 100%)',
+        borderTop: '1px solid rgba(196,151,42,0.3)',
+        textAlign: 'center'
+      }}>
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <p style={{
+              fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.2em',
+              color: 'var(--color-gold)',
+              marginBottom: '1rem'
+            }}>
+              El momento es HOY
+            </p>
+            <h2 style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.4rem, 4vw, 2.6rem)',
+              fontWeight: 700,
+              lineHeight: 1.2,
+              marginBottom: '1.25rem'
+            }}>
+              Cada día que esperas,<br />
+              <span style={{ color: 'var(--color-gold)' }}>otro cierra su venta.</span>
+            </h2>
+            <p style={{
+              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              color: 'var(--color-text-muted)',
+              lineHeight: 1.7,
+              marginBottom: '2.5rem'
+            }}>
+              30 días. 15 módulos. Certificación internacional.<br />
+              Todo lo que necesitás para escalar a $2000+ al mes.
+            </p>
+            <button
+              onClick={() => { trackEvent('final_cta_clicked'); router.push('/register') }}
+              style={{
+                padding: 'clamp(1rem,3vw,1.25rem) clamp(2rem,5vw,3rem)',
+                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                color: '#000',
+                fontWeight: 700,
+                borderRadius: '0.75rem',
+                fontSize: 'clamp(0.95rem, 2.5vw, 1.15rem)',
+                letterSpacing: '0.07em',
+                boxShadow: '0 12px 40px rgba(196,151,42,0.5)',
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: '420px',
+                transition: 'opacity 0.2s'
+              }}
+            >
+              QUIERO SER ASESOR de ELITE
+            </button>
           </motion.div>
         </div>
       </section>
