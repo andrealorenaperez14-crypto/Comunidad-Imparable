@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, KeyRound, Eye, EyeOff, Loader2, CheckCircle, X, Users } from 'lucide-react'
 import { adminUserApi } from '@/lib/api'
+import { useAuth } from '@/hooks/useAuth'
 
 interface User { id: string; email: string; dni: string; role: string; profile: { firstName: string; lastName: string } | null }
 
@@ -21,7 +22,7 @@ function RoleLabel({ role }: { role: string }) {
   )
 }
 
-function ResetModal({ user, onClose }: { user: User; onClose: () => void }) {
+function ResetModal({ user, isAdmin, onClose }: { user: User; isAdmin: boolean; onClose: () => void }) {
   const [newPwd, setNewPwd]       = useState('')
   const [confirmPwd, setConfirmPwd] = useState('')
   const [showNew, setShowNew]     = useState(false)
@@ -30,7 +31,9 @@ function ResetModal({ user, onClose }: { user: User; onClose: () => void }) {
   const [fieldError, setFieldError] = useState('')
 
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => adminUserApi.resetPassword(user.email, newPwd, confirmPwd),
+    mutationFn: () => user.role === 'STUDENT'
+      ? adminUserApi.resetStudentPassword(user.id, newPwd, confirmPwd)
+      : adminUserApi.resetPassword(user.email, newPwd, confirmPwd),
     onSuccess: () => setDone(true)
   })
 
@@ -150,6 +153,7 @@ function ResetModal({ user, onClose }: { user: User; onClose: () => void }) {
 }
 
 export default function UsuariosAdminPage() {
+  const { isAdmin } = useAuth()
   const [query, setQuery]       = useState('')
   const [results, setResults]   = useState<User[]>([])
   const [searching, setSearching] = useState(false)
@@ -230,14 +234,16 @@ export default function UsuariosAdminPage() {
                   {user.email} · DNI {user.dni}
                 </p>
               </div>
-              <button
-                onClick={() => setSelected(user)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium flex-shrink-0"
-                style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
-              >
-                <KeyRound className="w-4 h-4" strokeWidth={1.5} />
-                Resetear
-              </button>
+              {(isAdmin || user.role === 'STUDENT') && (
+                <button
+                  onClick={() => setSelected(user)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium flex-shrink-0"
+                  style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+                >
+                  <KeyRound className="w-4 h-4" strokeWidth={1.5} />
+                  Resetear
+                </button>
+              )}
             </motion.div>
           ))}
         </div>
@@ -250,7 +256,7 @@ export default function UsuariosAdminPage() {
       )}
 
       <AnimatePresence>
-        {selected && <ResetModal user={selected} onClose={() => setSelected(null)} />}
+        {selected && <ResetModal user={selected} isAdmin={isAdmin} onClose={() => setSelected(null)} />}
       </AnimatePresence>
     </div>
   )

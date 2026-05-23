@@ -59,6 +59,25 @@ export default function Parte2() {
       overflowX: 'hidden'
     }}>
 
+      {/* Login shortcut */}
+      <div style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 100 }}>
+        <Link href="/login" style={{
+          display: 'inline-block',
+          background: 'rgba(12,12,12,0.85)',
+          border: '1px solid var(--color-gold-border)',
+          color: 'var(--color-gold)',
+          padding: '0.45rem 1.1rem',
+          borderRadius: '0.5rem',
+          fontSize: '0.8rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          backdropFilter: 'blur(8px)',
+          letterSpacing: '0.04em'
+        }}>
+          Iniciar Sesión
+        </Link>
+      </div>
+
       {/* ══════════════════ HERO ══════════════════ */}
       <section style={{
         minHeight: '100svh',

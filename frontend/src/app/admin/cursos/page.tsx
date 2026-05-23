@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { BookOpen, Plus, Pencil, Trash2, X, Loader2, GripVertical, Lock, Globe } from 'lucide-react'
 import { adminCourseApi } from '@/lib/api'
+import { useAuth } from '@/hooks/useAuth'
 
 interface Course {
   id: string
@@ -23,6 +24,7 @@ const inputStyle = {
 }
 
 export default function CursosPage() {
+  const { isAdmin } = useAuth()
   const qc = useQueryClient()
   const [modal, setModal] = useState<{ open: boolean; course: Partial<Course> | null }>({ open: false, course: null })
   const [deleteId, setDeleteId] = useState<string | null>(null)
@@ -69,14 +71,16 @@ export default function CursosPage() {
           </h1>
           <p style={{ color: 'var(--color-text-muted)' }}>Gestiona el contenido del curso para tus alumnos</p>
         </div>
-        <button
-          onClick={openNew}
-          className="btn-primary flex items-center gap-2"
-          style={{ marginTop: 0, marginBottom: 0 }}
-        >
-          <Plus className="w-4 h-4" strokeWidth={1.5} />
-          Nueva lección
-        </button>
+        {isAdmin && (
+          <button
+            onClick={openNew}
+            className="btn-primary flex items-center gap-2"
+            style={{ marginTop: 0, marginBottom: 0 }}
+          >
+            <Plus className="w-4 h-4" strokeWidth={1.5} />
+            Nueva lección
+          </button>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -99,9 +103,11 @@ export default function CursosPage() {
           <BookOpen className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
           <p className="font-medium" style={{ color: 'var(--color-text-muted)' }}>Sin lecciones aún</p>
           <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>Crea tu primera lección para que los alumnos puedan estudiar</p>
-          <button onClick={openNew} className="mt-4 text-sm font-medium" style={{ color: 'var(--color-gold)' }}>
-            + Crear primera lección
-          </button>
+          {isAdmin && (
+            <button onClick={openNew} className="mt-4 text-sm font-medium" style={{ color: 'var(--color-gold)' }}>
+              + Crear primera lección
+            </button>
+          )}
         </div>
       ) : (
         <div className="space-y-3">
@@ -134,24 +140,26 @@ export default function CursosPage() {
                 )}
                 <p className="text-xs mt-1 line-clamp-1" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>{course.content.substring(0, 100)}...</p>
               </div>
-              <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={() => openEdit(course)}
-                  className="p-2 rounded-lg transition-all"
-                  style={{ color: 'var(--color-text-muted)' }}
-                  title="Editar"
-                >
-                  <Pencil className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-                <button
-                  onClick={() => setDeleteId(course.id)}
-                  className="p-2 rounded-lg transition-all"
-                  style={{ color: 'var(--color-text-muted)' }}
-                  title="Eliminar"
-                >
-                  <Trash2 className="w-4 h-4" strokeWidth={1.5} />
-                </button>
-              </div>
+              {isAdmin && (
+                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => openEdit(course)}
+                    className="p-2 rounded-lg transition-all"
+                    style={{ color: 'var(--color-text-muted)' }}
+                    title="Editar"
+                  >
+                    <Pencil className="w-4 h-4" strokeWidth={1.5} />
+                  </button>
+                  <button
+                    onClick={() => setDeleteId(course.id)}
+                    className="p-2 rounded-lg transition-all"
+                    style={{ color: 'var(--color-text-muted)' }}
+                    title="Eliminar"
+                  >
+                    <Trash2 className="w-4 h-4" strokeWidth={1.5} />
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>

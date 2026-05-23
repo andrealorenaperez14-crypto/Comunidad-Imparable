@@ -1,5 +1,5 @@
 export async function adminCourseRoutes(fastify) {
-  const authenticate = async (req, reply) => {
+  const authenticateAdmin = async (req, reply) => {
     try {
       await req.jwtVerify()
       if (req.user.role !== 'ADMIN') return reply.code(403).send({ error: 'Sin permisos' })
@@ -8,8 +8,17 @@ export async function adminCourseRoutes(fastify) {
     }
   }
 
-  // List all course content
-  fastify.get('/', { preHandler: authenticate }, async (req, reply) => {
+  const authenticateAdminOrClient = async (req, reply) => {
+    try {
+      await req.jwtVerify()
+      if (req.user.role !== 'ADMIN' && req.user.role !== 'CLIENT') return reply.code(403).send({ error: 'Sin permisos' })
+    } catch {
+      reply.code(401).send({ error: 'No autenticado' })
+    }
+  }
+
+  // List all course content — CLIENT (read-only) and ADMIN
+  fastify.get('/', { preHandler: authenticateAdminOrClient }, async (req, reply) => {
     const courses = await fastify.prisma.courseContent.findMany({
       where: { clientId: req.user.clientId },
       orderBy: { order: 'asc' }
@@ -18,7 +27,7 @@ export async function adminCourseRoutes(fastify) {
   })
 
   // Create course content
-  fastify.post('/', { preHandler: authenticate }, async (req, reply) => {
+  fastify.post('/', { preHandler: authenticateAdmin }, async (req, reply) => {
     const { title, description, content, type, order } = req.body
     if (!title || !content || !type) return reply.code(400).send({ error: 'title, content y type son requeridos' })
 
@@ -41,7 +50,7 @@ export async function adminCourseRoutes(fastify) {
   })
 
   // Update course content
-  fastify.put('/:id', { preHandler: authenticate }, async (req, reply) => {
+  fastify.put('/:id', { preHandler: authenticateAdmin }, async (req, reply) => {
     const { id } = req.params
     const { title, description, content, type, order } = req.body
 
@@ -58,7 +67,7 @@ export async function adminCourseRoutes(fastify) {
   })
 
   // Delete course content
-  fastify.delete('/:id', { preHandler: authenticate }, async (req, reply) => {
+  fastify.delete('/:id', { preHandler: authenticateAdmin }, async (req, reply) => {
     const { id } = req.params
     const existing = await fastify.prisma.courseContent.findFirst({
       where: { id, clientId: req.user.clientId }
@@ -70,7 +79,7 @@ export async function adminCourseRoutes(fastify) {
   })
 
   // Reorder
-  fastify.patch('/reorder', { preHandler: authenticate }, async (req, reply) => {
+  fastify.patch('/reorder', { preHandler: authenticateAdmin }, async (req, reply) => {
     const { items } = req.body // [{ id, order }]
     await Promise.all(items.map((item) =>
       fastify.prisma.courseContent.updateMany({

@@ -14,6 +14,14 @@ export async function requireAdmin(request, reply) {
   }
 }
 
+export async function requireAdminOrClient(request, reply) {
+  await requireAuth(request, reply)
+  if (reply.sent) return
+  if (request.user.role !== 'ADMIN' && request.user.role !== 'CLIENT') {
+    return reply.status(403).send({ error: 'Acceso denegado.' })
+  }
+}
+
 export async function requireActiveSubscription(request, reply) {
   await requireAuth(request, reply)
   if (reply.sent) return

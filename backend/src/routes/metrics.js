@@ -1,10 +1,10 @@
-import { requireAuth, requireAdmin } from '../middleware/auth.js'
+import { requireAuth, requireAdmin, requireAdminOrClient } from '../middleware/auth.js'
 
 export async function metricsRoutes(fastify) {
   fastify.get('/student/:studentId', { preHandler: requireAuth }, async (request, reply) => {
     const { studentId } = request.params
 
-    if (request.user.role !== 'ADMIN' && request.user.id !== studentId) {
+    if (request.user.role !== 'ADMIN' && request.user.role !== 'CLIENT' && request.user.id !== studentId) {
       return reply.status(403).send({ error: 'Acceso denegado.' })
     }
 
@@ -21,7 +21,7 @@ export async function metricsRoutes(fastify) {
     return reply.send({ metrics, subscription: sub })
   })
 
-  fastify.get('/dashboard', { preHandler: requireAdmin }, async (request, reply) => {
+  fastify.get('/dashboard', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const { clientId } = request.user
 
     const [totalStudents, activeSubscriptions, alertStudents, totalInteractions] = await Promise.all([
@@ -57,6 +57,34 @@ export async function metricsRoutes(fastify) {
         alertMessage: a.alertMessage
       }))
     })
+  })
+
+  fastify.post('/upload-params', { preHandler: requireAdmin }, async (request, reply) => {
+    const data = await request.file()
+    if (!data) return reply.code(400).send({ error: 'No se recibió ningún archivo' })
+
+    const buffer = await data.toBuffer()
+    const client = await fastify.prisma.client.findUnique({
+      where: { id: request.user.clientId },
+      select: { settings: true }
+    })
+
+    await fastify.prisma.client.update({
+      where: { id: request.user.clientId },
+      data: {
+        settings: {
+          ...(client.settings || {}),
+          paramsDocument: {
+            name: data.filename,
+            mimetype: data.mimetype,
+            size: buffer.length,
+            uploadedAt: new Date().toISOString()
+          }
+        }
+      }
+    })
+
+    return reply.send({ ok: true, filename: data.filename, size: buffer.length })
   })
 
   fastify.post('/generate-report', { preHandler: requireAuth }, async (request, reply) => {

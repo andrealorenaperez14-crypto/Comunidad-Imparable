@@ -97,7 +97,11 @@ export const metricsApi = {
   student: (studentId: string) => api.get(`/api/metrics/student/${studentId}`),
   dashboard: () => api.get('/api/metrics/dashboard'),
   generateReport: (studentId?: string) =>
-    api.post('/api/metrics/generate-report', studentId ? { studentId } : {})
+    api.post('/api/metrics/generate-report', studentId ? { studentId } : {}),
+  uploadParams: (formData: FormData) =>
+    api.post('/api/metrics/upload-params', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
 }
 
 // Ranking

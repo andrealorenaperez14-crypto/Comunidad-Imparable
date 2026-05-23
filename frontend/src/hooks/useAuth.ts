@@ -44,6 +44,7 @@ export function useAuth() {
     isLoading: !_hasHydrated || isLoading || (!!token && !user),
     isAuthenticated: !!token,
     isAdmin: user?.role === 'ADMIN',
+    isClient: user?.role === 'CLIENT',
     isStudent: user?.role === 'STUDENT',
     login,
     register,
@@ -65,15 +66,15 @@ export function useRequireAuth(redirectTo = '/login') {
 }
 
 export function useRequireAdmin() {
-  const { isAuthenticated, isAdmin, isLoading } = useAuth()
+  const { isAuthenticated, isAdmin, isClient, isLoading } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) router.push('/login')
-      else if (!isAdmin) router.push('/dashboard')
+      else if (!isAdmin && !isClient) router.push('/dashboard')
     }
-  }, [isAuthenticated, isAdmin, isLoading])
+  }, [isAuthenticated, isAdmin, isClient, isLoading])
 
-  return { isAdmin, isLoading }
+  return { isAdmin, isClient, isLoading }
 }

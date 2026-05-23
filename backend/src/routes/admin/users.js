@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
-import { requireAdmin } from '../../middleware/auth.js'
+import { requireAdmin, requireAdminOrClient } from '../../middleware/auth.js'
 
 const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
 
@@ -19,7 +19,7 @@ const resetSchema = z.object({
 
 export async function adminUserRoutes(fastify) {
   // Search users by email or DNI (any role)
-  fastify.get('/search', { preHandler: requireAdmin }, async (request, reply) => {
+  fastify.get('/search', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const q = (request.query.q || '').trim()
     if (!q || q.length < 2) return reply.send([])
 
@@ -42,7 +42,8 @@ export async function adminUserRoutes(fastify) {
   })
 
   // Admin resets any user's password directly (no OTP needed)
-  fastify.post('/reset-password', { preHandler: requireAdmin }, async (request, reply) => {
+  // CLIENT role can only reset STUDENT passwords via this endpoint
+  fastify.post('/reset-password', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const result = resetSchema.safeParse(request.body)
     if (!result.success) {
       return reply.status(400).send({ error: result.error.errors[0].message })
@@ -61,6 +62,10 @@ export async function adminUserRoutes(fastify) {
       return reply.status(404).send({ error: 'Usuario no encontrado.' })
     }
 
+    if (request.user.role === 'CLIENT' && user.role !== 'STUDENT') {
+      return reply.status(403).send({ error: 'No podés resetear la contraseña de administradores o clientes.' })
+    }
+
     const passwordHash = await bcrypt.hash(newPassword, 12)
     await fastify.prisma.user.update({ where: { id: user.id }, data: { passwordHash } })
 
@@ -68,7 +73,7 @@ export async function adminUserRoutes(fastify) {
   })
 
   // Reset student password specifically (from alumnos panel)
-  fastify.post('/students/:userId/reset-password', { preHandler: requireAdmin }, async (request, reply) => {
+  fastify.post('/students/:userId/reset-password', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const schema = z.object({
       newPassword: z.string()
         .min(8, PASSWORD_MSG)
@@ -98,7 +103,7 @@ export async function adminUserRoutes(fastify) {
   })
 
   // List all students
-  fastify.get('/students', { preHandler: requireAdmin }, async (request, reply) => {
+  fastify.get('/students', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const { q = '', page = '1' } = request.query
     const take = 20
     const skip = (parseInt(page) - 1) * take
