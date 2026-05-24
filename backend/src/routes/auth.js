@@ -8,7 +8,7 @@ const loginSchema = z.object({
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres')
 })
 
-const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número'
 
 const registerSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -18,8 +18,7 @@ const registerSchema = z.object({
   password: z.string()
     .min(8, PASSWORD_MSG)
     .regex(/[A-Z]/, PASSWORD_MSG)
-    .regex(/[0-9]/, PASSWORD_MSG)
-    .regex(/[!@#$%^&*]/, PASSWORD_MSG),
+    .regex(/[0-9]/, PASSWORD_MSG),
   firstName: z.string().min(1, 'El nombre es requerido'),
   lastName: z.string().min(1, 'El apellido es requerido'),
   clientId: z.string().optional()
@@ -216,7 +215,7 @@ async function getDefaultClientId(fastify) {
 }
 
 export async function authPasswordRoutes(fastify) {
-  const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+  const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número'
 
   fastify.post('/forgot-password', {
     config: { rateLimit: { max: 5, timeWindow: '10 minutes' } }
@@ -265,7 +264,6 @@ export async function authPasswordRoutes(fastify) {
         .min(8, PASSWORD_MSG)
         .regex(/[A-Z]/, PASSWORD_MSG)
         .regex(/[0-9]/, PASSWORD_MSG)
-        .regex(/[!@#$%^&*]/, PASSWORD_MSG)
     })
 
     const result = schema.safeParse(request.body)
