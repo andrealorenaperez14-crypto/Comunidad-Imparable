@@ -119,7 +119,7 @@ export default function RegisterPage() {
           </div>
           <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--color-text)' }}>Crea tu cuenta</h1>
           <p className="text-base leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-            <span className="font-medium" style={{ color: 'var(--color-gold)' }}>5 días gratis</span> con acceso completo
+            <span className="font-medium" style={{ color: 'var(--color-gold)' }}>5 días gratis, por ÚNICA vez</span>
           </p>
         </div>
 
@@ -136,11 +136,11 @@ export default function RegisterPage() {
           )}
 
           {/* Form - MÁS SEPARACIÓN */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-9">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-11">
             {/* Name and Last Name - lado a lado con más espacio */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                <label className="block text-sm font-bold mb-5" style={{ color: 'var(--color-text)' }}>
                   Nombre
                 </label>
                 <input
@@ -158,7 +158,7 @@ export default function RegisterPage() {
                 )}
               </div>
               <div>
-                <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+                <label className="block text-sm font-bold mb-5" style={{ color: 'var(--color-text)' }}>
                   Apellido
                 </label>
                 <input
@@ -179,7 +179,7 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+              <label className="block text-sm font-bold mb-5" style={{ color: 'var(--color-text)' }}>
                 Email
               </label>
               <input
@@ -200,7 +200,7 @@ export default function RegisterPage() {
 
             {/* DNI */}
             <div>
-              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+              <label className="block text-sm font-bold mb-5" style={{ color: 'var(--color-text)' }}>
                 DNI / Documento de identidad
               </label>
               <input
@@ -227,7 +227,7 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+              <label className="block text-sm font-bold mb-5" style={{ color: 'var(--color-text)' }}>
                 Contraseña
               </label>
               <div className="relative">
@@ -286,7 +286,7 @@ export default function RegisterPage() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
+              <label className="block text-sm font-bold mb-5" style={{ color: 'var(--color-text)' }}>
                 Confirmar contraseña
               </label>
               <div className="relative">
