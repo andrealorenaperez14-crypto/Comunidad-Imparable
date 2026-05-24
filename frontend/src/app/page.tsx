@@ -599,7 +599,7 @@ export default function HomePage() {
                 </p>
                 <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>por UNICA vez</p>
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>Inversión LANZAMIENTO -80%</p>
-                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>20 USD/mes</p>
+                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>20 USD / mes<br />(opcional)</p>
               </div>
 
               <button
@@ -620,7 +620,7 @@ export default function HomePage() {
               >
                 QUIERO SABER MÁS
               </button>
-              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Gana +1.000 USD en 30 días</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Ganá +1.000 USD en 30 días</p>
             </div>
           </motion.div>
         </div>
