@@ -617,7 +617,7 @@ export default function HomePage() {
                   marginBottom: '1rem'
                 }}
               >
-                QUIERO SER ASESOR de ELITE
+                QUIERO SABER MÁS
               </button>
               <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Gana +1.000 USD en 30 días</p>
             </div>
