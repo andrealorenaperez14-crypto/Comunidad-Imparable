@@ -161,7 +161,7 @@ export default function Parte2() {
               margin: '0 auto 2rem'
             }}
           >
-            El programa que convierte asesores en Profesionales de Alto Valor.<br />
+            El programa que convierte asesores<br />en Profesionales de Alto Valor.<br />
             <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
           </motion.p>
 
