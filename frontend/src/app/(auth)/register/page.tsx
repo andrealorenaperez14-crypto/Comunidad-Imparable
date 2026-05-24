@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'
 import { Brain, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 
-const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial'
+const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número'
 
 const schema = z.object({
   firstName: z.string().min(1, 'El nombre es requerido'),
@@ -21,8 +21,7 @@ const schema = z.object({
   password: z.string()
     .min(8, PASSWORD_MSG)
     .regex(/[A-Z]/, PASSWORD_MSG)
-    .regex(/[0-9]/, PASSWORD_MSG)
-    .regex(/[!@#$%^&*]/, PASSWORD_MSG),
+    .regex(/[0-9]/, PASSWORD_MSG),
   confirmPassword: z.string(),
   terms: z.boolean().refine(v => v, 'Debes aceptar los términos')
 }).refine(data => data.password === data.confirmPassword, {
@@ -40,12 +39,11 @@ const inputStyle = {
 
 function getStrength(pwd: string): { label: string; score: number } {
   let score = 0
-  if (pwd.length >= 8)       score++
-  if (/[A-Z]/.test(pwd))    score++
-  if (/[0-9]/.test(pwd))    score++
-  if (/[!@#$%^&*]/.test(pwd)) score++
+  if (pwd.length >= 8)    score++
+  if (/[A-Z]/.test(pwd)) score++
+  if (/[0-9]/.test(pwd)) score++
   if (score <= 1) return { label: 'Débil',  score }
-  if (score <= 3) return { label: 'Media',  score }
+  if (score <= 2) return { label: 'Media',  score }
   return               { label: 'Fuerte', score }
 }
 
@@ -57,6 +55,7 @@ const STRENGTH_COLOR: Record<string, string> = {
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [error, setError] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
   const router = useRouter()
@@ -219,7 +218,7 @@ export default function RegisterPage() {
                 <input
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Mín. 8 car., mayúscula, número y símbolo"
+                  placeholder="Mín. 8 car., 1 mayúscula y 1 número"
                   className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
@@ -244,7 +243,7 @@ export default function RegisterPage() {
               {strength && (
                 <div className="mt-4 space-y-2">
                   <div className="flex gap-1.5">
-                    {[1, 2, 3, 4].map(i => (
+                    {[1, 2, 3].map(i => (
                       <div
                         key={i}
                         className="flex-1 h-1.5 rounded-full transition-all duration-300"
@@ -274,15 +273,30 @@ export default function RegisterPage() {
               <label className="block text-sm font-medium mb-3" style={{ color: 'var(--color-text-muted)' }}>
                 Confirmar contraseña
               </label>
-              <input
-                {...register('confirmPassword')}
-                type="password"
-                placeholder="Repite tu contraseña"
-                className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
-                style={inputStyle}
-                onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
-                onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
-              />
+              <div className="relative">
+                <input
+                  {...register('confirmPassword')}
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder="Repite tu contraseña"
+                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all pr-12 text-base"
+                  style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                  onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1"
+                  style={{ color: 'var(--color-text-muted)' }}
+                  aria-label={showConfirmPassword ? 'Ocultar' : 'Mostrar'}
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff className="w-5 h-5" strokeWidth={1.5} />
+                  ) : (
+                    <Eye className="w-5 h-5" strokeWidth={1.5} />
+                  )}
+                </button>
+              </div>
               {errors.confirmPassword && (
                 <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
                   {errors.confirmPassword.message}
