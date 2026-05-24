@@ -231,14 +231,13 @@ export default function RegisterPage() {
               </label>
               <div className="relative">
                 <input
-                  {...register('password')}
+                  {...register('password', { onChange: e => setPasswordValue(e.target.value) })}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Mín. 8 car., 1 mayúscula y 1 número"
                   className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
-                  onChange={e => setPasswordValue(e.target.value)}
                 />
                 <button
                   type="button"
