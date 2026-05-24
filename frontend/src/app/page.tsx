@@ -144,7 +144,7 @@ export default function HomePage() {
           }}>
             {([
               { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Tradicional: Vende copiando y pegando un speech, asistido con la IA de MPS', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
-              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional, con el MÉTODO exclusivo para el Rubro SALUD, de Yami Mansilla', price: '$150 USD', cta: 'QUIERO SER ASESOR de ELITE', href: '/parte-2', note: '' }
+              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional, con el MÉTODO exclusivo para el Rubro SALUD, de Yami Mansilla', price: '$150 USD', cta: 'QUIERO SABER MÁS', href: '/parte-2', note: '' }
             ] as const).map(({ id, title, desc, price, cta, href, note }) => (
               <motion.div
                 key={id}
