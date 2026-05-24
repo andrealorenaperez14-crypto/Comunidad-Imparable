@@ -270,7 +270,7 @@ export default function Parte2() {
               {
                 icon: <MentalidadIcon />,
                 title: 'IA Mentalidad',
-                desc: 'Trabaja tus bloqueos. Transformación emocional. Confianza profesional. Mentalidad de campeón.',
+                desc: 'Trabaja tus Bloqueos y Miedos. La venta es un estado de Ánimo.',
                 features: ['Sesiones de mentalidad', 'Bloqueos identificados', 'Ejercicios prácticos', 'Transformación interna']
               }
             ].map((ia, i) => (

@@ -120,8 +120,8 @@ export default function HomePage() {
               lineHeight: 1.25,
               marginBottom: '1rem'
             }}>
-              ¿Vas a seguir siendo un Vendedor Junior{' '}
-              o das el salto a Asesor de Elite?
+              ¿Vas a seguir siendo un Vendedor Tradicional{' '}
+              o das el salto a Asesor de Elite en el Rubro Salud?
             </h1>
             <p style={{
               fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
@@ -130,7 +130,7 @@ export default function HomePage() {
               maxWidth: '620px',
               margin: '0 auto 2.5rem'
             }}>
-              Ayudamos a asesores a escalar a <strong style={{ color: 'var(--color-gold)' }}>$10k USD/mes</strong> implementando Neuroventas + IA sin depender de lanzamientos complejos.
+              Ayudamos a asesores/profesionales a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la IA como tu socio.
             </p>
           </motion.div>
 
@@ -142,8 +142,8 @@ export default function HomePage() {
             marginBottom: '2rem'
           }}>
             {([
-              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Junior: Vende copiando y pegando asistido por la IA', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register' },
-              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional', price: '$150 USD', cta: 'QUIERO SER ASESOR de ELITE', href: '/parte-2' }
+              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Tradicional: Vende copiando y pegando un speech, asistido con la IA de MPS', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register' },
+              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional, con el MÉTODO YM, exclusivo para el rubro Salud', price: '$150 USD', cta: 'QUIERO SER ASESOR de ELITE', href: '/parte-2' }
             ] as const).map(({ id, title, desc, price, cta, href }) => (
               <motion.div
                 key={id}
@@ -220,16 +220,6 @@ export default function HomePage() {
             transition={{ duration: 0.7 }}
           >
             <p style={{
-              fontSize: 'clamp(0.65rem, 1.5vw, 0.78rem)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              color: 'var(--color-gold)',
-              marginBottom: '2rem'
-            }}>
-              Por qué esto importa ahora
-            </p>
-
-            <p style={{
               fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
               fontWeight: 700,
               lineHeight: 1.5,
@@ -302,8 +292,11 @@ export default function HomePage() {
             }}>
               Nunca estás solo
             </h2>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
+              Los 3 agentes IA transformarán tu forma de trabajar y vender
+            </p>
             <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)' }}>
-              Los 3 agentes IA que transformarán tu forma de trabajar y vender
+              Entrenados con el MÉTODO exclusivo para el Rubro Salud de Yami Mansilla
             </p>
           </motion.div>
 
@@ -314,8 +307,8 @@ export default function HomePage() {
           }}>
             {[
               { icon: <CoachIcon />, name: 'IA Coach', desc: 'Mentoría personalizada 24/7 en cada paso' },
-              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'Transforma tus creencias limitantes' },
-              { icon: <ConsultivaIcon />, name: 'IA Consultiva', desc: '2000+ casos reales. Estrategias probadas' }
+              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'La Venta es un Estado de Ánimo. Yami ya pasó por eso, te ayuda a desbloquearlo' },
+              { icon: <ConsultivaIcon />, name: 'IA Consultiva', desc: '+de 10.000 casos reales. Estrategias probadas' }
             ].map((a) => (
               <motion.div
                 key={a.name}
@@ -372,7 +365,7 @@ export default function HomePage() {
               textAlign: 'center'
             }}
           >
-            De cero a 10,000+ clientes. Sin pedir permiso.
+            De 0 a +10.000 Clientes. Rompiendo todos los Esquemas.
           </motion.h2>
 
           <div style={{
@@ -383,8 +376,8 @@ export default function HomePage() {
             {[
               { num: '+10,000', text: 'Clientes' },
               { num: '13', text: 'Años de experiencia' },
-              { num: '1000+', text: 'Asesores Formados' },
-              { num: '$1500+', text: 'Dólares promedio' }
+              { num: '+1.000', text: 'Asesores Formados' },
+              { num: '+40.000', text: 'Dólares promedio por año' }
             ].map((s, i) => (
               <motion.div
                 key={i}
@@ -459,7 +452,7 @@ export default function HomePage() {
             {/* Texto */}
             <motion.div {...fadeUp} style={{ textAlign: 'center' }}>
               <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
-                A los 16 trabajé como asesor sin saber nada.
+                A los 16 años, trabajé como asesora,
                 Hoy, después de más de 10 mil clientes, sé exactamente la diferencia entre quien vende y quien no.
               </p>
               <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
@@ -468,9 +461,9 @@ export default function HomePage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
                 {[
-                  { v: 'HONESTIDAD', e: 'Digo No cuando no sirve' },
-                  { v: 'MOVIMIENTO', e: '3 llamadas, 5 prospectos, 1 venta' },
-                  { v: 'SERVICIO', e: 'Un cliente son mil' }
+                  { v: 'HONESTIDAD', e: 'Digo NO, cuando NO se puede' },
+                  { v: 'MOVIMIENTO', e: '5 llamadas, 5 prospectos, 1 venta' },
+                  { v: 'SERVICIO', e: 'Siempre en excelencia, implica que 1 Cliente, genera mil Clientes.' }
                 ].map((v, i) => (
                   <motion.div
                     key={i}
@@ -510,6 +503,9 @@ export default function HomePage() {
             </h2>
             <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', fontStyle: 'italic', color: 'var(--color-gold)', marginTop: '0.75rem' }}>
               Solo se aprende haciendo
+            </p>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', fontStyle: 'italic', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
+              Todo va a ser NO, buscamos el SÍ
             </p>
           </motion.div>
 
@@ -571,7 +567,7 @@ export default function HomePage() {
               alignItems: 'center'
             }}>
               <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', fontWeight: 700, marginBottom: '0.5rem' }}>
-                ASESOR ELITE
+                ASESOR ELITE<br />del RUBRO SALUD
               </h3>
               <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '2rem' }}>
                 30 días de formación
@@ -596,6 +592,7 @@ export default function HomePage() {
                   $150 USD
                 </p>
                 <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>Precio lanzamiento</p>
+                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>inversión por lanzamiento con un 80% menos</p>
                 <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>$20 USD/mes</p>
               </div>
 
@@ -617,7 +614,7 @@ export default function HomePage() {
               >
                 QUIERO SER ASESOR de ELITE
               </button>
-              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Gana $2000+ en 30 días</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Gana +1.000 USD en 30 días</p>
             </div>
           </motion.div>
         </div>
@@ -641,12 +638,10 @@ export default function HomePage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
-              { q: '¿En 3 días puedo cerrar una venta?', a: 'Si sigues los pasos: Sí.' },
-              { q: '¿Necesito experiencia previa?', a: 'No. Solo ganas, fe y disposición.' },
-              { q: '¿Cuánto puedo ganar?', a: '$100–500 por cliente. Tu objetivo es aprender.' },
-              { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí. En las noches. En Elite necesitas más dedicación.' },
-              { q: '¿Qué pasa si no cierro?', a: 'Si hiciste todo, el cliente dirá sí en 5–7 días.' },
-              { q: '¿Qué horarios tienen las IAs?', a: 'Las 3 IAs atienden 24/7.' }
+              { q: '¿En 3 días puedo cerrar una venta?', a: 'SÍ, aunque todo va a ser NO, buscamos el SÍ.' },
+              { q: '¿Necesito experiencia previa?', a: 'NO. Solo ganas, movimiento y ambición.' },
+              { q: '¿Cuánto puedo ganar?', a: 'Entre 50 y 500 USD por cliente. Tu objetivo es aprender.' },
+              { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí. En las noches. En Elite necesitas más dedicación.' }
             ].map((f, i) => (
               <motion.div
                 key={i}
@@ -713,14 +708,17 @@ export default function HomePage() {
                 style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(260px, 55vw, 420px)', height: 'auto' }}
               />
             </div>
-            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
-              "Capacitación de Alto Impacto que Rompe todos los Esquemas"
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '0.4rem' }}>
+              Capacitación de Alto Impacto
+            </p>
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
+              Experiencia que Rompe Todos los Esquemas
             </p>
             <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
               Yami Mansilla
             </p>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
-              CEO & Fundadora | Escuela de Asesores
+              CEO & Fundadora | Escuela de Asesores en el Rubro Salud
             </p>
           </motion.div>
         </div>
@@ -786,7 +784,7 @@ export default function HomePage() {
                 transition: 'opacity 0.2s'
               }}
             >
-              COMIENZA AHORA — GRATIS O $150
+              COMIENZA AHORA
             </button>
           </motion.div>
         </div>
