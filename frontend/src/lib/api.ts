@@ -118,7 +118,30 @@ export const adminUserApi = {
   resetStudentPassword: (userId: string, newPassword: string, confirmPassword: string) =>
     api.post(`/api/admin/users/students/${userId}/reset-password`, { newPassword, confirmPassword }),
   students: (q = '', page = 1) =>
-    api.get(`/api/admin/users/students?q=${encodeURIComponent(q)}&page=${page}`)
+    api.get(`/api/admin/users/students?q=${encodeURIComponent(q)}&page=${page}`),
+  deleteStudent: (userId: string) => api.delete(`/api/admin/users/students/${userId}`),
+  ranking: (filter: 'active' | 'all' = 'all', page = 1) =>
+    api.get(`/api/admin/users/ranking?filter=${filter}&page=${page}`)
+}
+
+// Commissions (student)
+export const commissionApi = {
+  list: () => api.get('/api/commissions'),
+  create: (data: { amount: number; description?: string; saleDate: string }) =>
+    api.post('/api/commissions', data),
+  remove: (id: string) => api.delete(`/api/commissions/${id}`)
+}
+
+// Admin commissions
+export const adminCommissionApi = {
+  list: (params?: { studentId?: string; cycleStart?: string; isPaid?: string; page?: number }) =>
+    api.get('/api/admin/commissions', { params }),
+  create: (data: { userId: string; amount: number; description?: string; saleDate: string }) =>
+    api.post('/api/admin/commissions', data),
+  markPaid: (id: string) => api.patch(`/api/admin/commissions/${id}/mark-paid`),
+  remove: (id: string) => api.delete(`/api/admin/commissions/${id}`),
+  summary: (cycleStart?: string) =>
+    api.get('/api/admin/commissions/summary', cycleStart ? { params: { cycleStart } } : {})
 }
 
 // Certificates

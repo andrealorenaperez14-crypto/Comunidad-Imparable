@@ -25,6 +25,7 @@ const adminNav = [
   { href: '/admin/agentes', icon: Brain, label: 'Agentes IA' },
   { href: '/admin/cursos', icon: BookOpen, label: 'Cursos' },
   { href: '/admin/alumnos', icon: Award, label: 'Alumnos' },
+  { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
   { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' }
 ]

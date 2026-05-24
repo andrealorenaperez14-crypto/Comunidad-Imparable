@@ -10,20 +10,21 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(cuid())
-  email          String          @unique
-  dni            String          @unique
-  passwordHash   String
-  role           String          // 'ADMIN' | 'STUDENT' | 'CLIENT'
-  clientId       String
-  client         Client          @relation(fields: [clientId], references: [id])
-  profile        Profile?
-  subscriptions  Subscription[]
-  iaInteractions IAInteraction[]
-  iaMetrics      IAMetric[]
-  certificates   Certificate[]
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id              String           @id @default(cuid())
+  email           String           @unique
+  dni             String           @unique
+  passwordHash    String
+  role            String           // 'ADMIN' | 'STUDENT' | 'CLIENT'
+  clientId        String
+  client          Client           @relation(fields: [clientId], references: [id])
+  profile         Profile?
+  subscriptions   Subscription[]
+  iaInteractions  IAInteraction[]
+  iaMetrics       IAMetric[]
+  certificates    Certificate[]
+  commissions     SaleCommission[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
   @@index([clientId])
   @@index([email])
@@ -43,18 +44,19 @@ model Profile {
 }
 
 model Client {
-  id                 String          @id @default(cuid())
+  id                 String           @id @default(cuid())
   name               String
-  domain             String          @unique
+  domain             String           @unique
   branding           Json
   settings           Json
-  subscriptionStatus String          @default("ACTIVE")
+  subscriptionStatus String           @default("ACTIVE")
   users              User[]
   iaAgents           IAAgent[]
   coursesContent     CourseContent[]
   rankings           Ranking[]
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
+  commissions        SaleCommission[]
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
 
   @@index([domain])
 }
@@ -207,6 +209,30 @@ model CourseContent {
   updatedAt   DateTime @updatedAt
 
   @@index([clientId, type])
+}
+
+model SaleCommission {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clientId    String
+  client      Client    @relation(fields: [clientId], references: [id])
+  amount      Float
+  description String?
+  saleDate    DateTime
+  cycleStart  DateTime
+  cycleEnd    DateTime
+  isPaid      Boolean   @default(false)
+  paidDate    DateTime?
+  source      String    @default("MANUAL") // 'MANUAL' | 'DRIVE' | 'AGENT'
+  externalRef String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([clientId])
+  @@index([cycleStart])
+  @@index([isPaid])
 }
 
 model StudentsPrevious {

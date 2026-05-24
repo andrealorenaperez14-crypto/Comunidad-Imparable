@@ -15,7 +15,9 @@ const schema = z.object({
   firstName: z.string().min(1, 'El nombre es requerido'),
   lastName: z.string().min(1, 'El apellido es requerido'),
   email: z.string().email('Email inválido'),
-  dni: z.string().min(6, 'DNI inválido').max(20, 'DNI demasiado largo'),
+  dni: z.string()
+    .regex(/^\d{8}$/, 'El DNI debe tener exactamente 8 dígitos numéricos')
+    .refine(v => { const n = parseInt(v, 10); return n >= 8000000 && n <= 99999999 }, 'El DNI debe estar entre 08000000 y 99999999'),
   password: z.string()
     .min(8, PASSWORD_MSG)
     .regex(/[A-Z]/, PASSWORD_MSG)
@@ -185,11 +187,18 @@ export default function RegisterPage() {
               </label>
               <input
                 {...register('dni')}
+                type="text"
+                inputMode="numeric"
+                maxLength={8}
                 placeholder="12345678"
                 className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
+                onInput={e => {
+                  const t = e.currentTarget
+                  t.value = t.value.replace(/\D/g, '').slice(0, 8)
+                }}
               />
               {errors.dni && (
                 <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
@@ -197,7 +206,7 @@ export default function RegisterPage() {
                 </p>
               )}
               <p className="mt-2.5 text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-                Usado como identificador único — no puede duplicarse
+                8 dígitos numéricos (08000000 – 99999999) · identificador único
               </p>
             </div>
 

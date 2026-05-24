@@ -12,7 +12,9 @@ const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayús
 
 const registerSchema = z.object({
   email: z.string().email('Email inválido'),
-  dni: z.string().min(6, 'DNI inválido').max(20),
+  dni: z.string()
+    .regex(/^\d{8}$/, 'El DNI debe tener exactamente 8 dígitos numéricos')
+    .refine(v => { const n = parseInt(v, 10); return n >= 8000000 && n <= 99999999 }, 'El DNI debe estar entre 08000000 y 99999999'),
   password: z.string()
     .min(8, PASSWORD_MSG)
     .regex(/[A-Z]/, PASSWORD_MSG)

@@ -143,4 +143,83 @@ export async function adminUserRoutes(fastify) {
 
     return reply.send({ students, total, page: parseInt(page), pages: Math.ceil(total / take) })
   })
+
+  // Delete student (ADMIN only for any role, CLIENT only for STUDENTs of their clientId)
+  fastify.delete('/students/:userId', { preHandler: requireAdminOrClient }, async (request, reply) => {
+    const { userId } = request.params
+
+    const student = await fastify.prisma.user.findFirst({
+      where: { id: userId, clientId: request.user.clientId }
+    })
+    if (!student) return reply.status(404).send({ error: 'Usuario no encontrado.' })
+
+    if (request.user.role === 'CLIENT' && student.role !== 'STUDENT') {
+      return reply.status(403).send({ error: 'Solo podés eliminar alumnos.' })
+    }
+    if (student.role === 'ADMIN') {
+      return reply.status(403).send({ error: 'No podés eliminar administradores.' })
+    }
+
+    // Delete all related records then the user (manual cascade for safety)
+    await fastify.prisma.$transaction([
+      fastify.prisma.saleCommission.deleteMany({ where: { userId } }),
+      fastify.prisma.certificate.deleteMany({ where: { userId } }),
+      fastify.prisma.iAMetric.deleteMany({ where: { userId } }),
+      fastify.prisma.iAInteraction.deleteMany({ where: { userId } }),
+      fastify.prisma.subscription.deleteMany({ where: { userId } }),
+      fastify.prisma.profile.deleteMany({ where: { userId } }),
+      fastify.prisma.user.delete({ where: { id: userId } })
+    ])
+    return reply.send({ ok: true })
+  })
+
+  // Admin ranking — all students sorted by score, filter active/all
+  fastify.get('/ranking', { preHandler: requireAdminOrClient }, async (request, reply) => {
+    const { filter = 'all', page = '1' } = request.query
+    const take = 50
+    const skip = (parseInt(page) - 1) * take
+
+    const activeSubFilter = filter === 'active'
+      ? { subscriptions: { some: { status: { in: ['ACTIVE', 'TRIAL'] } } } }
+      : {}
+
+    const students = await fastify.prisma.user.findMany({
+      where: { clientId: request.user.clientId, role: 'STUDENT', ...activeSubFilter },
+      include: {
+        profile: { select: { firstName: true, lastName: true } },
+        subscriptions: { where: { status: { in: ['ACTIVE', 'TRIAL'] } }, take: 1 },
+        iaMetrics: { select: { engagementScore: true, completionRate: true, problemResolutionRate: true, habitStreak: true, status: true } }
+      },
+      orderBy: { createdAt: 'desc' },
+      take,
+      skip
+    })
+
+    const total = await fastify.prisma.user.count({
+      where: { clientId: request.user.clientId, role: 'STUDENT', ...activeSubFilter }
+    })
+
+    const ranked = students
+      .map(s => {
+        const metric = s.iaMetrics[0]
+        const score = metric
+          ? (metric.engagementScore * 0.4 + metric.completionRate * 0.3 + metric.problemResolutionRate * 0.3) * 100
+          : 0
+        return {
+          id: s.id,
+          dni: s.dni,
+          email: s.email,
+          firstName: s.profile?.firstName || '',
+          lastName: s.profile?.lastName || '',
+          score: Math.round(score * 10) / 10,
+          status: metric?.status || 'BUENO',
+          habitStreak: metric?.habitStreak || 0,
+          isActive: s.subscriptions.length > 0
+        }
+      })
+      .sort((a, b) => b.score - a.score)
+      .map((s, i) => ({ ...s, position: i + 1 + skip }))
+
+    return reply.send({ students: ranked, total, page: parseInt(page), pages: Math.ceil(total / take) })
+  })
 }

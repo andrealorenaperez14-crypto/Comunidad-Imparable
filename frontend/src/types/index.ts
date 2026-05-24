@@ -111,6 +111,47 @@ export interface DashboardStats {
   recentAlerts: Alert[]
 }
 
+export interface SaleCommission {
+  id: string
+  userId: string
+  clientId: string
+  amount: number
+  description?: string
+  saleDate: string
+  cycleStart: string
+  cycleEnd: string
+  isPaid: boolean
+  paidDate?: string
+  source: string
+  createdAt: string
+  user?: { id: string; email: string; dni: string; profile?: { firstName: string; lastName: string } | null }
+}
+
+export interface AdminRankingEntry {
+  position: number
+  id: string
+  dni: string
+  email: string
+  firstName: string
+  lastName: string
+  score: number
+  status: 'EXCELENTE' | 'BUENO' | 'ALERTA'
+  habitStreak: number
+  isActive: boolean
+}
+
+export interface CommissionStudentSummary {
+  userId: string
+  email: string
+  dni: string
+  firstName: string
+  lastName: string
+  totalPending: number
+  totalPaid: number
+  countPending: number
+  countPaid: number
+}
+
 export interface Alert {
   userId: string
   studentName: string

@@ -175,85 +175,6 @@ export default function Parte2() {
         </motion.div>
       </section>
 
-      {/* ══════════════════ MANIFIESTO ══════════════════ */}
-      <section style={{
-        width: '100%',
-        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
-        background: 'linear-gradient(180deg, rgba(196,151,42,0.04) 0%, transparent 100%)',
-        borderBottom: '1px solid rgba(196,151,42,0.15)'
-      }}>
-        <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p style={{
-              fontSize: 'clamp(0.65rem, 1.5vw, 0.78rem)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              color: 'var(--color-gold)',
-              marginBottom: '2rem'
-            }}>
-              Por qué esto importa ahora
-            </p>
-
-            <p style={{
-              fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
-              fontWeight: 700,
-              lineHeight: 1.5,
-              marginBottom: '1.5rem',
-              color: 'var(--color-text)'
-            }}>
-              El rubro de la salud es de primera necesidad, y hoy, la demanda de{' '}
-              <span style={{ color: 'var(--color-gold)' }}>Asesores de Medicina Prepaga altamente capacitados</span>{' '}
-              está en su punto histórico más alto.
-            </p>
-
-            <p style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.8,
-              marginBottom: '2.5rem'
-            }}>
-              Las familias necesitan respuestas, no vendedores.
-            </p>
-
-            <div style={{
-              width: '3rem',
-              height: '2px',
-              background: 'var(--color-gold)',
-              margin: '0 auto 2.5rem'
-            }} />
-
-            <p style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.8,
-              marginBottom: '1.5rem'
-            }}>
-              A través del{' '}
-              <strong style={{ color: 'var(--color-text)' }}>método exclusivo de Yami Mansilla</strong>,
-              transformamos por completo tu enfoque: dejás de ser un simple "vendedor" persiguiendo comisiones,
-              para convertirte en un{' '}
-              <strong style={{ color: 'var(--color-gold)' }}>verdadero aliado estratégico</strong>.
-            </p>
-
-            <p style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.8
-            }}>
-              Aprenderás a guiar a cada cliente/paciente con{' '}
-              <strong style={{ color: 'var(--color-text)' }}>autoridad y empatía</strong>,
-              ayudándole a encontrar la opción de salud perfecta,
-              diseñada exactamente a su medida.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
       {/* ══════════════════ 15 MÓDULOS ══════════════════ */}
       <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
@@ -443,41 +364,6 @@ export default function Parte2() {
               Podés cancelar tu membresía en cualquier momento
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* ══════════════════ CIERRE YAMI ══════════════════ */}
-      <section style={{
-        width: '100%',
-        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
-        background: 'rgba(196,151,42,0.03)',
-        textAlign: 'center'
-      }}>
-        <div style={{ maxWidth: '480px', margin: '0 auto' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-              <Image
-                src="/assets/client1/YAMI_MANSILLA.jpeg"
-                alt="Yami Mansilla"
-                width={340}
-                height={340}
-                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(260px, 55vw, 420px)', height: 'auto' }}
-              />
-            </div>
-            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
-              "Capacitación de Alto Impacto que Rompe todos los Esquemas"
-            </p>
-            <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
-              Yami Mansilla
-            </p>
-            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
-              CEO & Fundadora | Escuela de Asesores
-            </p>
-          </motion.div>
         </div>
       </section>
 
