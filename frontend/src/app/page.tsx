@@ -462,7 +462,7 @@ export default function HomePage() {
                 Hoy, después de más de 10.000 clientes, sé exactamente la diferencia entre quien vende y quien es un aliado estratégico de los clientes/pacientes.
               </p>
               <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
-                La diferencia no es talento. Es MÉTODO.
+                La diferencia no es el talento. Es el MÉTODO.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
@@ -647,7 +647,7 @@ export default function HomePage() {
               { q: '¿En 3 días puedo cerrar una venta?', a: 'SÍ, aunque todo va a ser NO, buscamos el SÍ.' },
               { q: '¿Necesito experiencia previa?', a: 'NO. Solo ganas, movimiento y ambición.' },
               { q: '¿Cuánto puedo ganar?', a: 'Entre 50 y 500 USD por cliente. Tu objetivo es aprender.' },
-              { q: '¿Puedo hacerlo mientras trabajo?', a: 'SÍ, TRADICIONAL puede ser tu complemento. En ELITE, necesitas más dedicación y haces la diferencia.' }
+              { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí, como VENDEDOR TRADICIONAL: puede ser tu complemento.\nComo ASESOR ELITE: necesitas más dedicación y haces la diferencia.' }
             ].map((f, i) => (
               <motion.div
                 key={i}
@@ -685,7 +685,8 @@ export default function HomePage() {
                     color: 'var(--color-text-muted)',
                     fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
                     lineHeight: 1.7,
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    whiteSpace: 'pre-line'
                   }}>
                     {f.a}
                   </div>
