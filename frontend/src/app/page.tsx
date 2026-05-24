@@ -595,9 +595,9 @@ export default function HomePage() {
 
               <div style={{ width: '100%', borderTop: '1px solid var(--color-gold-border)', borderBottom: '1px solid var(--color-gold-border)', padding: '1.5rem 0', marginBottom: '2rem' }}>
                 <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
-                  150 USD</p>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>por UNICA vez</p>
+                  150 USD
                 </p>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>por UNICA vez</p>
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>Inversión LANZAMIENTO -80%</p>
                 <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>20 USD/mes</p>
               </div>
