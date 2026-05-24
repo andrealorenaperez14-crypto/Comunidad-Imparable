@@ -645,7 +645,7 @@ export default function HomePage() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
               { q: '¿En 3 días puedo cerrar una venta?', a: 'SÍ, aunque todo va a ser NO, buscamos el SÍ.' },
-              { q: '¿Necesito experiencia previa?', a: 'NO. Solo ganas, movimiento y ambición.' },
+              { q: '¿Necesito experiencia previa?', a: 'No, sólo ganas de salir de tu zona de confort, fe y visión.' },
               { q: '¿Cuánto puedo ganar?', a: 'Entre 50 y 500 USD por cliente. Tu objetivo es aprender.' },
               { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí, como VENDEDOR TRADICIONAL: puede ser tu complemento.\nComo ASESOR ELITE: necesitas más dedicación y haces la diferencia.' }
             ].map((f, i) => (
