@@ -382,68 +382,36 @@ export default function Parte2() {
         </div>
       </section>
 
-      {/* ══════════════════ EL MOMENTO ES HOY ══════════════════ */}
+      {/* ══════════════════ YAMI ══════════════════ */}
       <section style={{
         width: '100%',
-        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
-        background: 'linear-gradient(135deg, rgba(196,151,42,0.12) 0%, rgba(0,0,0,0.6) 100%)',
-        borderTop: '1px solid rgba(196,151,42,0.3)',
+        padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
+        background: 'rgba(196,151,42,0.03)',
         textAlign: 'center'
       }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-          >
-            <p style={{
-              fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              color: 'var(--color-gold)',
-              marginBottom: '1rem'
-            }}>
-              El momento es HOY
+        <div style={{ maxWidth: '480px', margin: '0 auto' }}>
+          <motion.div {...fadeUp}>
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+              <Image
+                src="/assets/client1/YAMI_MANSILLA.jpeg"
+                alt="Yami Mansilla"
+                width={340}
+                height={340}
+                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(260px, 55vw, 420px)', height: 'auto' }}
+              />
+            </div>
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '0.4rem' }}>
+              Capacitación de Alto Impacto
             </p>
-            <h2 style={{
-              fontFamily: 'Cinzel, serif',
-              fontSize: 'clamp(1.4rem, 4vw, 2.6rem)',
-              fontWeight: 700,
-              lineHeight: 1.2,
-              marginBottom: '1.25rem'
-            }}>
-              Cada día que esperas,<br />
-              <span style={{ color: 'var(--color-gold)' }}>otro cierra su venta.</span>
-            </h2>
-            <p style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.7,
-              marginBottom: '2.5rem'
-            }}>
-              30 días. 15 módulos. Certificación internacional.<br />
-              Todo lo que necesitás para escalar a +1.000 USD al mes.
+            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
+              Experiencia que Rompe Todos los Esquemas
             </p>
-            <button
-              onClick={() => { trackEvent('final_cta_clicked'); router.push('/register') }}
-              style={{
-                padding: 'clamp(1rem,3vw,1.25rem) clamp(2rem,5vw,3rem)',
-                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                color: '#000',
-                fontWeight: 700,
-                borderRadius: '0.75rem',
-                fontSize: 'clamp(0.95rem, 2.5vw, 1.15rem)',
-                letterSpacing: '0.07em',
-                boxShadow: '0 12px 40px rgba(196,151,42,0.5)',
-                cursor: 'pointer',
-                width: '100%',
-                maxWidth: '420px',
-                transition: 'opacity 0.2s'
-              }}
-            >
-              QUIERO SER ASESOR de ELITE
-            </button>
+            <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
+              Yami Mansilla
+            </p>
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
+              CEO & Fundadora | Escuela de Asesores en el Rubro Salud
+            </p>
           </motion.div>
         </div>
       </section>
