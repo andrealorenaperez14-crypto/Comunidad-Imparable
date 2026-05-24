@@ -1,12 +1,73 @@
 'use client'
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle } from 'lucide-react'
+import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle, Play } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
 import type { IAMetric } from '@/types'
+
+const WELCOME_VIDEO_ID = 'TU_ID_DE_YOUTUBE' // ← reemplazá con el ID de tu video (lo que va después de ?v= en la URL)
+
+function WelcomeVideo() {
+  const [playing, setPlaying] = useState(false)
+  const thumb = `https://img.youtube.com/vi/${WELCOME_VIDEO_ID}/maxresdefault.jpg`
+
+  return (
+    <div className="card overflow-hidden" style={{ padding: 0 }}>
+      <div style={{ padding: '1.25rem 1.5rem 1rem', borderBottom: '1px solid var(--color-separator)' }}>
+        <p className="font-semibold" style={{ color: 'var(--color-text)', marginBottom: '0.15rem' }}>
+          Video de bienvenida
+        </p>
+        <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+          Mirá este mensaje antes de empezar — es importante
+        </p>
+      </div>
+
+      <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#0a0a0a', cursor: 'pointer' }}
+        onClick={() => setPlaying(true)}
+      >
+        {playing ? (
+          <iframe
+            src={`https://www.youtube.com/embed/${WELCOME_VIDEO_ID}?autoplay=1&rel=0&modestbranding=1`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+          />
+        ) : (
+          <>
+            <img
+              src={thumb}
+              alt="Video de bienvenida"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.85 }}
+              onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
+            />
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'rgba(0,0,0,0.35)'
+            }}>
+              <div style={{
+                width: '5rem', height: '5rem', borderRadius: '50%',
+                background: 'var(--color-gold)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                boxShadow: '0 0 40px rgba(196,151,42,0.5)',
+                transition: 'transform 0.2s',
+              }}
+                onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
+                onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+              >
+                <Play className="w-7 h-7" style={{ color: '#0a0a0a', marginLeft: '4px' }} fill="#0a0a0a" />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
 
 function MetricCard({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
   return (
@@ -59,6 +120,11 @@ export default function DashboardPage() {
           Bienvenido/a, {user?.firstName || 'Estudiante'}
         </h1>
         <p style={{ color: 'var(--color-text-muted)' }}>Aquí está tu resumen de aprendizaje</p>
+      </section>
+
+      {/* Welcome video */}
+      <section className="overflow-hidden">
+        <WelcomeVideo />
       </section>
 
       {/* Subscription */}

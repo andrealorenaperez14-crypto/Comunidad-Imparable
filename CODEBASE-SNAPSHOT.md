@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-05-24. Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-05-24 (sesión 2). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -145,10 +145,10 @@ certificateApi   — list, verify, download
 
 ## OBLIGATORIO antes de deploy backend
 ```bash
-cd backend && npx prisma generate   # regenerar client para SaleCommission
+cd backend && npm run db:generate   # ✅ HECHO 2026-05-24 — usar npm run db:generate (NO npx, descarga v7)
 ```
 
 ## Pendiente de implementar
-- **Página 2:** más cambios pendientes (el usuario los pasa mañana)
+- **Página 2:** más cambios pendientes (el usuario los pasa cuando quiera)
 - **Google Drive → IA Consultiva:** leer valores/comisiones de Drive automáticamente
   - Requiere: Google OAuth credentials, `googleapis` package, folder ID en admin settings

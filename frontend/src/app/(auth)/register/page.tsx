@@ -136,7 +136,7 @@ export default function RegisterPage() {
           )}
 
           {/* Form - MÁS SEPARACIÓN */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-9">
             {/* Name and Last Name - lado a lado con más espacio */}
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -146,7 +146,7 @@ export default function RegisterPage() {
                 <input
                   {...register('firstName')}
                   placeholder="María"
-                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
+                  className="w-full rounded-xl px-4 py-7 focus:outline-none transition-all text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -164,7 +164,7 @@ export default function RegisterPage() {
                 <input
                   {...register('lastName')}
                   placeholder="García"
-                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
+                  className="w-full rounded-xl px-4 py-7 focus:outline-none transition-all text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -186,7 +186,7 @@ export default function RegisterPage() {
                 {...register('email')}
                 type="email"
                 placeholder="tu@email.com"
-                className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
+                className="w-full rounded-xl px-4 py-7 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -209,7 +209,7 @@ export default function RegisterPage() {
                 inputMode="numeric"
                 maxLength={8}
                 placeholder="12345678"
-                className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all text-base"
+                className="w-full rounded-xl px-4 py-7 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -223,9 +223,6 @@ export default function RegisterPage() {
                   {errors.dni.message}
                 </p>
               )}
-              <p className="mt-2.5 text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-                8 dígitos numéricos (08000000 – 99999999) · identificador único
-              </p>
             </div>
 
             {/* Password */}
@@ -238,7 +235,7 @@ export default function RegisterPage() {
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Mín. 8 car., 1 mayúscula y 1 número"
-                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all pr-12 text-base"
+                  className="w-full rounded-xl px-4 py-7 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -297,7 +294,7 @@ export default function RegisterPage() {
                   {...register('confirmPassword')}
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Repite tu contraseña"
-                  className="w-full rounded-xl px-4 py-3.5 focus:outline-none transition-all pr-12 text-base"
+                  className="w-full rounded-xl px-4 py-7 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -352,7 +349,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isSubmitting || (strength !== null && strength.label === 'Débil')}
-              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-3.5 text-base font-medium mt-8"
+              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-7 text-base font-medium mt-8"
             >
               {isSubmitting ? (
                 <>

@@ -131,7 +131,7 @@ export default function HomePage() {
               maxWidth: '620px',
               margin: '0 auto 2.5rem'
             }}>
-              Ayudamos a asesores/profesionales a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la IA entregada como tu socio.
+              Ayudamos a asesores/profesionales a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la IA entrenada como tu socio.
             </p>
           </motion.div>
 
@@ -590,7 +590,7 @@ export default function HomePage() {
               </div>
 
               <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', lineHeight: 1.7, marginBottom: '2rem' }}>
-                Certificación Internacional en Neuroventas + 15 módulos + Red de asesores
+                Certificación Internacional en Neuroventas + 15 módulos + Club de asesores VIP
               </p>
 
               <div style={{ width: '100%', borderTop: '1px solid var(--color-gold-border)', borderBottom: '1px solid var(--color-gold-border)', padding: '1.5rem 0', marginBottom: '2rem' }}>
