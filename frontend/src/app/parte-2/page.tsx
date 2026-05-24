@@ -303,13 +303,6 @@ export default function Parte2() {
                 <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
                   {ia.desc}
                 </p>
-                <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  {ia.features.map((f, j) => (
-                    <li key={j} style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
-                      <span style={{ color: 'var(--color-gold)' }}>+</span> {f}
-                    </li>
-                  ))}
-                </ul>
               </motion.div>
             ))}
           </div>
