@@ -35,19 +35,19 @@ export default function Parte2() {
   const modules = [
     { num: '01', title: 'Neuroventas aplicadas en Consumidor de Salud', topics: ['Introducción al Comportamiento humano', 'Qué compra realmente una persona', 'Cómo funciona la decisión emocional'] },
     { num: '02', title: 'Cerebro Reptiliano del Consumidor de Salud', topics: ['Miedo', 'Supervivencia', 'Seguridad', 'Dolor', 'Urgencia'] },
-    { num: '03', title: 'Cerebro Límbico del Consumidor de Salud', topics: ['Emociones', 'Apego', 'Familia', 'Empatía estratégica', 'Escucha activa', 'Tomo nota', 'Cuadro sinoptico'] },
-    { num: '04', title: 'Neocórtex del Consumidor de Salud', topics: ['Argumentos', 'Comparativas', 'Lógica', 'Validación mental', 'No vendemos bajo presón al cliente', 'Brindamos un Servicio de Primera necesidad', 'Ayudamos a las personas'] },
+    { num: '03', title: 'Cerebro Límbico del Consumidor de Salud', topics: ['Emociones', 'Apego', 'Familia', 'Empatía estratégica', 'Escucha activa', 'Tomo nota', 'Cuadro sinóptico'] },
+    { num: '04', title: 'Neocórtex del Consumidor de Salud', topics: ['Argumentos', 'Comparativas', 'Lógica', 'Validación mental', 'No vendemos bajo presión al cliente', 'Brindamos un Servicio de Primera necesidad', 'Ayudamos a las personas'] },
     { num: '05', title: 'Botón de Compra - Adultos Mayores', topics: ['Seguridad', 'Transparencia', 'Comunicación con la familia', 'Hijos protectores', 'Objeciones comunes', 'Experiencia', 'Excelencia'] },
     { num: '06', title: 'Botón de Compra - Madres', topics: ['Instinto protector biológico', 'Bajar culpa, brindar el servicio que está a su alcance', 'Seguridad infantil ante todo', 'A veces no se puede, y no se puede', 'Nunca insistimos'] },
     { num: '07', title: 'Botón de Compra - Familias', topics: ['Roles familiares', 'Influenciadores', 'Liderazgo emocional', 'Inclusión'] },
-    { num: '08', title: 'Psicología de Objeciones, persuasíon', topics: ['"Está caro"', '"Tengo otra cobertura"', '"Después te aviso"', '"Lo consulto con mi..."'] },
-    { num: '09', title: 'Cotización Inteligente', topics: ['Cómo presentar valor', 'Cómo evitar competir por precio', 'Cómo guíar mentalmente al cliente', 'Sin diálogo no hay conversación', 'No hacemos monólogos'] },
+    { num: '08', title: 'Psicología de Objeciones, persuasión', topics: ['"Está caro"', '"Tengo otra cobertura"', '"Después te aviso"', '"Lo consulto con mi..."'] },
+    { num: '09', title: 'Cotización Inteligente', topics: ['Cómo presentar valor', 'Cómo evitar competir por precio', 'Cómo guiar mentalmente al cliente', 'Sin diálogo no hay conversación', 'No hacemos monólogos'] },
     { num: '10', title: 'Persuasión aplicada a la Venta Online', topics: ['Palabras de impacto', 'Timing emocional', 'Vos', 'WhatsApp', 'Videollamadas'] },
-    { num: '11', title: 'Hipnosis Conversacional y PNL en Consumidor de Salud', topics: ['Cómo respondo', 'Cómo hago el seguimiento', 'Cuando se que ya no es un cliente potencial', 'Cómo convertir un cliente en mil clientes'] },
-    { num: '12', title: 'Agenda y Organización de un Asesor de Elite', topics: ['Cierre emocional como Lider', 'Cierre racional para delegar', 'Uso de Drive efectivo', 'Mis socios se convierten en colaboradores'] },
-    { num: '13', title: 'Asesor de Salud - unoficio que deja herencia', topics: ['Autoimagen', 'Energía', 'Liderazgo emocional', 'Gratitud'] },
+    { num: '11', title: 'Hipnosis Conversacional y PNL en Consumidor de Salud', topics: ['Cómo respondo', 'Cómo hago el seguimiento', 'Cuando sé que ya no es un cliente potencial', 'Cómo convertir un cliente en mil clientes'] },
+    { num: '12', title: 'Agenda y Organización de un Asesor de Elite', topics: ['Cierre emocional como Líder', 'Cierre racional para delegar', 'Uso de Drive efectivo', 'Mis socios se convierten en colaboradores'] },
+    { num: '13', title: 'Asesor de Salud - un oficio que deja herencia', topics: ['Autoimagen', 'Energía', 'Liderazgo emocional', 'Gratitud'] },
     { num: '14', title: 'Bonus: Enfermedades preexistentes y Medicamentos', topics: ['Preexistencias modulables', 'Anticonceptivos', 'Programa de Fertilización', 'Interrupción Legal del Embarazo', 'Resolución  310/2004', 'Enfermedades y Preexistencias'] },
-    { num: '15', title: 'Certificación Elite Internacional', topics: ['Evaluación final', 'Simulaciones de ventas', 'Casos reales', 'Entrega de la Certificación Internacional en NEuroventas, aplicada al Consumidor de Salud'] }
+    { num: '15', title: 'Certificación Elite Internacional', topics: ['Evaluación final', 'Simulaciones de ventas', 'Casos reales', 'Entrega de la Certificación Internacional en Neuroventas, aplicada al Consumidor de Salud'] }
   ]
 
   return (
@@ -342,7 +342,7 @@ export default function Parte2() {
               150 USD
             </p>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
-              15 módulos + IAs + Mentorias semanales en vivo + Club de asesores VIP ORO por 30 días
+              15 módulos + IAs + Mentorías semanales en vivo + Club de asesores VIP ORO por 30 días
             </p>
             <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, marginBottom: '2rem' }}>
               Luego 20 USD / mes (opcional)
