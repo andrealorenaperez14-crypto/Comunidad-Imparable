@@ -131,7 +131,7 @@ export default function HomePage() {
               maxWidth: '620px',
               margin: '0 auto 2.5rem'
             }}>
-              Ayudamos a asesores/profesionales a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la IA entrenada como tu socio.
+              Ayudamos a asesores y/o profesionales<br />a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la "IA Consultiva" entrenada como TU SOCIA.
             </p>
           </motion.div>
 
@@ -313,7 +313,7 @@ export default function HomePage() {
           }}>
             {[
               { icon: <CoachIcon />, name: 'IA Coach', desc: 'Mentoría personalizada 24/7 en cada paso' },
-              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'La Venta es un Estado de Ánimo. Yami ya pasó por eso, te ayuda a desbloquearlo' },
+              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'La Venta es un Estado de Ánimo.<br />Yami ya pasó por eso, te ayuda a desbloquearlo' },
               { icon: <ConsultivaIcon />, name: 'IA Consultiva', desc: '+de 10.000 casos reales. Estrategias probadas' }
             ].map((a) => (
               <motion.div
@@ -458,8 +458,8 @@ export default function HomePage() {
             {/* Texto */}
             <motion.div {...fadeUp} style={{ textAlign: 'center' }}>
               <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
-                A los 16 años, trabajé como asesora,
-                Hoy, después de más de 10 mil clientes, sé exactamente la diferencia entre quien vende y quien no.
+                A los 16 años trabajé por primera vez como asesora, vendiendo coberturas médicas. Entendí que ayudaba a la gente con mi servicio.
+                Hoy, después de más de 10.000 clientes, sé exactamente la diferencia entre quien vende y quien es un aliado estratégico de los clientes/pacientes.
               </p>
               <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
                 La diferencia no es talento. Es MÉTODO.
@@ -467,8 +467,8 @@ export default function HomePage() {
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
                 {[
-                  { v: 'HONESTIDAD', e: 'Digo NO, cuando NO se puede' },
-                  { v: 'MOVIMIENTO', e: '5 llamadas, 5 prospectos, 1 venta' },
+                  { v: 'HONESTIDAD', e: 'Digo NO, cuando NO se puede.' },
+                  { v: 'MOVIMIENTO', e: '5 llamadas, 5 prospectos, 1 venta.' },
                   { v: 'SERVICIO', e: 'Siempre en excelencia, implica que 1 Cliente, genera mil Clientes.' }
                 ].map((v, i) => (
                   <motion.div
@@ -590,15 +590,16 @@ export default function HomePage() {
               </div>
 
               <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', lineHeight: 1.7, marginBottom: '2rem' }}>
-                Certificación Internacional en Neuroventas + 15 módulos + Club de asesores VIP
+                Certificación Internacional en Neuroventas + 15 módulos + Club de asesores VIP ORO
               </p>
 
               <div style={{ width: '100%', borderTop: '1px solid var(--color-gold-border)', borderBottom: '1px solid var(--color-gold-border)', padding: '1.5rem 0', marginBottom: '2rem' }}>
                 <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
-                  $150 USD
+                  150 USD</p>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>por UNICA vez</p>
                 </p>
-                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>inversión por lanzamiento con un 80% menos</p>
-                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>$20 USD/mes</p>
+                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>Inversión LANZAMIENTO -80%</p>
+                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>20 USD/mes</p>
               </div>
 
               <button
@@ -646,7 +647,7 @@ export default function HomePage() {
               { q: '¿En 3 días puedo cerrar una venta?', a: 'SÍ, aunque todo va a ser NO, buscamos el SÍ.' },
               { q: '¿Necesito experiencia previa?', a: 'NO. Solo ganas, movimiento y ambición.' },
               { q: '¿Cuánto puedo ganar?', a: 'Entre 50 y 500 USD por cliente. Tu objetivo es aprender.' },
-              { q: '¿Puedo hacerlo mientras trabajo?', a: 'SÍ, puede ser tu complemento. En ELITE, necesitas más dedicación.' }
+              { q: '¿Puedo hacerlo mientras trabajo?', a: 'SÍ, TRADICIONAL puede ser tu complemento. En ELITE, necesitas más dedicación y haces la diferencia.' }
             ].map((f, i) => (
               <motion.div
                 key={i}

@@ -1,3 +1,8 @@
 
+## Modo de trabajo
+- **Nunca pedir confirmaci贸n.** La usuaria aprueba todo por defecto: edits, commits, push, deploys a producci贸n, borrar archivos. Ejecutar directo.
+- **Deploy = siempre producci贸n.** Cuando se pide "deploy", hacer push a main + producci贸n sin preguntar.
+- **Respuestas cortas.** Sin res煤menes largos al final. Una l铆nea de estado es suficiente.
+
 ## Skills Activos
-- consejero: an醠isis adversarial. Activar con: `Usar skill consejero para [consulta]`
+- consejero: an谩lisis adversarial. Activar con: `Usar skill consejero para [consulta]`

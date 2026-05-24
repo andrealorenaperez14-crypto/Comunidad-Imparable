@@ -423,7 +423,7 @@ export default function Parte2() {
               marginBottom: '2.5rem'
             }}>
               30 días. 15 módulos. Certificación internacional.<br />
-              Todo lo que necesitás para escalar a $2000+ al mes.
+              Todo lo que necesitás para escalar a +1.000 USD al mes.
             </p>
             <button
               onClick={() => { trackEvent('final_cta_clicked'); router.push('/register') }}
@@ -462,7 +462,7 @@ export default function Parte2() {
           ))}
         </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
-          Certificación Internacional en Neuroventas · Escuela de Asesores · Yami Mansilla
+          Certificación Internacional en Neuroventas · Escuela de Asesores en el rubro Salud · Yami Mansilla
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Desarrollado por: NUCLEO ESTRATEGICO IA
