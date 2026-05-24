@@ -40,7 +40,6 @@ const ConsultivaIcon = () => (
 
 export default function HomePage() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
-  const [selectedPath, setSelectedPath] = useState<'junior' | 'elite' | null>(null)
   const router = useRouter()
 
   return (
@@ -142,27 +141,21 @@ export default function HomePage() {
             gap: '1rem',
             marginBottom: '2rem'
           }}>
-            {[
-              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Junior: Vende copiando y pegando asistido por la IA', price: 'GRATIS' },
-              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional', price: '$150 USD' }
-            ].map(({ id, title, desc, price }) => (
-              <motion.button
+            {([
+              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Junior: Vende copiando y pegando asistido por la IA', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register' },
+              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional', price: '$150 USD', cta: 'QUIERO SER ASESOR de ELITE', href: '/parte-2' }
+            ] as const).map(({ id, title, desc, price, cta, href }) => (
+              <motion.div
                 key={id}
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={() => { setSelectedPath(id as 'junior' | 'elite'); trackEvent('path_selected', { path: id }) }}
                 style={{
                   padding: 'clamp(1.5rem,4vw,2rem)',
                   borderRadius: '0.75rem',
-                  border: `2px solid ${selectedPath === id ? 'var(--color-gold)' : 'var(--color-gold-border)'}`,
-                  background: selectedPath === id
-                    ? 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(0,0,0,0.4) 100%)'
-                    : 'rgba(20,20,20,0.8)',
-                  boxShadow: selectedPath === id ? '0 0 32px rgba(196,151,42,0.25)' : 'none',
+                  border: '2px solid var(--color-gold-border)',
+                  background: 'rgba(20,20,20,0.8)',
                   textAlign: 'center',
-                  width: '100%',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
+                  display: 'flex',
+                  flexDirection: 'column'
                 }}
               >
                 <h2 style={{
@@ -178,42 +171,37 @@ export default function HomePage() {
                   fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
                   color: 'var(--color-text-muted)',
                   lineHeight: 1.6,
-                  marginBottom: '1.25rem'
+                  marginBottom: '1.25rem',
+                  flexGrow: 1
                 }}>
                   {desc}
                 </p>
                 <div style={{ borderTop: '1px solid var(--color-gold-border)', paddingTop: '1rem' }}>
-                  <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--color-gold)' }}>
+                  <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1rem' }}>
                     {price}
                   </p>
+                  <button
+                    onClick={() => { trackEvent('cta_clicked', { cta_type: id }); router.push(href) }}
+                    style={{
+                      width: '100%',
+                      padding: '0.875rem 1rem',
+                      background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                      color: '#000',
+                      fontWeight: 700,
+                      borderRadius: '0.625rem',
+                      fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
+                      letterSpacing: '0.05em',
+                      boxShadow: '0 6px 20px rgba(196,151,42,0.4)',
+                      cursor: 'pointer',
+                      transition: 'opacity 0.2s'
+                    }}
+                  >
+                    {cta}
+                  </button>
                 </div>
-              </motion.button>
+              </motion.div>
             ))}
           </div>
-
-          {selectedPath && (
-            <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
-              <button
-                onClick={() => { trackEvent('cta_clicked', { cta_type: selectedPath }); router.push(selectedPath === 'junior' ? '/register' : '/parte-2') }}
-                style={{
-                  padding: '1rem 2.5rem',
-                  background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                  color: '#000',
-                  fontWeight: 700,
-                  borderRadius: '0.75rem',
-                  fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-                  letterSpacing: '0.07em',
-                  boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
-                  cursor: 'pointer',
-                  transition: 'opacity 0.2s',
-                  width: '100%',
-                  maxWidth: '360px'
-                }}
-              >
-                {selectedPath === 'junior' ? 'EMPEZAR RETO GRATIS' : 'QUIERO SER ASESOR de ELITE'}
-              </button>
-            </motion.div>
-          )}
         </motion.div>
       </section>
 
