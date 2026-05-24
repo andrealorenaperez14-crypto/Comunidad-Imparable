@@ -161,7 +161,7 @@ export default function Parte2() {
             }}
           >
             El programa que convierte asesores en profesionales de alto valor.<br />
-            <strong style={{ color: 'var(--color-gold)' }}>$2000+ en 30 días</strong> — o seguís como estás.
+            <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
           </motion.p>
 
           <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
@@ -201,7 +201,7 @@ export default function Parte2() {
               15 Módulos Especializados
             </motion.h2>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.75rem' }}>
-              Certificación Internacional en Neuroventas Aplicadas al Consumidor de Salud
+              Certificación Internacional en Neuroventas<br />Aplicadas al consumidor de coberturas médicas
             </p>
           </div>
 
