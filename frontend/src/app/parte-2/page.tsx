@@ -59,8 +59,23 @@ export default function Parte2() {
       overflowX: 'hidden'
     }}>
 
-      {/* Login shortcut */}
-      <div style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 100 }}>
+      {/* Nav fija superior derecha */}
+      <div style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 100, display: 'flex', gap: '0.5rem' }}>
+        <Link href="/" style={{
+          display: 'inline-block',
+          background: 'rgba(12,12,12,0.85)',
+          border: '1px solid var(--color-gold-border)',
+          color: 'var(--color-gold)',
+          padding: '0.45rem 1.1rem',
+          borderRadius: '0.5rem',
+          fontSize: '0.8rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          backdropFilter: 'blur(8px)',
+          letterSpacing: '0.04em'
+        }}>
+          ← Volver al INICIO
+        </Link>
         <Link href="/login" style={{
           display: 'inline-block',
           background: 'rgba(12,12,12,0.85)',

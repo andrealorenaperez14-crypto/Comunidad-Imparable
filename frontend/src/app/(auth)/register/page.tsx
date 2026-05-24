@@ -85,6 +85,25 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-16" style={{ background: 'var(--color-bg)' }}>
+      {/* Volver al inicio */}
+      <div style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 100 }}>
+        <Link href="/" style={{
+          display: 'inline-block',
+          background: 'rgba(12,12,12,0.85)',
+          border: '1px solid var(--color-gold-border)',
+          color: 'var(--color-gold)',
+          padding: '0.45rem 1.1rem',
+          borderRadius: '0.5rem',
+          fontSize: '0.8rem',
+          fontWeight: 600,
+          textDecoration: 'none',
+          backdropFilter: 'blur(8px)',
+          letterSpacing: '0.04em'
+        }}>
+          ← Volver al INICIO
+        </Link>
+      </div>
+
       <motion.div
         initial={{ opacity: 1, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
