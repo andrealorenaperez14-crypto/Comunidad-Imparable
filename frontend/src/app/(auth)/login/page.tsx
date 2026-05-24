@@ -78,7 +78,7 @@ export default function LoginPage() {
         </div>
 
         {/* Card - MÁS PADDING INTERNO */}
-        <div className="card p-8">
+        <div className="card" style={{ padding: '2.5rem' }}>
           {/* Error message - MÁS ESPACIO */}
           {error && (
             <div
@@ -90,10 +90,10 @@ export default function LoginPage() {
           )}
 
           {/* Form - MÁS SEPARACIÓN */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
             {/* Email field */}
             <div>
-              <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                 Email
               </label>
               <input
@@ -119,7 +119,7 @@ export default function LoginPage() {
 
             {/* Password field */}
             <div>
-              <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                 Contraseña
               </label>
               <div className="relative">

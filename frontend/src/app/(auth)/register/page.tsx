@@ -123,8 +123,7 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Card - MÁS PADDING */}
-        <div className="card p-8">
+        <div className="card" style={{ padding: '2.5rem' }}>
           {/* Error message */}
           {error && (
             <div
@@ -136,11 +135,11 @@ export default function RegisterPage() {
           )}
 
           {/* Form - MÁS SEPARACIÓN */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-16">
-            {/* Name and Last Name - lado a lado con más espacio */}
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+            {/* Name and Last Name */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
               <div>
-                <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+                <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                   Nombre
                 </label>
                 <input
@@ -158,7 +157,7 @@ export default function RegisterPage() {
                 )}
               </div>
               <div>
-                <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+                <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                   Apellido
                 </label>
                 <input
@@ -179,7 +178,7 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                 Email
               </label>
               <input
@@ -200,7 +199,7 @@ export default function RegisterPage() {
 
             {/* DNI */}
             <div>
-              <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                 DNI
               </label>
               <input
@@ -227,7 +226,7 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                 Contraseña
               </label>
               <div className="relative">
@@ -286,7 +285,7 @@ export default function RegisterPage() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-xs font-bold mb-6 uppercase tracking-widest" style={{ color: 'var(--color-text)' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
                 Confirmar contraseña
               </label>
               <div className="relative">
