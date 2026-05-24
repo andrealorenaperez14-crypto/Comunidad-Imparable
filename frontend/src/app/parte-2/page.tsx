@@ -33,21 +33,21 @@ export default function Parte2() {
   const router = useRouter()
 
   const modules = [
-    { num: '01', title: 'Neuroventas en Consumidor de Salud', topics: ['Comportamiento humano', 'Qué compra realmente una persona', 'Decisión emocional'] },
-    { num: '02', title: 'Cerebro Reptiliano', topics: ['Necesidad urgente de protección', 'Miedo', 'Supervivencia', 'Seguridad', 'Urgencia'] },
-    { num: '03', title: 'Cerebro Límbico', topics: ['Conexión emocional', 'Emociones', 'Apego', 'Familia', 'Empatía estratégica', 'Escucha activa'] },
-    { num: '04', title: 'Neocórtex del Consumidor', topics: ['Racionalizar decisiones', 'Argumentos', 'Comparativas', 'Lógica', 'Validación mental'] },
-    { num: '05', title: 'Botón de Compra - Adultos Mayores', topics: ['Bajar el miedo', 'Seguridad', 'Transparencia', 'Comunicación familiar', 'Objeciones comunes'] },
-    { num: '06', title: 'Botón de Compra - Madres', topics: ['Protección emocional', 'Instinto protector', 'Seguridad infantil', 'Sin presión'] },
-    { num: '07', title: 'Botón de Compra - Familias', topics: ['Quién decide realmente', 'Roles familiares', 'Influenciadores', 'Liderazgo emocional'] },
-    { num: '08', title: 'Psicología de Objeciones', topics: ['Responder sin presionar', '10000+ casos reales', 'Técnicas comprobadas', '"Está caro"', '"Tengo otra cobertura"'] },
-    { num: '09', title: 'Cotización Inteligente', topics: ['Cotizar de verdad', 'Presentar valor', 'No competir por precio', 'Guía mental del cliente'] },
-    { num: '10', title: 'Persuasión Online', topics: ['Atención en pantalla', 'Palabras de impacto', 'Timing emocional', 'WhatsApp', 'Videollamadas'] },
-    { num: '11', title: 'Hipnosis Conversacional y PNL', topics: ['Técnicas avanzadas', 'Cierres de alto impacto', 'Seguimiento efectivo', 'Multiplicador de clientes'] },
-    { num: '12', title: 'Agenda y Organización Elite', topics: ['Manejo de tiempos', 'Crecimiento de cartera', 'Cierre emocional', 'Delegación', 'Drive efectivo'] },
-    { num: '13', title: 'Asesor de Salud - Profesional', topics: ['Seguridad y presencia', 'Autoridad', 'Autoimagen', 'Energía', 'Liderazgo emocional', 'Gratitud'] },
-    { num: '14', title: 'Bonus: Enfermedades y Medicamentos', topics: ['Preexistencias modulables', 'Anticonceptivos', 'Fertilización', 'Legislación 310/2004', 'Medicamentos al 100%'] },
-    { num: '15', title: 'Certificación Elite Internacional', topics: ['De vendedor a profesional', 'Evaluación final', 'Simulaciones de ventas', 'Certificado oficial'] }
+    { num: '01', title: 'Neuroventas aplicadas en Consumidor de Salud', topics: ['Introducción al Comportamiento humano', 'Qué compra realmente una persona', 'Cómo funciona la decisión emocional'] },
+    { num: '02', title: 'Cerebro Reptiliano del Consumidor de Salud', topics: ['Miedo', 'Supervivencia', 'Seguridad', 'Dolor', 'Urgencia'] },
+    { num: '03', title: 'Cerebro Límbico del Consumidor de Salud', topics: ['Emociones', 'Apego', 'Familia', 'Empatía estratégica', 'Escucha activa', 'Tomo nota', 'Cuadro sinoptico'] },
+    { num: '04', title: 'Neocórtex del Consumidor de Salud', topics: ['Argumentos', 'Comparativas', 'Lógica', 'Validación mental', 'No vendemos bajo presón al cliente', 'Brindamos un Servicio de Primera necesidad', 'Ayudamos a las personas'] },
+    { num: '05', title: 'Botón de Compra - Adultos Mayores', topics: ['Seguridad', 'Transparencia', 'Comunicación con la familia', 'Hijos protectores', 'Objeciones comunes', 'Experiencia', 'Excelencia'] },
+    { num: '06', title: 'Botón de Compra - Madres', topics: ['Instinto protector biológico', 'Bajar culpa, brindar el servicio que está a su alcance', 'Seguridad infantil ante todo', 'A veces no se puede, y no se puede', 'Nunca insistimos'] },
+    { num: '07', title: 'Botón de Compra - Familias', topics: ['Roles familiares', 'Influenciadores', 'Liderazgo emocional', 'Inclusión'] },
+    { num: '08', title: 'Psicología de Objeciones, persuasíon', topics: ['"Está caro"', '"Tengo otra cobertura"', '"Después te aviso"', '"Lo consulto con mi..."'] },
+    { num: '09', title: 'Cotización Inteligente', topics: ['Cómo presentar valor', 'Cómo evitar competir por precio', 'Cómo guíar mentalmente al cliente', 'Sin diálogo no hay conversación', 'No hacemos monólogos'] },
+    { num: '10', title: 'Persuasión aplicada a la Venta Online', topics: ['Palabras de impacto', 'Timing emocional', 'Vos', 'WhatsApp', 'Videollamadas'] },
+    { num: '11', title: 'Hipnosis Conversacional y PNL en Consumidor de Salud', topics: ['Cómo respondo', 'Cómo hago el seguimiento', 'Cuando se que ya no es un cliente potencial', 'Cómo convertir un cliente en mil clientes'] },
+    { num: '12', title: 'Agenda y Organización de un Asesor de Elite', topics: ['Cierre emocional como Lider', 'Cierre racional para delegar', 'Uso de Drive efectivo', 'Mis socios se convierten en colaboradores'] },
+    { num: '13', title: 'Asesor de Salud - unoficio que deja herencia', topics: ['Autoimagen', 'Energía', 'Liderazgo emocional', 'Gratitud'] },
+    { num: '14', title: 'Bonus: Enfermedades preexistentes y Medicamentos', topics: ['Preexistencias modulables', 'Anticonceptivos', 'Programa de Fertilización', 'Interrupción Legal del Embarazo', 'Resolución  310/2004', 'Enfermedades y Preexistencias'] },
+    { num: '15', title: 'Certificación Elite Internacional', topics: ['Evaluación final', 'Simulaciones de ventas', 'Casos reales', 'Entrega de la Certificación Internacional en NEuroventas, aplicada al Consumidor de Salud'] }
   ]
 
   return (
@@ -148,6 +148,7 @@ export default function Parte2() {
           >
             30 días de formación. 15 módulos especializados.
             <br />Certificación Internacional en Neuroventas.
+            <br />2 Mentorías semanales en vivo.
           </motion.p>
 
           <motion.p
@@ -160,7 +161,7 @@ export default function Parte2() {
               margin: '0 auto 2rem'
             }}
           >
-            El programa que convierte asesores en profesionales de alto valor.<br />
+            El programa que convierte asesores en Profesionales de Alto Valor.<br />
             <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
           </motion.p>
 
@@ -264,14 +265,12 @@ export default function Parte2() {
               {
                 icon: <CoachIcon />,
                 title: 'IA Coach',
-                desc: 'Mentoría personalizada. Responde dudas 24/7. Guía paso a paso. Acelera tu aprendizaje.',
-                features: ['Respuestas inmediatas', 'Tutoría personalizada', 'Clarificación de conceptos', 'Motivación diaria']
+                desc: 'Mentoría personalizada. Responde dudas 24/7. Guía paso a paso. Acelera tu aprendizaje.'
               },
               {
                 icon: <MentalidadIcon />,
                 title: 'IA Mentalidad',
-                desc: 'Trabaja tus Bloqueos y Miedos. La venta es un estado de Ánimo.',
-                features: ['Sesiones de mentalidad', 'Bloqueos identificados', 'Ejercicios prácticos', 'Transformación interna']
+                desc: 'Trabaja tus Bloqueos y Miedos. La venta es un estado de Ánimo.'
               }
             ].map((ia, i) => (
               <motion.div
@@ -347,13 +346,13 @@ export default function Parte2() {
             </div>
 
             <p style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.5rem' }}>
-              $150 USD
+              150 USD
             </p>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
-              15 módulos + IA Coach + IA Mentalidad por 30 días
+              15 módulos + IAs + Mentorias semanales en vivo + Club de asesores VIP ORO por 30 días
             </p>
             <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, marginBottom: '2rem' }}>
-              Luego $20/mes (opcional)
+              Luego 20 USD / mes (opcional)
             </p>
 
             <button
@@ -430,7 +429,7 @@ export default function Parte2() {
           ))}
         </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
-          Certificación Internacional en Neuroventas · Escuela de Asesores en el rubro Salud · Yami Mansilla
+          Certificación Internacional en Neuroventas · Yami Mansilla
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Desarrollado por: NUCLEO ESTRATEGICO IA
