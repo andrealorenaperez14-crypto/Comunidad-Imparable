@@ -135,17 +135,17 @@ export default function RegisterPage() {
           )}
 
           {/* Form - MÁS SEPARACIÓN */}
-          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Name and Last Name */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+                <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                   Nombre
                 </label>
                 <input
                   {...register('firstName')}
                   placeholder="María"
-                  className="w-full rounded-xl px-4 py-14 focus:outline-none transition-all text-base"
+                  className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -157,13 +157,13 @@ export default function RegisterPage() {
                 )}
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+                <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                   Apellido
                 </label>
                 <input
                   {...register('lastName')}
                   placeholder="García"
-                  className="w-full rounded-xl px-4 py-14 focus:outline-none transition-all text-base"
+                  className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -178,14 +178,14 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                 Email
               </label>
               <input
                 {...register('email')}
                 type="email"
                 placeholder="tu@email.com"
-                className="w-full rounded-xl px-4 py-14 focus:outline-none transition-all text-base"
+                className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -199,7 +199,7 @@ export default function RegisterPage() {
 
             {/* DNI */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                 DNI
               </label>
               <input
@@ -208,7 +208,7 @@ export default function RegisterPage() {
                 inputMode="numeric"
                 maxLength={8}
                 placeholder="12345678"
-                className="w-full rounded-xl px-4 py-14 focus:outline-none transition-all text-base"
+                className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all text-base"
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -226,7 +226,7 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                 Contraseña
               </label>
               <div className="relative">
@@ -234,7 +234,7 @@ export default function RegisterPage() {
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Mín. 8 car., 1 mayúscula y 1 número"
-                  className="w-full rounded-xl px-4 py-14 focus:outline-none transition-all pr-12 text-base"
+                  className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -285,7 +285,7 @@ export default function RegisterPage() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                 Confirmar contraseña
               </label>
               <div className="relative">
@@ -293,7 +293,7 @@ export default function RegisterPage() {
                   {...register('confirmPassword')}
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Repite tu contraseña"
-                  className="w-full rounded-xl px-4 py-14 focus:outline-none transition-all pr-12 text-base"
+                  className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
                   onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
@@ -348,7 +348,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isSubmitting || (strength !== null && strength.label === 'Débil')}
-              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-14 text-base font-medium mt-8"
+              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-10 text-base font-medium mt-8"
             >
               {isSubmitting ? (
                 <>

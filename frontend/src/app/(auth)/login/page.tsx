@@ -90,10 +90,10 @@ export default function LoginPage() {
           )}
 
           {/* Form - MÁS SEPARACIÓN */}
-          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {/* Email field */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                 Email
               </label>
               <input
@@ -101,7 +101,7 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 placeholder="tu@email.com"
-                className="w-full rounded-xl px-4 py-7 transition-all focus:outline-none text-base"
+                className="w-full rounded-xl px-4 py-10 transition-all focus:outline-none text-base"
                 style={{
                   background: 'var(--color-bg)',
                   border: '1px solid var(--color-separator)',
@@ -119,7 +119,7 @@ export default function LoginPage() {
 
             {/* Password field */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block' }}>
+              <label className="block text-xs font-bold uppercase tracking-widest" style={{ color: 'var(--color-text)', marginBottom: '1rem', display: 'block', fontSize: '13px' }}>
                 Contraseña
               </label>
               <div className="relative">
@@ -128,7 +128,7 @@ export default function LoginPage() {
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="w-full rounded-xl px-4 py-7 transition-all focus:outline-none pr-12 text-base"
+                  className="w-full rounded-xl px-4 py-10 transition-all focus:outline-none pr-12 text-base"
                   style={{
                     background: 'var(--color-bg)',
                     border: '1px solid var(--color-separator)',
@@ -162,7 +162,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-7 text-base font-medium"
+              className="btn-primary w-full flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed py-10 text-base font-medium"
             >
               {isSubmitting ? (
                 <>
