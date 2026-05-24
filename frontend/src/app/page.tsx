@@ -115,13 +115,14 @@ export default function HomePage() {
             </p>
             <h1 style={{
               fontFamily: 'Cinzel, serif',
-              fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
+              fontSize: 'clamp(1.2rem, 3.5vw, 2.4rem)',
               fontWeight: 700,
               lineHeight: 1.25,
               marginBottom: '1rem'
             }}>
               ¿Vas a seguir siendo un Vendedor Tradicional{' '}
-              o das el salto a Asesor de Elite en el Rubro Salud?
+              o das el salto a{' '}
+              <span style={{ color: 'var(--color-gold)' }}>Asesor de Elite en el Rubro Salud</span>?
             </h1>
             <p style={{
               fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
@@ -130,7 +131,7 @@ export default function HomePage() {
               maxWidth: '620px',
               margin: '0 auto 2.5rem'
             }}>
-              Ayudamos a asesores/profesionales a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la IA como tu socio.
+              Ayudamos a asesores/profesionales a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la IA entregada como tu socio.
             </p>
           </motion.div>
 
@@ -142,9 +143,9 @@ export default function HomePage() {
             marginBottom: '2rem'
           }}>
             {([
-              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Tradicional: Vende copiando y pegando un speech, asistido con la IA de MPS', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register' },
-              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional, con el MÉTODO YM, exclusivo para el rubro Salud', price: '$150 USD', cta: 'QUIERO SER ASESOR de ELITE', href: '/parte-2' }
-            ] as const).map(({ id, title, desc, price, cta, href }) => (
+              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Tradicional: Vende copiando y pegando un speech, asistido con la IA de MPS', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
+              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional, con el MÉTODO exclusivo para el Rubro SALUD, de Yami Mansilla', price: '$150 USD', cta: 'QUIERO SER ASESOR de ELITE', href: '/parte-2', note: '' }
+            ] as const).map(({ id, title, desc, price, cta, href, note }) => (
               <motion.div
                 key={id}
                 whileHover={{ scale: 1.02 }}
@@ -198,6 +199,11 @@ export default function HomePage() {
                   >
                     {cta}
                   </button>
+                  {note ? (
+                    <p style={{ fontSize: '0.75rem', color: 'var(--color-gold)', marginTop: '0.6rem', letterSpacing: '0.04em' }}>
+                      {note}
+                    </p>
+                  ) : null}
                 </div>
               </motion.div>
             ))}
@@ -567,7 +573,7 @@ export default function HomePage() {
               alignItems: 'center'
             }}>
               <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', fontWeight: 700, marginBottom: '0.5rem' }}>
-                ASESOR ELITE<br />del RUBRO SALUD
+                ASESOR ELITE<br />en el RUBRO SALUD
               </h3>
               <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '2rem' }}>
                 30 días de formación
@@ -591,7 +597,6 @@ export default function HomePage() {
                 <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
                   $150 USD
                 </p>
-                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>Precio lanzamiento</p>
                 <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>inversión por lanzamiento con un 80% menos</p>
                 <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>$20 USD/mes</p>
               </div>
@@ -641,7 +646,7 @@ export default function HomePage() {
               { q: '¿En 3 días puedo cerrar una venta?', a: 'SÍ, aunque todo va a ser NO, buscamos el SÍ.' },
               { q: '¿Necesito experiencia previa?', a: 'NO. Solo ganas, movimiento y ambición.' },
               { q: '¿Cuánto puedo ganar?', a: 'Entre 50 y 500 USD por cliente. Tu objetivo es aprender.' },
-              { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí. En las noches. En Elite necesitas más dedicación.' }
+              { q: '¿Puedo hacerlo mientras trabajo?', a: 'SÍ, puede ser tu complemento. En ELITE, necesitas más dedicación.' }
             ].map((f, i) => (
               <motion.div
                 key={i}
@@ -804,7 +809,7 @@ export default function HomePage() {
           ))}
         </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
-          © 2026 Escuela de Asesores | Formamos Líderes, No Vendedores
+          © 2026 Escuela de Asesores en el Rubro Salud | Formamos Líderes, No Vendedores
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Desarrollado por: NUCLEO ESTRATEGICO IA
