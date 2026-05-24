@@ -313,7 +313,7 @@ export default function HomePage() {
           }}>
             {[
               { icon: <CoachIcon />, name: 'IA Coach', desc: 'Mentoría personalizada 24/7 en cada paso' },
-              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'La Venta es un Estado de Ánimo.<br />Yami ya pasó por eso, te ayuda a desbloquearlo' },
+              { icon: <MentalidadIcon />, name: 'IA Mentalidad', desc: 'La Venta es un Estado de Ánimo.\nYami ya pasó por eso, te ayuda a desbloquearlo' },
               { icon: <ConsultivaIcon />, name: 'IA Consultiva', desc: '+de 10.000 casos reales. Estrategias probadas' }
             ].map((a) => (
               <motion.div
@@ -349,7 +349,7 @@ export default function HomePage() {
                 }}>
                   {a.name}
                 </h3>
-                <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>
+                <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', lineHeight: 1.6, whiteSpace: 'pre-line' }}>
                   {a.desc}
                 </p>
               </motion.div>
