@@ -73,6 +73,7 @@ export const agentApi = {
 // Admin agents
 export const adminAgentApi = {
   list: () => api.get('/api/admin/agents'),
+  get: (id: string) => api.get(`/api/admin/agents/${id}`),
   create: (data: object) => api.post('/api/admin/agents', data),
   update: (id: string, data: object) => api.put(`/api/admin/agents/${id}`, data),
   uploadKnowledge: (id: string, formData: FormData) =>

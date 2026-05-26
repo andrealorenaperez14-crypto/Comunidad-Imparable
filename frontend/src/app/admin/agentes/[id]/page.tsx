@@ -25,12 +25,11 @@ export default function AgentEditorPage() {
   const [uploadStatus, setUploadStatus] = useState('')
   const [uploadOk, setUploadOk] = useState<boolean | null>(null)
 
-  const { data: agents } = useQuery({
-    queryKey: ['admin-agents'],
-    queryFn: () => adminAgentApi.list().then(r => r.data)
+  const { data: agent } = useQuery({
+    queryKey: ['admin-agent', id],
+    queryFn: () => adminAgentApi.get(id).then(r => r.data),
+    enabled: !!id
   })
-
-  const agent = agents?.find((a: any) => a.id === id)
 
   const { register, handleSubmit, formState: { isSubmitting } } = useForm({
     values: agent
@@ -39,6 +38,7 @@ export default function AgentEditorPage() {
   const updateMutation = useMutation({
     mutationFn: (data: object) => adminAgentApi.update(id, data),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-agent', id] })
       queryClient.invalidateQueries({ queryKey: ['admin-agents'] })
       alert('Agente guardado exitosamente.')
     }
@@ -59,7 +59,7 @@ export default function AgentEditorPage() {
       await adminAgentApi.uploadKnowledge(id, formData)
       setUploadStatus('Archivo(s) cargado(s) correctamente')
       setUploadOk(true)
-      queryClient.invalidateQueries({ queryKey: ['admin-agents'] })
+      queryClient.invalidateQueries({ queryKey: ['admin-agent', id] })
     } catch {
       setUploadStatus('Error al cargar el archivo')
       setUploadOk(false)

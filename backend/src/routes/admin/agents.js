@@ -62,6 +62,20 @@ export async function adminAgentRoutes(fastify) {
     return reply.status(201).send(agent)
   })
 
+  fastify.get('/:id', async (request, reply) => {
+    const { id } = request.params
+    const agent = await fastify.prisma.iAAgent.findFirst({
+      where: { id, clientId: request.user.clientId }
+    })
+    if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
+
+    return reply.send({
+      ...agent,
+      primaryApiKey: agent.primaryApiKey ? maskApiKey(decrypt(agent.primaryApiKey)) : '',
+      backupApiKey: agent.backupApiKey ? maskApiKey(decrypt(agent.backupApiKey)) : ''
+    })
+  })
+
   fastify.put('/:id', async (request, reply) => {
     const { id } = request.params
     const agent = await fastify.prisma.iAAgent.findFirst({
