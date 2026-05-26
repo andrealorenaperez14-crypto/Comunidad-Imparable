@@ -9,7 +9,7 @@ import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
 import type { IAMetric } from '@/types'
 
-const WELCOME_DRIVE_ID = '1Bu6gKkxArUhqxA8WB0s7i2CXQwhKJS5F'
+const WELCOME_VIDEO_URL = 'https://gqhwqtunhpcwzoqrbyor.supabase.co/storage/v1/object/public/videos/bienvenida.mp4'
 
 function WelcomeVideo() {
   const [playing, setPlaying] = useState(false)
@@ -27,11 +27,11 @@ function WelcomeVideo() {
 
       <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#0a0a0a' }}>
         {playing ? (
-          <iframe
-            src={`https://drive.google.com/file/d/${WELCOME_DRIVE_ID}/preview`}
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+          <video
+            src={WELCOME_VIDEO_URL}
+            autoPlay
+            controls
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
           />
         ) : (
           <div
