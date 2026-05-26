@@ -9,7 +9,7 @@ import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
 import type { IAMetric } from '@/types'
 
-const WELCOME_VIDEO_ID = 'TU_ID_DE_YOUTUBE' // ← reemplazá con el ID de tu video (lo que va después de ?v= en la URL)
+const WELCOME_VIDEO_ID = 'epjjoP0GMtc'
 
 function WelcomeVideo() {
   const [playing, setPlaying] = useState(false)
