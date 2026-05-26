@@ -13,7 +13,6 @@ const WELCOME_DRIVE_ID = '1Bu6gKkxArUhqxA8WB0s7i2CXQwhKJS5F'
 
 function WelcomeVideo() {
   const [playing, setPlaying] = useState(false)
-  const thumb = `https://drive.google.com/thumbnail?id=${WELCOME_DRIVE_ID}&sz=w1280`
 
   return (
     <div className="card overflow-hidden" style={{ padding: 0 }}>
@@ -26,9 +25,7 @@ function WelcomeVideo() {
         </p>
       </div>
 
-      <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#0a0a0a', cursor: 'pointer' }}
-        onClick={() => setPlaying(true)}
-      >
+      <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#0a0a0a' }}>
         {playing ? (
           <iframe
             src={`https://drive.google.com/file/d/${WELCOME_DRIVE_ID}/preview`}
@@ -37,32 +34,29 @@ function WelcomeVideo() {
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
           />
         ) : (
-          <>
-            <img
-              src={thumb}
-              alt="Video de bienvenida"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.85 }}
-              onError={e => { (e.target as HTMLImageElement).style.display = 'none' }}
-            />
+          <div
+            onClick={() => setPlaying(true)}
+            style={{
+              position: 'absolute', inset: 0, cursor: 'pointer',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+              gap: '1rem',
+              background: 'linear-gradient(135deg, #111 0%, #1a1a0e 100%)'
+            }}
+          >
             <div style={{
-              position: 'absolute', inset: 0,
+              width: '5rem', height: '5rem', borderRadius: '50%',
+              background: 'var(--color-gold)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'rgba(0,0,0,0.35)'
-            }}>
-              <div style={{
-                width: '5rem', height: '5rem', borderRadius: '50%',
-                background: 'var(--color-gold)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 0 40px rgba(196,151,42,0.5)',
-                transition: 'transform 0.2s',
-              }}
-                onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
-                onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
-              >
-                <Play className="w-7 h-7" style={{ color: '#0a0a0a', marginLeft: '4px' }} fill="#0a0a0a" />
-              </div>
+              boxShadow: '0 0 40px rgba(196,151,42,0.5)',
+              transition: 'transform 0.2s',
+            }}
+              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
+              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+            >
+              <Play className="w-7 h-7" style={{ color: '#0a0a0a', marginLeft: '4px' }} fill="#0a0a0a" />
             </div>
-          </>
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>Reproducir video</p>
+          </div>
         )}
       </div>
     </div>
