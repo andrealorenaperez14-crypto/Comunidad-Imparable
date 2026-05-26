@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           {
             key: 'Content-Security-Policy',
-            value: "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com;"
+            value: "frame-src 'self' https://drive.google.com https://www.youtube.com https://www.youtube-nocookie.com;"
           }
         ]
       }

@@ -9,11 +9,11 @@ import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
 import type { IAMetric } from '@/types'
 
-const WELCOME_VIDEO_ID = 'epjjoP0GMtc'
+const WELCOME_DRIVE_ID = '1Bu6gKkxArUhqxA8WB0s7i2CXQwhKJS5F'
 
 function WelcomeVideo() {
   const [playing, setPlaying] = useState(false)
-  const thumb = `https://img.youtube.com/vi/${WELCOME_VIDEO_ID}/maxresdefault.jpg`
+  const thumb = `https://drive.google.com/thumbnail?id=${WELCOME_DRIVE_ID}&sz=w1280`
 
   return (
     <div className="card overflow-hidden" style={{ padding: 0 }}>
@@ -31,8 +31,8 @@ function WelcomeVideo() {
       >
         {playing ? (
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${WELCOME_VIDEO_ID}?autoplay=1&mute=1&rel=0&modestbranding=1`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            src={`https://drive.google.com/file/d/${WELCOME_DRIVE_ID}/preview`}
+            allow="autoplay; encrypted-media"
             allowFullScreen
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
           />
