@@ -5,6 +5,11 @@ import { BookOpen, Lock, Loader2 } from 'lucide-react'
 import { api } from '@/lib/api'
 import { useAuth } from '@/hooks/useAuth'
 
+function getYouTubeId(url: string): string | null {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([^?&\s]+)/)
+  return match ? match[1] : null
+}
+
 export default function CursoPage() {
   const { user } = useAuth()
 
@@ -59,7 +64,20 @@ export default function CursoPage() {
                   Gratuito
                 </span>
               </div>
-              <p className="text-sm mb-6" style={{ color: 'var(--color-text-muted)' }}>{item.description}</p>
+              <p className="text-sm mb-4" style={{ color: 'var(--color-text-muted)' }}>{item.description}</p>
+              {item.videoUrl && (() => {
+                const videoId = getYouTubeId(item.videoUrl)
+                return videoId ? (
+                  <div className="rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : null
+              })()}
             </div>
           ))}
 
@@ -108,7 +126,20 @@ export default function CursoPage() {
                   </span>
                 )}
               </div>
-              <p className="text-sm mb-6" style={{ color: 'var(--color-text-muted)' }}>{item.description}</p>
+              <p className="text-sm mb-4" style={{ color: 'var(--color-text-muted)' }}>{item.description}</p>
+              {isPaid && item.videoUrl && (() => {
+                const videoId = getYouTubeId(item.videoUrl)
+                return videoId ? (
+                  <div className="rounded-xl overflow-hidden mb-4" style={{ aspectRatio: '16/9' }}>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${videoId}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                ) : null
+              })()}
               {!isPaid && (
                 <p className="text-xs" style={{ color: 'var(--color-gold)' }}>
                   Actualiza a un plan pago para acceder a este contenido

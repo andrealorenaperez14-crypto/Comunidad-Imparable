@@ -28,7 +28,7 @@ export async function adminCourseRoutes(fastify) {
 
   // Create course content
   fastify.post('/', { preHandler: authenticateAdmin }, async (req, reply) => {
-    const { title, description, content, type, order } = req.body
+    const { title, description, content, type, order, videoUrl } = req.body
     if (!title || !content || !type) return reply.code(400).send({ error: 'title, content y type son requeridos' })
 
     const last = await fastify.prisma.courseContent.findFirst({
@@ -43,6 +43,7 @@ export async function adminCourseRoutes(fastify) {
         description: description || '',
         content,
         type: type || 'FREE',
+        videoUrl: videoUrl || null,
         order: order ?? (last ? last.order + 1 : 0)
       }
     })
@@ -52,7 +53,7 @@ export async function adminCourseRoutes(fastify) {
   // Update course content
   fastify.put('/:id', { preHandler: authenticateAdmin }, async (req, reply) => {
     const { id } = req.params
-    const { title, description, content, type, order } = req.body
+    const { title, description, content, type, order, videoUrl } = req.body
 
     const existing = await fastify.prisma.courseContent.findFirst({
       where: { id, clientId: req.user.clientId }
@@ -61,7 +62,7 @@ export async function adminCourseRoutes(fastify) {
 
     const course = await fastify.prisma.courseContent.update({
       where: { id },
-      data: { title, description, content, type, order }
+      data: { title, description, content, type, order, videoUrl: videoUrl ?? null }
     })
     return course
   })

@@ -204,6 +204,7 @@ model CourseContent {
   title       String
   description String   @db.Text
   content     String   @db.Text
+  videoUrl    String?  @db.Text
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
