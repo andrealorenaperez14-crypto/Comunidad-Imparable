@@ -1,6 +1,10 @@
+import { createRequire } from 'module'
 import { requireAdmin } from '../../middleware/auth.js'
 import { encrypt, decrypt, maskApiKey } from '../../utils/encryption.js'
 import { z } from 'zod'
+
+const require = createRequire(import.meta.url)
+const pdfParse = require('pdf-parse')
 
 const agentSchema = z.object({
   type: z.enum(['CONSULTIVO', 'MENTOR', 'CONSULTIVA']),
@@ -87,8 +91,9 @@ export async function adminAgentRoutes(fastify) {
     const { primaryApiKey, backupApiKey, ...rest } = request.body || {}
     const updateData = { ...rest }
 
-    if (primaryApiKey) updateData.primaryApiKey = encrypt(primaryApiKey)
-    if (backupApiKey) updateData.backupApiKey = encrypt(backupApiKey)
+    // Solo actualizar si es una clave nueva (no enmascarada)
+    if (primaryApiKey && !primaryApiKey.includes('****')) updateData.primaryApiKey = encrypt(primaryApiKey)
+    if (backupApiKey && !backupApiKey.includes('****')) updateData.backupApiKey = encrypt(backupApiKey)
 
     const updated = await fastify.prisma.iAAgent.update({
       where: { id },
@@ -114,7 +119,20 @@ export async function adminAgentRoutes(fastify) {
       if (part.file) {
         const chunks = []
         for await (const chunk of part.file) chunks.push(chunk)
-        const content = Buffer.concat(chunks).toString('utf8')
+        const buffer = Buffer.concat(chunks)
+
+        let content
+        if (part.filename?.toLowerCase().endsWith('.pdf')) {
+          try {
+            const parsed = await pdfParse(buffer)
+            content = parsed.text
+          } catch {
+            content = buffer.toString('utf8')
+          }
+        } else {
+          content = buffer.toString('utf8')
+        }
+
         parts.push({ filename: part.filename, content: content.slice(0, 50000) })
       }
     }
