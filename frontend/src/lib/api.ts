@@ -80,6 +80,9 @@ export const adminAgentApi = {
     api.post(`/api/admin/agents/${id}/knowledge`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     }),
+  listKnowledge: (id: string) => api.get(`/api/admin/agents/${id}/knowledge`),
+  deleteKnowledge: (id: string, filename?: string) =>
+    api.delete(`/api/admin/agents/${id}/knowledge${filename ? `?filename=${encodeURIComponent(filename)}` : ''}`),
   interactions: (id: string, page = 1) =>
     api.get(`/api/admin/agents/${id}/interactions?page=${page}`),
   publish: (id: string) => api.post(`/api/admin/agents/${id}/publish`)

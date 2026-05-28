@@ -94,10 +94,11 @@ model IAAgent {
   backupApiKey  String          @db.Text
   published     Boolean         @default(false)
   publishedDate DateTime?
-  interactions  IAInteraction[]
-  metrics       IAMetric[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  interactions    IAInteraction[]
+  metrics         IAMetric[]
+  documentChunks  DocumentChunk[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
   @@index([clientId])
   @@unique([clientId, type])
@@ -210,6 +211,18 @@ model CourseContent {
   updatedAt   DateTime @updatedAt
 
   @@index([clientId, type])
+}
+
+model DocumentChunk {
+  id          String   @id @default(cuid())
+  agentId     String
+  agent       IAAgent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  filename    String
+  chunkIndex  Int
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+
+  @@index([agentId])
 }
 
 model SaleCommission {

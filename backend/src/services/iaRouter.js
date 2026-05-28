@@ -3,6 +3,32 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
+async function retrieveRelevantChunks(prisma, agentId, query, limit = 6) {
+  try {
+    const results = await prisma.$queryRaw`
+      SELECT content, filename,
+             ts_rank(to_tsvector('spanish', content), plainto_tsquery('spanish', ${query})) AS rank
+      FROM "DocumentChunk"
+      WHERE "agentId" = ${agentId}
+        AND to_tsvector('spanish', content) @@ plainto_tsquery('spanish', ${query})
+      ORDER BY rank DESC
+      LIMIT ${limit}
+    `
+    if (results.length > 0) return results.map(r => r.content)
+
+    // fallback: si no matchea, devolver los primeros chunks
+    const fallback = await prisma.documentChunk.findMany({
+      where: { agentId },
+      orderBy: [{ filename: 'asc' }, { chunkIndex: 'asc' }],
+      take: limit,
+      select: { content: true }
+    })
+    return fallback.map(r => r.content)
+  } catch {
+    return []
+  }
+}
+
 const TIMEOUT_MS = 30000
 
 async function withTimeout(promise, ms) {
@@ -93,7 +119,7 @@ async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledge
   }
 }
 
-export async function routeIaRequest(agent, message, userId) {
+export async function routeIaRequest(agent, message, userId, prisma = null) {
   let primaryKey = null
   let backupKey = null
   try {
@@ -102,7 +128,16 @@ export async function routeIaRequest(agent, message, userId) {
   } catch {
     // Keys can't be decrypted — proceed without them, fall back to env vars
   }
-  const knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
+
+  // RAG: buscar chunks relevantes en DB, fallback al JSON legacy
+  let knowledgeBase = []
+  if (prisma) {
+    const chunks = await retrieveRelevantChunks(prisma, agent.id, message)
+    knowledgeBase = chunks.map(content => ({ content }))
+  }
+  if (knowledgeBase.length === 0) {
+    knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
+  }
 
   const { systemPrompt, instructions, type } = agent
 

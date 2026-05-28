@@ -114,38 +114,75 @@ export async function adminAgentRoutes(fastify) {
     })
     if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
 
-    const parts = []
+    const filesProcessed = []
     for await (const part of request.parts()) {
-      if (part.file) {
-        const chunks = []
-        for await (const chunk of part.file) chunks.push(chunk)
-        const buffer = Buffer.concat(chunks)
+      if (!part.file) continue
 
-        let content
-        if (part.filename?.toLowerCase().endsWith('.pdf')) {
-          try {
-            const parsed = await pdfParse(buffer)
-            content = parsed.text
-          } catch {
-            content = buffer.toString('utf8')
-          }
-        } else {
-          content = buffer.toString('utf8')
+      const chunks = []
+      for await (const chunk of part.file) chunks.push(chunk)
+      const buffer = Buffer.concat(chunks)
+
+      let text
+      if (part.filename?.toLowerCase().endsWith('.pdf')) {
+        try {
+          const parsed = await pdfParse(buffer)
+          text = parsed.text
+        } catch {
+          text = buffer.toString('utf8')
         }
-
-        parts.push({ filename: part.filename, content: content.slice(0, 50000) })
+      } else {
+        text = buffer.toString('utf8')
       }
+
+      // Fragmentar en párrafos de ~1000 chars para búsqueda granular
+      const paragraphs = text.split(/\n{2,}/).map(p => p.trim()).filter(p => p.length > 50)
+      const chunkDocs = []
+      let chunkIndex = 0
+      let current = ''
+      for (const para of paragraphs) {
+        if ((current + para).length > 1000 && current.length > 0) {
+          chunkDocs.push({ agentId: id, filename: part.filename, chunkIndex: chunkIndex++, content: current.trim() })
+          current = para
+        } else {
+          current = current ? `${current}\n\n${para}` : para
+        }
+      }
+      if (current.trim()) chunkDocs.push({ agentId: id, filename: part.filename, chunkIndex: chunkIndex, content: current.trim() })
+
+      // Eliminar chunks anteriores de este archivo y guardar los nuevos
+      await fastify.prisma.documentChunk.deleteMany({ where: { agentId: id, filename: part.filename } })
+      await fastify.prisma.documentChunk.createMany({ data: chunkDocs })
+
+      filesProcessed.push({ filename: part.filename, chunks: chunkDocs.length })
     }
 
-    const existing = JSON.parse(agent.knowledgeBase || '[]')
-    const updated = [...existing, ...parts]
-
-    await fastify.prisma.iAAgent.update({
-      where: { id },
-      data: { knowledgeBase: JSON.stringify(updated) }
+    return reply.send({
+      mensaje: `${filesProcessed.length} archivo(s) indexado(s) correctamente.`,
+      detalle: filesProcessed
     })
+  })
 
-    return reply.send({ mensaje: `${parts.length} archivo(s) cargado(s) correctamente.`, total: updated.length })
+  fastify.delete('/:id/knowledge', async (request, reply) => {
+    const { id } = request.params
+    const { filename } = request.query
+    const agent = await fastify.prisma.iAAgent.findFirst({ where: { id, clientId: request.user.clientId } })
+    if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
+
+    await fastify.prisma.documentChunk.deleteMany({ where: { agentId: id, ...(filename ? { filename } : {}) } })
+    return reply.send({ ok: true })
+  })
+
+  fastify.get('/:id/knowledge', async (request, reply) => {
+    const { id } = request.params
+    const agent = await fastify.prisma.iAAgent.findFirst({ where: { id, clientId: request.user.clientId } })
+    if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
+
+    const files = await fastify.prisma.documentChunk.groupBy({
+      by: ['filename'],
+      where: { agentId: id },
+      _count: { chunkIndex: true }
+    })
+    return reply.send(files.map(f => ({ filename: f.filename, chunks: f._count.chunkIndex })))
   })
 
   fastify.get('/:id/interactions', async (request, reply) => {

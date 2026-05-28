@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { motion } from 'framer-motion'
-import { Save, Upload, Eye, EyeOff, Loader2, ArrowLeft, CheckCircle, XCircle } from 'lucide-react'
+import { Save, Upload, Eye, EyeOff, Loader2, ArrowLeft, CheckCircle, XCircle, Trash2, FileText } from 'lucide-react'
 import Link from 'next/link'
 import { adminAgentApi } from '@/lib/api'
 import { ChatInterface } from '@/components/chat/ChatInterface'
@@ -24,10 +24,17 @@ export default function AgentEditorPage() {
   const [activeTab, setActiveTab] = useState<'config' | 'preview' | 'logs'>('config')
   const [uploadStatus, setUploadStatus] = useState('')
   const [uploadOk, setUploadOk] = useState<boolean | null>(null)
+  const [deletingFile, setDeletingFile] = useState<string | null>(null)
 
   const { data: agent } = useQuery({
     queryKey: ['admin-agent', id],
     queryFn: () => adminAgentApi.get(id).then(r => r.data),
+    enabled: !!id
+  })
+
+  const { data: knowledgeDocs = [], refetch: refetchDocs } = useQuery({
+    queryKey: ['agent-knowledge', id],
+    queryFn: () => adminAgentApi.listKnowledge(id).then(r => r.data),
     enabled: !!id
   })
 
@@ -53,13 +60,13 @@ export default function AgentEditorPage() {
       formData.append('files', file)
     }
 
-    setUploadStatus('Cargando...')
+    setUploadStatus('Indexando...')
     setUploadOk(null)
     try {
       await adminAgentApi.uploadKnowledge(id, formData)
-      setUploadStatus('Archivo(s) cargado(s) correctamente')
+      setUploadStatus('Archivo(s) indexado(s) correctamente')
       setUploadOk(true)
-      queryClient.invalidateQueries({ queryKey: ['admin-agent', id] })
+      refetchDocs()
     } catch {
       setUploadStatus('Error al cargar el archivo')
       setUploadOk(false)
@@ -216,8 +223,10 @@ export default function AgentEditorPage() {
           </div>
 
           <div className="card space-y-4">
-            <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Base de conocimiento</h2>
-            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Sube archivos PDF, TXT o JSON para enriquecer al agente</p>
+            <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>Base de conocimiento (RAG)</h2>
+            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+              Los archivos se fragmentan e indexan automáticamente. La IA busca el fragmento más relevante para cada pregunta.
+            </p>
 
             <label
               className="flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all"
@@ -225,13 +234,7 @@ export default function AgentEditorPage() {
             >
               <Upload className="w-5 h-5" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
               <span className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Seleccionar archivos (PDF, TXT, JSON)</span>
-              <input
-                type="file"
-                multiple
-                accept=".pdf,.txt,.json"
-                onChange={uploadKnowledge}
-                className="hidden"
-              />
+              <input type="file" multiple accept=".pdf,.txt,.json" onChange={uploadKnowledge} className="hidden" />
             </label>
 
             {uploadStatus && (
@@ -240,6 +243,39 @@ export default function AgentEditorPage() {
                 {uploadOk === false && <XCircle className="w-4 h-4" strokeWidth={1.5} />}
                 {uploadStatus}
               </p>
+            )}
+
+            {(knowledgeDocs as any[]).length > 0 && (
+              <div className="space-y-2">
+                <p className="text-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>Documentos indexados:</p>
+                {(knowledgeDocs as any[]).map((doc: any) => (
+                  <div key={doc.filename} className="flex items-center justify-between px-3 py-2 rounded-lg" style={{ background: 'var(--color-bg)', border: '1px solid var(--color-separator)' }}>
+                    <div className="flex items-center gap-2">
+                      <FileText className="w-4 h-4" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+                      <span className="text-sm" style={{ color: 'var(--color-text)' }}>{doc.filename}</span>
+                      <span className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{doc.chunks} fragmentos</span>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={deletingFile === doc.filename}
+                      onClick={async () => {
+                        setDeletingFile(doc.filename)
+                        try {
+                          await adminAgentApi.deleteKnowledge(id, doc.filename)
+                          refetchDocs()
+                        } finally {
+                          setDeletingFile(null)
+                        }
+                      }}
+                      style={{ color: 'var(--color-text-muted)' }}
+                    >
+                      {deletingFile === doc.filename
+                        ? <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
+                        : <Trash2 className="w-4 h-4" strokeWidth={1.5} />}
+                    </button>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
 

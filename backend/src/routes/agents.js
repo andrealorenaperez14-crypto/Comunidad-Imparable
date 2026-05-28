@@ -29,7 +29,7 @@ export async function agentRoutes(fastify) {
       }
 
       const startTime = Date.now()
-      const result = await routeIaRequest(agent, message, request.user.id)
+      const result = await routeIaRequest(agent, message, request.user.id, fastify.prisma)
       const duration = Date.now() - startTime
 
       const interaction = await fastify.prisma.iAInteraction.create({
