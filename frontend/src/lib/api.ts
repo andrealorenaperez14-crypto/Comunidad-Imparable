@@ -56,7 +56,7 @@ export const authApi = {
 // Subscription
 export const subscriptionApi = {
   status: () => api.get('/api/subscription/status'),
-  upgrade: (planType: string) => api.post('/api/subscription/upgrade', { planType }),
+  upgrade: (userId: string, planType: string) => api.post('/api/subscription/upgrade', { userId, planType }),
   cancel: () => api.post('/api/subscription/cancel'),
   history: () => api.get('/api/subscription/history')
 }

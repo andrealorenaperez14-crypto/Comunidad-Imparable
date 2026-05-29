@@ -115,7 +115,7 @@ export function startCronJobs(fastify) {
     }
   })
 
-  // 8am: alertas de sin ingreso (3 días inactivos)
+  // 8am: alertas de sin ingreso (3 días inactivos) — máx 1 email cada 3 días por usuario
   cron.schedule('0 8 * * *', async () => {
     try {
       const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
@@ -128,7 +128,12 @@ export function startCronJobs(fastify) {
         include: { user: true }
       })
 
+      let sent = 0
       for (const profile of inactiveProfiles) {
+        const redisKey = `warn_email:${profile.userId}`
+        const alreadySent = fastify.redis ? await fastify.redis.get(redisKey) : null
+        if (alreadySent) continue
+
         const daysSince = Math.floor((Date.now() - new Date(profile.lastLoginAt).getTime()) / (1000 * 60 * 60 * 24))
         await sendNoLoginWarningEmail({
           email: profile.user.email,
@@ -136,9 +141,14 @@ export function startCronJobs(fastify) {
           schoolName: 'Escuela Digital Elite',
           daysSinceLogin: daysSince
         })
+
+        if (fastify.redis) {
+          await fastify.redis.setex(redisKey, 3 * 24 * 60 * 60, '1') // no repetir por 3 días
+        }
+        sent++
       }
 
-      fastify.log.info(`Alertas de inactividad enviadas: ${inactiveProfiles.length}`)
+      fastify.log.info(`Alertas de inactividad enviadas: ${sent} (${inactiveProfiles.length} inactivos totales)`)
     } catch (err) {
       fastify.log.error({ err }, 'Error enviando alertas de inactividad')
     }
