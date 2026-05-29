@@ -2,8 +2,8 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Users, TrendingUp, Loader2, Search, KeyRound, Eye, EyeOff, CheckCircle, X, Trash2, DollarSign, Plus, BadgeCheck, Clock } from 'lucide-react'
-import { metricsApi, adminUserApi, adminCommissionApi } from '@/lib/api'
+import { Users, TrendingUp, Loader2, Search, KeyRound, Eye, EyeOff, CheckCircle, X, Trash2, DollarSign, Plus, BadgeCheck, Clock, Star, Mail } from 'lucide-react'
+import { metricsApi, adminUserApi, adminCommissionApi, subscriptionApi } from '@/lib/api'
 import { getStatusBg } from '@/lib/utils'
 import type { SaleCommission } from '@/types'
 import { useAuth } from '@/hooks/useAuth'
@@ -13,7 +13,7 @@ interface Student {
   email: string
   dni: string
   profile: { firstName: string; lastName: string; lastLoginAt?: string } | null
-  subscription: { status: string } | null
+  subscription: { status: string; planType?: string } | null
 }
 
 function ResetPasswordModal({ student, onClose }: { student: Student; onClose: () => void }) {
@@ -103,6 +103,111 @@ function ResetPasswordModal({ student, onClose }: { student: Student; onClose: (
             </form>
           </>
         )}
+      </motion.div>
+    </div>
+  )
+}
+
+function UpgradeVitalicioModal({ student, onClose, onDone }: { student: Student; onClose: () => void; onDone: () => void }) {
+  const name = student.profile ? `${student.profile.firstName} ${student.profile.lastName}` : student.email
+  const { mutate, isPending, error, isSuccess } = useMutation({
+    mutationFn: () => subscriptionApi.upgrade(student.id, 'VITALICIO'),
+    onSuccess: () => { onDone() }
+  })
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.75)' }}>
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+        className="card w-full max-w-sm text-center"
+      >
+        {isSuccess ? (
+          <div className="py-4 space-y-3">
+            <CheckCircle className="w-12 h-12 mx-auto" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            <p className="font-semibold" style={{ color: 'var(--color-text)' }}>Plan Vitalicio activado</p>
+            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{name}</p>
+            <button onClick={onClose} className="btn-primary mt-2">Cerrar</button>
+          </div>
+        ) : (
+          <>
+            <Star className="w-10 h-10 mx-auto mb-3" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            <h3 className="font-semibold mb-1" style={{ color: 'var(--color-text)' }}>Activar Plan Vitalicio</h3>
+            <p className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>{name}</p>
+            <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)' }}>
+              El alumno tendrá acceso permanente sin fecha de vencimiento. La suscripción actual será reemplazada.
+            </p>
+            {(error as any)?.response?.data?.error && (
+              <p className="text-sm mb-4" style={{ color: '#F87171' }}>{(error as any).response.data.error}</p>
+            )}
+            <div className="flex gap-3">
+              <button onClick={onClose} className="flex-1 py-2.5 rounded-xl text-sm" style={{ border: '1px solid var(--color-separator)', color: 'var(--color-text-muted)' }}>
+                Cancelar
+              </button>
+              <button onClick={() => mutate()} disabled={isPending} className="flex-1 py-2.5 rounded-xl text-sm font-medium disabled:opacity-50"
+                style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>
+                {isPending ? 'Activando...' : 'Confirmar'}
+              </button>
+            </div>
+          </>
+        )}
+      </motion.div>
+    </div>
+  )
+}
+
+function EditEmailModal({ student, onClose, onDone }: { student: Student; onClose: () => void; onDone: (newEmail: string) => void }) {
+  const [email, setEmail] = useState(student.email)
+  const [fieldError, setFieldError] = useState('')
+  const name = student.profile ? `${student.profile.firstName} ${student.profile.lastName}` : student.email
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: () => adminUserApi.updateEmail(student.id, email),
+    onSuccess: () => { onDone(email) }
+  })
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setFieldError('')
+    if (!email.includes('@')) { setFieldError('Email inválido'); return }
+    mutate()
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.75)' }}>
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+        className="card w-full max-w-md relative"
+      >
+        <button onClick={onClose} className="absolute top-4 right-4" style={{ color: 'var(--color-text-muted)', minHeight: 'unset', minWidth: 'unset' }}>
+          <X className="w-5 h-5" strokeWidth={1.5} />
+        </button>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+            <Mail className="w-5 h-5" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+          </div>
+          <div>
+            <p className="font-semibold" style={{ color: 'var(--color-text)' }}>Editar email</p>
+            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{name} · DNI {student.dni}</p>
+          </div>
+        </div>
+        {((error as any)?.response?.data?.error || fieldError) && (
+          <div className="px-4 py-3 rounded-lg text-sm mb-4" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.3)', color: '#F87171' }}>
+            {fieldError || (error as any)?.response?.data?.error}
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--color-text-muted)' }}>Nuevo email</label>
+            <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+              className="w-full rounded-xl px-4 py-3 focus:outline-none"
+              style={{ background: 'var(--color-bg)', border: '1px solid var(--color-separator)', color: 'var(--color-text)' }}
+              onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+              onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
+            />
+          </div>
+          <button type="submit" disabled={isPending || !email || email === student.email}
+            className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50">
+            {isPending ? <><Loader2 className="w-4 h-4 animate-spin" />Guardando...</> : 'Guardar email'}
+          </button>
+        </form>
       </motion.div>
     </div>
   )
@@ -332,6 +437,8 @@ export default function AlumnosPage() {
   const [selected, setSelected] = useState<Student | null>(null)
   const [deleteTarget, setDeleteTarget] = useState<Student | null>(null)
   const [commissionTarget, setCommissionTarget] = useState<Student | null>(null)
+  const [upgradeTarget, setUpgradeTarget] = useState<Student | null>(null)
+  const [editEmailTarget, setEditEmailTarget] = useState<Student | null>(null)
 
   const { data: stats, isLoading } = useQuery({
     queryKey: ['dashboard-stats'],
@@ -398,7 +505,13 @@ export default function AlumnosPage() {
             {students.map(student => {
               const name = student.profile ? `${student.profile.firstName} ${student.profile.lastName}` : student.email
               const initial = (student.profile?.firstName || student.email)[0].toUpperCase()
-              const isActive = student.subscription?.status === 'ACTIVE'
+              const sub = student.subscription
+              const isVitalicio = sub?.planType === 'VITALICIO'
+              const isTrial = sub?.planType === 'TRIAL'
+              const isActive = sub?.status === 'ACTIVE' || sub?.status === 'TRIAL'
+              const badgeLabel = isVitalicio ? 'Vitalicio' : isTrial ? 'Prueba' : isActive ? 'Activo' : 'Inactivo'
+              const badgeColor = isVitalicio ? 'var(--color-gold)' : isTrial ? '#60A5FA' : isActive ? '#4ADE80' : '#9CA3AF'
+              const badgeBg = isVitalicio ? 'rgba(196,151,42,0.1)' : isTrial ? 'rgba(96,165,250,0.1)' : isActive ? 'rgba(74,222,128,0.1)' : 'rgba(156,163,175,0.1)'
               return (
                 <div key={student.id} className="flex items-center gap-4 p-4 rounded-xl"
                   style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}>
@@ -410,8 +523,8 @@ export default function AlumnosPage() {
                     <div className="flex items-center gap-2 mb-0.5">
                       <p className="font-medium truncate" style={{ color: 'var(--color-text)' }}>{name}</p>
                       <span className="text-xs px-2 py-0.5 rounded-full flex-shrink-0"
-                        style={{ background: isActive ? 'rgba(74,222,128,0.1)' : 'rgba(156,163,175,0.1)', color: isActive ? '#4ADE80' : '#9CA3AF', border: `1px solid ${isActive ? '#4ADE8040' : '#9CA3AF40'}` }}>
-                        {isActive ? 'Activo' : 'Inactivo'}
+                        style={{ background: badgeBg, color: badgeColor, border: `1px solid ${badgeColor}40` }}>
+                        {badgeLabel}
                       </span>
                     </div>
                     <p className="text-sm truncate" style={{ color: 'var(--color-text-muted)' }}>
@@ -419,6 +532,18 @@ export default function AlumnosPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
+                    {student.subscription?.planType !== 'VITALICIO' && (
+                      <button onClick={() => setUpgradeTarget(student)}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
+                        style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+                        <Star className="w-4 h-4" strokeWidth={1.5} />
+                        <span className="hidden lg:inline">Vitalicio</span>
+                      </button>
+                    )}
+                    <button onClick={() => setEditEmailTarget(student)}
+                      className="p-2 rounded-xl" style={{ color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}>
+                      <Mail className="w-4 h-4" strokeWidth={1.5} />
+                    </button>
                     <button onClick={() => setCommissionTarget(student)}
                       className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
                       style={{ background: 'rgba(74,222,128,0.08)', color: '#4ADE80', border: '1px solid rgba(74,222,128,0.2)' }}>
@@ -483,6 +608,26 @@ export default function AlumnosPage() {
           />
         )}
         {commissionTarget && <CommissionsModal student={commissionTarget} onClose={() => setCommissionTarget(null)} />}
+        {upgradeTarget && (
+          <UpgradeVitalicioModal
+            student={upgradeTarget}
+            onClose={() => setUpgradeTarget(null)}
+            onDone={() => {
+              qc.invalidateQueries({ queryKey: ['admin-students'] })
+              setUpgradeTarget(null)
+            }}
+          />
+        )}
+        {editEmailTarget && (
+          <EditEmailModal
+            student={editEmailTarget}
+            onClose={() => setEditEmailTarget(null)}
+            onDone={() => {
+              qc.invalidateQueries({ queryKey: ['admin-students'] })
+              setEditEmailTarget(null)
+            }}
+          />
+        )}
       </AnimatePresence>
     </div>
   )

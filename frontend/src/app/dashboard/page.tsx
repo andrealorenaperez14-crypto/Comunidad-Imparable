@@ -1,19 +1,14 @@
 'use client'
-import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle, Play } from 'lucide-react'
+import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle, CalendarDays } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
 import type { IAMetric } from '@/types'
 
-const WELCOME_VIDEO_URL = 'https://gqhwqtunhpcwzoqrbyor.supabase.co/storage/v1/object/public/videos/bienvenida.mp4'
-
 function WelcomeVideo() {
-  const [playing, setPlaying] = useState(false)
-
   return (
     <div className="card overflow-hidden" style={{ padding: 0 }}>
       <div style={{ padding: '1.25rem 1.5rem 1rem', borderBottom: '1px solid var(--color-separator)' }}>
@@ -24,40 +19,13 @@ function WelcomeVideo() {
           Mirá este mensaje antes de empezar — es importante
         </p>
       </div>
-
       <div style={{ position: 'relative', width: '100%', aspectRatio: '16/9', background: '#0a0a0a' }}>
-        {playing ? (
-          <video
-            src={WELCOME_VIDEO_URL}
-            autoPlay
-            controls
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
-          />
-        ) : (
-          <div
-            onClick={() => setPlaying(true)}
-            style={{
-              position: 'absolute', inset: 0, cursor: 'pointer',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              gap: '1rem',
-              background: 'linear-gradient(135deg, #111 0%, #1a1a0e 100%)'
-            }}
-          >
-            <div style={{
-              width: '5rem', height: '5rem', borderRadius: '50%',
-              background: 'var(--color-gold)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 0 40px rgba(196,151,42,0.5)',
-              transition: 'transform 0.2s',
-            }}
-              onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
-              onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
-            >
-              <Play className="w-7 h-7" style={{ color: '#0a0a0a', marginLeft: '4px' }} fill="#0a0a0a" />
-            </div>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>Reproducir video</p>
-          </div>
-        )}
+        <iframe
+          src="https://www.youtube.com/embed/MFyN9db4kfw"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
       </div>
     </div>
   )
@@ -86,7 +54,8 @@ export default function DashboardPage() {
 
   const { data: subData } = useQuery({
     queryKey: ['subscription'],
-    queryFn: () => subscriptionApi.status().then(r => r.data)
+    queryFn: () => subscriptionApi.status().then(r => r.data),
+    retry: false
   })
   const { data: metricsData } = useQuery({
     queryKey: ['metrics', user?.id],
@@ -120,6 +89,48 @@ export default function DashboardPage() {
       <section className="overflow-hidden">
         <WelcomeVideo />
       </section>
+
+      {/* Trial countdown banner */}
+      {subData?.isTrial && !subData?.isTrialExpired && (
+        <motion.section
+          className="overflow-hidden"
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div
+            className="rounded-2xl p-5"
+            style={{
+              background: 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(196,151,42,0.05) 100%)',
+              border: '1px solid var(--color-gold-border)'
+            }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <CalendarDays className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+                <div>
+                  <p className="font-semibold" style={{ color: 'var(--color-gold)' }}>
+                    Período gratuito — Día {subData.trialDayNumber} de 5
+                  </p>
+                  <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                    {subData.daysRemaining === 0
+                      ? 'Hoy es tu último día de acceso gratuito'
+                      : `Te quedan ${subData.daysRemaining} día${subData.daysRemaining !== 1 ? 's' : ''} de acceso`}
+                  </p>
+                </div>
+              </div>
+              <span className="text-2xl font-bold flex-shrink-0" style={{ color: 'var(--color-gold)' }}>
+                {subData.trialDayNumber}/5
+              </span>
+            </div>
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(196,151,42,0.15)' }}>
+              <div
+                className="h-full rounded-full transition-all"
+                style={{ width: `${(subData.trialDayNumber / 5) * 100}%`, background: 'var(--color-gold)' }}
+              />
+            </div>
+          </div>
+        </motion.section>
+      )}
 
       {/* Subscription */}
       {subData && (

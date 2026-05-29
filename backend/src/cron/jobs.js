@@ -15,6 +15,19 @@ import {
 export function startCronJobs(fastify) {
   const { prisma } = fastify
 
+  // Medianoche+5: expirar suscripciones TRIAL vencidas
+  cron.schedule('5 0 * * *', async () => {
+    try {
+      const result = await prisma.subscription.updateMany({
+        where: { status: 'TRIAL', activeUntil: { lt: new Date() } },
+        data: { status: 'EXPIRED' }
+      })
+      fastify.log.info(`Suscripciones TRIAL expiradas automáticamente: ${result.count}`)
+    } catch (err) {
+      fastify.log.error({ err }, 'Error expirando suscripciones TRIAL')
+    }
+  })
+
   // Medianoche: recalcular ranking
   cron.schedule('0 0 * * *', async () => {
     try {
