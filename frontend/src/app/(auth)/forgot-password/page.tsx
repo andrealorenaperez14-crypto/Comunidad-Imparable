@@ -32,7 +32,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--color-bg)' }}>
       <motion.div
-        initial={{ opacity: 1, y: 16 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
         className="w-full max-w-md"
@@ -48,9 +48,7 @@ export default function ForgotPasswordPage() {
             {sent ? 'Email enviado' : 'Olvidé mi contraseña'}
           </h1>
           <p style={{ color: 'var(--color-text-muted)' }}>
-            {sent
-              ? 'Revisá tu bandeja de entrada'
-              : 'Te enviamos un código de 6 dígitos'}
+            {sent ? 'Revisá tu bandeja de entrada' : 'Te enviamos una contraseña provisoria'}
           </p>
         </div>
 
@@ -58,15 +56,16 @@ export default function ForgotPasswordPage() {
           {sent ? (
             <div className="text-center space-y-6">
               <CheckCircle className="w-12 h-12 mx-auto" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
-              <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                Si <span style={{ color: 'var(--color-gold)' }}>{getValues('email')}</span> está registrado,
-                recibirás un código válido por 15 minutos.
-              </p>
-              <Link
-                href={`/reset-password?email=${encodeURIComponent(getValues('email'))}`}
-                className="btn-primary w-full flex items-center justify-center gap-2"
-              >
-                Ingresar código
+              <div className="space-y-2">
+                <p className="text-sm" style={{ color: 'var(--color-text)' }}>
+                  Si <span style={{ color: 'var(--color-gold)' }}>{getValues('email')}</span> está registrado, vas a recibir una contraseña provisoria por email.
+                </p>
+                <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                  Usala para ingresar y luego cambiala desde tu perfil.
+                </p>
+              </div>
+              <Link href="/login" className="btn-primary w-full flex items-center justify-center gap-2">
+                Ir al login
               </Link>
             </div>
           ) : (
@@ -98,7 +97,7 @@ export default function ForgotPasswordPage() {
                   disabled={isSubmitting}
                   className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Enviando...</> : 'Enviar código'}
+                  {isSubmitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Enviando...</> : 'Enviar contraseña provisoria'}
                 </button>
               </form>
             </>
