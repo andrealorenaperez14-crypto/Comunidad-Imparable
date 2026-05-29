@@ -1,7 +1,6 @@
 export async function requireAuth(request, reply) {
   try {
     await request.jwtVerify()
-    // Verificar blacklist de tokens revocados (logout)
     const { jti } = request.user
     if (jti) {
       const redis = request.server.redis
@@ -36,13 +35,24 @@ export async function requireActiveSubscription(request, reply) {
   if (reply.sent) return
 
   const { prisma } = request.server
+  const now = new Date()
+
   const sub = await prisma.subscription.findFirst({
-    where: { userId: request.user.id, status: { in: ['ACTIVE', 'TRIAL'] } }
+    where: { userId: request.user.id, status: { in: ['ACTIVE', 'TRIAL'] } },
+    orderBy: { createdAt: 'desc' }
   })
 
   if (!sub) {
     return reply.status(403).send({
-      error: 'Tu suscripción no está activa. Por favor renueva tu plan para continuar.'
+      code: 'NO_SUBSCRIPTION',
+      error: 'Tu suscripción no está activa. Por favor renovate para continuar.'
     })
+  }
+
+  if (now > sub.activeUntil) {
+    await prisma.subscription.update({ where: { id: sub.id }, data: { status: 'EXPIRED' } })
+
+    const code = sub.status === 'TRIAL' ? 'TRIAL_EXPIRED' : 'SUBSCRIPTION_EXPIRED'
+    return reply.status(403).send({ code, error: 'Tu acceso ha expirado.' })
   }
 }

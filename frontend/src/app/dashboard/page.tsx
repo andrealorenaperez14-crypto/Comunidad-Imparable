@@ -1,7 +1,7 @@
 'use client'
 import { useQuery } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
-import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle } from 'lucide-react'
+import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle, CalendarDays, Star, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
@@ -54,7 +54,8 @@ export default function DashboardPage() {
 
   const { data: subData } = useQuery({
     queryKey: ['subscription'],
-    queryFn: () => subscriptionApi.status().then(r => r.data)
+    queryFn: () => subscriptionApi.status().then(r => r.data),
+    retry: false
   })
   const { data: metricsData } = useQuery({
     queryKey: ['metrics', user?.id],
@@ -89,6 +90,48 @@ export default function DashboardPage() {
         <WelcomeVideo />
       </section>
 
+      {/* Trial countdown banner */}
+      {subData?.isTrial && !subData?.isTrialExpired && (
+        <motion.section
+          className="overflow-hidden"
+          initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div
+            className="rounded-2xl p-5"
+            style={{
+              background: 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(196,151,42,0.05) 100%)',
+              border: '1px solid var(--color-gold-border)'
+            }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <CalendarDays className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+                <div>
+                  <p className="font-semibold" style={{ color: 'var(--color-gold)' }}>
+                    Período gratuito — Día {subData.trialDayNumber} de 5
+                  </p>
+                  <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                    {subData.daysRemaining === 0
+                      ? 'Hoy es tu último día de acceso gratuito'
+                      : `Te quedan ${subData.daysRemaining} día${subData.daysRemaining !== 1 ? 's' : ''} de acceso`}
+                  </p>
+                </div>
+              </div>
+              <span className="text-2xl font-bold flex-shrink-0" style={{ color: 'var(--color-gold)' }}>
+                {subData.trialDayNumber}/5
+              </span>
+            </div>
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(196,151,42,0.15)' }}>
+              <div
+                className="h-full rounded-full transition-all"
+                style={{ width: `${(subData.trialDayNumber / 5) * 100}%`, background: 'var(--color-gold)' }}
+              />
+            </div>
+          </div>
+        </motion.section>
+      )}
+
       {/* Subscription */}
       {subData && (
         <motion.section
@@ -96,25 +139,41 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          <div className="card">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Clock className="w-5 h-5" style={{ color: 'var(--color-gold)' }} />
-                <div>
-                  <p className="font-medium" style={{ color: 'var(--color-text)' }}>
-                    {subData.isVitalicio ? 'Plan Vitalicio' : getSubscriptionStatusLabel(subData.status)}
-                  </p>
-                  <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                    {subData.isVitalicio ? 'Acceso permanente activo' : `${daysRemaining} días restantes`}
-                  </p>
-                </div>
+          <div className="card space-y-4">
+            <div className="flex items-center gap-3">
+              <Clock className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} />
+              <div>
+                <p className="font-medium" style={{ color: 'var(--color-text)' }}>
+                  {subData.isVitalicio ? 'Plan Vitalicio' : getSubscriptionStatusLabel(subData.status)}
+                </p>
+                <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                  {subData.isVitalicio ? 'Acceso permanente activo' : `${daysRemaining} días restantes`}
+                </p>
               </div>
-              {!subData.isVitalicio && subData.status !== 'SUSPENDED' && (
-                <Link href="/dashboard/suscripcion" className="text-sm font-medium" style={{ color: 'var(--color-gold)', minHeight: 'unset', minWidth: 'unset' }}>
-                  Renovar
-                </Link>
-              )}
             </div>
+
+            {!subData.isVitalicio && (
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  href="/parte-2"
+                  className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+                  style={{ background: 'var(--color-gold)', color: '#0C0C0C', textDecoration: 'none' }}
+                >
+                  <Star className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
+                  Iniciar membresía ASESOR ELITE
+                </Link>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+                  style={{ background: '#25D366', color: '#fff', textDecoration: 'none' }}
+                >
+                  <MessageCircle className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
+                  WhatsApp — Escuela de Asesores
+                </a>
+              </div>
+            )}
           </div>
         </motion.section>
       )}

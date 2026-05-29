@@ -11,11 +11,23 @@ export async function subscriptionRoutes(fastify) {
 
     const now = new Date()
     const daysRemaining = Math.max(0, Math.ceil((sub.activeUntil - now) / (1000 * 60 * 60 * 24)))
+    const isExpired = now > sub.activeUntil
+
+    // Datos específicos del período de prueba
+    const isTrial = sub.planType === 'TRIAL'
+    const trialStartDate = sub.createdAt
+    const trialDayNumber = isTrial
+      ? Math.min(5, Math.max(1, Math.ceil((now - trialStartDate) / (1000 * 60 * 60 * 24)) + 1))
+      : null
+    const isTrialExpired = isTrial && isExpired
 
     return reply.send({
       ...sub,
       daysRemaining,
-      isExpired: now > sub.activeUntil,
+      isExpired,
+      isTrialExpired,
+      isTrial,
+      trialDayNumber,
       isSuspended: sub.suspensionDate && now > sub.suspensionDate,
       isVitalicio: sub.planType === 'VITALICIO'
     })

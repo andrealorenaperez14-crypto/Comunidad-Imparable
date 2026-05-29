@@ -124,6 +124,8 @@ export const adminUserApi = {
   students: (q = '', page = 1) =>
     api.get(`/api/admin/users/students?q=${encodeURIComponent(q)}&page=${page}`),
   deleteStudent: (userId: string) => api.delete(`/api/admin/users/students/${userId}`),
+  updateEmail: (userId: string, email: string) =>
+    api.put(`/api/admin/users/students/${userId}/email`, { email }),
   ranking: (filter: 'active' | 'all' = 'all', page = 1) =>
     api.get(`/api/admin/users/ranking?filter=${filter}&page=${page}`)
 }

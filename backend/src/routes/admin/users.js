@@ -177,6 +177,34 @@ export async function adminUserRoutes(fastify) {
     return reply.send({ ok: true })
   })
 
+  // Update student email (ADMIN or CLIENT only)
+  fastify.put('/students/:userId/email', { preHandler: requireAdminOrClient }, async (request, reply) => {
+    const schema = z.object({
+      email: z.string().email('Email inválido')
+    })
+    const result = schema.safeParse(request.body)
+    if (!result.success) return reply.status(400).send({ error: result.error.errors[0].message })
+
+    const { email } = result.data
+    const normalizedEmail = email.toLowerCase().trim()
+
+    const target = await fastify.prisma.user.findFirst({
+      where: { id: request.params.userId, clientId: request.user.clientId }
+    })
+    if (!target) return reply.status(404).send({ error: 'Usuario no encontrado.' })
+    if (request.user.role === 'CLIENT' && target.role !== 'STUDENT') {
+      return reply.status(403).send({ error: 'Solo podés modificar el email de alumnos.' })
+    }
+
+    const existing = await fastify.prisma.user.findUnique({ where: { email: normalizedEmail } })
+    if (existing && existing.id !== target.id) {
+      return reply.status(409).send({ error: 'Ya existe una cuenta con ese email.' })
+    }
+
+    await fastify.prisma.user.update({ where: { id: target.id }, data: { email: normalizedEmail } })
+    return reply.send({ ok: true, email: normalizedEmail })
+  })
+
   // Admin ranking — all students sorted by score, filter active/all
   fastify.get('/ranking', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const { filter = 'all', page = '1' } = request.query
