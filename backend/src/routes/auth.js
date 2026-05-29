@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import { randomUUID, randomInt } from 'crypto'
 import { z } from 'zod'
 import { requireAuth } from '../middleware/auth.js'
 import { sendPasswordResetEmail } from '../services/email.js'
@@ -49,6 +50,7 @@ export async function authRoutes(fastify) {
     })
 
     const token = fastify.jwt.sign({
+      jti: randomUUID(),
       id: user.id,
       email: user.email,
       role: user.role,
@@ -123,6 +125,7 @@ export async function authRoutes(fastify) {
     })
 
     const token = fastify.jwt.sign({
+      jti: randomUUID(),
       id: user.id,
       email: user.email,
       role: user.role,
@@ -143,9 +146,10 @@ export async function authRoutes(fastify) {
   })
 
   fastify.post('/logout', { preHandler: requireAuth }, async (request, reply) => {
-    const jti = request.user.jti
+    const { jti } = request.user
     if (jti && fastify.redis) {
-      await fastify.redis.setex(`bl:${jti}`, 3600, '1')
+      const ttl = 60 * 16 // 16 min > 15 min de expiración del token
+      await fastify.redis.setex(`bl:${jti}`, ttl, '1')
     }
     return reply.send({ mensaje: 'Sesión cerrada correctamente.' })
   })
@@ -163,6 +167,7 @@ export async function authRoutes(fastify) {
       if (!user) return reply.status(401).send({ error: 'Usuario no encontrado.' })
 
       const token = fastify.jwt.sign({
+        jti: randomUUID(),
         id: user.id,
         email: user.email,
         role: user.role,
@@ -234,7 +239,7 @@ export async function authPasswordRoutes(fastify) {
     const ok = { message: 'Si el email existe, recibirás un código de verificación.' }
     if (!user) return reply.send(ok)
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString()
+    const otp = randomInt(100000, 999999).toString()
     const key = `pwd_reset:${email.toLowerCase().trim()}`
 
     try {

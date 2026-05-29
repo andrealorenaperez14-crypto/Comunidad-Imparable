@@ -53,9 +53,12 @@ export async function adminUserRoutes(fastify) {
     const isEmail = emailOrDni.includes('@')
 
     const user = await fastify.prisma.user.findFirst({
-      where: isEmail
-        ? { email: emailOrDni.toLowerCase().trim() }
-        : { dni: emailOrDni.trim() }
+      where: {
+        clientId: request.user.clientId,
+        ...(isEmail
+          ? { email: emailOrDni.toLowerCase().trim() }
+          : { dni: emailOrDni.trim() })
+      }
     })
 
     if (!user) {
@@ -126,7 +129,8 @@ export async function adminUserRoutes(fastify) {
     const [students, total] = await Promise.all([
       fastify.prisma.user.findMany({
         where,
-        include: {
+        select: {
+          id: true, email: true, dni: true, role: true, createdAt: true,
           profile: { select: { firstName: true, lastName: true, lastLoginAt: true } },
           subscriptions: {
             where: { status: { in: ['ACTIVE', 'TRIAL'] } },

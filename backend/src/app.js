@@ -58,8 +58,13 @@ export async function buildApp(opts = {}) {
   await app.register(sensible)
   await app.register(multipart, { limits: { fileSize: 10 * 1024 * 1024 } })
 
+  const jwtSecret = process.env.JWT_SECRET
+  if (!jwtSecret && process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SECRET no está configurado. La app no puede iniciarse.')
+  }
+
   await app.register(jwt, {
-    secret: process.env.JWT_SECRET || 'dev-secret-min-32-chars-change-in-prod',
+    secret: jwtSecret || 'dev-secret-min-32-chars-change-in-prod',
     sign: { expiresIn: process.env.JWT_EXPIRES_IN || '15m' }
   })
 

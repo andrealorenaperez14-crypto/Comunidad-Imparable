@@ -1,4 +1,4 @@
-import { requireAuth } from '../middleware/auth.js'
+import { requireAuth, requireAdminOrClient } from '../middleware/auth.js'
 
 export async function subscriptionRoutes(fastify) {
   fastify.get('/status', { preHandler: requireAuth }, async (request, reply) => {
@@ -21,16 +21,29 @@ export async function subscriptionRoutes(fastify) {
     })
   })
 
-  fastify.post('/upgrade', { preHandler: requireAuth }, async (request, reply) => {
-    const { planType = '30_DAYS' } = request.body || {}
+  // Solo ADMIN o CLIENT pueden activar planes — los alumnos no pueden auto-upgradearse
+  fastify.post('/upgrade', { preHandler: requireAdminOrClient }, async (request, reply) => {
+    const { planType = '30_DAYS', userId } = request.body || {}
     const validPlans = ['30_DAYS', 'VITALICIO']
 
     if (!validPlans.includes(planType)) {
       return reply.status(400).send({ error: 'Plan inválido. Opciones: 30_DAYS, VITALICIO' })
     }
 
+    if (!userId) {
+      return reply.status(400).send({ error: 'userId requerido.' })
+    }
+
+    // Verificar que el usuario pertenece al mismo cliente
+    const targetUser = await fastify.prisma.user.findFirst({
+      where: { id: userId, clientId: request.user.clientId }
+    })
+    if (!targetUser) {
+      return reply.status(404).send({ error: 'Usuario no encontrado.' })
+    }
+
     await fastify.prisma.subscription.updateMany({
-      where: { userId: request.user.id, status: { in: ['ACTIVE', 'TRIAL', 'SUSPENDED'] } },
+      where: { userId, status: { in: ['ACTIVE', 'TRIAL', 'SUSPENDED'] } },
       data: { status: 'EXPIRED' }
     })
 
@@ -41,7 +54,7 @@ export async function subscriptionRoutes(fastify) {
 
     const sub = await fastify.prisma.subscription.create({
       data: {
-        userId: request.user.id,
+        userId,
         planType,
         status: 'ACTIVE',
         activeUntil,

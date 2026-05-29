@@ -18,6 +18,9 @@ export async function agentRoutes(fastify) {
     if (!message?.trim()) {
       return reply.status(400).send({ error: 'El mensaje no puede estar vacío.' })
     }
+    if (message.length > 2000) {
+      return reply.status(400).send({ error: 'El mensaje no puede superar los 2000 caracteres.' })
+    }
 
     try {
       const agent = await fastify.prisma.iAAgent.findFirst({

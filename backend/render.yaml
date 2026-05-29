@@ -28,7 +28,7 @@ services:
       - key: RESEND_FROM_EMAIL
         value: noreply@escueladigital.com
       - key: ENCRYPTION_KEY
-        generateValue: true
+        sync: false
       - key: GEMINI_API_KEY
         sync: false
       - key: ANTHROPIC_API_KEY

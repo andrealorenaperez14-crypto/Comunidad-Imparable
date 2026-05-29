@@ -115,15 +115,27 @@ export async function adminAgentRoutes(fastify) {
     if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
 
     const filesProcessed = []
+    const ALLOWED_TYPES = ['application/pdf', 'text/plain', 'application/json', 'text/csv']
+    const ALLOWED_EXTS = ['.pdf', '.txt', '.json', '.csv']
+
     for await (const part of request.parts()) {
       if (!part.file) continue
+
+      const ext = part.filename ? '.' + part.filename.split('.').pop().toLowerCase() : ''
+      if (!ALLOWED_EXTS.includes(ext)) {
+        await part.file.resume()
+        return reply.status(400).send({ error: `Tipo de archivo no permitido: ${part.filename}. Solo PDF, TXT, JSON, CSV.` })
+      }
+
+      // Sanitizar filename
+      const safeFilename = part.filename.replace(/[^a-zA-Z0-9._\-áéíóúÁÉÍÓÚñÑ ]/g, '_')
 
       const chunks = []
       for await (const chunk of part.file) chunks.push(chunk)
       const buffer = Buffer.concat(chunks)
 
       let text
-      if (part.filename?.toLowerCase().endsWith('.pdf')) {
+      if (ext === '.pdf') {
         try {
           const parsed = await pdfParse(buffer)
           text = parsed.text
@@ -141,19 +153,18 @@ export async function adminAgentRoutes(fastify) {
       let current = ''
       for (const para of paragraphs) {
         if ((current + para).length > 1000 && current.length > 0) {
-          chunkDocs.push({ agentId: id, filename: part.filename, chunkIndex: chunkIndex++, content: current.trim() })
+          chunkDocs.push({ agentId: id, filename: safeFilename, chunkIndex: chunkIndex++, content: current.trim() })
           current = para
         } else {
           current = current ? `${current}\n\n${para}` : para
         }
       }
-      if (current.trim()) chunkDocs.push({ agentId: id, filename: part.filename, chunkIndex: chunkIndex, content: current.trim() })
+      if (current.trim()) chunkDocs.push({ agentId: id, filename: safeFilename, chunkIndex: chunkIndex, content: current.trim() })
 
-      // Eliminar chunks anteriores de este archivo y guardar los nuevos
-      await fastify.prisma.documentChunk.deleteMany({ where: { agentId: id, filename: part.filename } })
+      await fastify.prisma.documentChunk.deleteMany({ where: { agentId: id, filename: safeFilename } })
       await fastify.prisma.documentChunk.createMany({ data: chunkDocs })
 
-      filesProcessed.push({ filename: part.filename, chunks: chunkDocs.length })
+      filesProcessed.push({ filename: safeFilename, chunks: chunkDocs.length })
     }
 
     return reply.send({

@@ -1,6 +1,15 @@
 export async function requireAuth(request, reply) {
   try {
     await request.jwtVerify()
+    // Verificar blacklist de tokens revocados (logout)
+    const { jti } = request.user
+    if (jti) {
+      const redis = request.server.redis
+      if (redis) {
+        const revoked = await redis.get(`bl:${jti}`)
+        if (revoked) return reply.status(401).send({ error: 'Sesión expirada. Inicia sesión nuevamente.' })
+      }
+    }
   } catch {
     return reply.status(401).send({ error: 'No autorizado. Inicia sesión para continuar.' })
   }
