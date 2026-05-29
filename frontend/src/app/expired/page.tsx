@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { MessageCircle, Star, Trophy } from 'lucide-react'
 
 const ELITE_LINK = '/parte-2'
-const WHATSAPP_LINK = '#' // TODO: reemplazar con el link del grupo de WhatsApp MPS
+const WHATSAPP_LINK = 'https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr'
 
 export default function ExpiredPage() {
   return (

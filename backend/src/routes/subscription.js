@@ -17,7 +17,7 @@ export async function subscriptionRoutes(fastify) {
     const isTrial = sub.planType === 'TRIAL'
     const trialStartDate = sub.createdAt
     const trialDayNumber = isTrial
-      ? Math.min(5, Math.max(1, Math.ceil((now - trialStartDate) / (1000 * 60 * 60 * 24)) + 1))
+      ? Math.min(5, Math.max(1, Math.floor((now - trialStartDate) / (1000 * 60 * 60 * 24)) + 1))
       : null
     const isTrialExpired = isTrial && isExpired
 

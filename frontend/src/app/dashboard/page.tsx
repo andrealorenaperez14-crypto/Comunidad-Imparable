@@ -163,7 +163,7 @@ export default function DashboardPage() {
                   Iniciar membresía ASESOR ELITE
                 </Link>
                 <a
-                  href="#"
+                  href="https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
