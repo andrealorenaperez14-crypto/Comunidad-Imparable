@@ -2,7 +2,7 @@
 import { motion } from 'framer-motion'
 import { MessageCircle, Star, Trophy } from 'lucide-react'
 
-const ELITE_LINK = '#' // TODO: reemplazar con el link de la membresía ASESOR ELITE Internacional
+const ELITE_LINK = '/parte-2'
 const WHATSAPP_LINK = '#' // TODO: reemplazar con el link del grupo de WhatsApp MPS
 
 export default function ExpiredPage() {
