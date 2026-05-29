@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
-const FROM = process.env.RESEND_FROM_EMAIL || 'escueladeasesoresmps@gmail.com'
+const FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
 
 async function sendEmail({ to, subject, html }) {
   if (!resend) {
