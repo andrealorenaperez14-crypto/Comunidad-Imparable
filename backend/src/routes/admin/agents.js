@@ -73,10 +73,15 @@ export async function adminAgentRoutes(fastify) {
     })
     if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
 
+    let primaryMasked = ''
+    let backupMasked = ''
+    try { primaryMasked = agent.primaryApiKey ? maskApiKey(decrypt(agent.primaryApiKey)) : '' } catch { primaryMasked = '' }
+    try { backupMasked = agent.backupApiKey ? maskApiKey(decrypt(agent.backupApiKey)) : '' } catch { backupMasked = '' }
+
     return reply.send({
       ...agent,
-      primaryApiKey: agent.primaryApiKey ? maskApiKey(decrypt(agent.primaryApiKey)) : '',
-      backupApiKey: agent.backupApiKey ? maskApiKey(decrypt(agent.backupApiKey)) : ''
+      primaryApiKey: primaryMasked,
+      backupApiKey: backupMasked
     })
   })
 
@@ -100,10 +105,15 @@ export async function adminAgentRoutes(fastify) {
       data: updateData
     })
 
+    let primaryMasked = ''
+    let backupMasked = ''
+    try { primaryMasked = updated.primaryApiKey ? maskApiKey(decrypt(updated.primaryApiKey)) : '' } catch { primaryMasked = '' }
+    try { backupMasked = updated.backupApiKey ? maskApiKey(decrypt(updated.backupApiKey)) : '' } catch { backupMasked = '' }
+
     return reply.send({
       ...updated,
-      primaryApiKey: maskApiKey(decrypt(updated.primaryApiKey)),
-      backupApiKey: maskApiKey(decrypt(updated.backupApiKey))
+      primaryApiKey: primaryMasked,
+      backupApiKey: backupMasked
     })
   })
 
