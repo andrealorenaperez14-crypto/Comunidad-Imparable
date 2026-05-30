@@ -141,17 +141,17 @@ export async function routeIaRequest(agent, message, userId, prisma = null) {
 
   const { systemPrompt, instructions, type } = agent
 
-  // COACH: Claude Sonnet → Gemini → OpenAI GPT-4
+  // COACH: Gemini → Claude → OpenAI GPT-4
   const coachPipeline = [
-    () => callClaude(primaryKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callGemini(backupKey, systemPrompt, instructions, message, knowledgeBase),
+    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
+    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
     () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase)
   ]
 
-  // MENTALIDAD: Claude Sonnet → Gemini → OpenAI GPT-4
+  // MENTALIDAD: Gemini → Claude → OpenAI GPT-4
   const mentalidadPipeline = [
-    () => callClaude(primaryKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callGemini(backupKey, systemPrompt, instructions, message, knowledgeBase),
+    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
+    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
     () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase)
   ]
 
