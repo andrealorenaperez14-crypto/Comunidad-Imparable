@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenAI } from '@google/genai'
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
@@ -42,8 +42,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
   const key = apiKey || process.env.GEMINI_API_KEY
   if (!key) throw new Error('Sin clave Gemini')
 
-  const genAI = new GoogleGenerativeAI(key)
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
+  const ai = new GoogleGenAI({ apiKey: key })
 
   const context = knowledgeBase?.length > 0
     ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
@@ -51,13 +50,15 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
 
   const fullPrompt = `${systemPrompt}\n\n${instructions}${context}\n\nUsuario: ${message}`
 
-  const result = await withTimeout(model.generateContent(fullPrompt), TIMEOUT_MS)
-  const response = result.response.text()
+  const result = await withTimeout(
+    ai.models.generateContent({ model: 'gemini-2.0-flash', contents: fullPrompt }),
+    TIMEOUT_MS
+  )
 
   return {
-    response,
+    response: result.text,
     modelUsed: 'gemini-2.0-flash',
-    tokens: result.response.usageMetadata?.totalTokenCount || 0,
+    tokens: result.usageMetadata?.totalTokenCount || 0,
     cost: 0
   }
 }
@@ -141,31 +142,13 @@ export async function routeIaRequest(agent, message, userId, prisma = null) {
 
   const { systemPrompt, instructions, type } = agent
 
-  // COACH: Gemini → Claude → OpenAI GPT-4
-  const coachPipeline = [
+  // Todos los agentes: Gemini → Claude → OpenAI → local fallback
+  const pipeline = [
     () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
     () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase)
-  ]
-
-  // MENTALIDAD: Gemini → Claude → OpenAI GPT-4
-  const mentalidadPipeline = [
-    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase)
-  ]
-
-  // CONSULTIVA: Gemini Pro → Claude Sonnet → Local knowledge base
-  const consultivaPipeline = [
-    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
+    () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase),
     () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
   ]
-
-  let pipeline
-  if (type === 'CONSULTIVO') pipeline = coachPipeline
-  else if (type === 'MENTOR') pipeline = mentalidadPipeline
-  else pipeline = consultivaPipeline
 
   for (const provider of pipeline) {
     try {
