@@ -23,8 +23,9 @@ export async function agentRoutes(fastify) {
     }
 
     try {
+      const isPrivileged = request.user.role === 'ADMIN' || request.user.role === 'CLIENT'
       const agent = await fastify.prisma.iAAgent.findFirst({
-        where: { id: agentId, clientId: request.user.clientId, published: true }
+        where: { id: agentId, clientId: request.user.clientId, ...(isPrivileged ? {} : { published: true }) }
       })
 
       if (!agent) {

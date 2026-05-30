@@ -34,6 +34,9 @@ export async function requireActiveSubscription(request, reply) {
   await requireAuth(request, reply)
   if (reply.sent) return
 
+  // Admins and clients bypass subscription checks
+  if (request.user.role === 'ADMIN' || request.user.role === 'CLIENT') return
+
   const { prisma } = request.server
   const now = new Date()
 
