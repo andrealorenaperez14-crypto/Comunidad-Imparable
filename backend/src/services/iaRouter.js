@@ -130,24 +130,30 @@ export async function routeIaRequest(agent, message, userId, prisma = null) {
     // Keys can't be decrypted — proceed without them, fall back to env vars
   }
 
-  // RAG: buscar chunks relevantes en DB, fallback al JSON legacy
+  // RAG solo para CONSULTIVA — Coach y Mentalidad son modo conversación pura
   let knowledgeBase = []
-  if (prisma) {
-    const chunks = await retrieveRelevantChunks(prisma, agent.id, message)
-    knowledgeBase = chunks.map(content => ({ content }))
-  }
-  if (knowledgeBase.length === 0) {
-    knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
+  if (agent.type === 'CONSULTIVA') {
+    if (prisma) {
+      const chunks = await retrieveRelevantChunks(prisma, agent.id, message)
+      knowledgeBase = chunks.map(content => ({ content }))
+    }
+    if (knowledgeBase.length === 0) {
+      knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
+    }
   }
 
   const { systemPrompt, instructions, type } = agent
 
-  // Todos los agentes: Gemini → Claude → OpenAI → local fallback
+  // Todos los agentes: Gemini → Claude → OpenAI → fallback
+  const localFallback = type === 'CONSULTIVA'
+    ? () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
+    : () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
+
   const pipeline = [
     () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
     () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
     () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase),
-    () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
+    localFallback
   ]
 
   for (const provider of pipeline) {
