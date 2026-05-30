@@ -43,7 +43,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
   if (!key) throw new Error('Sin clave Gemini')
 
   const genAI = new GoogleGenerativeAI(key)
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' })
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' })
 
   const context = knowledgeBase?.length > 0
     ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
@@ -56,7 +56,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
 
   return {
     response,
-    modelUsed: 'gemini-1.5-pro',
+    modelUsed: 'gemini-2.0-flash',
     tokens: result.response.usageMetadata?.totalTokenCount || 0,
     cost: 0
   }
