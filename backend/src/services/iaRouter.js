@@ -126,8 +126,8 @@ export async function routeIaRequest(agent, message, userId, prisma = null) {
   try {
     primaryKey = agent.primaryApiKey ? decrypt(agent.primaryApiKey) : null
     backupKey = agent.backupApiKey ? decrypt(agent.backupApiKey) : null
-  } catch {
-    // Keys can't be decrypted — proceed without them, fall back to env vars
+  } catch (err) {
+    console.warn('[IA Router] No se pudo descifrar API key del agente:', agent.type, err.message)
   }
 
   // RAG solo para CONSULTIVA — Coach y Mentalidad son modo conversación pura
@@ -161,7 +161,7 @@ export async function routeIaRequest(agent, message, userId, prisma = null) {
       const result = await provider()
       if (result.response) return result
     } catch (err) {
-      // Intentar siguiente proveedor
+      console.warn('[IA Router] Provider failed:', err.message)
     }
   }
 
