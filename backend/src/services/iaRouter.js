@@ -51,13 +51,13 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
   const fullPrompt = `${systemPrompt}\n\n${instructions}${context}\n\nUsuario: ${message}`
 
   const result = await withTimeout(
-    ai.models.generateContent({ model: 'gemini-2.0-flash', contents: fullPrompt }),
+    ai.models.generateContent({ model: 'gemini-1.5-flash', contents: fullPrompt }),
     TIMEOUT_MS
   )
 
   return {
     response: result.text,
-    modelUsed: 'gemini-2.0-flash',
+    modelUsed: 'gemini-1.5-flash',
     tokens: result.usageMetadata?.totalTokenCount || 0,
     cost: 0
   }

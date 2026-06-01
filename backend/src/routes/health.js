@@ -31,7 +31,7 @@ export async function healthRoutes(fastify) {
     try {
       const ai = new GoogleGenAI({ apiKey: key })
       const result = await ai.models.generateContent({
-        model: 'gemini-2.0-flash',
+        model: 'gemini-1.5-flash',
         contents: 'Respondé solo "OK"'
       })
       return reply.send({ ok: true, response: result.text, keyPrefix: key.slice(0, 8) + '...' })
