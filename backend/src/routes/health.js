@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenAI } from '@google/genai'
 
 export async function healthRoutes(fastify) {
   fastify.get('/health', async (request, reply) => {
@@ -29,10 +29,9 @@ export async function healthRoutes(fastify) {
     if (!key) return reply.send({ ok: false, error: 'GEMINI_API_KEY no configurada' })
 
     try {
-      const genAI = new GoogleGenerativeAI(key)
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
-      const result = await model.generateContent('Respondé solo "OK"')
-      return reply.send({ ok: true, response: result.response.text(), keyPrefix: key.slice(0, 8) + '...' })
+      const ai = new GoogleGenAI({ apiKey: key })
+      const result = await ai.models.generateContent({ model: 'gemini-2.0-flash-lite', contents: 'Respondé solo "OK"' })
+      return reply.send({ ok: true, response: result.text, keyPrefix: key.slice(0, 8) + '...' })
     } catch (err) {
       return reply.send({ ok: false, error: err.message, keyPrefix: key.slice(0, 8) + '...' })
     }
