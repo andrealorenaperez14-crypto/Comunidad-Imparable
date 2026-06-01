@@ -36,7 +36,7 @@ export interface Subscription {
 
 export interface IAAgent {
   id: string
-  type: 'CONSULTIVO' | 'MENTOR' | 'CONSULTIVA'
+  type: 'COACH' | 'MENTALIDAD' | 'CONSULTIVA'
   name: string
   description: string
   icon: string

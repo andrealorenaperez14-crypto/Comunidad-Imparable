@@ -16,12 +16,19 @@ export function useChat(agentId: string) {
       timestamp: new Date()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    setMessages(prev => {
+      const updated = [...prev, userMessage]
+      return updated
+    })
     setIsLoading(true)
     setError(null)
 
     try {
-      const { data } = await agentApi.chat(agentId, content)
+      const history = messages
+        .slice(-10)
+        .map(m => ({ role: m.role, content: m.content }))
+
+      const { data } = await agentApi.chat(agentId, content, history)
 
       const assistantMessage: ChatMessage = {
         id: `assistant-${Date.now()}`,
@@ -45,7 +52,7 @@ export function useChat(agentId: string) {
     } finally {
       setIsLoading(false)
     }
-  }, [agentId])
+  }, [agentId, messages])
 
   const clearMessages = () => setMessages([])
 

@@ -13,7 +13,7 @@ export async function agentRoutes(fastify) {
 
   fastify.post('/:agentId/chat', { preHandler: requireActiveSubscription }, async (request, reply) => {
     const { agentId } = request.params
-    const { message } = request.body || {}
+    const { message, history } = request.body || {}
 
     if (!message?.trim()) {
       return reply.status(400).send({ error: 'El mensaje no puede estar vacío.' })
@@ -33,7 +33,7 @@ export async function agentRoutes(fastify) {
       }
 
       const startTime = Date.now()
-      const result = await routeIaRequest(agent, message, request.user.id, fastify.prisma)
+      const result = await routeIaRequest(agent, message, Array.isArray(history) ? history : [], request.user.id, fastify.prisma)
       const duration = Date.now() - startTime
 
       const interaction = await fastify.prisma.iAInteraction.create({

@@ -38,7 +38,7 @@ async function withTimeout(promise, ms) {
   ])
 }
 
-async function callGemini(apiKey, systemPrompt, instructions, message, knowledgeBase) {
+async function callGemini(apiKey, systemPrompt, instructions, message, knowledgeBase, history = []) {
   const key = apiKey || process.env.GEMINI_API_KEY
   if (!key) throw new Error('Sin clave Gemini')
 
@@ -48,10 +48,22 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
     ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
     : ''
 
-  const fullPrompt = `${systemPrompt}\n\n${instructions}${context}\n\nUsuario: ${message}`
+  const systemInstruction = `${systemPrompt}\n\n${instructions}${context}`
+
+  const contents = [
+    ...history.map(m => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.content }]
+    })),
+    { role: 'user', parts: [{ text: message }] }
+  ]
 
   const result = await withTimeout(
-    ai.models.generateContent({ model: 'gemini-2.0-flash-lite', contents: fullPrompt }),
+    ai.models.generateContent({
+      model: 'gemini-2.0-flash-lite',
+      config: { systemInstruction },
+      contents
+    }),
     TIMEOUT_MS
   )
 
@@ -63,7 +75,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
   }
 }
 
-async function callClaude(apiKey, systemPrompt, instructions, message, knowledgeBase) {
+async function callClaude(apiKey, systemPrompt, instructions, message, knowledgeBase, history = []) {
   const key = apiKey || process.env.ANTHROPIC_API_KEY
   if (!key) throw new Error('Sin clave Claude')
 
@@ -73,12 +85,17 @@ async function callClaude(apiKey, systemPrompt, instructions, message, knowledge
     ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
     : ''
 
+  const messages = [
+    ...history.map(m => ({ role: m.role, content: m.content })),
+    { role: 'user', content: message }
+  ]
+
   const result = await withTimeout(
     anthropic.messages.create({
       model: 'claude-sonnet-4-6',
       max_tokens: 4096,
       system: `${systemPrompt}\n\n${instructions}${context}`,
-      messages: [{ role: 'user', content: message }]
+      messages
     }),
     TIMEOUT_MS
   )
@@ -91,7 +108,7 @@ async function callClaude(apiKey, systemPrompt, instructions, message, knowledge
   }
 }
 
-async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledgeBase) {
+async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledgeBase, history = []) {
   const key = apiKey || process.env.OPENAI_API_KEY
   if (!key) throw new Error('Sin clave OpenAI')
 
@@ -101,14 +118,14 @@ async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledge
     ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
     : ''
 
+  const messages = [
+    { role: 'system', content: `${systemPrompt}\n\n${instructions}${context}` },
+    ...history.map(m => ({ role: m.role, content: m.content })),
+    { role: 'user', content: message }
+  ]
+
   const result = await withTimeout(
-    openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: `${systemPrompt}\n\n${instructions}${context}` },
-        { role: 'user', content: message }
-      ]
-    }),
+    openai.chat.completions.create({ model: 'gpt-4o-mini', messages }),
     TIMEOUT_MS
   )
 
@@ -120,7 +137,7 @@ async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledge
   }
 }
 
-export async function routeIaRequest(agent, message, userId, prisma = null) {
+export async function routeIaRequest(agent, message, history = [], userId, prisma = null) {
   let primaryKey = null
   let backupKey = null
   try {
@@ -144,15 +161,18 @@ export async function routeIaRequest(agent, message, userId, prisma = null) {
 
   const { systemPrompt, instructions, type } = agent
 
+  // Limitar historial a últimos 10 mensajes para no exceder tokens
+  const trimmedHistory = history.slice(-10)
+
   // Todos los agentes: Gemini → Claude → OpenAI → fallback
   const localFallback = type === 'CONSULTIVA'
     ? () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
     : () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
 
   const pipeline = [
-    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase),
-    () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase),
+    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
+    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
+    () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
     localFallback
   ]
 

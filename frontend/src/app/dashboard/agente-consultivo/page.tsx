@@ -10,7 +10,7 @@ export default function IaCoachPage() {
     queryFn: () => agentApi.list().then(r => r.data)
   })
 
-  const agent = agents?.find((a: any) => a.type === 'CONSULTIVO' && a.published)
+  const agent = agents?.find((a: any) => a.type === 'COACH' && a.published)
 
   if (isLoading) {
     return (

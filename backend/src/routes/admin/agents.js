@@ -7,7 +7,7 @@ const require = createRequire(import.meta.url)
 const pdfParse = require('pdf-parse')
 
 const agentSchema = z.object({
-  type: z.enum(['CONSULTIVO', 'MENTOR', 'CONSULTIVA']),
+  type: z.enum(['COACH', 'MENTALIDAD', 'CONSULTIVA']),
   name: z.string().min(1),
   description: z.string().min(1),
   icon: z.string().default(''),

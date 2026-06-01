@@ -78,21 +78,21 @@ async function main() {
 
   console.log('✅ Client creado:', clientUser.email)
 
-  // Agente CONSULTIVO — pipeline: Claude(primary) → Gemini(backup) → OpenAI
+  // Agente COACH — pipeline: Claude(primary) → Gemini(backup) → OpenAI
   const consultivo = await prisma.iAAgent.upsert({
-    where: { clientId_type: { clientId: client.id, type: 'CONSULTIVO' } },
+    where: { clientId_type: { clientId: client.id, type: 'COACH' } },
     update: {
       primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
       backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
     },
     create: {
       clientId: client.id,
-      type: 'CONSULTIVO',
-      name: 'Asistente Técnico',
-      description: 'Responde tus preguntas técnicas sobre el contenido del curso',
+      type: 'COACH',
+      name: 'IA Coach',
+      description: 'Acompaña tu proceso de aprendizaje 24/7',
       icon: '🔍',
-      systemPrompt: 'Eres un asistente técnico experto de Escuela de Asesores. Tu rol es responder preguntas técnicas del curso de manera clara, precisa y en español latinoamericano. Sé conciso pero completo. Si no sabes algo, dilo honestamente.',
-      instructions: 'Responde siempre en español. Usa ejemplos prácticos. Si la pregunta no está relacionada con el contenido del curso, redirige amablemente al usuario.',
+      systemPrompt: 'Eres la IA Coach de Escuela de Asesores. Tu rol es acompañar al estudiante durante su proceso de aprendizaje, responder preguntas sobre el contenido del curso y guiarlo para que avance con claridad. Habla siempre en español latinoamericano, de forma clara y empática.',
+      instructions: 'Responde siempre en español. Usa ejemplos prácticos. Mantén el contexto de la conversación para dar respuestas coherentes. Si la pregunta no está relacionada con el curso, redirige amablemente al estudiante.',
       knowledgeBase: '[]',
       metricsConfig: {
         alertThresholdLow: 0.6,
@@ -106,21 +106,21 @@ async function main() {
     }
   })
 
-  // Agente MENTOR — pipeline: Claude(primary) → Gemini(backup) → OpenAI
+  // Agente MENTALIDAD — pipeline: Claude(primary) → Gemini(backup) → OpenAI
   const mentor = await prisma.iAAgent.upsert({
-    where: { clientId_type: { clientId: client.id, type: 'MENTOR' } },
+    where: { clientId_type: { clientId: client.id, type: 'MENTALIDAD' } },
     update: {
       primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
       backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
     },
     create: {
       clientId: client.id,
-      type: 'MENTOR',
-      name: 'Mentor Personal',
-      description: 'Tu guía de aprendizaje personalizado y coaching',
+      type: 'MENTALIDAD',
+      name: 'IA Mentalidad',
+      description: 'Trabaja tus miedos y bloqueos personales',
       icon: '🎯',
-      systemPrompt: 'Eres un mentor personal y coach de Escuela de Asesores. Tu misión es acompañar al estudiante en su proceso de aprendizaje, motivarlo, ayudarlo a establecer hábitos de estudio y superar sus obstáculos. Eres empático, motivador y orientado a resultados. Habla siempre en español latinoamericano.',
-      instructions: 'Mantén un tono positivo y alentador. Ayuda al estudiante a establecer metas concretas. Haz seguimiento de su progreso. Cuando detectes desmotivación, usa técnicas de coaching para reactivar el compromiso.',
+      systemPrompt: 'Eres la IA de Mentalidad de Escuela de Asesores. Tu misión es ayudar al estudiante a trabajar sus miedos, bloqueos y limitaciones mentales que le impiden crecer. Eres empático, contenedor y orientado a la acción. Usa técnicas de coaching y PNL adaptadas al mundo de las ventas. Habla siempre en español latinoamericano.',
+      instructions: 'Mantén un tono positivo y alentador. Ayuda al estudiante a identificar sus bloqueos concretos. Usa el historial de la conversación para hacer seguimiento y profundizar. Cuando detectes desmotivación, aplica técnicas de reencuadre.',
       knowledgeBase: '[]',
       metricsConfig: {
         alertThresholdLow: 0.6,
@@ -209,7 +209,7 @@ async function main() {
           agentId: agent.id,
           userId: user.id,
           totalSessions: Math.floor(Math.random() * 20) + 1,
-          totalQuestions: agent.type === 'CONSULTIVO' ? Math.floor(Math.random() * 15) : 0,
+          totalQuestions: agent.type === 'COACH' ? Math.floor(Math.random() * 15) : 0,
           engagementScore: Math.random() * 0.5 + 0.5,
           completionRate: Math.random() * 0.4 + 0.6,
           habitStreak: Math.floor(Math.random() * 10) + 1,

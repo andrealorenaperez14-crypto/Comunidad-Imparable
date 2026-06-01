@@ -10,7 +10,7 @@ export default function IaMentalidadPage() {
     queryFn: () => agentApi.list().then(r => r.data)
   })
 
-  const agent = agents?.find((a: any) => a.type === 'MENTOR' && a.published)
+  const agent = agents?.find((a: any) => a.type === 'MENTALIDAD' && a.published)
 
   if (isLoading) {
     return (
