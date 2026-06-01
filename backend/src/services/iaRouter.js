@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
@@ -42,7 +42,8 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
   const key = apiKey || process.env.GEMINI_API_KEY
   if (!key) throw new Error('Sin clave Gemini')
 
-  const ai = new GoogleGenAI({ apiKey: key })
+  const genAI = new GoogleGenerativeAI(key)
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
   const context = knowledgeBase?.length > 0
     ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
@@ -50,15 +51,12 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
 
   const fullPrompt = `${systemPrompt}\n\n${instructions}${context}\n\nUsuario: ${message}`
 
-  const result = await withTimeout(
-    ai.models.generateContent({ model: 'gemini-1.5-flash', contents: fullPrompt }),
-    TIMEOUT_MS
-  )
+  const result = await withTimeout(model.generateContent(fullPrompt), TIMEOUT_MS)
 
   return {
-    response: result.text,
+    response: result.response.text(),
     modelUsed: 'gemini-1.5-flash',
-    tokens: result.usageMetadata?.totalTokenCount || 0,
+    tokens: result.response.usageMetadata?.totalTokenCount || 0,
     cost: 0
   }
 }
