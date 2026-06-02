@@ -41,7 +41,7 @@ export async function healthRoutes(fastify) {
         ])
         results.gemini = { ok: true, model: 'gemini-1.5-flash', response: r.text?.slice(0, 50) }
       } catch (err) {
-        results.gemini = { ok: false, error: err.message?.slice(0, 200) }
+        results.gemini = { ok: false, error: err.message?.slice(0, 400), keyPrefix: geminiKey.slice(0, 12) + '...' }
       }
     }
 
