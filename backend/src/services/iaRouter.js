@@ -164,15 +164,15 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
   // Limitar historial a últimos 10 mensajes para no exceder tokens
   const trimmedHistory = history.slice(-10)
 
-  // Todos los agentes: Gemini → Claude → OpenAI → fallback
   const localFallback = type === 'CONSULTIVA'
     ? () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
     : () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
 
+  // Solo incluir proveedores que tienen clave configurada para no perder tiempo en timeouts
   const pipeline = [
     () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
-    () => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
-    () => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
+    ...(process.env.ANTHROPIC_API_KEY ? [() => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
+    ...(process.env.OPENAI_API_KEY ? [() => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
     localFallback
   ]
 
