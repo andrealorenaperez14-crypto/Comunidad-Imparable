@@ -1,4 +1,6 @@
 import { GoogleGenAI } from '@google/genai'
+import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 
 export async function healthRoutes(fastify) {
   fastify.get('/health', async (request, reply) => {
@@ -23,17 +25,60 @@ export async function healthRoutes(fastify) {
     })
   })
 
-  // Diagnóstico temporal de Gemini
-  fastify.get('/health/gemini', async (request, reply) => {
-    const key = process.env.GEMINI_API_KEY
-    if (!key) return reply.send({ ok: false, error: 'GEMINI_API_KEY no configurada' })
+  fastify.get('/health/ia', async (request, reply) => {
+    const results = {}
 
-    try {
-      const ai = new GoogleGenAI({ apiKey: key })
-      const result = await ai.models.generateContent({ model: 'gemini-2.0-flash-lite', contents: 'Respondé solo "OK"' })
-      return reply.send({ ok: true, response: result.text, keyPrefix: key.slice(0, 8) + '...' })
-    } catch (err) {
-      return reply.send({ ok: false, error: err.message, keyPrefix: key.slice(0, 8) + '...' })
+    // Gemini
+    const geminiKey = process.env.GEMINI_API_KEY
+    if (!geminiKey) {
+      results.gemini = { ok: false, error: 'GEMINI_API_KEY no configurada' }
+    } else {
+      try {
+        const ai = new GoogleGenAI({ apiKey: geminiKey })
+        const r = await Promise.race([
+          ai.models.generateContent({ model: 'gemini-1.5-flash', contents: 'Di solo OK' }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
+        ])
+        results.gemini = { ok: true, model: 'gemini-1.5-flash', response: r.text?.slice(0, 50) }
+      } catch (err) {
+        results.gemini = { ok: false, error: err.message?.slice(0, 200) }
+      }
     }
+
+    // Claude
+    const claudeKey = process.env.ANTHROPIC_API_KEY
+    if (!claudeKey) {
+      results.claude = { ok: false, error: 'ANTHROPIC_API_KEY no configurada' }
+    } else {
+      try {
+        const anthropic = new Anthropic({ apiKey: claudeKey })
+        const r = await Promise.race([
+          anthropic.messages.create({ model: 'claude-haiku-4-5-20251001', max_tokens: 10, messages: [{ role: 'user', content: 'Di solo OK' }] }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
+        ])
+        results.claude = { ok: true, response: r.content[0]?.text?.slice(0, 50) }
+      } catch (err) {
+        results.claude = { ok: false, error: err.message?.slice(0, 200) }
+      }
+    }
+
+    // OpenAI
+    const openaiKey = process.env.OPENAI_API_KEY
+    if (!openaiKey) {
+      results.openai = { ok: false, error: 'OPENAI_API_KEY no configurada' }
+    } else {
+      try {
+        const openai = new OpenAI({ apiKey: openaiKey })
+        const r = await Promise.race([
+          openai.chat.completions.create({ model: 'gpt-4o-mini', messages: [{ role: 'user', content: 'Di solo OK' }], max_tokens: 10 }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
+        ])
+        results.openai = { ok: true, response: r.choices[0]?.message?.content?.slice(0, 50) }
+      } catch (err) {
+        results.openai = { ok: false, error: err.message?.slice(0, 200) }
+      }
+    }
+
+    return reply.send(results)
   })
 }
