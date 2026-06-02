@@ -36,7 +36,7 @@ export async function healthRoutes(fastify) {
       try {
         const ai = new GoogleGenAI({ apiKey: geminiKey })
         const r = await Promise.race([
-          ai.models.generateContent({ model: 'gemini-1.5-flash', contents: 'Di solo OK' }),
+          ai.models.generateContent({ model: 'gemini-2.0-flash', contents: 'Di solo OK' }),
           new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
         ])
         results.gemini = { ok: true, model: 'gemini-1.5-flash', response: r.text?.slice(0, 50) }

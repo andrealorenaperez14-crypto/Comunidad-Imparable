@@ -60,7 +60,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
 
   const result = await withTimeout(
     ai.models.generateContent({
-      model: 'gemini-1.5-flash',
+      model: 'gemini-2.0-flash',
       config: { systemInstruction },
       contents
     }),
@@ -69,7 +69,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
 
   return {
     response: result.text,
-    modelUsed: 'gemini-1.5-flash',
+    modelUsed: 'gemini-2.0-flash',
     tokens: result.usageMetadata?.totalTokenCount || 0,
     cost: 0
   }
