@@ -12,6 +12,7 @@ interface Props {
 }
 
 const MODEL_LABELS: Record<string, string> = {
+  'llama-3.3-70b-versatile': 'Groq',
   'gemini-2.0-flash': 'Gemini',
   'gemini-1.5-pro': 'Gemini',
   'gemini-2.0-flash-lite': 'Gemini',

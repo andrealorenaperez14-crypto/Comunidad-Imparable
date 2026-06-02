@@ -16,7 +16,6 @@ async function retrieveRelevantChunks(prisma, agentId, query, limit = 6) {
     `
     if (results.length > 0) return results.map(r => r.content)
 
-    // fallback: si no matchea, devolver los primeros chunks
     const fallback = await prisma.documentChunk.findMany({
       where: { agentId },
       orderBy: [{ filename: 'asc' }, { chunkIndex: 'asc' }],
@@ -36,6 +35,42 @@ async function withTimeout(promise, ms) {
     promise,
     new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), ms))
   ])
+}
+
+async function callGroq(systemPrompt, instructions, message, knowledgeBase, history = []) {
+  const key = process.env.GROQ_API_KEY
+  if (!key) throw new Error('Sin clave Groq')
+
+  const groq = new OpenAI({
+    apiKey: key,
+    baseURL: 'https://api.groq.com/openai/v1'
+  })
+
+  const context = knowledgeBase?.length > 0
+    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
+    : ''
+
+  const messages = [
+    { role: 'system', content: `${systemPrompt}\n\n${instructions}${context}` },
+    ...history.map(m => ({ role: m.role, content: m.content })),
+    { role: 'user', content: message }
+  ]
+
+  const result = await withTimeout(
+    groq.chat.completions.create({
+      model: 'llama-3.3-70b-versatile',
+      messages,
+      max_tokens: 4096
+    }),
+    TIMEOUT_MS
+  )
+
+  return {
+    response: result.choices[0].message.content,
+    modelUsed: 'llama-3.3-70b-versatile',
+    tokens: result.usage?.total_tokens || 0,
+    cost: 0
+  }
 }
 
 async function callGemini(apiKey, systemPrompt, instructions, message, knowledgeBase, history = []) {
@@ -147,7 +182,7 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
     console.warn('[IA Router] No se pudo descifrar API key del agente:', agent.type, err.message)
   }
 
-  // RAG solo para CONSULTIVA — Coach y Mentalidad son modo conversación pura
+  // RAG solo para CONSULTIVA
   let knowledgeBase = []
   if (agent.type === 'CONSULTIVA') {
     if (prisma) {
@@ -160,16 +195,15 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
   }
 
   const { systemPrompt, instructions, type } = agent
-
-  // Limitar historial a últimos 10 mensajes para no exceder tokens
   const trimmedHistory = history.slice(-10)
 
   const localFallback = type === 'CONSULTIVA'
     ? () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
     : () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
 
-  // Solo incluir proveedores que tienen clave configurada para no perder tiempo en timeouts
+  // Pipeline: Groq (primario, gratis) → Gemini → Claude → OpenAI → local
   const pipeline = [
+    ...(process.env.GROQ_API_KEY ? [() => callGroq(systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
     () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
     ...(process.env.ANTHROPIC_API_KEY ? [() => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
     ...(process.env.OPENAI_API_KEY ? [() => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),

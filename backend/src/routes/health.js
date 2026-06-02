@@ -28,6 +28,23 @@ export async function healthRoutes(fastify) {
   fastify.get('/health/ia', async (request, reply) => {
     const results = {}
 
+    // Groq
+    const groqKey = process.env.GROQ_API_KEY
+    if (!groqKey) {
+      results.groq = { ok: false, error: 'GROQ_API_KEY no configurada' }
+    } else {
+      try {
+        const groq = new OpenAI({ apiKey: groqKey, baseURL: 'https://api.groq.com/openai/v1' })
+        const r = await Promise.race([
+          groq.chat.completions.create({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: 'Di solo OK' }], max_tokens: 10 }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
+        ])
+        results.groq = { ok: true, response: r.choices[0]?.message?.content?.slice(0, 50) }
+      } catch (err) {
+        results.groq = { ok: false, error: err.message?.slice(0, 200) }
+      }
+    }
+
     // Gemini
     const geminiKey = process.env.GEMINI_API_KEY
     if (!geminiKey) {
