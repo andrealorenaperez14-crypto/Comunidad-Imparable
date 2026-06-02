@@ -3,7 +3,7 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
-async function retrieveRelevantChunks(prisma, agentId, query, limit = 6) {
+async function retrieveRelevantChunks(prisma, agentId, query, limit = 15) {
   try {
     const results = await prisma.$queryRaw`
       SELECT content, filename,
