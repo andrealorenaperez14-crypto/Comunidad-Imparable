@@ -2,9 +2,34 @@ import { createRequire } from 'module'
 import { requireAdmin } from '../../middleware/auth.js'
 import { encrypt, decrypt, maskApiKey } from '../../utils/encryption.js'
 import { z } from 'zod'
+import { GoogleGenAI } from '@google/genai'
 
 const require = createRequire(import.meta.url)
 const pdfParse = require('pdf-parse')
+
+async function embedChunks(fastify, chunkIds, contents) {
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) return
+
+  const ai = new GoogleGenAI({ apiKey })
+  for (let i = 0; i < chunkIds.length; i++) {
+    try {
+      const result = await ai.models.embedContent({
+        model: 'text-embedding-004',
+        contents: contents[i],
+      })
+      const values = result.embeddings[0].values
+      const vectorLiteral = `[${values.join(',')}]`
+      await fastify.prisma.$executeRaw`
+        UPDATE "DocumentChunk"
+        SET embedding = ${vectorLiteral}::vector
+        WHERE id = ${chunkIds[i]}
+      `
+    } catch (err) {
+      console.warn('[embedChunks] Error embedding chunk', chunkIds[i], err.message)
+    }
+  }
+}
 
 const agentSchema = z.object({
   type: z.enum(['COACH', 'MENTALIDAD', 'CONSULTIVA']),
@@ -173,6 +198,13 @@ export async function adminAgentRoutes(fastify) {
 
       await fastify.prisma.documentChunk.deleteMany({ where: { agentId: id, filename: safeFilename } })
       await fastify.prisma.documentChunk.createMany({ data: chunkDocs })
+
+      const created = await fastify.prisma.documentChunk.findMany({
+        where: { agentId: id, filename: safeFilename },
+        orderBy: { chunkIndex: 'asc' },
+        select: { id: true, content: true }
+      })
+      embedChunks(fastify, created.map(c => c.id), created.map(c => c.content)).catch(() => {})
 
       filesProcessed.push({ filename: safeFilename, chunks: chunkDocs.length })
     }
