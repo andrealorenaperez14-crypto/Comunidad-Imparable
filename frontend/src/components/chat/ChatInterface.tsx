@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, Loader2, Bot, User, Zap } from 'lucide-react'
+import { Send, Loader2, Bot, User, Zap, Copy, Check } from 'lucide-react'
 import { useChat } from '@/hooks/useChat'
 import { cn } from '@/lib/utils'
 import type { IAAgent } from '@/types'
@@ -36,6 +36,27 @@ function TypingIndicator() {
         />
       ))}
     </div>
+  )
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+  return (
+    <button
+      onClick={handleCopy}
+      className="flex items-center gap-1 text-xs px-2 py-1 rounded-lg transition-all opacity-60 hover:opacity-100"
+      style={{ color: 'var(--color-text-muted)' }}
+      title="Copiar respuesta"
+    >
+      {copied
+        ? <><Check className="w-3 h-3" strokeWidth={2} /><span>Copiado</span></>
+        : <><Copy className="w-3 h-3" strokeWidth={1.5} /><span>Copiar</span></>}
+    </button>
   )
 }
 
@@ -128,7 +149,8 @@ export function ChatInterface({ agent, agentId }: Props) {
               >
                 <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
 
-                <div className="flex items-center gap-2 mt-2">
+                <div className="flex items-center justify-between gap-2 mt-2">
+                  <div className="flex items-center gap-2">
                   <span className="text-xs opacity-50">
                     {msg.timestamp.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}
                   </span>
@@ -138,6 +160,8 @@ export function ChatInterface({ agent, agentId }: Props) {
                       {MODEL_LABELS[msg.modelUsed] || msg.modelUsed}
                     </span>
                   )}
+                  </div>
+                  {msg.role === 'assistant' && <CopyButton text={msg.content} />}
                 </div>
               </div>
             </motion.div>
