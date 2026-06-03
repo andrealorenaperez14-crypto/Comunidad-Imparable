@@ -3,26 +3,16 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
-async function retrieveRelevantChunks(prisma, agentId, query, limit = 15) {
+async function retrieveAllChunks(prisma, agentId) {
+  // Para CONSULTIVA: devolver TODOS los documentos sin filtrar
+  // Con 15 obras sociales el contexto total es manejable para los modelos
   try {
-    const results = await prisma.$queryRaw`
-      SELECT content, filename,
-             ts_rank(to_tsvector('spanish', content), plainto_tsquery('spanish', ${query})) AS rank
-      FROM "DocumentChunk"
-      WHERE "agentId" = ${agentId}
-        AND to_tsvector('spanish', content) @@ plainto_tsquery('spanish', ${query})
-      ORDER BY rank DESC
-      LIMIT ${limit}
-    `
-    if (results.length > 0) return results.map(r => r.content)
-
-    const fallback = await prisma.documentChunk.findMany({
+    const chunks = await prisma.documentChunk.findMany({
       where: { agentId },
       orderBy: [{ filename: 'asc' }, { chunkIndex: 'asc' }],
-      take: limit,
-      select: { content: true }
+      select: { content: true, filename: true }
     })
-    return fallback.map(r => r.content)
+    return chunks.map(c => `[${c.filename}]\n${c.content}`)
   } catch {
     return []
   }
@@ -47,7 +37,7 @@ async function callGroq(systemPrompt, instructions, message, knowledgeBase, hist
   })
 
   const context = knowledgeBase?.length > 0
-    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
+    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 80000)}`
     : ''
 
   const messages = [
@@ -85,7 +75,7 @@ async function callGemini(apiKey, systemPrompt, instructions, message, knowledge
   const ai = new GoogleGenAI({ apiKey: key })
 
   const context = knowledgeBase?.length > 0
-    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
+    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 80000)}`
     : ''
 
   const systemInstruction = `${systemPrompt}\n\n${instructions}${context}`
@@ -122,7 +112,7 @@ async function callClaude(apiKey, systemPrompt, instructions, message, knowledge
   const anthropic = new Anthropic({ apiKey: key })
 
   const context = knowledgeBase?.length > 0
-    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
+    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 80000)}`
     : ''
 
   const messages = [
@@ -155,7 +145,7 @@ async function callOpenAI(apiKey, systemPrompt, instructions, message, knowledge
   const openai = new OpenAI({ apiKey: key })
 
   const context = knowledgeBase?.length > 0
-    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 10000)}`
+    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 80000)}`
     : ''
 
   const messages = [
@@ -187,11 +177,11 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
     console.warn('[IA Router] No se pudo descifrar API key del agente:', agent.type, err.message)
   }
 
-  // RAG solo para CONSULTIVA
+  // Para CONSULTIVA: cargar TODOS los documentos (no RAG selectivo)
   let knowledgeBase = []
   if (agent.type === 'CONSULTIVA') {
     if (prisma) {
-      const chunks = await retrieveRelevantChunks(prisma, agent.id, message)
+      const chunks = await retrieveAllChunks(prisma, agent.id)
       knowledgeBase = chunks.map(content => ({ content }))
     }
     if (knowledgeBase.length === 0) {

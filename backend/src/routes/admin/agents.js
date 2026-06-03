@@ -156,8 +156,8 @@ export async function adminAgentRoutes(fastify) {
         text = buffer.toString('utf8')
       }
 
-      // Fragmentar en párrafos de ~1000 chars para búsqueda granular
-      const paragraphs = text.split(/\n{2,}/).map(p => p.trim()).filter(p => p.length > 50)
+      // Fragmentar en párrafos (soporta \r\n y \n)
+      const paragraphs = text.split(/(\r?\n){2,}/).map(p => p.trim()).filter(p => p.length > 50)
       const chunkDocs = []
       let chunkIndex = 0
       let current = ''
