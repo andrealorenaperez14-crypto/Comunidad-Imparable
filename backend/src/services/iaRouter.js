@@ -16,9 +16,9 @@ async function retrieveAllChunks(prisma, agentId) {
   }
 }
 
-async function retrieveRelevantChunks(prisma, agentId, query, limit = 5) {
+async function retrieveRelevantChunks(prisma, agentId, query, limit = 3) {
   try {
-    // Intentar FTS primero
+    // FTS en español
     const fts = await prisma.$queryRaw`
       SELECT content, filename,
              ts_rank(to_tsvector('spanish', content), plainto_tsquery('spanish', ${query})) AS rank
@@ -28,22 +28,20 @@ async function retrieveRelevantChunks(prisma, agentId, query, limit = 5) {
       ORDER BY rank DESC
       LIMIT ${limit}
     `
-    if (fts.length >= 2) return fts.map(r => `[${r.filename}]\n${r.content}`)
+    if (fts.length >= 1) return fts.map(r => `[${r.filename}]\n${r.content}`)
 
-    // Fallback ILIKE: busca palabras clave del query en el contenido
+    // Fallback ILIKE con palabras clave (usando $queryRawUnsafe para SQL dinámico)
     const keywords = query.split(/\s+/).filter(w => w.length > 3).slice(0, 3)
-    if (keywords.length === 0) throw new Error('sin keywords')
+    if (keywords.length > 0) {
+      const conditions = keywords.map(k => `content ILIKE '%${k.replace(/'/g, "''")}%'`).join(' OR ')
+      const ilike = await prisma.$queryRawUnsafe(
+        `SELECT content, filename FROM "DocumentChunk" WHERE "agentId" = $1 AND (${conditions}) LIMIT $2`,
+        agentId, limit
+      )
+      if (ilike.length > 0) return ilike.map(r => `[${r.filename}]\n${r.content}`)
+    }
 
-    const ilike = await prisma.$queryRaw`
-      SELECT content, filename
-      FROM "DocumentChunk"
-      WHERE "agentId" = ${agentId}
-        AND (${keywords.map(k => `content ILIKE '%${k}%'`).join(' OR ')})
-      LIMIT ${limit}
-    `
-    if (ilike.length > 0) return ilike.map(r => `[${r.filename}]\n${r.content}`)
-
-    // Último recurso: devolver los primeros N por orden alfabético
+    // Último recurso: primeros N alfabéticamente
     const fallback = await prisma.documentChunk.findMany({
       where: { agentId },
       orderBy: [{ filename: 'asc' }],
@@ -90,7 +88,7 @@ async function callGroq(systemPrompt, instructions, message, knowledgeBase, hist
   for (const model of models) {
     try {
       const result = await withTimeout(
-        groq.chat.completions.create({ model, messages, max_tokens: 4096 }),
+        groq.chat.completions.create({ model, messages, max_tokens: 800 }),
         TIMEOUT_MS
       )
       return {
