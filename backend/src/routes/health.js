@@ -35,11 +35,21 @@ export async function healthRoutes(fastify) {
     } else {
       try {
         const groq = new OpenAI({ apiKey: groqKey, baseURL: 'https://api.groq.com/openai/v1' })
-        const r = await Promise.race([
-          groq.chat.completions.create({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: 'Di solo OK' }], max_tokens: 10 }),
-          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
-        ])
-        results.groq = { ok: true, response: r.choices[0]?.message?.content?.slice(0, 50) }
+        let groqOk = false
+        for (const model of ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant']) {
+          try {
+            const r = await Promise.race([
+              groq.chat.completions.create({ model, messages: [{ role: 'user', content: 'Di solo OK' }], max_tokens: 10 }),
+              new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 15000))
+            ])
+            results.groq = { ok: true, model, response: r.choices[0]?.message?.content?.slice(0, 50) }
+            groqOk = true
+            break
+          } catch (e) {
+            if (!e.message?.includes('429')) throw e
+          }
+        }
+        if (!groqOk) results.groq = { ok: false, error: 'Rate limit en todos los modelos Groq' }
       } catch (err) {
         results.groq = { ok: false, error: err.message?.slice(0, 200) }
       }
