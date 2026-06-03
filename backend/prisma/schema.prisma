@@ -214,13 +214,14 @@ model CourseContent {
 }
 
 model DocumentChunk {
-  id          String   @id @default(cuid())
+  id          String                      @id @default(cuid())
   agentId     String
-  agent       IAAgent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  agent       IAAgent                     @relation(fields: [agentId], references: [id], onDelete: Cascade)
   filename    String
   chunkIndex  Int
-  content     String   @db.Text
-  createdAt   DateTime @default(now())
+  content     String                      @db.Text
+  embedding   Unsupported("vector(768)")?
+  createdAt   DateTime                    @default(now())
 
   @@index([agentId])
 }
