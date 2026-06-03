@@ -3,6 +3,42 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
+async function embedQuery(text) {
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) return null
+  try {
+    const ai = new GoogleGenAI({ apiKey })
+    const result = await ai.models.embedContent({
+      model: 'text-embedding-004',
+      contents: text,
+    })
+    return result.embeddings[0].values
+  } catch {
+    return null
+  }
+}
+
+async function retrieveRelevantChunksVector(prisma, agentId, query, limit = 8) {
+  const embedding = await embedQuery(query)
+  if (!embedding) return []
+
+  const vectorLiteral = `[${embedding.join(',')}]`
+  try {
+    const rows = await prisma.$queryRaw`
+      SELECT id, content, filename, similarity
+      FROM search_chunks_semantic(
+        ${agentId},
+        ${vectorLiteral}::vector,
+        ${limit}
+      )
+      WHERE similarity > 0.4
+    `
+    return rows.map(r => `[${r.filename}]\n${r.content}`)
+  } catch {
+    return []
+  }
+}
+
 async function retrieveAllChunks(prisma, agentId) {
   try {
     const chunks = await prisma.documentChunk.findMany({
@@ -219,10 +255,17 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
   let knowledgeBaseSmall = []
   if (agent.type === 'CONSULTIVA') {
     if (prisma) {
-      const allChunks = await retrieveAllChunks(prisma, agent.id)
-      knowledgeBase = allChunks.map(content => ({ content }))
-      const relevantChunks = await retrieveRelevantChunks(prisma, agent.id, message, 5)
-      knowledgeBaseSmall = relevantChunks.map(content => ({ content }))
+      const vectorChunks = await retrieveRelevantChunksVector(prisma, agent.id, message, 8)
+      if (vectorChunks.length > 0) {
+        knowledgeBase = vectorChunks.map(content => ({ content }))
+        knowledgeBaseSmall = vectorChunks.slice(0, 5).map(content => ({ content }))
+      } else {
+        // Fallback a FTS si no hay embeddings todavía
+        const allChunks = await retrieveAllChunks(prisma, agent.id)
+        knowledgeBase = allChunks.map(content => ({ content }))
+        const relevantChunks = await retrieveRelevantChunks(prisma, agent.id, message, 5)
+        knowledgeBaseSmall = relevantChunks.map(content => ({ content }))
+      }
     }
     if (knowledgeBase.length === 0) {
       knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
