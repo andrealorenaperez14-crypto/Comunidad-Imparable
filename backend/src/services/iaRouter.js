@@ -56,21 +56,26 @@ async function callGroq(systemPrompt, instructions, message, knowledgeBase, hist
     { role: 'user', content: message }
   ]
 
-  const result = await withTimeout(
-    groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages,
-      max_tokens: 4096
-    }),
-    TIMEOUT_MS
-  )
-
-  return {
-    response: result.choices[0].message.content,
-    modelUsed: 'llama-3.3-70b-versatile',
-    tokens: result.usage?.total_tokens || 0,
-    cost: 0
+  // Intentar 70B primero (mejor calidad), si hay rate limit usar 8B (14.400 req/día)
+  const models = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant']
+  for (const model of models) {
+    try {
+      const result = await withTimeout(
+        groq.chat.completions.create({ model, messages, max_tokens: 4096 }),
+        TIMEOUT_MS
+      )
+      return {
+        response: result.choices[0].message.content,
+        modelUsed: model,
+        tokens: result.usage?.total_tokens || 0,
+        cost: 0
+      }
+    } catch (err) {
+      if (!err.message?.includes('429') && !err.message?.includes('rate') && !err.message?.includes('limit')) throw err
+      console.warn(`[Groq] ${model} rate limited, probando siguiente modelo`)
+    }
   }
+  throw new Error('Groq rate limit en todos los modelos')
 }
 
 async function callGemini(apiKey, systemPrompt, instructions, message, knowledgeBase, history = []) {
