@@ -1,0 +1,40 @@
+# OBRA SOCIAL: [NOMBRE COMPLETO]
+SIGLA: [...]  |  TIPO: [Obra Social / Prepaga]  |  ZONA: [cobertura geográfica]
+
+## PLANES Y PRECIOS
+### [Nombre del plan]
+Individual: $[precio] | Grupo familiar 2: $[precio] | Grupo familiar 3+: $[precio]
+Adherente: $[precio] | [otras categorías]
+
+### [Siguiente plan...]
+...
+
+## COBERTURA
+- [bullet cobertura 1]
+- [bullet cobertura 2]
+[máx 15 bullets, los más importantes primero]
+
+## CARTILLA MÉDICA
+Especialidades: [lista separada por comas]
+Urgencias 24hs: Sí/No | Emergencias: [detalle]
+Zonas: [CABA / GBA / Interior / Nacional]
+
+## COSEGUROS Y COPAGOS
+Consulta clínico: $[X] | Especialista: $[X] | Guardia: $[X]
+Estudios básicos: $[X] | Alta complejidad: $[X]
+
+## CARENCIAS
+General: [tiempo] | Maternidad: [tiempo] | Preexistencias: [detalle]
+Sin carencia: [qué no tiene carencia]
+
+## MEDICAMENTOS
+Descuento general: [%] | Crónicos: [%] | Alta dispensación: [%]
+
+## VENTAJAS DIFERENCIALES (para ventas)
+- [diferenciador clave 1]
+- [diferenciador clave 2]
+- [por qué elegirla sobre la competencia]
+
+## CONTACTO Y CIERRE
+Tel: [...] | Email: [...] | Web: [...]
+Tiempo de alta: [X días] | Forma de pago: [...]
