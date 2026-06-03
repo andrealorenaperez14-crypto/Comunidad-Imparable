@@ -4,8 +4,6 @@ import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
 async function retrieveAllChunks(prisma, agentId) {
-  // Para CONSULTIVA: devolver TODOS los documentos sin filtrar
-  // Con 15 obras sociales el contexto total es manejable para los modelos
   try {
     const chunks = await prisma.documentChunk.findMany({
       where: { agentId },
@@ -13,6 +11,46 @@ async function retrieveAllChunks(prisma, agentId) {
       select: { content: true, filename: true }
     })
     return chunks.map(c => `[${c.filename}]\n${c.content}`)
+  } catch {
+    return []
+  }
+}
+
+async function retrieveRelevantChunks(prisma, agentId, query, limit = 5) {
+  try {
+    // Intentar FTS primero
+    const fts = await prisma.$queryRaw`
+      SELECT content, filename,
+             ts_rank(to_tsvector('spanish', content), plainto_tsquery('spanish', ${query})) AS rank
+      FROM "DocumentChunk"
+      WHERE "agentId" = ${agentId}
+        AND to_tsvector('spanish', content) @@ plainto_tsquery('spanish', ${query})
+      ORDER BY rank DESC
+      LIMIT ${limit}
+    `
+    if (fts.length >= 2) return fts.map(r => `[${r.filename}]\n${r.content}`)
+
+    // Fallback ILIKE: busca palabras clave del query en el contenido
+    const keywords = query.split(/\s+/).filter(w => w.length > 3).slice(0, 3)
+    if (keywords.length === 0) throw new Error('sin keywords')
+
+    const ilike = await prisma.$queryRaw`
+      SELECT content, filename
+      FROM "DocumentChunk"
+      WHERE "agentId" = ${agentId}
+        AND (${keywords.map(k => `content ILIKE '%${k}%'`).join(' OR ')})
+      LIMIT ${limit}
+    `
+    if (ilike.length > 0) return ilike.map(r => `[${r.filename}]\n${r.content}`)
+
+    // Último recurso: devolver los primeros N por orden alfabético
+    const fallback = await prisma.documentChunk.findMany({
+      where: { agentId },
+      orderBy: [{ filename: 'asc' }],
+      take: limit,
+      select: { content: true, filename: true }
+    })
+    return fallback.map(c => `[${c.filename}]\n${c.content}`)
   } catch {
     return []
   }
@@ -36,8 +74,9 @@ async function callGroq(systemPrompt, instructions, message, knowledgeBase, hist
     baseURL: 'https://api.groq.com/openai/v1'
   })
 
+  // Groq free: 6.000 TPM → limitar contexto a ~12k chars (≈3k tokens)
   const context = knowledgeBase?.length > 0
-    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 80000)}`
+    ? `\n\nBase de conocimiento:\n${knowledgeBase.map(k => k.content).join('\n\n').slice(0, 12000)}`
     : ''
 
   const messages = [
@@ -177,15 +216,19 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
     console.warn('[IA Router] No se pudo descifrar API key del agente:', agent.type, err.message)
   }
 
-  // Para CONSULTIVA: cargar TODOS los documentos (no RAG selectivo)
+  // Para CONSULTIVA: todos los docs disponibles (el provider limita según su contexto)
   let knowledgeBase = []
+  let knowledgeBaseSmall = []
   if (agent.type === 'CONSULTIVA') {
     if (prisma) {
-      const chunks = await retrieveAllChunks(prisma, agent.id)
-      knowledgeBase = chunks.map(content => ({ content }))
+      const allChunks = await retrieveAllChunks(prisma, agent.id)
+      knowledgeBase = allChunks.map(content => ({ content }))
+      const relevantChunks = await retrieveRelevantChunks(prisma, agent.id, message, 5)
+      knowledgeBaseSmall = relevantChunks.map(content => ({ content }))
     }
     if (knowledgeBase.length === 0) {
       knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
+      knowledgeBaseSmall = knowledgeBase.slice(0, 5)
     }
   }
 
@@ -196,9 +239,12 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
     ? () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
     : () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
 
-  // Pipeline: Groq (primario, gratis) → Gemini → Claude → OpenAI → local
+  // Groq recibe KB reducida (límite 6k TPM free tier), Claude/OpenAI reciben todo
+  const kbForGroq = agent.type === 'CONSULTIVA' ? knowledgeBaseSmall : knowledgeBase
+
+  // Pipeline: Groq → Gemini → Claude → OpenAI → local
   const pipeline = [
-    ...(process.env.GROQ_API_KEY ? [() => callGroq(systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
+    ...(process.env.GROQ_API_KEY ? [() => callGroq(systemPrompt, instructions, message, kbForGroq, trimmedHistory)] : []),
     () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
     ...(process.env.ANTHROPIC_API_KEY ? [() => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
     ...(process.env.OPENAI_API_KEY ? [() => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
