@@ -1,40 +1,106 @@
-# OBRA SOCIAL: [NOMBRE COMPLETO]
-SIGLA: [...]  |  TIPO: [Obra Social / Prepaga]  |  ZONA: [cobertura geográfica]
+====================================================
+OBRA SOCIAL: [NOMBRE COMERCIAL COMPLETO]
+SIGLA: [...]  |  TIPO: [Obra Social / Prepaga / Mutual]
+====================================================
 
-## PLANES Y PRECIOS
-### [Nombre del plan]
-Individual: $[precio] | Grupo familiar 2: $[precio] | Grupo familiar 3+: $[precio]
-Adherente: $[precio] | [otras categorías]
+## EDADES Y GRUPO FAMILIAR
+Edad mínima: [X años]
+Edad máxima titular: [X años]
+Edad máxima hijo: [X años / hasta casamiento / hasta primer trabajo]
+Condiciones especiales: [hijos discapacitados sin límite de edad, etc.]
+Integrantes permitidos: [titular, cónyuge/conviviente, hijos, padres, etc.]
 
-### [Siguiente plan...]
-...
+## ZONA DE COBERTURA
+[Listar todas las localidades, zonas o provincias con prestadores]
+Cobertura nacional: [Sí / No / Parcial]
+Zonas destacadas: [CABA, GBA Norte, GBA Sur, GBA Oeste, Córdoba, Rosario, etc.]
 
-## COBERTURA
-- [bullet cobertura 1]
-- [bullet cobertura 2]
-[máx 15 bullets, los más importantes primero]
+## INGRESO POR RECIBO DE SUELDO (Relación de Dependencia)
+Aporte titular: [% o importe fijo]
+Aporte adherente/cónyuge: [% o importe fijo]
+Aporte por hijo: [% o importe fijo]
+Condiciones: [antigüedad mínima, documentación requerida, etc.]
+Tope máximo de aporte: [importe si aplica]
+Observaciones: [condiciones especiales, límites, etc.]
 
-## CARTILLA MÉDICA
-Especialidades: [lista separada por comas]
-Urgencias 24hs: Sí/No | Emergencias: [detalle]
-Zonas: [CABA / GBA / Interior / Nacional]
+## INGRESO POR MONOTRIBUTO
+Categoría A: $[importe]
+Categoría B: $[importe]
+Categoría C: $[importe]
+Categoría D: $[importe]
+Categoría E: $[importe]
+Categoría F: $[importe]
+Categoría G: $[importe]
+Categoría H: $[importe]
+Categoría I: $[importe]
+Categoría J: $[importe]
+Adherente/integrante: $[importe adicional o %]
+Condiciones: [documentación, antigüedad, etc.]
 
-## COSEGUROS Y COPAGOS
-Consulta clínico: $[X] | Especialista: $[X] | Guardia: $[X]
-Estudios básicos: $[X] | Alta complejidad: $[X]
+## INGRESO PARTICULAR (Voluntario)
+[Precios de lista CON IVA por rango etario y plan]
 
-## CARENCIAS
-General: [tiempo] | Maternidad: [tiempo] | Preexistencias: [detalle]
-Sin carencia: [qué no tiene carencia]
+### Plan [NOMBRE DEL PLAN]
+Hasta 30 años: $[importe]
+31 a 40 años: $[importe]
+41 a 50 años: $[importe]
+51 a 60 años: $[importe]
+61 a 65 años: $[importe]
+66 años en adelante: $[importe / Consultar]
+Grupo familiar 2 integrantes: $[importe]
+Grupo familiar 3 integrantes: $[importe]
+Grupo familiar 4+ integrantes: $[importe]
 
-## MEDICAMENTOS
-Descuento general: [%] | Crónicos: [%] | Alta dispensación: [%]
+### Plan [NOMBRE DEL PLAN 2]
+[repetir estructura]
+
+## CONDICIONES DEL SERVICIO
+Turnos: [cómo se sacan, tiempos de espera, canales disponibles]
+Copagos: [importe por consulta clínica / especialista / guardia]
+Autorización de estudios: [proceso, tiempos, canales]
+Urgencias y emergencias: [cobertura 24hs, número, condiciones]
+Atención al cliente: [teléfono, horario, canales digitales]
+Medicamentos: [% descuento general / crónicos / alta dispensación]
+Internación: [condiciones generales]
+
+## CARTILLA (CLÍNICAS Y SANATORIOS)
+[Listar TODOS los centros mencionados, identificando a qué plan pertenecen]
+
+### Todos los planes
+- [Nombre clínica/sanatorio] — [Dirección] — [Localidad]
+- [Nombre clínica/sanatorio] — [Dirección] — [Localidad]
+
+### Solo Plan [NOMBRE]
+- [Nombre clínica/sanatorio] — [Dirección] — [Localidad]
+
+### Solo Plan [NOMBRE 2]
+- [Nombre clínica/sanatorio] — [Dirección] — [Localidad]
+
+## PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+Política general: [cómo maneja preexistencias]
+Carencia general: [tiempo]
+Carencia maternidad: [tiempo]
+Carencia preexistencias: [tiempo / condiciones]
+Carencia alta complejidad: [tiempo]
+Sin carencia: [qué procedimientos no tienen carencia]
+Medicación crónica: [condiciones para cobertura, documentación requerida]
+Requisitos declaración: [formulario, estudios previos, etc.]
+
+## PROMOCIONES POR FORMA DE PAGO
+Débito automático: [descuento % o beneficio]
+Tarjeta de crédito: [descuento % o beneficio, qué tarjetas]
+Transferencia bancaria: [descuento % o beneficio]
+Pago en efectivo: [condiciones]
+Otras promociones vigentes: [detallar]
 
 ## VENTAJAS DIFERENCIALES (para ventas)
-- [diferenciador clave 1]
+- [diferenciador clave 1 — qué la hace mejor que la competencia]
 - [diferenciador clave 2]
-- [por qué elegirla sobre la competencia]
+- [diferenciador clave 3]
+- [por qué un asesor debería recomendarla]
 
 ## CONTACTO Y CIERRE
-Tel: [...] | Email: [...] | Web: [...]
-Tiempo de alta: [X días] | Forma de pago: [...]
+Tel: [...] | WhatsApp: [...] | Email: [...] | Web: [...]
+Tiempo de alta: [X días hábiles]
+Documentación para alta: [DNI, recibo de sueldo, etc.]
+Ejecutivo/contacto comercial: [nombre y datos si aplica]
