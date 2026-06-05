@@ -2,23 +2,29 @@ import { createRequire } from 'module'
 import { requireAdmin } from '../../middleware/auth.js'
 import { encrypt, decrypt, maskApiKey } from '../../utils/encryption.js'
 import { z } from 'zod'
-import { GoogleGenAI } from '@google/genai'
 
 const require = createRequire(import.meta.url)
 const pdfParse = require('pdf-parse')
 
-async function embedChunks(fastify, chunkIds, contents) {
+async function geminiEmbed(text) {
   const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) return
+  if (!apiKey) return null
+  const url = `https://generativelanguage.googleapis.com/v1/models/text-embedding-004:embedContent?key=${apiKey}`
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ content: { parts: [{ text }] } })
+  })
+  if (!res.ok) throw new Error(`Gemini embed ${res.status}`)
+  const data = await res.json()
+  return data.embedding.values
+}
 
-  const ai = new GoogleGenAI({ apiKey })
+async function embedChunks(fastify, chunkIds, contents) {
   for (let i = 0; i < chunkIds.length; i++) {
     try {
-      const result = await ai.models.embedContent({
-        model: 'text-embedding-004',
-        content: { parts: [{ text: contents[i] }] },
-      })
-      const values = result.embedding.values
+      const values = await geminiEmbed(contents[i])
+      if (!values) continue
       const vectorLiteral = `[${values.join(',')}]`
       await fastify.prisma.$executeRaw`
         UPDATE "DocumentChunk"

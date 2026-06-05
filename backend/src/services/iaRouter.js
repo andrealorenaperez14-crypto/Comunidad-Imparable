@@ -7,12 +7,15 @@ async function embedQuery(text) {
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) return null
   try {
-    const ai = new GoogleGenAI({ apiKey })
-    const result = await ai.models.embedContent({
-      model: 'text-embedding-004',
-      content: { parts: [{ text }] },
+    const url = `https://generativelanguage.googleapis.com/v1/models/text-embedding-004:embedContent?key=${apiKey}`
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: { parts: [{ text }] } })
     })
-    return result.embedding.values
+    if (!res.ok) return null
+    const data = await res.json()
+    return data.embedding.values
   } catch {
     return null
   }
