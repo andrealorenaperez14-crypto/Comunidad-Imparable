@@ -16,7 +16,7 @@ async function embedChunks(fastify, chunkIds, contents) {
     try {
       const result = await ai.models.embedContent({
         model: 'text-embedding-004',
-        content: contents[i],
+        content: { parts: [{ text: contents[i] }] },
       })
       const values = result.embedding.values
       const vectorLiteral = `[${values.join(',')}]`

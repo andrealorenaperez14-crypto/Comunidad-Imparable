@@ -23,7 +23,7 @@ async function main() {
     try {
       const result = await ai.models.embedContent({
         model: 'text-embedding-004',
-        content: chunk.content,
+        content: { parts: [{ text: chunk.content }] },
       })
       const values = result.embedding.values
       const vectorLiteral = `[${values.join(',')}]`

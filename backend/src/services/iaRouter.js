@@ -10,7 +10,7 @@ async function embedQuery(text) {
     const ai = new GoogleGenAI({ apiKey })
     const result = await ai.models.embedContent({
       model: 'text-embedding-004',
-      content: text,
+      content: { parts: [{ text }] },
     })
     return result.embedding.values
   } catch {
