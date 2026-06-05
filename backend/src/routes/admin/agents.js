@@ -16,9 +16,9 @@ async function embedChunks(fastify, chunkIds, contents) {
     try {
       const result = await ai.models.embedContent({
         model: 'text-embedding-004',
-        contents: contents[i],
+        content: contents[i],
       })
-      const values = result.embeddings[0].values
+      const values = result.embedding.values
       const vectorLiteral = `[${values.join(',')}]`
       await fastify.prisma.$executeRaw`
         UPDATE "DocumentChunk"

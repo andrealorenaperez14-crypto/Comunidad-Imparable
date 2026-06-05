@@ -18,9 +18,9 @@ async function main() {
     try {
       const result = await ai.models.embedContent({
         model: 'text-embedding-004',
-        contents: chunk.content,
+        content: chunk.content,
       })
-      const values = result.embeddings[0].values
+      const values = result.embedding.values
       const vectorLiteral = `[${values.join(',')}]`
       await prisma.$executeRaw`
         UPDATE "DocumentChunk"
