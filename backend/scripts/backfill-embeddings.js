@@ -2,7 +2,12 @@ import { PrismaClient } from '@prisma/client'
 import { GoogleGenAI } from '@google/genai'
 import 'dotenv/config'
 
-const prisma = new PrismaClient()
+// Supabase pooler (puerto 6543) no soporta prepared statements — forzar modo pgbouncer
+const dbUrl = (process.env.DATABASE_URL || '').includes('?')
+  ? process.env.DATABASE_URL + '&pgbouncer=true&connection_limit=1'
+  : process.env.DATABASE_URL + '?pgbouncer=true&connection_limit=1'
+
+const prisma = new PrismaClient({ datasources: { db: { url: dbUrl } } })
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
 async function main() {
