@@ -3,38 +3,16 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
-async function embedQuery(text) {
-  const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) return null
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${apiKey}`
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: { parts: [{ text }] } })
-    })
-    if (!res.ok) return null
-    const data = await res.json()
-    return data.embedding.values
-  } catch {
-    return null
-  }
-}
-
 async function retrieveRelevantChunksVector(prisma, agentId, query, limit = 8) {
-  const embedding = await embedQuery(query)
-  if (!embedding) return []
-
-  const vectorLiteral = `[${embedding.join(',')}]`
   try {
     const rows = await prisma.$queryRaw`
-      SELECT id, content, filename, similarity
-      FROM search_chunks_semantic(
-        ${agentId},
-        ${vectorLiteral}::vector,
-        ${limit}
-      )
-      WHERE similarity > 0.4
+      SELECT content, filename,
+             word_similarity(${query}, content) AS sim
+      FROM "DocumentChunk"
+      WHERE "agentId" = ${agentId}
+        AND word_similarity(${query}, content) > 0.08
+      ORDER BY sim DESC
+      LIMIT ${limit}
     `
     return rows.map(r => `[${r.filename}]\n${r.content}`)
   } catch {
