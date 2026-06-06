@@ -182,7 +182,7 @@ export default function Parte2() {
                 maxWidth: '360px'
               }}
             >
-              QUIERO SER ASESOR de ELITE
+              QUIERO SER ASESOR VIP
             </button>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
               Acceso inmediato · Soporte 24/7 · Certificado internacional
@@ -309,14 +309,14 @@ export default function Parte2() {
         </div>
       </section>
 
-      {/* ══════════════════ PRICING ══════════════════ */}
+      {/* ══════════════════ ASESORES VIP ══════════════════ */}
       <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
-        <div style={{ maxWidth: '440px', margin: '0 auto', textAlign: 'center' }}>
+        <div style={{ maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
           <motion.h2
             {...fadeUp}
             style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '2.5rem' }}
           >
-            Tu Inversión
+            Asesores VIP
           </motion.h2>
 
           <div style={{
@@ -326,30 +326,22 @@ export default function Parte2() {
             background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center'
+            alignItems: 'center',
+            gap: '1.25rem'
           }}>
-            <div style={{ marginBottom: '1.5rem' }}>
-              <Image
-                src="/assets/client1/LOGO_NEUROVENTAS.png"
-                alt="Certificado Neuroventas"
-                width={100}
-                height={100}
-                style={{ objectFit: 'contain' }}
-              />
-            </div>
 
-            <p style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.5rem' }}>
-              150 USD
-            </p>
-            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
-              15 módulos + IAs + Mentorías semanales en vivo + Club de asesores VIP ORO por 30 días
-            </p>
-            <p style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, marginBottom: '2rem' }}>
-              Luego 20 USD / mes (opcional)
+            {/* Texto principal */}
+            <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'var(--color-text)', lineHeight: 1.75 }}>
+              ¿Listo para llevar tus asesorías al siguiente nivel?<br />
+              La versión avanzada de la <strong style={{ color: 'var(--color-gold)' }}>Escuela de Asesores ELITE en el rubro Salud</strong>, llega en julio.
             </p>
 
-            <button
-              onClick={() => { trackEvent('final_cta_clicked'); router.push('/register') }}
+            {/* Botón 1 — Lista de Espera */}
+            <a
+              href="https://wa.me/?text=Quiero%20unirme%20a%20la%20Lista%20VIP%20Pre-lanzamiento%20de%20Escuela%20de%20Asesores%20ELITE"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('vip_waitlist_clicked')}
               style={{
                 width: '100%',
                 padding: '1rem 2rem',
@@ -357,19 +349,69 @@ export default function Parte2() {
                 color: '#000',
                 fontWeight: 700,
                 borderRadius: '0.75rem',
-                fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-                letterSpacing: '0.07em',
+                fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                letterSpacing: '0.05em',
                 boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
                 cursor: 'pointer',
-                marginBottom: '1.25rem'
+                textDecoration: 'none',
+                display: 'block',
+                textAlign: 'center'
               }}
             >
-              QUIERO SER ASESOR de ELITE
-            </button>
+              Unirme a la Lista VIP (Pre-lanzamiento)
+            </a>
 
-            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
-              Podés cancelar tu membresía en cualquier momento
-            </p>
+            {/* Botón 2 — WhatsApp Club */}
+            <a
+              href="https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackEvent('vip_whatsapp_clicked')}
+              style={{
+                width: '100%',
+                padding: '0.875rem 2rem',
+                background: 'rgba(37,211,102,0.12)',
+                color: '#25D366',
+                fontWeight: 700,
+                borderRadius: '0.75rem',
+                fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                letterSpacing: '0.05em',
+                border: '1px solid rgba(37,211,102,0.35)',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                display: 'block',
+                textAlign: 'center'
+              }}
+            >
+              Sumarme al Club de Asesores VIP ORO
+            </a>
+
+            {/* Separador */}
+            <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
+
+            {/* Gancho precio */}
+            <div style={{
+              width: '100%',
+              padding: '1.25rem',
+              borderRadius: '0.75rem',
+              background: 'rgba(196,151,42,0.07)',
+              border: '1px solid var(--color-gold-border)',
+              textAlign: 'center'
+            }}>
+              <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
+                Quienes estén en la lista de espera recibirán un beneficio exclusivo que no estará disponible para el público general el día del lanzamiento.
+              </p>
+              <p style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.25rem' }}>
+                INVERSIÓN 150 USD
+              </p>
+              <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-gold)', fontWeight: 600, marginBottom: '0.5rem' }}>
+                con 80% dto.
+              </p>
+              <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)' }}>
+                Después <strong style={{ color: 'var(--color-text)' }}>270 USD</strong>
+              </p>
+            </div>
+
           </div>
         </div>
       </section>
