@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Users, TrendingUp, Loader2, Search, KeyRound, Eye, EyeOff, CheckCircle, X, Trash2, DollarSign, Plus, BadgeCheck, Clock, Star, Mail } from 'lucide-react'
+import { Users, TrendingUp, Loader2, Search, KeyRound, Eye, EyeOff, CheckCircle, X, Trash2, DollarSign, Plus, BadgeCheck, Clock, Star, Mail, Copy, Check } from 'lucide-react'
 import { metricsApi, adminUserApi, adminCommissionApi, subscriptionApi } from '@/lib/api'
 import { getStatusBg } from '@/lib/utils'
 import type { SaleCommission } from '@/types'
@@ -12,8 +12,16 @@ interface Student {
   id: string
   email: string
   dni: string
+  createdAt: string
   profile: { firstName: string; lastName: string; lastLoginAt?: string } | null
-  subscription: { status: string; planType?: string } | null
+  subscriptions: { status: string; planType?: string; activeUntil?: string }[]
+  subscription?: { status: string; planType?: string; activeUntil?: string } | null
+}
+
+function getDaysRemaining(activeUntil?: string): number | null {
+  if (!activeUntil) return null
+  const diff = new Date(activeUntil).getTime() - Date.now()
+  return Math.ceil(diff / (1000 * 60 * 60 * 24))
 }
 
 function ResetPasswordModal({ student, onClose }: { student: Student; onClose: () => void }) {
@@ -439,6 +447,23 @@ export default function AlumnosPage() {
   const [commissionTarget, setCommissionTarget] = useState<Student | null>(null)
   const [upgradeTarget, setUpgradeTarget] = useState<Student | null>(null)
   const [editEmailTarget, setEditEmailTarget] = useState<Student | null>(null)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
+
+  function copyStudentData(student: Student) {
+    const sub = student.subscriptions?.[0] || student.subscription
+    const name = student.profile ? `${student.profile.firstName} ${student.profile.lastName}` : ''
+    const text = [
+      `Nombre: ${name}`,
+      `Email: ${student.email}`,
+      `DNI: ${student.dni}`,
+      `Fecha de ingreso: ${new Date(student.createdAt).toLocaleDateString('es-AR')}`,
+      sub?.activeUntil ? `Vencimiento: ${new Date(sub.activeUntil).toLocaleDateString('es-AR')}` : '',
+      `Estado: ${sub?.status || 'Sin suscripción'}`,
+    ].filter(Boolean).join('\n')
+    navigator.clipboard.writeText(text)
+    setCopiedId(student.id)
+    setTimeout(() => setCopiedId(null), 2000)
+  }
 
   const { data: stats, isLoading } = useQuery({
     queryKey: ['dashboard-stats'],
@@ -505,16 +530,19 @@ export default function AlumnosPage() {
             {students.map(student => {
               const name = student.profile ? `${student.profile.firstName} ${student.profile.lastName}` : student.email
               const initial = (student.profile?.firstName || student.email)[0].toUpperCase()
-              const sub = student.subscription
+              const sub = student.subscriptions?.[0] || student.subscription
               const isVitalicio = sub?.planType === 'VITALICIO'
               const isTrial = sub?.planType === 'TRIAL'
               const isActive = sub?.status === 'ACTIVE' || sub?.status === 'TRIAL'
-              const badgeLabel = isVitalicio ? 'Vitalicio' : isTrial ? 'Prueba' : isActive ? 'Activo' : 'Inactivo'
-              const badgeColor = isVitalicio ? 'var(--color-gold)' : isTrial ? '#60A5FA' : isActive ? '#4ADE80' : '#9CA3AF'
-              const badgeBg = isVitalicio ? 'rgba(196,151,42,0.1)' : isTrial ? 'rgba(96,165,250,0.1)' : isActive ? 'rgba(74,222,128,0.1)' : 'rgba(156,163,175,0.1)'
+              const isExpired = !isActive && !!sub
+              const badgeLabel = isVitalicio ? 'Vitalicio' : isTrial ? 'Prueba' : isActive ? 'Activo' : isExpired ? 'Vencido' : 'Sin plan'
+              const badgeColor = isVitalicio ? 'var(--color-gold)' : isTrial ? '#60A5FA' : isActive ? '#4ADE80' : isExpired ? '#F87171' : '#9CA3AF'
+              const badgeBg = isVitalicio ? 'rgba(196,151,42,0.1)' : isTrial ? 'rgba(96,165,250,0.1)' : isActive ? 'rgba(74,222,128,0.1)' : isExpired ? 'rgba(239,68,68,0.1)' : 'rgba(156,163,175,0.1)'
+              const daysLeft = getDaysRemaining(sub?.activeUntil)
+              const fechaIngreso = new Date(student.createdAt).toLocaleDateString('es-AR')
               return (
                 <div key={student.id} className="flex items-center gap-4 p-4 rounded-xl"
-                  style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}>
+                  style={{ background: 'var(--color-bg-card)', border: `1px solid ${isExpired ? 'rgba(239,68,68,0.2)' : 'var(--color-separator)'}` }}>
                   <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
                     <span className="font-bold text-sm" style={{ color: 'var(--color-gold)' }}>{initial}</span>
@@ -530,9 +558,28 @@ export default function AlumnosPage() {
                     <p className="text-sm truncate" style={{ color: 'var(--color-text-muted)' }}>
                       {student.email} · DNI {student.dni}
                     </p>
+                    <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
+                      Ingreso: {fechaIngreso}
+                      {daysLeft !== null && (
+                        <span style={{ color: daysLeft <= 0 ? '#F87171' : daysLeft <= 3 ? '#FBBF24' : 'var(--color-text-muted)' }}>
+                          {' · '}
+                          {daysLeft <= 0 ? 'Vencido' : `${daysLeft} día${daysLeft !== 1 ? 's' : ''} restante${daysLeft !== 1 ? 's' : ''}`}
+                        </span>
+                      )}
+                    </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    {student.subscription?.planType !== 'VITALICIO' && (
+                    <button
+                      onClick={() => copyStudentData(student)}
+                      title="Copiar datos del alumno"
+                      className="p-2 rounded-xl transition-all"
+                      style={{ color: copiedId === student.id ? '#4ADE80' : 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}
+                    >
+                      {copiedId === student.id
+                        ? <Check className="w-4 h-4" strokeWidth={1.5} />
+                        : <Copy className="w-4 h-4" strokeWidth={1.5} />}
+                    </button>
+                    {sub?.planType !== 'VITALICIO' && (
                       <button onClick={() => setUpgradeTarget(student)}
                         className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
                         style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>

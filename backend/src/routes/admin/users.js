@@ -133,7 +133,6 @@ export async function adminUserRoutes(fastify) {
           id: true, email: true, dni: true, role: true, createdAt: true,
           profile: { select: { firstName: true, lastName: true, lastLoginAt: true } },
           subscriptions: {
-            where: { status: { in: ['ACTIVE', 'TRIAL'] } },
             orderBy: { createdAt: 'desc' },
             take: 1
           }
