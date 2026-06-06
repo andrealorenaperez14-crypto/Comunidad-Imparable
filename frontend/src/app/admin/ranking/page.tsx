@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
-import { Trophy, TrendingUp, Flame, Activity, Search, Loader2 } from 'lucide-react'
-import { adminUserApi } from '@/lib/api'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { Trophy, TrendingUp, Flame, Activity, Search, Loader2, RefreshCw } from 'lucide-react'
+import { adminUserApi, rankingApi } from '@/lib/api'
 import type { AdminRankingEntry } from '@/types'
 
 const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }> = {
@@ -16,10 +16,16 @@ export default function AdminRankingPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
+  const qc = useQueryClient()
 
   const { data, isLoading } = useQuery({
     queryKey: ['admin-ranking', filter, page],
     queryFn: () => adminUserApi.ranking(filter, page).then(r => r.data)
+  })
+
+  const recalcMutation = useMutation({
+    mutationFn: () => rankingApi.recalculate(),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['admin-ranking'] })
   })
 
   const students: AdminRankingEntry[] = data?.students || []
@@ -37,14 +43,27 @@ export default function AdminRankingPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
-          <Trophy className="w-7 h-7" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
-          Ranking de Alumnos
-        </h1>
-        <p style={{ color: 'var(--color-text-muted)' }}>
-          {total} alumnos en total · ordenados por puntuación
-        </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
+            <Trophy className="w-7 h-7" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            Ranking de Alumnos
+          </h1>
+          <p style={{ color: 'var(--color-text-muted)' }}>
+            {total} alumnos en total · ordenados por puntuación
+          </p>
+        </div>
+        <button
+          onClick={() => recalcMutation.mutate()}
+          disabled={recalcMutation.isPending}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
+          style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(196,151,42,0.08)' }}
+        >
+          {recalcMutation.isPending
+            ? <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
+            : <RefreshCw className="w-4 h-4" strokeWidth={1.5} />}
+          Recalcular ahora
+        </button>
       </div>
 
       {/* Filters */}
