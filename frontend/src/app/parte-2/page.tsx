@@ -130,21 +130,28 @@ export default function Parte2() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'clamp(5rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(1.5rem,3vw,2rem)',
-        position: 'relative'
+        padding: 'clamp(5rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(2rem,4vw,3rem)',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
+        {/* Fondo radial dorado */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.09) 0%, transparent 70%)'
+          background: 'radial-gradient(ellipse at center top, rgba(196,151,42,0.13) 0%, transparent 65%)'
         }} />
+        {/* Líneas decorativas laterales */}
+        <div style={{ position: 'absolute', left: 0, top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(196,151,42,0.3), transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', right: 0, top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(196,151,42,0.3), transparent)', pointerEvents: 'none' }} />
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ width: '100%', maxWidth: '640px', margin: '0 auto', position: 'relative', zIndex: 10 }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+        <div style={{ width: '100%', maxWidth: '680px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
+
+          {/* Logo con glow */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.1, 0.25, 1] }}
+            style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}
+          >
             <Image
               src="/assets/client1/LOGO_NEUROVENTAS.png"
               alt="Neuroventas"
@@ -152,61 +159,120 @@ export default function Parte2() {
               height={280}
               style={{
                 objectFit: 'contain',
-                width: 'clamp(180px, 40vw, 280px)',
+                width: 'clamp(160px, 38vw, 260px)',
                 height: 'auto',
                 filter: 'drop-shadow(0 0 18px rgba(196,151,42,0.75)) drop-shadow(0 0 40px rgba(196,151,42,0.45)) drop-shadow(0 0 80px rgba(196,151,42,0.2))',
               }}
             />
-          </div>
+          </motion.div>
 
+          {/* Título grande */}
           <motion.h1
-            {...fadeUp}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
             style={{
               fontFamily: 'Cinzel, serif',
-              fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
+              fontSize: 'clamp(2rem, 5.5vw, 3.5rem)',
               fontWeight: 700,
-              lineHeight: 1.25,
-              marginBottom: '1.25rem'
+              lineHeight: 1.15,
+              marginBottom: '1rem',
+              letterSpacing: '0.02em'
             }}
           >
-            Asesor Elite Internacional
+            Asesor Elite<br />
+            <span style={{ color: 'var(--color-gold)' }}>Internacional</span>
           </motion.h1>
 
-          <motion.p
-            {...fadeUp}
-            style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
-              color: 'var(--color-gold)',
-              lineHeight: 1.7,
-              marginBottom: '1rem'
-            }}
-          >
-            30 días de formación. 15 módulos especializados.
-            <br />Certificación Internacional en Neuroventas.
-            <br />2 Mentorías semanales en vivo.
-          </motion.p>
+          {/* Separador dorado */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            style={{ height: '2px', width: '80px', background: 'linear-gradient(to right, var(--color-gold), transparent)', margin: '0 auto 1.75rem', borderRadius: '2px' }}
+          />
 
+          {/* Badges de propuesta de valor */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.625rem', marginBottom: '2rem' }}
+          >
+            {[
+              { num: '30', label: 'días de formación' },
+              { num: '15', label: 'módulos especializados' },
+              { num: '2', label: 'mentorías en vivo / sem' },
+              { num: '24/7', label: 'IAs de acompañamiento' },
+            ].map((item, i) => (
+              <div key={i} style={{
+                display: 'flex', alignItems: 'center', gap: '0.5rem',
+                padding: '0.5rem 1rem',
+                borderRadius: '2rem',
+                border: '1px solid var(--color-gold-border)',
+                background: 'rgba(196,151,42,0.06)',
+              }}>
+                <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-gold)' }}>{item.num}</span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{item.label}</span>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Cuerpo principal */}
           <motion.p
-            {...fadeUp}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.45 }}
             style={{
-              fontSize: 'clamp(0.82rem, 1.8vw, 1rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.7,
+              fontSize: 'clamp(1rem, 2.2vw, 1.2rem)',
+              color: 'var(--color-text)',
+              lineHeight: 1.85,
               maxWidth: '520px',
-              margin: '0 auto 2rem'
+              margin: '0 auto 1.5rem',
             }}
           >
-            El programa que convierte asesores<br />en Profesionales de Alto Valor.<br />
-            <strong style={{ color: 'var(--color-gold)' }}>Escalá a +1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
+            El programa que convierte asesores en{' '}
+            <strong style={{ color: 'var(--color-gold)' }}>Profesionales de Alto Valor</strong>{' '}
+            en el rubro Salud.
           </motion.p>
 
-          <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.5rem', lineHeight: 1.7 }}>
+          {/* Frase de impacto */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            style={{
+              padding: '1.25rem 2rem',
+              borderRadius: '0.875rem',
+              border: '1px solid var(--color-gold-border)',
+              background: 'rgba(196,151,42,0.06)',
+              marginBottom: '1.75rem',
+              maxWidth: '480px',
+              margin: '0 auto 1.75rem'
+            }}
+          >
+            <p style={{ fontSize: 'clamp(1.1rem, 2.8vw, 1.4rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.25rem' }}>
+              Escalá a +1.000 USD en 30 días
+            </p>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)' }}>
+              o seguís como asesor tradicional.
+            </p>
+          </motion.div>
+
+          {/* Call to scroll */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            style={{ fontSize: 'clamp(0.8rem, 1.6vw, 0.9rem)', color: 'var(--color-text-muted)', lineHeight: 1.7 }}
+          >
             Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo<br />
             <span style={{ color: 'var(--color-gold)', fontWeight: 600 }}>
               ↓ Anotate más abajo antes de que cierren los cupos
             </span>
           </motion.p>
-        </motion.div>
+
+        </div>
       </section>
 
       {/* ══════════════════ 15 MÓDULOS ══════════════════ */}
