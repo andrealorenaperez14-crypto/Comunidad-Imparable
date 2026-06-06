@@ -1,7 +1,13 @@
 export async function recalcularRanking(prisma, clientId) {
-  const baseIngresoThreshold = 0
   const topN = 10
 
+  // Todos los alumnos del cliente
+  const allStudents = await prisma.user.findMany({
+    where: { clientId, role: 'STUDENT' },
+    select: { id: true }
+  })
+
+  // Métricas existentes
   const metrics = await prisma.iAMetric.findMany({
     where: { user: { clientId } },
     include: { user: true }
@@ -17,13 +23,13 @@ export async function recalcularRanking(prisma, clientId) {
     scoreByUser[m.userId].count++
   }
 
-  const userScores = Object.entries(scoreByUser)
-    .map(([userId, data]) => ({
-      userId,
-      totalScore: data.totalScore / data.count,
-      gainPercentage: (data.totalScore / data.count) * 100
-    }))
-    .filter(u => u.gainPercentage >= baseIngresoThreshold * 100)
+  // Incluir todos los alumnos — score 0 si no tienen métricas aún
+  const userScores = allStudents
+    .map(({ id: userId }) => {
+      const data = scoreByUser[userId]
+      const totalScore = data ? data.totalScore / data.count : 0
+      return { userId, totalScore, gainPercentage: totalScore * 100 }
+    })
     .sort((a, b) => b.totalScore - a.totalScore)
     .slice(0, topN)
 
