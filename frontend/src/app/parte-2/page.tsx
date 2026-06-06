@@ -198,7 +198,10 @@ export default function Parte2() {
 
           <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
             <button
-              onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_hero' }); router.push('/register') }}
+              onClick={() => {
+                trackEvent('cta_clicked', { cta_type: 'elite_hero' })
+                document.getElementById('asesores-elite')?.scrollIntoView({ behavior: 'smooth' })
+              }}
               style={{
                 padding: '1rem 2.5rem',
                 background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
@@ -216,7 +219,7 @@ export default function Parte2() {
               QUIERO SER ASESOR de ELITE
             </button>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
-              Acceso inmediato · Soporte 24/7 · Certificado internacional
+              Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo
             </p>
           </motion.div>
         </motion.div>
@@ -341,7 +344,7 @@ export default function Parte2() {
       </section>
 
       {/* ══════════════════ ASESORES VIP ══════════════════ */}
-      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+      <section id="asesores-elite" style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
         <div style={{ maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
           <motion.h2
             {...fadeUp}
