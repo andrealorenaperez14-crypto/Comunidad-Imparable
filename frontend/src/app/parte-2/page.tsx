@@ -126,12 +126,11 @@ export default function Parte2() {
 
       {/* ══════════════════ HERO ══════════════════ */}
       <section style={{
-        minHeight: '100svh',
         width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
+        padding: 'clamp(5rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(1.5rem,3vw,2rem)',
         position: 'relative'
       }}>
         <div style={{
@@ -201,32 +200,9 @@ export default function Parte2() {
             <strong style={{ color: 'var(--color-gold)' }}>Escalá a +1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
           </motion.p>
 
-          <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-            <button
-              onClick={() => {
-                trackEvent('cta_clicked', { cta_type: 'elite_hero' })
-                document.getElementById('asesores-elite')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-              style={{
-                padding: '1rem 2.5rem',
-                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                color: '#000',
-                fontWeight: 700,
-                borderRadius: '0.75rem',
-                fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-                letterSpacing: '0.07em',
-                boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
-                cursor: 'pointer',
-                width: '100%',
-                maxWidth: '360px'
-              }}
-            >
-              QUIERO SER ASESOR de ELITE
-            </button>
-            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
-              Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo
-            </p>
-          </motion.div>
+          <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
+            Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo
+          </motion.p>
         </motion.div>
       </section>
 
