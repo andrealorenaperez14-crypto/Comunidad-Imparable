@@ -9,7 +9,7 @@ import { trackEvent } from '@/lib/analytics'
 
 const LEMON_ALIAS = 'escuela.de.asesores'
 const USD_AMOUNT = 150
-const WHATSAPP_COMPROBANTE = 'REEMPLAZAR_CON_LINK_WHATSAPP' // ← pegar link de WhatsApp aquí
+const EMAIL_COMPROBANTE = 'escueladeasesoresmps@gmail.com'
 
 const CoachIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -575,12 +575,10 @@ export default function Parte2() {
                   ¡Datos registrados!
                 </p>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', lineHeight: 1.6 }}>
-                  Último paso: envianos la <strong style={{ color: 'var(--color-text)' }}>captura del comprobante</strong> por WhatsApp para confirmar tu lugar.
+                  Último paso: envianos la <strong style={{ color: 'var(--color-text)' }}>captura del comprobante</strong> por email para confirmar tu lugar.
                 </p>
                 <a
-                  href={`https://wa.me/${WHATSAPP_COMPROBANTE}?text=${encodeURIComponent(`Hola! Me registré en la Lista VIP ELITE. Te mando el comprobante de pago.\n\nNombre: ${form.nombre}\nEmail: ${form.email}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`mailto:${EMAIL_COMPROBANTE}?subject=${encodeURIComponent(`Comprobante Lista VIP ELITE — ${form.nombre}`)}&body=${encodeURIComponent(`Hola! Me registré en la Lista VIP ELITE.\n\nMis datos:\nNombre: ${form.nombre}\nEmail: ${form.email}\nWhatsApp: ${form.whatsapp}${pesoAmount ? `\nMonto abonado: $${pesoAmount.toLocaleString('es-AR')} pesos` : ''}\n\nAdjunto el comprobante de pago.\n\n¡Gracias!`)}`}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.625rem',
                     padding: '1rem 1.5rem',
@@ -591,13 +589,12 @@ export default function Parte2() {
                   }}
                 >
                   <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#000"/>
-                    <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  Enviar comprobante por WhatsApp
+                  Enviar comprobante por email
                 </a>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
-                  Te confirmamos tu lugar en julio una vez verificado el pago.
+                  El mail se abre con tus datos pre-cargados. Solo adjuntá la captura y envialo.
                 </p>
               </div>
             )}
