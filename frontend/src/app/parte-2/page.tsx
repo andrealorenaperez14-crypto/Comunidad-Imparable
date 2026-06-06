@@ -182,7 +182,7 @@ export default function Parte2() {
                 maxWidth: '360px'
               }}
             >
-              QUIERO SER ASESOR VIP
+              QUIERO SER ASESOR de ELITE
             </button>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)' }}>
               Acceso inmediato · Soporte 24/7 · Certificado internacional
@@ -316,7 +316,7 @@ export default function Parte2() {
             {...fadeUp}
             style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '2.5rem' }}
           >
-            Asesores VIP
+            Asesores ELITE
           </motion.h2>
 
           <div style={{
