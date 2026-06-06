@@ -20,9 +20,9 @@ function doPost(e) {
     data.nombre || '',
     data.email || '',
     data.whatsapp || '',
-    data.comprobante || '',
     data.montoPesos || '',
-    data.cotizacionMep || ''
+    data.cotizacionMep || '',
+    'Pendiente'  // Estado Pago — cambiá a "Confirmado" cuando llegue el email
   ])
 
   return ContentService
