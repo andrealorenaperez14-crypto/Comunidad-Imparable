@@ -200,8 +200,11 @@ export default function Parte2() {
             <strong style={{ color: 'var(--color-gold)' }}>Escalá a +1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
           </motion.p>
 
-          <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
-            Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo
+          <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.5rem', lineHeight: 1.7 }}>
+            Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo<br />
+            <span style={{ color: 'var(--color-gold)', fontWeight: 600 }}>
+              ↓ Anotate más abajo antes de que cierren los cupos
+            </span>
           </motion.p>
         </motion.div>
       </section>
@@ -358,19 +361,21 @@ export default function Parte2() {
                   onClick={() => { setShowForm(true); trackEvent('vip_waitlist_clicked') }}
                   style={{
                     width: '100%',
-                    padding: '1rem 2rem',
+                    padding: '2rem 2rem',
                     background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
                     color: '#000',
                     fontWeight: 700,
                     borderRadius: '0.75rem',
-                    fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
                     letterSpacing: '0.05em',
                     boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
                     cursor: 'pointer',
-                    border: 'none'
+                    border: 'none',
+                    lineHeight: 1.4
                   }}
                 >
-                  Unirme a la Lista VIP (Pre-lanzamiento)
+                  Unirme a la Lista VIP<br />
+                  <span style={{ fontSize: '0.85em', fontWeight: 600, opacity: 0.85 }}>(Pre-lanzamiento julio)</span>
                 </button>
               ) : (
                 <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -450,10 +455,16 @@ export default function Parte2() {
                 border: '1px solid rgba(245,240,232,0.25)',
                 cursor: 'pointer',
                 textDecoration: 'none',
-                display: 'block',
-                textAlign: 'center'
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.625rem'
               }}
             >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="var(--color-gold)"/>
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="var(--color-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
               Sumarme al Club de Asesores VIP ORO
             </a>
 
