@@ -1,10 +1,14 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
+import { QRCodeSVG } from 'qrcode.react'
 import { trackEvent } from '@/lib/analytics'
+
+const LEMON_ALIAS = 'escuela.de.asesores'
+const USD_AMOUNT = 150
 
 const CoachIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,16 +37,28 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjS0oqQK6ISclBZS9h2
 export default function Parte2() {
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
   const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ nombre: '', email: '', whatsapp: '' })
+  const [form, setForm] = useState({ nombre: '', email: '', whatsapp: '', comprobante: '' })
   const [sending, setSending] = useState(false)
   const [sent, setSent] = useState(false)
   const [formError, setFormError] = useState('')
+  const [mepRate, setMepRate] = useState<number | null>(null)
+  const [mepLoading, setMepLoading] = useState(true)
   const router = useRouter()
+
+  useEffect(() => {
+    fetch('https://dolarapi.com/v1/dolares/mep')
+      .then(r => r.json())
+      .then(d => setMepRate(d.venta))
+      .catch(() => setMepRate(null))
+      .finally(() => setMepLoading(false))
+  }, [])
+
+  const pesoAmount = mepRate ? Math.round(USD_AMOUNT * mepRate) : null
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!form.nombre.trim() || !form.email.trim() || !form.whatsapp.trim()) {
-      setFormError('Completá todos los campos')
+    if (!form.nombre.trim() || !form.email.trim() || !form.whatsapp.trim() || !form.comprobante.trim()) {
+      setFormError('Completá todos los campos, incluyendo el comprobante de pago')
       return
     }
     setSending(true)
@@ -52,7 +68,11 @@ export default function Parte2() {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
+        body: JSON.stringify({
+        ...form,
+        montoPesos: pesoAmount ? `$${pesoAmount.toLocaleString('es-AR')}` : '',
+        cotizacionMep: mepRate ? `$${mepRate.toLocaleString('es-AR')}` : ''
+      })
       })
       setSent(true)
       trackEvent('vip_waitlist_submitted')
@@ -395,92 +415,150 @@ export default function Parte2() {
 
       {/* ══════════════════ ASESORES VIP ══════════════════ */}
       <section id="asesores-elite" style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
-        <div style={{ maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
-          <motion.h2
-            {...fadeUp}
-            style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '2.5rem' }}
-          >
+        <div style={{ maxWidth: '520px', margin: '0 auto', textAlign: 'center' }}>
+          <motion.h2 {...fadeUp} style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
             Asesores ELITE
           </motion.h2>
+          <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '2.5rem', lineHeight: 1.7 }}>
+            ¿Listo para llevar tus asesorías al siguiente nivel?<br />
+            La versión avanzada de la <strong style={{ color: 'var(--color-gold)' }}>Escuela de Asesores ELITE</strong> en el rubro Salud, llega en julio.
+          </motion.p>
 
           <div style={{
-            padding: 'clamp(2rem,5vw,2.5rem)',
+            padding: 'clamp(1.75rem,5vw,2.5rem)',
             borderRadius: '0.875rem',
             border: '2px solid var(--color-gold)',
             background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1.25rem'
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem'
           }}>
 
-            {/* Texto principal */}
-            <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', color: 'var(--color-text)', lineHeight: 1.75 }}>
-              ¿Listo para llevar tus asesorías al siguiente nivel?<br />
-              La versión avanzada de la <strong style={{ color: 'var(--color-gold)' }}>Escuela de Asesores ELITE en el rubro Salud</strong>, llega en julio.
-            </p>
+            {/* Gancho precio */}
+            <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.07)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
+              <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
+                Quienes estén en la lista de espera recibirán un beneficio exclusivo que no estará disponible para el público general el día del lanzamiento.
+              </p>
+              <p style={{ fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.2rem' }}>
+                150 USD <span style={{ fontSize: '0.6em', color: 'var(--color-gold-light)', fontWeight: 600 }}>con 80% dto.</span>
+              </p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
+                Después <strong style={{ color: 'var(--color-text)' }}>270 USD</strong>
+              </p>
+            </div>
 
-            {/* Formulario Lista de Espera */}
+            {/* Separador */}
+            <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
+
+            {/* QR + cotización MEP */}
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+              <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-text)' }}>
+                Pagá escaneando el QR con cualquier app
+              </p>
+
+              {/* QR */}
+              <div style={{
+                padding: '1rem',
+                borderRadius: '0.75rem',
+                background: '#fff',
+                display: 'inline-flex',
+                boxShadow: '0 0 24px rgba(196,151,42,0.35)'
+              }}>
+                <QRCodeSVG
+                  value={LEMON_ALIAS}
+                  size={180}
+                  bgColor="#ffffff"
+                  fgColor="#0C0C0C"
+                  level="M"
+                />
+              </div>
+
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>Alias Lemon Cash</p>
+                <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-gold)', letterSpacing: '0.04em' }}>{LEMON_ALIAS}</p>
+              </div>
+
+              {/* Cotización MEP */}
+              <div style={{
+                width: '100%', padding: '1rem',
+                borderRadius: '0.75rem',
+                border: '1px solid var(--color-gold-border)',
+                background: 'rgba(196,151,42,0.05)',
+                textAlign: 'center'
+              }}>
+                {mepLoading ? (
+                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Calculando cotización...</p>
+                ) : pesoAmount ? (
+                  <>
+                    <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>
+                      150 USD · Dólar MEP ${mepRate?.toLocaleString('es-AR')}
+                    </p>
+                    <p style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                      ${pesoAmount.toLocaleString('es-AR')}
+                    </p>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
+                      Cotización actualizada al momento del pago
+                    </p>
+                  </>
+                ) : (
+                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Enviá el equivalente a 150 USD al alias</p>
+                )}
+              </div>
+            </div>
+
+            {/* Separador */}
+            <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
+
+            {/* Formulario */}
             {!sent ? (
               !showForm ? (
                 <button
                   onClick={() => { setShowForm(true); trackEvent('vip_waitlist_clicked') }}
                   style={{
-                    width: '100%',
-                    padding: '2rem 2rem',
+                    width: '100%', padding: '2rem 2rem',
                     background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                    color: '#000',
-                    fontWeight: 700,
-                    borderRadius: '0.75rem',
-                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
-                    letterSpacing: '0.05em',
+                    color: '#000', fontWeight: 700, borderRadius: '0.75rem',
+                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', letterSpacing: '0.05em',
                     boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
-                    cursor: 'pointer',
-                    border: 'none',
-                    lineHeight: 1.4
+                    cursor: 'pointer', border: 'none', lineHeight: 1.4
                   }}
                 >
-                  Unirme a la Lista VIP<br />
+                  Ya pagué — Confirmar mi lugar VIP<br />
                   <span style={{ fontSize: '0.85em', fontWeight: 600, opacity: 0.85 }}>(Pre-lanzamiento julio)</span>
                 </button>
               ) : (
                 <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  {(['nombre', 'email', 'whatsapp'] as const).map((field) => (
+                  <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', textAlign: 'left' }}>
+                    Completá tus datos y el número de comprobante de pago:
+                  </p>
+                  {[
+                    { field: 'nombre' as const, placeholder: 'Tu nombre completo' },
+                    { field: 'email' as const, placeholder: 'Tu email', type: 'email' },
+                    { field: 'whatsapp' as const, placeholder: 'Tu WhatsApp (+54...)' },
+                    { field: 'comprobante' as const, placeholder: 'N° de comprobante / ID de transferencia' },
+                  ].map(({ field, placeholder, type }) => (
                     <input
                       key={field}
-                      type={field === 'email' ? 'email' : 'text'}
-                      placeholder={field === 'nombre' ? 'Tu nombre' : field === 'email' ? 'Tu email' : 'Tu WhatsApp (con código de país)'}
+                      type={type || 'text'}
+                      placeholder={placeholder}
                       value={form[field]}
                       onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
                       style={{
-                        width: '100%',
-                        padding: '0.875rem 1rem',
+                        width: '100%', padding: '0.875rem 1rem',
                         borderRadius: '0.625rem',
                         border: '1px solid var(--color-gold-border)',
                         background: 'rgba(0,0,0,0.4)',
-                        color: 'var(--color-text)',
-                        fontSize: '0.95rem',
-                        outline: 'none',
-                        boxSizing: 'border-box'
+                        color: 'var(--color-text)', fontSize: '0.95rem',
+                        outline: 'none', boxSizing: 'border-box'
                       }}
                     />
                   ))}
-                  {formError && (
-                    <p style={{ color: '#F87171', fontSize: '0.85rem' }}>{formError}</p>
-                  )}
+                  {formError && <p style={{ color: '#F87171', fontSize: '0.85rem' }}>{formError}</p>}
                   <button
-                    type="submit"
-                    disabled={sending}
+                    type="submit" disabled={sending}
                     style={{
-                      width: '100%',
-                      padding: '1rem',
+                      width: '100%', padding: '1rem',
                       background: sending ? 'rgba(196,151,42,0.5)' : 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                      color: '#000',
-                      fontWeight: 700,
-                      borderRadius: '0.75rem',
-                      fontSize: '1rem',
-                      cursor: sending ? 'not-allowed' : 'pointer',
-                      border: 'none'
+                      color: '#000', fontWeight: 700, borderRadius: '0.75rem',
+                      fontSize: '1rem', cursor: sending ? 'not-allowed' : 'pointer', border: 'none'
                     }}
                   >
                     {sending ? 'Enviando...' : 'Confirmar mi lugar VIP'}
@@ -489,76 +567,38 @@ export default function Parte2() {
               )
             ) : (
               <div style={{
-                width: '100%',
-                padding: '1.5rem',
-                borderRadius: '0.75rem',
-                background: 'rgba(74,222,128,0.08)',
-                border: '1px solid rgba(74,222,128,0.3)',
+                width: '100%', padding: '1.5rem', borderRadius: '0.75rem',
+                background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)',
                 textAlign: 'center'
               }}>
-                <p style={{ color: '#4ADE80', fontWeight: 700, fontSize: '1rem', marginBottom: '0.5rem' }}>¡Estás en la lista!</p>
+                <p style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '1rem', marginBottom: '0.5rem' }}>¡Estás en la lista VIP!</p>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
-                  Te vamos a avisar antes que nadie cuando abramos el acceso ELITE en julio.
+                  Verificamos tu pago y te confirmamos por WhatsApp antes del lanzamiento en julio.
                 </p>
               </div>
             )}
 
-            {/* Botón 2 — WhatsApp Club */}
+            {/* Botón WhatsApp */}
             <a
               href="https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr"
-              target="_blank"
-              rel="noopener noreferrer"
+              target="_blank" rel="noopener noreferrer"
               onClick={() => trackEvent('vip_whatsapp_clicked')}
               style={{
-                width: '100%',
-                padding: '0.875rem 2rem',
-                background: 'rgba(245,240,232,0.05)',
-                color: '#F5F0E8',
-                fontWeight: 700,
-                borderRadius: '0.75rem',
-                fontSize: 'clamp(0.85rem, 2vw, 1rem)',
-                letterSpacing: '0.05em',
+                width: '100%', padding: '0.875rem 2rem',
+                background: 'rgba(245,240,232,0.05)', color: '#F5F0E8',
+                fontWeight: 700, borderRadius: '0.75rem',
+                fontSize: 'clamp(0.85rem, 2vw, 1rem)', letterSpacing: '0.05em',
                 border: '1px solid rgba(245,240,232,0.25)',
-                cursor: 'pointer',
-                textDecoration: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.625rem'
+                cursor: 'pointer', textDecoration: 'none',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.625rem'
               }}
             >
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="var(--color-gold)"/>
                 <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.424A9.953 9.953 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" stroke="var(--color-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               Sumarme al Club de Asesores VIP ORO
             </a>
-
-            {/* Separador */}
-            <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
-
-            {/* Gancho precio */}
-            <div style={{
-              width: '100%',
-              padding: '1.25rem',
-              borderRadius: '0.75rem',
-              background: 'rgba(196,151,42,0.07)',
-              border: '1px solid var(--color-gold-border)',
-              textAlign: 'center'
-            }}>
-              <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
-                Quienes estén en la lista de espera recibirán un beneficio exclusivo que no estará disponible para el público general el día del lanzamiento.
-              </p>
-              <p style={{ fontSize: 'clamp(1.1rem, 3vw, 1.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.25rem' }}>
-                INVERSIÓN 150 USD
-              </p>
-              <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-gold)', fontWeight: 600, marginBottom: '0.5rem' }}>
-                con 80% dto.
-              </p>
-              <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)' }}>
-                Después <strong style={{ color: 'var(--color-text)' }}>270 USD</strong>
-              </p>
-            </div>
 
           </div>
         </div>

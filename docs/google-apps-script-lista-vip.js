@@ -19,7 +19,10 @@ function doPost(e) {
     new Date().toLocaleString('es-AR'),
     data.nombre || '',
     data.email || '',
-    data.whatsapp || ''
+    data.whatsapp || '',
+    data.comprobante || '',
+    data.montoPesos || '',
+    data.cotizacionMep || ''
   ])
 
   return ContentService
