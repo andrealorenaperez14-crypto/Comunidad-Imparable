@@ -147,11 +147,16 @@ export default function Parte2() {
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
             <Image
-              src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.png"
-              alt="Escuela de Asesores"
-              width={300}
-              height={300}
-              style={{ objectFit: 'contain', width: 'clamp(220px, 48vw, 380px)', height: 'auto' }}
+              src="/assets/client1/LOGO_NEUROVENTAS.png"
+              alt="Neuroventas"
+              width={280}
+              height={280}
+              style={{
+                objectFit: 'contain',
+                width: 'clamp(180px, 40vw, 280px)',
+                height: 'auto',
+                filter: 'drop-shadow(0 0 18px rgba(196,151,42,0.75)) drop-shadow(0 0 40px rgba(196,151,42,0.45)) drop-shadow(0 0 80px rgba(196,151,42,0.2))',
+              }}
             />
           </div>
 
