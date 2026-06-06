@@ -193,7 +193,7 @@ export default function Parte2() {
             }}
           >
             El programa que convierte asesores<br />en Profesionales de Alto Valor.<br />
-            <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
+            <strong style={{ color: 'var(--color-gold)' }}>Escalá a +1.000 USD en 30 días</strong><br />o seguí como asesor tradicional.
           </motion.p>
 
           <motion.div {...fadeUp} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
@@ -457,13 +457,13 @@ export default function Parte2() {
               style={{
                 width: '100%',
                 padding: '0.875rem 2rem',
-                background: 'rgba(37,211,102,0.12)',
-                color: '#25D366',
+                background: 'rgba(245,240,232,0.05)',
+                color: '#F5F0E8',
                 fontWeight: 700,
                 borderRadius: '0.75rem',
                 fontSize: 'clamp(0.85rem, 2vw, 1rem)',
                 letterSpacing: '0.05em',
-                border: '1px solid rgba(37,211,102,0.35)',
+                border: '1px solid rgba(245,240,232,0.25)',
                 cursor: 'pointer',
                 textDecoration: 'none',
                 display: 'block',
