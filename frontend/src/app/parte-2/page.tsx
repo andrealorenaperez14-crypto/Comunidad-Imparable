@@ -578,7 +578,7 @@ export default function Parte2() {
                   Último paso: envianos la <strong style={{ color: 'var(--color-text)' }}>captura del comprobante</strong> por email para confirmar tu lugar.
                 </p>
                 <a
-                  href={`mailto:${EMAIL_COMPROBANTE}?subject=${encodeURIComponent(`Comprobante Lista VIP ELITE — ${form.nombre}`)}&body=${encodeURIComponent(`Hola! Me registré en la Lista VIP ELITE.\n\nMis datos:\nNombre: ${form.nombre}\nEmail: ${form.email}\nWhatsApp: ${form.whatsapp}${pesoAmount ? `\nMonto abonado: $${pesoAmount.toLocaleString('es-AR')} pesos` : ''}\n\nAdjunto el comprobante de pago.\n\n¡Gracias!`)}`}
+                  href={`mailto:${EMAIL_COMPROBANTE}?subject=${encodeURIComponent(`[VIP ELITE] Comprobante de pago — ${form.nombre}`)}&body=${encodeURIComponent(`Hola Escuela de Asesores,\n\nMe registro en la Lista VIP ELITE y adjunto mi comprobante de pago.\n\n── DATOS PERSONALES ──\nNombre: ${form.nombre}\nEmail: ${form.email}\nWhatsApp: ${form.whatsapp}\n\n── DATOS DEL PAGO ──\nAlias Lemon Cash: ${LEMON_ALIAS}\nMonto abonado: ${pesoAmount ? `$${pesoAmount.toLocaleString('es-AR')} pesos` : '(ver comprobante)'}\nCotización MEP utilizada: ${mepRate ? `$${mepRate.toLocaleString('es-AR')}` : '-'}\nEquivalente USD: 150 USD\n\n[Adjunto captura del comprobante]\n\n¡Gracias!`)}`}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.625rem',
                     padding: '1rem 1.5rem',

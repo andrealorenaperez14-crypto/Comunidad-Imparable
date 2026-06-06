@@ -20,9 +20,10 @@ function doPost(e) {
     data.nombre || '',
     data.email || '',
     data.whatsapp || '',
-    data.montoPesos || '',
-    data.cotizacionMep || '',
-    'Pendiente'  // Estado Pago — cambiá a "Confirmado" cuando llegue el email
+    data.montoPesos || '',      // Monto que mostró la página (MEP del momento)
+    data.cotizacionMep || '',   // Cotización MEP usada
+    '',                         // Monto Recibido — completar cuando llegue el email
+    'Pendiente'                 // Estado Pago — cambiar a "Confirmado" cuando coincida
   ])
 
   return ContentService
