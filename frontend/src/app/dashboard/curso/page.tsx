@@ -70,7 +70,7 @@ export default function CursoPage() {
                 return videoId ? (
                   <div className="rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
                     <iframe
-                      src={`https://www.youtube.com/embed/${videoId}`}
+                      src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                       className="w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
@@ -132,7 +132,7 @@ export default function CursoPage() {
                 return videoId ? (
                   <div className="rounded-xl overflow-hidden mb-4" style={{ aspectRatio: '16/9' }}>
                     <iframe
-                      src={`https://www.youtube.com/embed/${videoId}`}
+                      src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                       className="w-full h-full"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
