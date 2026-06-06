@@ -1,5 +1,5 @@
 export async function recalcularRanking(prisma, clientId) {
-  const baseIngresoThreshold = 0.7
+  const baseIngresoThreshold = 0
   const topN = 10
 
   const metrics = await prisma.iAMetric.findMany({
