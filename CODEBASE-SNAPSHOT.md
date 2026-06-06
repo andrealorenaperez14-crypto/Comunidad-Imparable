@@ -8,11 +8,11 @@
 - **Vercel CLI:** instalado globalmente, scope `escuela-de-asesores-mps-s-projects`, proyecto `frontend`
 
 ## Roles del sistema
-| Rol | Acceso |
-|-----|--------|
-| `ADMIN` | Total |
-| `CLIENT` | Panel admin completo, solo puede operar sobre STUDENTs de su clientId |
-| `STUDENT` | Dashboard personal (IA agents, ranking, certificados, curso) |
+| Rol | Acceso | Email |
+|-----|--------|-------|
+| `ADMIN` | Total | andrealorenaperez14@gmail.com |
+| `CLIENT` | Panel admin completo, solo puede operar sobre STUDENTs de su clientId | yamilamansilla154@gmail.com |
+| `STUDENT` | Dashboard personal (IA agents, ranking, certificados, curso) | — |
 
 ## Archivos clave (rutas rápidas)
 
