@@ -150,5 +150,9 @@ cd backend && npm run db:generate   # ✅ HECHO 2026-05-24 — usar npm run db:g
 
 ## Pendiente de implementar
 - **Página 2:** más cambios pendientes (el usuario los pasa cuando quiera)
-- **Google Drive → IA Consultiva:** leer valores/comisiones de Drive automáticamente
-  - Requiere: Google OAuth credentials, `googleapis` package, folder ID en admin settings
+
+## Flujo de carga — IA Consultiva (knowledge base)
+Sin integración a Drive. El flujo es manual asistido por IA:
+1. Subir PDFs/planillas de la obra social a Gemini AI Studio junto con `docs/prompt-extraccion-gemini.txt`
+2. Gemini extrae la info y llena el template (`docs/template-obra-social.txt`)
+3. Pegar el texto extraído como knowledge base desde el panel admin → IA Consultiva
