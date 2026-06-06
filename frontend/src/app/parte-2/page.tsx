@@ -28,9 +28,40 @@ const fadeUp = {
   transition: { duration: 0.5 }
 }
 
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjS0oqQK6ISclBZS9h2BKrMhrNr_sCsCtzx6kYBzFclzWcax2OPrB9VFrmtkEQ_6cg/exec'
+
 export default function Parte2() {
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
+  const [showForm, setShowForm] = useState(false)
+  const [form, setForm] = useState({ nombre: '', email: '', whatsapp: '' })
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [formError, setFormError] = useState('')
   const router = useRouter()
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (!form.nombre.trim() || !form.email.trim() || !form.whatsapp.trim()) {
+      setFormError('Completá todos los campos')
+      return
+    }
+    setSending(true)
+    setFormError('')
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      })
+      setSent(true)
+      trackEvent('vip_waitlist_submitted')
+    } catch {
+      setFormError('Hubo un error. Intentá de nuevo.')
+    } finally {
+      setSending(false)
+    }
+  }
 
   const modules = [
     { num: '01', title: 'Neuroventas aplicadas en Consumidor de Salud', topics: ['Introducción al Comportamiento humano', 'Qué compra realmente una persona', 'Cómo funciona la decisión emocional'] },
@@ -336,30 +367,86 @@ export default function Parte2() {
               La versión avanzada de la <strong style={{ color: 'var(--color-gold)' }}>Escuela de Asesores ELITE en el rubro Salud</strong>, llega en julio.
             </p>
 
-            {/* Botón 1 — Lista de Espera */}
-            <a
-              href="https://wa.me/?text=Quiero%20unirme%20a%20la%20Lista%20VIP%20Pre-lanzamiento%20de%20Escuela%20de%20Asesores%20ELITE"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackEvent('vip_waitlist_clicked')}
-              style={{
+            {/* Formulario Lista de Espera */}
+            {!sent ? (
+              !showForm ? (
+                <button
+                  onClick={() => { setShowForm(true); trackEvent('vip_waitlist_clicked') }}
+                  style={{
+                    width: '100%',
+                    padding: '1rem 2rem',
+                    background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                    color: '#000',
+                    fontWeight: 700,
+                    borderRadius: '0.75rem',
+                    fontSize: 'clamp(0.85rem, 2vw, 1rem)',
+                    letterSpacing: '0.05em',
+                    boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
+                    cursor: 'pointer',
+                    border: 'none'
+                  }}
+                >
+                  Unirme a la Lista VIP (Pre-lanzamiento)
+                </button>
+              ) : (
+                <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {(['nombre', 'email', 'whatsapp'] as const).map((field) => (
+                    <input
+                      key={field}
+                      type={field === 'email' ? 'email' : 'text'}
+                      placeholder={field === 'nombre' ? 'Tu nombre' : field === 'email' ? 'Tu email' : 'Tu WhatsApp (con código de país)'}
+                      value={form[field]}
+                      onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
+                      style={{
+                        width: '100%',
+                        padding: '0.875rem 1rem',
+                        borderRadius: '0.625rem',
+                        border: '1px solid var(--color-gold-border)',
+                        background: 'rgba(0,0,0,0.4)',
+                        color: 'var(--color-text)',
+                        fontSize: '0.95rem',
+                        outline: 'none',
+                        boxSizing: 'border-box'
+                      }}
+                    />
+                  ))}
+                  {formError && (
+                    <p style={{ color: '#F87171', fontSize: '0.85rem' }}>{formError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      background: sending ? 'rgba(196,151,42,0.5)' : 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                      color: '#000',
+                      fontWeight: 700,
+                      borderRadius: '0.75rem',
+                      fontSize: '1rem',
+                      cursor: sending ? 'not-allowed' : 'pointer',
+                      border: 'none'
+                    }}
+                  >
+                    {sending ? 'Enviando...' : 'Confirmar mi lugar VIP'}
+                  </button>
+                </form>
+              )
+            ) : (
+              <div style={{
                 width: '100%',
-                padding: '1rem 2rem',
-                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                color: '#000',
-                fontWeight: 700,
+                padding: '1.5rem',
                 borderRadius: '0.75rem',
-                fontSize: 'clamp(0.85rem, 2vw, 1rem)',
-                letterSpacing: '0.05em',
-                boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
-                cursor: 'pointer',
-                textDecoration: 'none',
-                display: 'block',
+                background: 'rgba(74,222,128,0.08)',
+                border: '1px solid rgba(74,222,128,0.3)',
                 textAlign: 'center'
-              }}
-            >
-              Unirme a la Lista VIP (Pre-lanzamiento)
-            </a>
+              }}>
+                <p style={{ color: '#4ADE80', fontWeight: 700, fontSize: '1rem', marginBottom: '0.5rem' }}>¡Estás en la lista!</p>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>
+                  Te vamos a avisar antes que nadie cuando abramos el acceso ELITE en julio.
+                </p>
+              </div>
+            )}
 
             {/* Botón 2 — WhatsApp Club */}
             <a
