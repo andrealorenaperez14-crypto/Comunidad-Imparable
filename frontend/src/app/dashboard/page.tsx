@@ -167,7 +167,7 @@ export default function DashboardPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
-                  style={{ background: '#25D366', color: '#fff', textDecoration: 'none' }}
+                  style={{ background: 'rgba(245,240,232,0.05)', color: '#F5F0E8', border: '1px solid rgba(245,240,232,0.25)', textDecoration: 'none' }}
                 >
                   <MessageCircle className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
                   WhatsApp — Escuela de Asesores
