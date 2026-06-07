@@ -8,29 +8,27 @@ export async function rankingRoutes(fastify) {
     const rankings = await fastify.prisma.ranking.findMany({
       where: { clientId },
       orderBy: { position: 'asc' },
-      take: 10,
-      include: {
-        // We join manually since Ranking doesn't have a User relation
-      }
+      take: 10
     })
 
-    // Enrich with user profiles
-    const enriched = await Promise.all(
-      rankings.map(async (r) => {
-        const profile = await fastify.prisma.profile.findFirst({
-          where: { userId: r.userId }
-        })
-        return {
-          position: r.position,
-          userId: r.userId,
-          nombre: profile ? `${profile.firstName} ${profile.lastName}` : 'Estudiante',
-          totalScore: r.totalScore,
-          gainPercentage: r.gainPercentage,
-          daysInTop10: r.daysInTop10,
-          lastUpdated: r.lastUpdated
-        }
-      })
-    )
+    const profiles = await fastify.prisma.profile.findMany({
+      where: { userId: { in: rankings.map(r => r.userId) } },
+      select: { userId: true, firstName: true, lastName: true }
+    })
+    const profileMap = Object.fromEntries(profiles.map(p => [p.userId, p]))
+
+    const enriched = rankings.map(r => {
+      const profile = profileMap[r.userId]
+      return {
+        position: r.position,
+        userId: r.userId,
+        nombre: profile ? `${profile.firstName} ${profile.lastName}` : 'Estudiante',
+        totalScore: r.totalScore,
+        gainPercentage: r.gainPercentage,
+        daysInTop10: r.daysInTop10,
+        lastUpdated: r.lastUpdated
+      }
+    })
 
     return reply.send(enriched)
   })
