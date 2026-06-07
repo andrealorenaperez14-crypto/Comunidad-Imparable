@@ -8,8 +8,7 @@
       "source": "/(.*)",
       "headers": [
         { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Content-Security-Policy", "value": "frame-src 'self' https://drive.google.com https://www.youtube.com https://www.youtube-nocookie.com;" }
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
       ]
     }
   ]

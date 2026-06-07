@@ -1,6 +1,7 @@
 import { GoogleGenAI } from '@google/genai'
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
+import { requireAdmin } from '../middleware/auth.js'
 
 export async function healthRoutes(fastify) {
   fastify.get('/health', async (request, reply) => {
@@ -25,7 +26,7 @@ export async function healthRoutes(fastify) {
     })
   })
 
-  fastify.get('/health/ia', async (request, reply) => {
+  fastify.get('/health/ia', { preHandler: requireAdmin }, async (request, reply) => {
     const results = {}
 
     // Groq

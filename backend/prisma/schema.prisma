@@ -76,6 +76,7 @@ model Subscription {
   @@index([userId])
   @@index([activeUntil])
   @@index([status])
+  @@index([userId, status])
 }
 
 model IAAgent {
@@ -224,6 +225,7 @@ model DocumentChunk {
   createdAt   DateTime                    @default(now())
 
   @@index([agentId])
+  @@index([agentId, filename])
 }
 
 model SaleCommission {
