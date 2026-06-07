@@ -53,7 +53,7 @@ function Parte2Inner() {
   const pagoStatus   = searchParams.get('pago') // 'exitoso' | 'fallido' | 'pendiente'
 
   useEffect(() => {
-    fetch('https://dolarapi.com/v1/dolares/mep')
+    fetch('https://dolarapi.com/v1/dolares/bolsa')
       .then(r => r.json())
       .then(d => setMepRate(d.venta))
       .catch(() => setMepRate(null))

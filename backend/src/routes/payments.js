@@ -14,7 +14,7 @@ const USD_AMOUNT      = 150
 
 async function getMepRate() {
   try {
-    const r = await fetch('https://dolarapi.com/v1/dolares/mep')
+    const r = await fetch('https://dolarapi.com/v1/dolares/bolsa')
     const d = await r.json()
     return d.venta
   } catch {
