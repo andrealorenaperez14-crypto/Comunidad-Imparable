@@ -42,12 +42,13 @@ export default function CursoPage() {
           <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-gold)' }} />
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-16">
           {freeContent.map((item: any, idx: number) => (
             <div
               key={item.id}
+              id={`modulo-${item.id}`}
               className="rounded-xl p-8"
-              style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-gold-border)' }}
+              style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-gold-border)', scrollMarginTop: '2rem' }}
             >
               <div className="flex items-center gap-3 mb-4">
                 <span
@@ -99,6 +100,7 @@ export default function CursoPage() {
           {paidContent.map((item: any, idx: number) => (
             <div
               key={item.id}
+              id={`modulo-${item.id}`}
               className="rounded-xl p-8 transition-all"
               style={{
                 background: isPaid ? 'var(--color-bg-card)' : 'rgba(20,20,20,0.5)',

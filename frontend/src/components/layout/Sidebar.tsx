@@ -1,14 +1,16 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Brain, Target, TrendingUp, Trophy, Award, BookOpen,
-  LogOut, Menu, X, ChevronRight, BarChart2, Users
+  LogOut, Menu, X, ChevronRight, ChevronDown, BarChart2, Users
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '@/lib/api'
 
 const studentNav = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Mi Dashboard' },
@@ -31,11 +33,20 @@ const adminNav = [
 ]
 
 export function Sidebar() {
-  const pathname = usePathname()
+  const pathname   = usePathname()
   const { user, logout, isAdmin, isClient } = useAuth()
-  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileOpen, setMobileOpen]   = useState(false)
+  const [cursoOpen, setCursoOpen]     = useState(pathname.startsWith('/dashboard/curso'))
 
+  const isStudentArea = !isAdmin && !isClient
   const navItems = (isAdmin || isClient) ? adminNav : studentNav
+
+  const { data: modules = [] } = useQuery({
+    queryKey: ['course-content-sidebar'],
+    queryFn: () => api.get('/api/course').then(r => r.data).catch(() => []),
+    enabled: isStudentArea,
+    staleTime: 5 * 60 * 1000
+  })
 
   const NavContent = () => (
     <div className="flex flex-col h-full">
@@ -54,7 +65,69 @@ export function Sidebar() {
 
       <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         {navItems.map((item) => {
-          const isActive = pathname === item.href
+          const isActive   = pathname === item.href
+          const isCurso    = item.href === '/dashboard/curso'
+
+          if (isCurso && isStudentArea) {
+            const isCursoActive = pathname.startsWith('/dashboard/curso')
+            return (
+              <div key={item.href}>
+                <button
+                  onClick={() => { setCursoOpen(o => !o) }}
+                  className="w-full flex items-center gap-3 px-3 py-3 rounded text-sm font-medium transition-all"
+                  style={isCursoActive
+                    ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                    : { color: 'var(--color-text-muted)' }
+                  }
+                >
+                  <BookOpen className="w-5 h-5 flex-shrink-0" strokeWidth={1.5}
+                    style={isCursoActive ? { color: '#0C0C0C' } : { color: 'var(--color-text-muted)' }} />
+                  <span className="flex-1 text-left">Mi Curso</span>
+                  {cursoOpen
+                    ? <ChevronDown className="w-4 h-4 opacity-60" strokeWidth={1.5} />
+                    : <ChevronRight className="w-4 h-4 opacity-60" strokeWidth={1.5} />}
+                </button>
+
+                <AnimatePresence>
+                  {cursoOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ overflow: 'hidden' }}
+                    >
+                      <div className="ml-3 mt-1 space-y-0.5" style={{ borderLeft: '1px solid var(--color-gold-border)', paddingLeft: '0.75rem' }}>
+                        <Link
+                          href="/dashboard/curso"
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-2 px-2 py-2 rounded text-xs font-medium transition-all"
+                          style={{ color: 'var(--color-text-muted)' }}
+                        >
+                          Ver todos los módulos
+                        </Link>
+                        {modules.map((mod: any, idx: number) => (
+                          <Link
+                            key={mod.id}
+                            href={`/dashboard/curso#modulo-${mod.id}`}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center gap-2 px-2 py-2 rounded text-xs transition-all hover:opacity-90"
+                            style={{ color: 'var(--color-text-muted)' }}
+                          >
+                            <span style={{ color: 'var(--color-gold)', fontWeight: 700, flexShrink: 0, fontSize: '0.7rem' }}>
+                              {String(idx + 1).padStart(2, '0')}
+                            </span>
+                            <span className="truncate">{mod.title}</span>
+                          </Link>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )
+          }
+
           return (
             <Link
               key={item.href}
@@ -62,22 +135,15 @@ export function Sidebar() {
               onClick={() => setMobileOpen(false)}
               className={cn(
                 'flex items-center gap-3 px-3 py-3 rounded text-sm font-medium transition-all group',
-                isActive
-                  ? 'text-[#0C0C0C]'
-                  : 'hover:opacity-90'
+                isActive ? 'text-[#0C0C0C]' : 'hover:opacity-90'
               )}
-              style={isActive ? {
-                background: 'var(--color-gold)',
-                color: '#0C0C0C'
-              } : {
-                color: 'var(--color-text-muted)'
-              }}
+              style={isActive
+                ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                : { color: 'var(--color-text-muted)' }
+              }
             >
-              <item.icon
-                className="w-5 h-5"
-                strokeWidth={1.5}
-                style={isActive ? { color: '#0C0C0C' } : { color: 'var(--color-text-muted)' }}
-              />
+              <item.icon className="w-5 h-5" strokeWidth={1.5}
+                style={isActive ? { color: '#0C0C0C' } : { color: 'var(--color-text-muted)' }} />
               <span>{item.label}</span>
               {isActive && <ChevronRight className="w-4 h-4 ml-auto opacity-60" strokeWidth={1.5} />}
             </Link>
