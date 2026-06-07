@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 10). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 11). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -191,15 +191,20 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 6. `requireActiveSubscription` en todas las rutas de contenido de alumnos
 7. Búsqueda knowledge base usa ORM Prisma (sin `$queryRawUnsafe`)
 
+## Links WhatsApp definitivos ✅ (sesión 11)
+- `parte-2`: Club VIP ORO → `chat.whatsapp.com/Lvxh9N5rk6m6kz4Ks8lRGL`
+- `dashboard` + `expired`: → `chat.whatsapp.com/BkMTtbFbGwjAOsgD8pjUFH`
+- `expired/page.tsx`: card WhatsApp — verde (#25D366) reemplazado por crema/dorado (paleta del proyecto)
+- `MP_WEBHOOK_SECRET` cargado en Render ✅
+
 ## ⏳ PENDIENTE (próxima sesión)
-1. **MP_WEBHOOK_SECRET** en Render → MP Developers → tu app → Webhooks → Secret key
-2. **Link WhatsApp** del Club VIP ORO en `parte-2/page.tsx` (constante cerca del tope del archivo)
-   - Buscar: `href="https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr"`
-   - Reemplazar con el link definitivo de Yami
-3. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
-4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
+1. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
+2. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
+3. **prisma db push** — aplicar índices `[userId, status]` en Subscription y `[agentId, filename]` en DocumentChunk
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `da28c15` fix: expired page — verde WhatsApp → crema/dorado
+- `e080c8c` feat: actualizar links WhatsApp definitivos
 - `fbef2f6` security/perf: auth /health/ia + índices compuestos + fix CSP duplicada
 - `d4c782a` security: noopener noreferrer en link verificar certificado
 - `ae8e762` security: mass assignment agents PUT + blacklist courses + limit interactions
