@@ -14,8 +14,8 @@ interface Student {
   dni: string
   createdAt: string
   profile: { firstName: string; lastName: string; lastLoginAt?: string } | null
-  subscriptions: { status: string; planType?: string; activeUntil?: string }[]
-  subscription?: { status: string; planType?: string; activeUntil?: string } | null
+  subscriptions: { status: string; planType?: string; activeUntil?: string; amountPaid?: number }[]
+  subscription?: { status: string; planType?: string; activeUntil?: string; amountPaid?: number } | null
 }
 
 function getDaysRemaining(activeUntil?: string): number | null {
@@ -564,6 +564,11 @@ export default function AlumnosPage() {
                         <span style={{ color: daysLeft <= 0 ? '#F87171' : daysLeft <= 3 ? '#FBBF24' : 'var(--color-text-muted)' }}>
                           {' · '}
                           {daysLeft <= 0 ? 'Vencido' : `${daysLeft} día${daysLeft !== 1 ? 's' : ''} restante${daysLeft !== 1 ? 's' : ''}`}
+                        </span>
+                      )}
+                      {sub?.planType === '30_DAYS' && sub?.amountPaid && sub.amountPaid > 0 && (
+                        <span style={{ color: 'var(--color-gold)' }}>
+                          {' · '}💰 ${sub.amountPaid.toLocaleString('es-AR')}
                         </span>
                       )}
                     </p>

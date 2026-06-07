@@ -71,6 +71,7 @@ model Subscription {
   activeUntil     DateTime
   suspensionDate  DateTime?
   lastPaymentDate DateTime?
+  amountPaid      Float?    @default(0)
   updatedAt       DateTime  @updatedAt
 
   @@index([userId])

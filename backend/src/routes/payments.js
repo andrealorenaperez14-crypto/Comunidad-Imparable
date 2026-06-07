@@ -144,7 +144,7 @@ export async function paymentRoutes(fastify) {
             data:  { status: 'EXPIRED' }
           })
           await prisma.subscription.create({
-            data: { userId: existing.id, planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now }
+            data: { userId: existing.id, planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now, amountPaid: montoReal || 0 }
           })
           fastify.log.info({ dni, userId: existing.id }, 'VIP: suscripción actualizada a 30_DAYS')
         } else {
@@ -162,7 +162,7 @@ export async function paymentRoutes(fastify) {
               clientId,
               profile:  { create: { firstName: nombre, lastName: apellido } },
               subscriptions: {
-                create: { planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now }
+                create: { planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now, amountPaid: montoReal || 0 }
               }
             }
           })

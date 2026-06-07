@@ -118,12 +118,14 @@ export default function MetricasAdminPage() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {[
-          { label: 'Total alumnos',           value: stats?.totalStudents || 0,   color: 'var(--color-text)', fmt: 'n' },
-          { label: 'Suscripciones activas',   value: stats?.activeSubscriptions || 0, color: 'var(--color-gold)', fmt: 'n' },
-          { label: 'Comisiones pendientes',   value: totalPending,                color: 'var(--color-gold)', fmt: '$' },
-          { label: 'Comisiones pagadas',      value: totalPaid,                   color: '#4ADE80', fmt: '$' }
+          { label: 'Total alumnos',           value: stats?.totalStudents || 0,        color: 'var(--color-text)', fmt: 'n' },
+          { label: 'Suscripciones activas',   value: stats?.activeSubscriptions || 0,  color: 'var(--color-gold)', fmt: 'n' },
+          { label: 'Comisiones pendientes',   value: totalPending,                     color: 'var(--color-gold)', fmt: '$' },
+          { label: 'Comisiones pagadas',      value: totalPaid,                        color: '#4ADE80', fmt: '$' },
+          { label: 'Ingresos VIP',            value: stats?.vipRevenue?.total || 0,    color: '#C4972A', fmt: '$' },
+          { label: 'Alumnos VIP',             value: stats?.vipRevenue?.count || 0,    color: 'var(--color-gold)', fmt: 'n', sublabel: 'pagaron con MP' }
         ].map(item => (
           <div key={item.label} className="rounded-xl p-4 text-center"
             style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}>
@@ -133,6 +135,9 @@ export default function MetricasAdminPage() {
                 : item.value.toLocaleString()}
             </p>
             <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>{item.label}</p>
+            {'sublabel' in item && item.sublabel && (
+              <p className="text-xs" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>{item.sublabel}</p>
+            )}
           </div>
         ))}
       </div>

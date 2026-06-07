@@ -24,11 +24,16 @@ export async function metricsRoutes(fastify) {
   fastify.get('/dashboard', { preHandler: requireAdminOrClient }, async (request, reply) => {
     const { clientId } = request.user
 
-    const [totalStudents, activeSubscriptions, alertStudents, totalInteractions] = await Promise.all([
+    const [totalStudents, activeSubscriptions, alertStudents, totalInteractions, vipRevenue] = await Promise.all([
       fastify.prisma.user.count({ where: { clientId, role: 'STUDENT' } }),
       fastify.prisma.subscription.count({ where: { user: { clientId }, status: { in: ['ACTIVE', 'TRIAL'] } } }),
       fastify.prisma.iAMetric.count({ where: { user: { clientId }, status: 'ALERTA' } }),
-      fastify.prisma.iAInteraction.count({ where: { user: { clientId } } })
+      fastify.prisma.iAInteraction.count({ where: { user: { clientId } } }),
+      fastify.prisma.subscription.aggregate({
+        where: { user: { clientId }, planType: '30_DAYS', amountPaid: { gt: 0 } },
+        _sum: { amountPaid: true },
+        _count: { id: true }
+      })
     ])
 
     const recentAlerts = await fastify.prisma.iAMetric.findMany({
@@ -46,6 +51,10 @@ export async function metricsRoutes(fastify) {
       activeSubscriptions,
       alertStudents,
       totalInteractions,
+      vipRevenue: {
+        total: vipRevenue._sum.amountPaid || 0,
+        count: vipRevenue._count.id || 0
+      },
       recentAlerts: recentAlerts.map(a => ({
         userId: a.userId,
         studentName: a.user.profile
