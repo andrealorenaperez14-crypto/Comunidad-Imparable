@@ -200,3 +200,25 @@ export async function sendWeeklyReportEmail({ email, firstName, schoolName, metr
     `
   })
 }
+
+export async function sendVIPWelcomeEmail({ email, firstName, tempPassword, loginUrl }) {
+  await sendEmail({
+    to: email,
+    subject: '¡Tu acceso VIP ELITE está listo! — Escuela de Asesores',
+    html: `
+      <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px;background:#0C0C0C;color:#F5F0E8;border-radius:12px">
+        <h1 style="color:#C4972A;font-size:1.5rem;margin-bottom:8px">¡Bienvenido/a, ${firstName}!</h1>
+        <p style="color:#F5F0E8;margin-bottom:24px">Tu pago fue confirmado. Ya tenés acceso al <strong style="color:#C4972A">sector VIP ELITE</strong> de la Escuela de Asesores.</p>
+        <div style="background:#141414;border:1px solid rgba(196,151,42,0.25);border-radius:8px;padding:20px;margin-bottom:24px">
+          <p style="margin:0 0 8px;color:#8A8A7A;font-size:0.85rem">TUS CREDENCIALES DE ACCESO</p>
+          <p style="margin:0 0 4px"><strong>Email:</strong> ${email}</p>
+          <p style="margin:0"><strong>Contraseña temporal:</strong> <code style="background:#0C0C0C;padding:2px 8px;border-radius:4px;color:#C4972A">${tempPassword}</code></p>
+        </div>
+        <a href="${loginUrl}" style="display:block;background:#C4972A;color:#0C0C0C;text-align:center;padding:14px;border-radius:8px;font-weight:700;text-decoration:none;margin-bottom:16px">
+          Ingresar a la plataforma
+        </a>
+        <p style="color:#8A8A7A;font-size:0.8rem;text-align:center">Te recomendamos cambiar tu contraseña luego de ingresar.</p>
+      </div>
+    `
+  })
+}

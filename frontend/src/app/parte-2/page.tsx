@@ -43,7 +43,7 @@ export default function Parte2() {
 function Parte2Inner() {
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
   const [showForm, setShowForm]             = useState(false)
-  const [form, setForm]                     = useState({ nombre: '', email: '', whatsapp: '' })
+  const [form, setForm]                     = useState({ nombre: '', apellido: '', dni: '', email: '', whatsapp: '' })
   const [sending, setSending]               = useState(false)
   const [formError, setFormError]           = useState('')
   const [mepRate, setMepRate]               = useState<number | null>(null)
@@ -64,8 +64,12 @@ function Parte2Inner() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (!form.nombre.trim() || !form.email.trim() || !form.whatsapp.trim()) {
+    if (!form.nombre.trim() || !form.apellido.trim() || !form.dni.trim() || !form.email.trim() || !form.whatsapp.trim()) {
       setFormError('Completá todos los campos')
+      return
+    }
+    if (!/^\d{7,8}$/.test(form.dni.trim())) {
+      setFormError('El DNI debe tener 7 u 8 dígitos')
       return
     }
     setSending(true)
@@ -505,7 +509,9 @@ function Parte2Inner() {
                   Completá tus datos — te vamos a redirigir al pago seguro con Mercado Pago:
                 </p>
                 {[
-                  { field: 'nombre'   as const, placeholder: 'Tu nombre completo' },
+                  { field: 'nombre'   as const, placeholder: 'Nombre' },
+                  { field: 'apellido' as const, placeholder: 'Apellido' },
+                  { field: 'dni'      as const, placeholder: 'DNI (sin puntos)' },
                   { field: 'email'    as const, placeholder: 'Tu email', type: 'email' },
                   { field: 'whatsapp' as const, placeholder: 'Tu WhatsApp (+54...)' },
                 ].map(({ field, placeholder, type }) => (
