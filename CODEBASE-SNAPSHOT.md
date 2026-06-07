@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 6). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 7). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -133,6 +133,11 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - **Footer global:** "Desarrollado por: Núcleo Estratégico IA" — sidebar (bajo logout) + todos los paneles dashboard y admin (via layouts)
 - **Mi Curso:** gap entre módulos `5rem` inline style (antes `space-y-16`)
 
+## Performance — frontend (sesión 7)
+- **`hooks/useChat.ts`**: `sendMessage` se recreaba en cada mensaje (`messages` en deps de `useCallback`). Fix: `useRef` para leer messages → `sendMessage` estable con solo `[agentId]` como dep, cero re-renders innecesarios en ChatInterface
+- **`dashboard/curso/page.tsx`**: iframes YouTube sin `loading="lazy"` → cargaban el runtime de YouTube aunque el alumno no hubiera scrolleado. Agregado `loading="lazy"` en ambos iframes (free y paid)
+- **No auditado/accionable**: React Query staleTime global 5min ✅, code splitting automático por ruta (App Router) ✅, fuentes self-hosted con next/font ✅, CSS custom properties sin duplicados ✅
+
 ## Performance — backend queries & caching (sesión 6)
 - **`services/ranking.js`**: `include: { user: true }` → `select` solo campos necesarios (userId ya está en la métrica); loop de N `create` → `createMany` en 1 llamada
 - **`middleware/auth.js` `requireActiveSubscription`**: cache Redis `sub:{userId}` con TTL 2min — evita query a DB en cada mensaje de chat. Valores: `ok` / `expired` / `none`
@@ -179,6 +184,7 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `332e271` perf: useChat stable callback con useRef + lazy iframes YouTube en curso
 - `2f6d296` perf: 4 optimizaciones backend (ranking, subscription cache, cron, admin)
 - `639a848` perf: eliminar 4 deps sin uso (~39MB) + fix N+1 query ranking
 
