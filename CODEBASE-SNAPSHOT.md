@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 9). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 10). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -166,6 +166,13 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - Favicon cambiado a `LOGO_y_nombre_ESCUELA_DE_ASESORES.webp` (26 KB vs 3 MB antes)
 - Verificado en producción: todos los assets responden HTTP 200, Content-Type correcto, pipeline `/_next/image` sirve AVIF
 
+## Optimizaciones generales — sesión 10
+- **`/health/ia` protegido**: agregado `requireAdmin` — antes cualquiera podía ver qué proveedores IA están activos
+- **`Subscription @@index([userId, status])`**: índice compuesto para el query de `requireActiveSubscription` (filtra por ambos campos en cada chat)
+- **`DocumentChunk @@index([agentId, filename])`**: índice para `deleteMany` en uploads de knowledge base
+- **`frontend/vercel.json`**: eliminada CSP duplicada — `next.config.ts` ya maneja los headers completos
+- **⏳ PENDIENTE**: `prisma db push` en producción para aplicar los 2 índices nuevos en Supabase (corriendo desde este entorno con DATABASE_URL del .env)
+
 ## Seguridad — fixes sesión 9 (frontend)
 - **`dashboard/certificados/page.tsx`**: `target="_blank"` sin `rel="noopener noreferrer"` en link "Verificar" → reverse tabnapping (nueva pestaña podía acceder a `window.opener`). Corregido.
 - Auditado sin hallazgos: sin `dangerouslySetInnerHTML`, sin tokens hardcodeados, redirects solo a rutas internas, `localStorage` solo en authStore, CSP configurada en next.config.ts
@@ -193,6 +200,7 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `fbef2f6` security/perf: auth /health/ia + índices compuestos + fix CSP duplicada
 - `d4c782a` security: noopener noreferrer en link verificar certificado
 - `ae8e762` security: mass assignment agents PUT + blacklist courses + limit interactions
 - `332e271` perf: useChat stable callback con useRef + lazy iframes YouTube en curso
