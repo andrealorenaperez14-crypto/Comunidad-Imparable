@@ -111,6 +111,7 @@ export default function CertificadosPage() {
                     <a
                       href={`/verificar/${cert.serialNumber}`}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-2 px-4 py-2 rounded text-sm transition-all"
                       style={{ color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}
                     >
