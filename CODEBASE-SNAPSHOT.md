@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 4). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 5). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -133,6 +133,14 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - **Footer global:** "Desarrollado por: Núcleo Estratégico IA" — sidebar (bajo logout) + todos los paneles dashboard y admin (via layouts)
 - **Mi Curso:** gap entre módulos `5rem` inline style (antes `space-y-16`)
 
+## Performance — backend & dependencias (sesión 5)
+- **N+1 fix en `GET /api/ranking`**: antes hacía 1 `findMany` + 10 `findFirst` = 11 queries. Ahora: 1 `findMany` rankings + 1 `findMany` profiles (userId `in` array) = 2 queries. Archivo: `backend/src/routes/ranking.js`
+- **Dependencias frontend removidas** (sin ningún uso en el código):
+  - `date-fns` — 39 MB
+  - `cmdk` — 124 KB
+  - `vaul` — 204 KB
+  - `qrcode.react` — 148 KB
+
 ## Performance — imágenes (sesión 4)
 | Archivo | Antes | Después | Formato |
 |---|---|---|---|
@@ -164,7 +172,10 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 3. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
 4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
 
-## Commits recientes (sesión 2026-06-07 tarde)
+## Commits recientes (sesión 2026-06-07 noche)
+- `639a848` perf: eliminar 4 deps sin uso (~39MB) + fix N+1 query ranking
+
+## Commits sesión 2026-06-07 tarde
 - `e94bc24` perf: convertir logos a WebP (-97%) y actualizar referencias
 - `6ba12ec` perf: AVIF format, borrar imágenes sin uso, favicon más liviano
 - `12cae97` fix: priority en logo hero landing página 1
