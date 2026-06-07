@@ -208,8 +208,7 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - `MP_WEBHOOK_SECRET` cargado en Render ✅
 
 ## ⏳ PENDIENTE (próxima sesión)
-1. **Apps Script** — pegar código de `docs/google-apps-script-lista-vip.js` → deployar nueva versión → verificar que URL no cambió (si cambió, actualizar `APPS_SCRIPT_VIP_URL` en Render)
-2. **Mercado Pago** — hacer un pago de prueba real para confirmar webhook end-to-end (Sheet + creación de alumno en DB)
+1. **Mercado Pago** — hacer un pago de prueba real para confirmar webhook end-to-end (Sheet + creación de alumno en DB + email con credenciales)
 
 ## Commits recientes (sesión 2026-06-07 noche)
 - `66458dc` security: escapeHtml en todos los templates de email
