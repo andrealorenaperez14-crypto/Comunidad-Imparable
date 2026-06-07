@@ -550,7 +550,7 @@ function Parte2Inner() {
 
             {/* Botón WhatsApp */}
             <a
-              href="https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr"
+              href="https://chat.whatsapp.com/Lvxh9N5rk6m6kz4Ks8lRGL"
               target="_blank" rel="noopener noreferrer"
               onClick={() => trackEvent('vip_whatsapp_clicked')}
               style={{
