@@ -101,7 +101,7 @@ export function Sidebar() {
                         <Link
                           href="/dashboard/curso"
                           onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-2 px-2 py-2 rounded text-xs font-medium transition-all"
+                          className="flex items-center gap-2 px-2 py-1 rounded text-xs font-medium transition-all"
                           style={{ color: 'var(--color-text-muted)' }}
                         >
                           Ver todos los módulos
@@ -111,7 +111,7 @@ export function Sidebar() {
                             key={mod.id}
                             href={`/dashboard/curso#modulo-${mod.id}`}
                             onClick={() => setMobileOpen(false)}
-                            className="flex items-center gap-2 px-2 py-2 rounded text-xs transition-all hover:opacity-90"
+                            className="flex items-center gap-2 px-2 py-1 rounded text-xs transition-all hover:opacity-90"
                             style={{ color: 'var(--color-text-muted)' }}
                           >
                             <span style={{ color: 'var(--color-gold)', fontWeight: 700, flexShrink: 0, fontSize: '0.7rem' }}>

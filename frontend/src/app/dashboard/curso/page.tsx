@@ -42,7 +42,7 @@ export default function CursoPage() {
           <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-gold)' }} />
         </div>
       ) : (
-        <div className="space-y-16">
+        <div className="space-y-24">
           {freeContent.map((item: any, idx: number) => (
             <div
               key={item.id}
