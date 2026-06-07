@@ -200,7 +200,7 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 ## ⏳ PENDIENTE (próxima sesión)
 1. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
 2. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
-3. **prisma db push** — aplicar índices `[userId, status]` en Subscription y `[agentId, filename]` en DocumentChunk
+3. ~~**prisma db push**~~ ✅ Índices aplicados vía Supabase MCP: `Subscription_userId_status_idx` + `DocumentChunk_agentId_filename_idx`
 
 ## Commits recientes (sesión 2026-06-07 noche)
 - `da28c15` fix: expired page — verde WhatsApp → crema/dorado
