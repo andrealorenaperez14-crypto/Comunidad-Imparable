@@ -99,6 +99,7 @@ export default function HomePage() {
               alt="Escuela de Asesores"
               width={300}
               height={300}
+              priority
               style={{ objectFit: 'contain', width: 'clamp(220px, 48vw, 380px)', height: 'auto' }}
             />
           </div>
