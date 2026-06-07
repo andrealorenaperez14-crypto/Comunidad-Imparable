@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 3). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 4). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -127,6 +127,26 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 ### SaleCommission — ciclo 21→20 de cada mes
 ### IAAgent — tipos: COACH | MENTALIDAD | CONSULTIVA
 
+## UI / UX — cambios sesión 4
+- **Sidebar header:** "Escuela de Asesores Elite for MPS" + "By Yami Mansilla" (dorado)
+- **Sidebar módulos:** padding `py-1` (antes `py-2`) — 50% menos espacio entre ítems
+- **Footer global:** "Desarrollado por: Núcleo Estratégico IA" — sidebar (bajo logout) + todos los paneles dashboard y admin (via layouts)
+- **Mi Curso:** gap entre módulos `5rem` inline style (antes `space-y-16`)
+
+## Performance — imágenes (sesión 4)
+| Archivo | Antes | Después | Formato |
+|---|---|---|---|
+| `LOGO_NEUROVENTAS` | 3.8 MB | 156 KB | WebP |
+| `LOGO_cuad_y_nombre` | 3.0 MB | 77 KB | WebP |
+| `LOGO_y_nombre` | 569 KB | 26 KB | WebP |
+| `yami-gemini` | 2.0 MB | 75 KB | WebP |
+| 3 archivos sin uso | 3.2 MB | eliminados | — |
+
+- `next.config.ts`: `formats: ['image/avif', 'image/webp']` — Next.js sirve AVIF en browsers modernos
+- `priority` agregado en logos hero: `LOGO_cuad_y_nombre` (page.tsx) y `LOGO_NEUROVENTAS` (parte-2)
+- Favicon cambiado a `LOGO_y_nombre_ESCUELA_DE_ASESORES.webp` (26 KB vs 3 MB antes)
+- Verificado en producción: todos los assets responden HTTP 200, Content-Type correcto, pipeline `/_next/image` sirve AVIF
+
 ## Patrones de seguridad ✅ AUDITADOS (2026-06-07)
 1. Filtrar siempre por `clientId: request.user.clientId` (nunca del body)
 2. CLIENT role: verificar `user.role === 'STUDENT'` antes de operar
@@ -144,7 +164,16 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 3. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
 4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
 
-## Commits recientes (sesión 2026-06-07)
+## Commits recientes (sesión 2026-06-07 tarde)
+- `e94bc24` perf: convertir logos a WebP (-97%) y actualizar referencias
+- `6ba12ec` perf: AVIF format, borrar imágenes sin uso, favicon más liviano
+- `12cae97` fix: priority en logo hero landing página 1
+- `610d842` fix: tilde en Núcleo + priority en logo hero página 2
+- `9674af5` feat: renombrar escuela en sidebar + footer Núcleo Estratégico IA
+- `a975d5f` fix: separación entre módulos con inline style (5rem)
+- `4a161f7` fix: espaciado módulos sidebar al 50% + separar videos del curso
+
+## Commits sesión 2026-06-07 mañana
 - `33550ab` security: fix 5 vulnerabilidades
 - `bca2bd1` fix: Suspense para useSearchParams en Next.js 15
 - `35ff785` feat: espaciado módulos + submenú sidebar
