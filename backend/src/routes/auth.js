@@ -147,9 +147,21 @@ export async function authRoutes(fastify) {
 
   fastify.post('/logout', { preHandler: requireAuth }, async (request, reply) => {
     const { jti } = request.user
-    if (jti && fastify.redis) {
-      const ttl = 60 * 16 // 16 min > 15 min de expiración del token
-      await fastify.redis.setex(`bl:${jti}`, ttl, '1')
+    const { refreshToken } = request.body || {}
+    if (fastify.redis) {
+      if (jti) {
+        await fastify.redis.setex(`bl:${jti}`, 60 * 16, '1')
+      }
+      // Revocar refresh token para que no pueda generar nuevos access tokens
+      if (refreshToken) {
+        try {
+          const payload = fastify.jwt.verify(refreshToken, {
+            secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET
+          })
+          const ttl = 60 * 60 * 24 * 7 // 7 días (vida del refresh token)
+          await fastify.redis.setex(`bl:rt:${payload.id}:${payload.iat}`, ttl, '1')
+        } catch { /* token inválido, ignorar */ }
+      }
     }
     return reply.send({ mensaje: 'Sesión cerrada correctamente.' })
   })
@@ -165,6 +177,12 @@ export async function authRoutes(fastify) {
 
       const user = await fastify.prisma.user.findUnique({ where: { id: payload.id } })
       if (!user) return reply.status(401).send({ error: 'Usuario no encontrado.' })
+
+      // Verificar que el refresh token no fue revocado
+      if (fastify.redis) {
+        const revoked = await fastify.redis.get(`bl:rt:${payload.id}:${payload.iat}`)
+        if (revoked) return reply.status(401).send({ error: 'Sesión expirada. Iniciá sesión nuevamente.' })
+      }
 
       const token = fastify.jwt.sign({
         jti: randomUUID(),

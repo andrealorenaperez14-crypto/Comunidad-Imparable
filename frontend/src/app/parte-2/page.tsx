@@ -31,7 +31,6 @@ const fadeUp = {
   transition: { duration: 0.5 }
 }
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjS0oqQK6ISclBZS9h2BKrMhrNr_sCsCtzx6kYBzFclzWcax2OPrB9VFrmtkEQ_6cg/exec'
 
 export default function Parte2() {
   return (

@@ -1,4 +1,5 @@
 import { MercadoPagoConfig, Preference, Payment } from 'mercadopago'
+import { createHmac, timingSafeEqual } from 'crypto'
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
@@ -64,6 +65,24 @@ export async function paymentRoutes(fastify) {
 
   // Webhook — MP notifica cuando se aprueba el pago
   fastify.post('/webhook', async (req, reply) => {
+    // Verificar firma del webhook si está configurado el secret
+    const webhookSecret = process.env.MP_WEBHOOK_SECRET
+    if (webhookSecret) {
+      const signature  = req.headers['x-signature'] || ''
+      const requestId  = req.headers['x-request-id'] || ''
+      const ts         = signature.match(/ts=(\d+)/)?.[1] || ''
+      const v1         = signature.match(/v1=([a-f0-9]+)/)?.[1] || ''
+      const dataId     = req.body?.data?.id || ''
+      const manifest   = `id:${dataId};request-id:${requestId};ts:${ts};`
+      const expected   = createHmac('sha256', webhookSecret).update(manifest).digest('hex')
+      try {
+        const valid = timingSafeEqual(Buffer.from(v1, 'hex'), Buffer.from(expected, 'hex'))
+        if (!valid) return reply.code(400).send({ error: 'Firma inválida' })
+      } catch {
+        return reply.code(400).send({ error: 'Firma inválida' })
+      }
+    }
+
     const { type, data } = req.body || {}
 
     // Responder rápido a MP para evitar reintentos

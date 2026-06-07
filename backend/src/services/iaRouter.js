@@ -47,14 +47,17 @@ async function retrieveRelevantChunks(prisma, agentId, query, limit = 3) {
     `
     if (fts.length >= 1) return fts.map(r => `[${r.filename}]\n${r.content}`)
 
-    // Fallback ILIKE con palabras clave (usando $queryRawUnsafe para SQL dinámico)
+    // Fallback ILIKE con palabras clave usando ORM (seguro contra SQL injection)
     const keywords = query.split(/\s+/).filter(w => w.length > 3).slice(0, 3)
     if (keywords.length > 0) {
-      const conditions = keywords.map(k => `content ILIKE '%${k.replace(/'/g, "''")}%'`).join(' OR ')
-      const ilike = await prisma.$queryRawUnsafe(
-        `SELECT content, filename FROM "DocumentChunk" WHERE "agentId" = $1 AND (${conditions}) LIMIT $2`,
-        agentId, limit
-      )
+      const ilike = await prisma.documentChunk.findMany({
+        where: {
+          agentId,
+          OR: keywords.map(k => ({ content: { contains: k, mode: 'insensitive' } }))
+        },
+        take: limit,
+        select: { content: true, filename: true }
+      })
       if (ilike.length > 0) return ilike.map(r => `[${r.filename}]\n${r.content}`)
     }
 

@@ -1,10 +1,7 @@
+import { requireActiveSubscription } from '../middleware/auth.js'
+
 export async function courseRoutes(fastify) {
-  fastify.get('/', async (req, reply) => {
-    try {
-      await req.jwtVerify()
-    } catch {
-      return reply.code(401).send({ error: 'No autenticado' })
-    }
+  fastify.get('/', { preHandler: requireActiveSubscription }, async (req, reply) => {
 
     const courses = await fastify.prisma.courseContent.findMany({
       where: { clientId: req.user.clientId },
