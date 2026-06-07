@@ -1,12 +1,15 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { agentApi } from '@/lib/api'
 import type { ChatMessage } from '@/types'
 
 export function useChat(agentId: string) {
   const [messages, setMessages] = useState<ChatMessage[]>([])
+  const messagesRef = useRef<ChatMessage[]>(messages)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  messagesRef.current = messages
 
   const sendMessage = useCallback(async (content: string) => {
     const userMessage: ChatMessage = {
@@ -16,15 +19,12 @@ export function useChat(agentId: string) {
       timestamp: new Date()
     }
 
-    setMessages(prev => {
-      const updated = [...prev, userMessage]
-      return updated
-    })
+    setMessages(prev => [...prev, userMessage])
     setIsLoading(true)
     setError(null)
 
     try {
-      const history = messages
+      const history = messagesRef.current
         .slice(-10)
         .map(m => ({ role: m.role, content: m.content }))
 
@@ -52,7 +52,7 @@ export function useChat(agentId: string) {
     } finally {
       setIsLoading(false)
     }
-  }, [agentId, messages])
+  }, [agentId])
 
   const clearMessages = () => setMessages([])
 

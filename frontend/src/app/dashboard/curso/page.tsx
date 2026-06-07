@@ -73,6 +73,7 @@ export default function CursoPage() {
                     <iframe
                       src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                       className="w-full h-full"
+                      loading="lazy"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
@@ -136,6 +137,7 @@ export default function CursoPage() {
                     <iframe
                       src={`https://www.youtube.com/embed/${videoId}?rel=0`}
                       className="w-full h-full"
+                      loading="lazy"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
