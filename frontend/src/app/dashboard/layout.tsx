@@ -43,6 +43,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="container py-10">
           {children}
         </div>
+        <p className="text-center text-xs py-6" style={{ color: 'var(--color-text-muted)', opacity: 0.4 }}>
+          Desarrollado por: Nucleo Estratégico IA
+        </p>
       </main>
     </div>
   )

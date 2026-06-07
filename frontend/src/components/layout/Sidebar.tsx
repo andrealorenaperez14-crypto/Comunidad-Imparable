@@ -54,10 +54,10 @@ export function Sidebar() {
         <div className="flex items-center gap-3">
           <div>
             <p className="font-semibold text-sm" style={{ color: 'var(--color-text)', letterSpacing: '0.08em' }}>
-              {user?.schoolName || 'ESCUELA DE ASESORES'}
+              Escuela de Asesores Elite for MPS
             </p>
-            <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-              {(isAdmin || isClient) ? 'Panel Admin' : 'Mi Formación'}
+            <p className="text-xs mt-0.5" style={{ color: 'var(--color-gold)' }}>
+              By Yami Mansilla
             </p>
           </div>
         </div>
@@ -175,6 +175,9 @@ export function Sidebar() {
           <LogOut className="w-4 h-4" strokeWidth={1.5} />
           Cerrar sesión
         </button>
+        <p className="text-center text-xs mt-3" style={{ color: 'var(--color-text-muted)', opacity: 0.5 }}>
+          Desarrollado por: Nucleo Estratégico IA
+        </p>
       </div>
     </div>
   )
