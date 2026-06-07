@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -34,6 +34,14 @@ const fadeUp = {
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjS0oqQK6ISclBZS9h2BKrMhrNr_sCsCtzx6kYBzFclzWcax2OPrB9VFrmtkEQ_6cg/exec'
 
 export default function Parte2() {
+  return (
+    <Suspense>
+      <Parte2Inner />
+    </Suspense>
+  )
+}
+
+function Parte2Inner() {
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
   const [showForm, setShowForm]             = useState(false)
   const [form, setForm]                     = useState({ nombre: '', email: '', whatsapp: '' })
