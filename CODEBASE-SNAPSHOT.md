@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 11). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 12 — FINAL DÍA). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -77,7 +77,7 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - Formulario: nombre, email, WhatsApp → **Pagar con Mercado Pago**
 - Post-pago: MP redirige a `/parte-2?pago=exitoso` o `?pago=fallido`
 - Estado de éxito/falla mostrado automáticamente
-- Botón "Sumarme al Club de Asesores VIP ORO" → WhatsApp (PENDIENTE: cambiar link)
+- Botón "Sumarme al Club de Asesores VIP ORO" → WhatsApp `chat.whatsapp.com/Lvxh9N5rk6m6kz4Ks8lRGL` ✅
 
 ## Integración Mercado Pago (Lista VIP) ✅ DEPLOYADO
 
@@ -87,14 +87,14 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 3. MP confirma → webhook → backend verifica firma HMAC → escribe en Google Sheet
 4. Sheet recibe: Fecha y hora | Nombre | Email | WhatsApp | Monto Página | Cotización MEP | Monto Recibido | CONFIRMADO
 
-**Variables de entorno en Render (todas cargadas excepto MP_WEBHOOK_SECRET):**
+**Variables de entorno en Render — todas cargadas ✅:**
 | Variable | Estado |
 |---|---|
-| `MP_ACCESS_TOKEN` | ✅ cargada |
-| `MP_PUBLIC_KEY` | ✅ cargada |
-| `APPS_SCRIPT_VIP_URL` | ✅ cargada |
+| `MP_ACCESS_TOKEN` | ✅ |
+| `MP_PUBLIC_KEY` | ✅ |
+| `APPS_SCRIPT_VIP_URL` | ✅ |
 | `BACKEND_URL` | ✅ `https://nucleo-estrategico-ia.onrender.com` |
-| `MP_WEBHOOK_SECRET` | ⏳ PENDIENTE — obtener en MP Developers → tu app → Webhooks → Secret key |
+| `MP_WEBHOOK_SECRET` | ✅ cargado (sesión 11) |
 
 **Google Sheet:** `escueladeasesoresmps@gmail.com`
 **Apps Script URL:** en variable de entorno del backend (no en el frontend)
@@ -168,10 +168,9 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 
 ## Optimizaciones generales — sesión 10
 - **`/health/ia` protegido**: agregado `requireAdmin` — antes cualquiera podía ver qué proveedores IA están activos
-- **`Subscription @@index([userId, status])`**: índice compuesto para el query de `requireActiveSubscription` (filtra por ambos campos en cada chat)
-- **`DocumentChunk @@index([agentId, filename])`**: índice para `deleteMany` en uploads de knowledge base
+- **`Subscription @@index([userId, status])`**: índice compuesto aplicado en producción ✅ (vía Supabase MCP)
+- **`DocumentChunk @@index([agentId, filename])`**: índice aplicado en producción ✅ (vía Supabase MCP)
 - **`frontend/vercel.json`**: eliminada CSP duplicada — `next.config.ts` ya maneja los headers completos
-- **⏳ PENDIENTE**: `prisma db push` en producción para aplicar los 2 índices nuevos en Supabase (corriendo desde este entorno con DATABASE_URL del .env)
 
 ## Seguridad — fixes sesión 9 (frontend)
 - **`dashboard/certificados/page.tsx`**: `target="_blank"` sin `rel="noopener noreferrer"` en link "Verificar" → reverse tabnapping (nueva pestaña podía acceder a `window.opener`). Corregido.
@@ -199,10 +198,10 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 
 ## ⏳ PENDIENTE (próxima sesión)
 1. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
-2. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
-3. ~~**prisma db push**~~ ✅ Índices aplicados vía Supabase MCP: `Subscription_userId_status_idx` + `DocumentChunk_agentId_filename_idx`
+2. **Mercado Pago** — hacer un pago de prueba real para confirmar que el webhook funciona end-to-end en producción
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `a886b64` docs: índices DB aplicados en producción via Supabase MCP
 - `da28c15` fix: expired page — verde WhatsApp → crema/dorado
 - `e080c8c` feat: actualizar links WhatsApp definitivos
 - `fbef2f6` security/perf: auth /health/ia + índices compuestos + fix CSP duplicada
