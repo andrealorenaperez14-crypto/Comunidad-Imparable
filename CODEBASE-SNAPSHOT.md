@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 12 — FINAL DÍA). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 13). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -172,6 +172,17 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - **`DocumentChunk @@index([agentId, filename])`**: índice aplicado en producción ✅ (vía Supabase MCP)
 - **`frontend/vercel.json`**: eliminada CSP duplicada — `next.config.ts` ya maneja los headers completos
 
+## Seguridad — sesión 13
+- **SQL injection — LIMPIO ✅**: cero `$queryRawUnsafe`/`$executeRawUnsafe`. Los 4 raw queries usan tagged templates Prisma (todos los `${}` se convierten en `$1`, `$2` parametrizados). El mensaje del chat del usuario llega como parámetro a `word_similarity` y `plainto_tsquery`, nunca concatenado.
+- **XSS en emails — CORREGIDO ✅**: `email.js` tenía 20+ interpolaciones de datos de usuario en HTML sin escapar. Agregada función `h()` (escapa `&<>"'`) aplicada a `firstName`, `studentName`, `schoolName`, `agentName`, `otp`, `email`, `tempPassword`, `m.agentName`, `m.status` en los 8 templates.
+- **Rate limiting agregado**: chat IA `30/min` por userId (keyGenerator decodifica JWT sin verificar, solo para clave), VIP create `5/10min` por IP.
+
+## Flujo VIP completo (sesión 13)
+- **`parte-2` formulario**: agrega campos Apellido y DNI (validación 7-8 dígitos)
+- **Webhook MP**: escribe Sheet simplificado (fecha, nombre, DNI, email, WA, importe) + crea alumno nuevo con plan 30_DAYS y envía email con credenciales, o actualiza suscripción si el DNI ya existe
+- **`email.js`**: nueva función `sendVIPWelcomeEmail` con contraseña temporal y link de ingreso
+- **Apps Script**: simplificado a `doPost` con 6 columnas (sin automatización email)
+
 ## Seguridad — fixes sesión 9 (frontend)
 - **`dashboard/certificados/page.tsx`**: `target="_blank"` sin `rel="noopener noreferrer"` en link "Verificar" → reverse tabnapping (nueva pestaña podía acceder a `window.opener`). Corregido.
 - Auditado sin hallazgos: sin `dangerouslySetInnerHTML`, sin tokens hardcodeados, redirects solo a rutas internas, `localStorage` solo en authStore, CSP configurada en next.config.ts
@@ -197,10 +208,13 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - `MP_WEBHOOK_SECRET` cargado en Render ✅
 
 ## ⏳ PENDIENTE (próxima sesión)
-1. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
-2. **Mercado Pago** — hacer un pago de prueba real para confirmar que el webhook funciona end-to-end en producción
+1. **Apps Script** — pegar código de `docs/google-apps-script-lista-vip.js` → deployar nueva versión → verificar que URL no cambió (si cambió, actualizar `APPS_SCRIPT_VIP_URL` en Render)
+2. **Mercado Pago** — hacer un pago de prueba real para confirmar webhook end-to-end (Sheet + creación de alumno en DB)
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `66458dc` security: escapeHtml en todos los templates de email
+- `c805d91` security: rate limiting chat 30/min + VIP create 5/10min
+- `80c8688` feat: VIP flow completo — DNI+apellido en form, Sheet simplificado, crear/actualizar alumno en DB
 - `a886b64` docs: índices DB aplicados en producción via Supabase MCP
 - `da28c15` fix: expired page — verde WhatsApp → crema/dorado
 - `e080c8c` feat: actualizar links WhatsApp definitivos
