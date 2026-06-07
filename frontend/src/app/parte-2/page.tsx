@@ -2,14 +2,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { QRCodeSVG } from 'qrcode.react'
 import { trackEvent } from '@/lib/analytics'
 
-const LEMON_ALIAS = 'escuela.de.asesores'
-const USD_AMOUNT = 150
-const EMAIL_COMPROBANTE = 'escueladeasesoresmps@gmail.com'
+const USD_AMOUNT  = 150
+const API_URL     = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
 
 const CoachIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -37,14 +35,15 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxjS0oqQK6ISclBZS9h2
 
 export default function Parte2() {
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
-  const [showForm, setShowForm] = useState(false)
-  const [form, setForm] = useState({ nombre: '', email: '', whatsapp: '', comprobante: '' })
-  const [sending, setSending] = useState(false)
-  const [sent, setSent] = useState(false)
-  const [formError, setFormError] = useState('')
-  const [mepRate, setMepRate] = useState<number | null>(null)
-  const [mepLoading, setMepLoading] = useState(true)
-  const router = useRouter()
+  const [showForm, setShowForm]             = useState(false)
+  const [form, setForm]                     = useState({ nombre: '', email: '', whatsapp: '' })
+  const [sending, setSending]               = useState(false)
+  const [formError, setFormError]           = useState('')
+  const [mepRate, setMepRate]               = useState<number | null>(null)
+  const [mepLoading, setMepLoading]         = useState(true)
+  const router       = useRouter()
+  const searchParams = useSearchParams()
+  const pagoStatus   = searchParams.get('pago') // 'exitoso' | 'fallido' | 'pendiente'
 
   useEffect(() => {
     fetch('https://dolarapi.com/v1/dolares/mep')
@@ -65,21 +64,17 @@ export default function Parte2() {
     setSending(true)
     setFormError('')
     try {
-      await fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
+      const res  = await fetch(`${API_URL}/api/payments/vip/create`, {
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-        ...form,
-        montoPesos: pesoAmount ? `$${pesoAmount.toLocaleString('es-AR')}` : '',
-        cotizacionMep: mepRate ? `$${mepRate.toLocaleString('es-AR')}` : ''
+        body:    JSON.stringify(form)
       })
-      })
-      setSent(true)
-      trackEvent('vip_waitlist_submitted')
-    } catch {
-      setFormError('Hubo un error. Intentá de nuevo.')
-    } finally {
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
+      trackEvent('vip_payment_started')
+      window.location.href = data.init_point
+    } catch (err: any) {
+      setFormError(err.message || 'Hubo un error. Intentá de nuevo.')
       setSending(false)
     }
   }
@@ -449,154 +444,100 @@ export default function Parte2() {
             {/* Separador */}
             <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
 
-            {/* QR + cotización MEP */}
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-              <p style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--color-text)' }}>
-                Pagá escaneando el QR con cualquier app
-              </p>
-
-              {/* QR */}
-              <div style={{
-                padding: '1rem',
-                borderRadius: '0.75rem',
-                background: '#fff',
-                display: 'inline-flex',
-                boxShadow: '0 0 24px rgba(196,151,42,0.35)'
-              }}>
-                <QRCodeSVG
-                  value={LEMON_ALIAS}
-                  size={180}
-                  bgColor="#ffffff"
-                  fgColor="#0C0C0C"
-                  level="M"
-                />
-              </div>
-
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>Alias Lemon Cash</p>
-                <p style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-gold)', letterSpacing: '0.04em' }}>{LEMON_ALIAS}</p>
-              </div>
-
-              {/* Cotización MEP */}
-              <div style={{
-                width: '100%', padding: '1rem',
-                borderRadius: '0.75rem',
-                border: '1px solid var(--color-gold-border)',
-                background: 'rgba(196,151,42,0.05)',
-                textAlign: 'center'
-              }}>
-                {mepLoading ? (
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Calculando cotización...</p>
-                ) : pesoAmount ? (
-                  <>
-                    <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>
-                      150 USD · Dólar MEP ${mepRate?.toLocaleString('es-AR')}
-                    </p>
-                    <p style={{ fontSize: 'clamp(1.4rem, 4vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
-                      ${pesoAmount.toLocaleString('es-AR')}
-                    </p>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
-                      Cotización actualizada al momento del pago
-                    </p>
-                  </>
-                ) : (
-                  <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Enviá el equivalente a 150 USD al alias</p>
-                )}
-              </div>
+            {/* Cotización MEP */}
+            <div style={{ width: '100%', padding: '1rem', borderRadius: '0.75rem', border: '1px solid var(--color-gold-border)', background: 'rgba(196,151,42,0.05)', textAlign: 'center' }}>
+              {mepLoading ? (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Calculando cotización...</p>
+              ) : pesoAmount ? (
+                <>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>
+                    150 USD · Dólar MEP ${mepRate?.toLocaleString('es-AR')}
+                  </p>
+                  <p style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                    ${pesoAmount.toLocaleString('es-AR')}
+                  </p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
+                    Cotización actualizada · Mercado Pago acepta tarjeta de crédito y débito
+                  </p>
+                </>
+              ) : (
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Equivalente a 150 USD en pesos</p>
+              )}
             </div>
 
-            {/* Separador */}
-            <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
-
-            {/* Formulario */}
-            {!sent ? (
-              !showForm ? (
-                <button
-                  onClick={() => { setShowForm(true); trackEvent('vip_waitlist_clicked') }}
-                  style={{
-                    width: '100%', padding: '2rem 2rem',
-                    background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                    color: '#000', fontWeight: 700, borderRadius: '0.75rem',
-                    fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', letterSpacing: '0.05em',
-                    boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
-                    cursor: 'pointer', border: 'none', lineHeight: 1.4
-                  }}
-                >
-                  Ya pagué — Confirmar mi lugar VIP<br />
-                  <span style={{ fontSize: '0.85em', fontWeight: 600, opacity: 0.85 }}>(Pre-lanzamiento julio)</span>
-                </button>
-              ) : (
-                <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', textAlign: 'left' }}>
-                    Completá tus datos y el número de comprobante de pago:
-                  </p>
-                  {[
-                    { field: 'nombre' as const, placeholder: 'Tu nombre completo' },
-                    { field: 'email' as const, placeholder: 'Tu email', type: 'email' },
-                    { field: 'whatsapp' as const, placeholder: 'Tu WhatsApp (+54...)' },
-                  ].map(({ field, placeholder, type }) => (
-                    <input
-                      key={field}
-                      type={type || 'text'}
-                      placeholder={placeholder}
-                      value={form[field]}
-                      onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
-                      style={{
-                        width: '100%', padding: '0.875rem 1rem',
-                        borderRadius: '0.625rem',
-                        border: '1px solid var(--color-gold-border)',
-                        background: 'rgba(0,0,0,0.4)',
-                        color: 'var(--color-text)', fontSize: '0.95rem',
-                        outline: 'none', boxSizing: 'border-box'
-                      }}
-                    />
-                  ))}
-                  {formError && <p style={{ color: '#F87171', fontSize: '0.85rem' }}>{formError}</p>}
-                  <button
-                    type="submit" disabled={sending}
-                    style={{
-                      width: '100%', padding: '1rem',
-                      background: sending ? 'rgba(196,151,42,0.5)' : 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                      color: '#000', fontWeight: 700, borderRadius: '0.75rem',
-                      fontSize: '1rem', cursor: sending ? 'not-allowed' : 'pointer', border: 'none'
-                    }}
-                  >
-                    {sending ? 'Enviando...' : 'Confirmar mi lugar VIP'}
-                  </button>
-                </form>
-              )
-            ) : (
-              <div style={{
-                width: '100%', padding: '1.5rem', borderRadius: '0.75rem',
-                background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)',
-                textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '1rem'
-              }}>
-                <p style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '1.05rem' }}>
-                  ¡Datos registrados!
-                </p>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem', lineHeight: 1.6 }}>
-                  Último paso: envianos la <strong style={{ color: 'var(--color-text)' }}>captura del comprobante</strong> por email para confirmar tu lugar.
-                </p>
-                <a
-                  href={`mailto:${EMAIL_COMPROBANTE}?subject=${encodeURIComponent(`[VIP ELITE] Comprobante de pago — ${form.nombre}`)}&body=${encodeURIComponent(`Hola Escuela de Asesores,\n\nMe registro en la Lista VIP ELITE y adjunto mi comprobante de pago.\n\n── DATOS PERSONALES ──\nNombre: ${form.nombre}\nEmail: ${form.email}\nWhatsApp: ${form.whatsapp}\n\n── DATOS DEL PAGO ──\nAlias Lemon Cash: ${LEMON_ALIAS}\nMonto abonado: ${pesoAmount ? `$${pesoAmount.toLocaleString('es-AR')} pesos` : '(ver comprobante)'}\nCotización MEP utilizada: ${mepRate ? `$${mepRate.toLocaleString('es-AR')}` : '-'}\nEquivalente USD: 150 USD\n\n[Adjunto captura del comprobante]\n\n¡Gracias!`)}`}
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.625rem',
-                    padding: '1rem 1.5rem',
-                    background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                    color: '#000', fontWeight: 700, borderRadius: '0.75rem',
-                    fontSize: '1rem', textDecoration: 'none',
-                    boxShadow: '0 6px 20px rgba(196,151,42,0.4)'
-                  }}
-                >
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  Enviar comprobante por email
-                </a>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
-                  El mail se abre con tus datos pre-cargados. Solo adjuntá la captura y envialo.
-                </p>
+            {/* Formulario + botón pagar */}
+            {pagoStatus === 'exitoso' ? (
+              <div style={{ width: '100%', padding: '1.5rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
+                <p style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>¡Pago confirmado!</p>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Tu lugar VIP ELITE está reservado. Te avisamos antes del lanzamiento en julio.</p>
               </div>
+            ) : pagoStatus === 'fallido' ? (
+              <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', textAlign: 'center' }}>
+                <p style={{ color: '#F87171', fontWeight: 700, marginBottom: '0.25rem' }}>El pago no se completó</p>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>Podés intentarlo de nuevo.</p>
+              </div>
+            ) : !showForm ? (
+              <button
+                onClick={() => { setShowForm(true); trackEvent('vip_waitlist_clicked') }}
+                style={{
+                  width: '100%', padding: '2rem',
+                  background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                  color: '#000', fontWeight: 700, borderRadius: '0.75rem',
+                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', letterSpacing: '0.05em',
+                  boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
+                  cursor: 'pointer', border: 'none', lineHeight: 1.4
+                }}
+              >
+                Unirme a la Lista VIP<br />
+                <span style={{ fontSize: '0.85em', fontWeight: 600, opacity: 0.85 }}>(Pre-lanzamiento julio)</span>
+              </button>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', textAlign: 'left' }}>
+                  Completá tus datos — te vamos a redirigir al pago seguro con Mercado Pago:
+                </p>
+                {[
+                  { field: 'nombre'   as const, placeholder: 'Tu nombre completo' },
+                  { field: 'email'    as const, placeholder: 'Tu email', type: 'email' },
+                  { field: 'whatsapp' as const, placeholder: 'Tu WhatsApp (+54...)' },
+                ].map(({ field, placeholder, type }) => (
+                  <input
+                    key={field} type={type || 'text'} placeholder={placeholder}
+                    value={form[field]}
+                    onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
+                    style={{
+                      width: '100%', padding: '0.875rem 1rem', borderRadius: '0.625rem',
+                      border: '1px solid var(--color-gold-border)',
+                      background: 'rgba(0,0,0,0.4)', color: 'var(--color-text)',
+                      fontSize: '0.95rem', outline: 'none', boxSizing: 'border-box'
+                    }}
+                  />
+                ))}
+                {formError && <p style={{ color: '#F87171', fontSize: '0.85rem' }}>{formError}</p>}
+                <button
+                  type="submit" disabled={sending}
+                  style={{
+                    width: '100%', padding: '1.25rem',
+                    background: sending ? 'rgba(196,151,42,0.5)' : 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                    color: '#000', fontWeight: 700, borderRadius: '0.75rem',
+                    fontSize: '1rem', cursor: sending ? 'not-allowed' : 'pointer', border: 'none',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
+                  }}
+                >
+                  {sending ? 'Redirigiendo...' : (
+                    <>
+                      <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                        <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" stroke="#000" strokeWidth="1.5"/>
+                        <path d="M8 12h8M14 9l3 3-3 3" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      Pagar con Mercado Pago
+                    </>
+                  )}
+                </button>
+                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center' }}>
+                  Pago seguro · Tarjeta de crédito o débito · Confirmación automática
+                </p>
+              </form>
             )}
 
             {/* Botón WhatsApp */}

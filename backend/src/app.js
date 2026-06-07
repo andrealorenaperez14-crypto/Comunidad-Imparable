@@ -21,6 +21,7 @@ import { adminUserRoutes } from './routes/admin/users.js'
 import { adminCommissionRoutes } from './routes/admin/commissions.js'
 import { commissionRoutes } from './routes/commissions.js'
 import { courseRoutes } from './routes/courses.js'
+import { paymentRoutes } from './routes/payments.js'
 import { healthRoutes } from './routes/health.js'
 
 export async function buildApp(opts = {}) {
@@ -92,6 +93,7 @@ export async function buildApp(opts = {}) {
   await app.register(adminCommissionRoutes, { prefix: '/api/admin/commissions' })
   await app.register(commissionRoutes, { prefix: '/api/commissions' })
   await app.register(courseRoutes, { prefix: '/api/course' })
+  await app.register(paymentRoutes, { prefix: '/api/payments' })
 
   return app
 }

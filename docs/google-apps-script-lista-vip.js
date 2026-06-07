@@ -31,15 +31,20 @@ function doPost(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet()
   const data = JSON.parse(e.postData.contents)
 
+  // Si viene del webhook de MP, el pago ya está confirmado
+  // Si viene del formulario, queda Pendiente
+  const estado = data.estado || 'Pendiente'
+  const montoRecibido = data.montoRecibido || ''
+
   sheet.appendRow([
-    new Date().toLocaleString('es-AR'),
-    data.nombre      || '',
-    data.email       || '',
-    data.whatsapp    || '',
-    data.montoPesos  || '',   // Monto Página
-    data.cotizacionMep || '', // Cotización MEP
-    '',                       // Monto Recibido (se completa automáticamente)
-    'Pendiente'               // Estado Pago
+    new Date().toLocaleString('es-AR'),  // A: Fecha y hora
+    data.nombre        || '',            // B: Nombre
+    data.email         || '',            // C: Email
+    data.whatsapp      || '',            // D: WhatsApp
+    data.montoPesos    || '',            // E: Monto Página (MEP del momento)
+    data.cotizacionMep || '',            // F: Cotización MEP
+    montoRecibido,                       // G: Monto Recibido (confirma MP)
+    estado                               // H: Estado Pago
   ])
 
   return ContentService
