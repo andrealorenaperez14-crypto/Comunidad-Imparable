@@ -124,8 +124,16 @@ export async function adminAgentRoutes(fastify) {
 
     if (!agent) return reply.status(404).send({ error: 'Agente no encontrado.' })
 
-    const { primaryApiKey, backupApiKey, ...rest } = request.body || {}
-    const updateData = { ...rest }
+    const { primaryApiKey, backupApiKey, name, description, icon, systemPrompt, instructions, metricsConfig } = request.body || {}
+
+    // Whitelist explícita — nunca spread directo del body para evitar mass assignment
+    const updateData = {}
+    if (name         !== undefined) updateData.name         = name
+    if (description  !== undefined) updateData.description  = description
+    if (icon         !== undefined) updateData.icon         = icon
+    if (systemPrompt !== undefined) updateData.systemPrompt = systemPrompt
+    if (instructions !== undefined) updateData.instructions = instructions
+    if (metricsConfig !== undefined) updateData.metricsConfig = metricsConfig
 
     // Solo actualizar si es una clave nueva (no enmascarada)
     if (primaryApiKey && !primaryApiKey.includes('****')) updateData.primaryApiKey = encrypt(primaryApiKey)
@@ -246,7 +254,8 @@ export async function adminAgentRoutes(fastify) {
 
   fastify.get('/:id/interactions', async (request, reply) => {
     const { id } = request.params
-    const { page = 1, limit = 50 } = request.query
+    const page  = Math.max(1, parseInt(request.query.page) || 1)
+    const limit = Math.min(100, Math.max(1, parseInt(request.query.limit) || 50))
 
     const agent = await fastify.prisma.iAAgent.findFirst({
       where: { id, clientId: request.user.clientId }
@@ -257,7 +266,7 @@ export async function adminAgentRoutes(fastify) {
       where: { agentId: id },
       orderBy: { createdAt: 'desc' },
       skip: (page - 1) * limit,
-      take: parseInt(limit),
+      take: limit,
       include: { user: { include: { profile: true } } }
     })
 
