@@ -7,10 +7,10 @@ export async function recalcularRanking(prisma, clientId) {
     select: { id: true }
   })
 
-  // Métricas existentes
+  // Métricas existentes (userId ya está en el modelo, no necesitamos join)
   const metrics = await prisma.iAMetric.findMany({
     where: { user: { clientId } },
-    include: { user: true }
+    select: { userId: true, engagementScore: true, completionRate: true, problemResolutionRate: true }
   })
 
   const scoreByUser = {}
@@ -36,24 +36,19 @@ export async function recalcularRanking(prisma, clientId) {
   const currentRankings = await prisma.ranking.findMany({ where: { clientId } })
   const currentByUser = Object.fromEntries(currentRankings.map(r => [r.userId, r]))
 
-  await prisma.$transaction(async (tx) => {
-    await tx.ranking.deleteMany({ where: { clientId } })
+  const rankingRows = userScores.map(({ userId, totalScore, gainPercentage }, i) => ({
+    clientId, position: i + 1, userId, totalScore, gainPercentage,
+    daysInTop10: currentByUser[userId] ? (currentByUser[userId].daysInTop10 + 1) : 1
+  }))
+  const historyRows = userScores.map(({ userId, totalScore, gainPercentage }, i) => ({
+    clientId, userId, position: i + 1, totalScore, gainPercentage
+  }))
 
-    for (let i = 0; i < userScores.length; i++) {
-      const { userId, totalScore, gainPercentage } = userScores[i]
-      const position = i + 1
-      const wasInTop10 = !!currentByUser[userId]
-      const daysInTop10 = wasInTop10 ? (currentByUser[userId].daysInTop10 + 1) : 1
-
-      await tx.ranking.create({
-        data: { clientId, position, userId, totalScore, gainPercentage, daysInTop10 }
-      })
-
-      await tx.rankingHistory.create({
-        data: { clientId, userId, position, totalScore, gainPercentage }
-      })
-    }
-  })
+  await prisma.$transaction([
+    prisma.ranking.deleteMany({ where: { clientId } }),
+    prisma.ranking.createMany({ data: rankingRows }),
+    prisma.rankingHistory.createMany({ data: historyRows })
+  ])
 
   return userScores
 }

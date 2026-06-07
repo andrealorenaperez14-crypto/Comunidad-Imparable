@@ -181,39 +181,40 @@ export function startCronJobs(fastify) {
           }
         })
 
-        for (const metric of metrics) {
-          const score = metric.engagementScore
+        const toAlert = metrics.filter(m => m.engagementScore < 0.6 && m.status !== 'ALERTA')
+        const toExcel = metrics.filter(m => m.engagementScore > 0.9 && m.status !== 'EXCELENTE')
 
-          if (score < 0.6 && metric.status !== 'ALERTA') {
-            await prisma.iAMetric.update({
-              where: { id: metric.id },
-              data: { status: 'ALERTA', alertMessage: 'Rendimiento bajo detectado' }
+        await Promise.all([
+          toAlert.length && prisma.iAMetric.updateMany({
+            where: { id: { in: toAlert.map(m => m.id) } },
+            data: { status: 'ALERTA', alertMessage: 'Rendimiento bajo detectado' }
+          }),
+          toExcel.length && prisma.iAMetric.updateMany({
+            where: { id: { in: toExcel.map(m => m.id) } },
+            data: { status: 'EXCELENTE' }
+          })
+        ])
+
+        for (const metric of toAlert) {
+          if (metric.user.profile) {
+            await sendLowPerformanceEmailStudent({
+              email: metric.user.email,
+              firstName: metric.user.profile.firstName,
+              schoolName: client.name,
+              agentName: metric.agent.name,
+              score: metric.engagementScore
             })
-
-            if (metric.user.profile) {
-              await sendLowPerformanceEmailStudent({
-                email: metric.user.email,
-                firstName: metric.user.profile.firstName,
-                schoolName: client.name,
-                agentName: metric.agent.name,
-                score
-              })
-            }
-          } else if (score > 0.9 && metric.status !== 'EXCELENTE') {
-            await prisma.iAMetric.update({
-              where: { id: metric.id },
-              data: { status: 'EXCELENTE' }
+          }
+        }
+        for (const metric of toExcel) {
+          if (metric.user.profile) {
+            await sendHighPerformanceEmailStudent({
+              email: metric.user.email,
+              firstName: metric.user.profile.firstName,
+              schoolName: client.name,
+              agentName: metric.agent.name,
+              score: metric.engagementScore
             })
-
-            if (metric.user.profile) {
-              await sendHighPerformanceEmailStudent({
-                email: metric.user.email,
-                firstName: metric.user.profile.firstName,
-                schoolName: client.name,
-                agentName: metric.agent.name,
-                score
-              })
-            }
           }
         }
       }

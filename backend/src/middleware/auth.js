@@ -37,8 +37,18 @@ export async function requireActiveSubscription(request, reply) {
   // Admins and clients bypass subscription checks
   if (request.user.role === 'ADMIN' || request.user.role === 'CLIENT') return
 
-  const { prisma } = request.server
+  const { prisma, redis } = request.server
   const now = new Date()
+  const cacheKey = `sub:${request.user.id}`
+
+  // Cache de suscripción activa en Redis (TTL 2 min) para no golpear la DB en cada chat
+  if (redis) {
+    const cached = await redis.get(cacheKey)
+    if (cached === 'ok') return
+    if (cached === 'expired' || cached === 'none') {
+      return reply.status(403).send({ code: 'SUBSCRIPTION_EXPIRED', error: 'Tu acceso ha expirado.' })
+    }
+  }
 
   const sub = await prisma.subscription.findFirst({
     where: { userId: request.user.id, status: { in: ['ACTIVE', 'TRIAL'] } },
@@ -46,6 +56,7 @@ export async function requireActiveSubscription(request, reply) {
   })
 
   if (!sub) {
+    if (redis) await redis.setex(cacheKey, 120, 'none')
     return reply.status(403).send({
       code: 'NO_SUBSCRIPTION',
       error: 'Tu suscripción no está activa. Por favor renovate para continuar.'
@@ -54,8 +65,10 @@ export async function requireActiveSubscription(request, reply) {
 
   if (now > sub.activeUntil) {
     await prisma.subscription.update({ where: { id: sub.id }, data: { status: 'EXPIRED' } })
-
+    if (redis) await redis.setex(cacheKey, 120, 'expired')
     const code = sub.status === 'TRIAL' ? 'TRIAL_EXPIRED' : 'SUBSCRIPTION_EXPIRED'
     return reply.status(403).send({ code, error: 'Tu acceso ha expirado.' })
   }
+
+  if (redis) await redis.setex(cacheKey, 120, 'ok')
 }

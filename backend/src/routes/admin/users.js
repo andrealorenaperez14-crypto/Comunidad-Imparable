@@ -219,7 +219,7 @@ export async function adminUserRoutes(fastify) {
       include: {
         profile: { select: { firstName: true, lastName: true } },
         subscriptions: { where: { status: { in: ['ACTIVE', 'TRIAL'] } }, take: 1 },
-        iaMetrics: { select: { engagementScore: true, completionRate: true, problemResolutionRate: true, habitStreak: true, status: true } }
+        iaMetrics: { select: { engagementScore: true, completionRate: true, problemResolutionRate: true, habitStreak: true, status: true }, take: 1 }
       },
       orderBy: { createdAt: 'desc' },
       take,
