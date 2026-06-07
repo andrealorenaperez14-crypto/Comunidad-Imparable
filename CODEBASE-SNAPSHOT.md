@@ -1,10 +1,10 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-05-24 (sesión 2). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 3). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
 - **Backend:** Fastify 4 + Prisma 5 + PostgreSQL (Supabase) + Redis + JWT
-- **Deploy:** Frontend → Vercel (`https://frontend-one-ivory-47.vercel.app/`), Backend → Render
+- **Deploy:** Frontend → Vercel (`https://frontend-one-ivory-47.vercel.app/`), Backend → Render (`https://nucleo-estrategico-ia.onrender.com`)
 - **Vercel CLI:** instalado globalmente, scope `escuela-de-asesores-mps-s-projects`, proyecto `frontend`
 
 ## Roles del sistema
@@ -21,138 +21,133 @@
 src/store/authStore.ts          — Zustand auth store (persiste token + refreshToken + user)
 src/lib/api.ts                  — Todos los métodos HTTP agrupados por dominio
 src/types/index.ts              — Tipos TypeScript globales
-src/components/layout/Sidebar.tsx — Nav condicional según rol
+src/components/layout/Sidebar.tsx — Nav condicional según rol + submenú módulos del curso
 
-src/app/(auth)/login/page.tsx       — Login (botón "← Volver al INICIO" fijo top-right)
-src/app/(auth)/register/page.tsx    — Registro (sin carácter especial, confirmar pwd con ojo)
-src/app/page.tsx                    — Landing página 1 (TODA editada - ver sección abajo)
-src/app/parte-2/page.tsx            — Landing página 2 (15 módulos Elite - ver sección abajo)
+src/app/(auth)/login/page.tsx       — Login
+src/app/(auth)/register/page.tsx    — Registro
+src/app/page.tsx                    — Landing página 1 ✅ COMPLETADA
+src/app/parte-2/page.tsx            — Landing página 2 ✅ COMPLETADA (ver sección abajo)
 src/app/dashboard/page.tsx          — Dashboard alumno
+src/app/dashboard/curso/page.tsx    — Curso con IDs por módulo para scroll desde sidebar
 src/app/dashboard/agente-consultiva/page.tsx  — IA Consultiva + panel comisiones propias
-src/app/admin/alumnos/page.tsx      — Lista alumnos + modal comisiones + reset pwd + delete
-src/app/admin/ranking/page.tsx      — Ranking con filtros suscripción/status/búsqueda
-src/app/admin/metricas/page.tsx     — Métricas: gráficas + tabla ranking+comisiones por alumno
+src/app/admin/alumnos/page.tsx      — Lista alumnos + fecha ingreso + días restantes + botón copiar datos
+src/app/admin/ranking/page.tsx      — Ranking + botón "Recalcular ahora"
+src/app/admin/metricas/page.tsx     — Métricas
 ```
 
 ### Backend
 ```
 src/app.js                          — Registro de todos los plugins y routes
-src/middleware/auth.js              — requireAuth, requireAdmin, requireAdminOrClient
-src/routes/auth.js                  — login, register, me, logout, refresh, forgot/reset pwd
+src/middleware/auth.js              — requireAuth, requireAdmin, requireAdminOrClient, requireActiveSubscription
+src/routes/auth.js                  — login, register, me, logout (revoca refresh token), refresh (verifica revocación)
 src/routes/agents.js                — chat con IA, métricas post-chat
-src/routes/commissions.js           — Comisiones del alumno (list/create/delete own)
-src/routes/admin/users.js           — students CRUD, delete cascade, ranking
-src/routes/admin/commissions.js     — Gestión admin de comisiones + summary por ciclo
-src/routes/admin/agents.js          — CRUD agentes IA + knowledge upload + publish
-prisma/schema.prisma                — Schema completo (User, Client, SaleCommission, IAMetric, etc.)
+src/routes/courses.js               — GET /api/course — requiere suscripción activa ✅ SEGURO
+src/routes/payments.js              — Mercado Pago: crear preferencia VIP + webhook con firma HMAC ✅
+src/routes/commissions.js           — Comisiones del alumno
+src/routes/admin/users.js           — students CRUD + fecha ingreso + suscripción completa
+src/routes/admin/commissions.js     — Gestión admin de comisiones
+src/routes/admin/agents.js          — CRUD agentes IA
+src/routes/ranking.js               — top10 + student + POST /recalculate (admin)
+src/services/iaRouter.js            — búsqueda knowledge base con ORM (sin SQL injection) ✅
+prisma/schema.prisma                — Schema completo
 ```
 
-## Estado actual de las LANDING PAGES
-
-### Página 1 (`/`) — page.tsx — COMPLETADA ✅
-**Hero:**
-- Título: "¿Vas a seguir siendo un Vendedor Tradicional o das el salto a **Asesor de Elite en el Rubro Salud**?" (dorado el final, tamaño reducido)
-- Subtítulo: "Ayudamos a asesores/profesionales a escalar a **+1.000 USD por mes**, implementando Neuroventas con la IA entregada como tu socio."
-- Card Reto 3 Días: desc actualizada + botón "EMPEZAR RETO GRATIS" + nota "Acceso por ÚNICA vez"
-- Card En 30 Días: desc con "MÉTODO exclusivo para el Rubro SALUD, de Yami Mansilla" + botón "QUIERO SABER MÁS"
-
-**Secciones:**
-- MANIFIESTO ("Por qué esto importa ahora"): frase eliminada
-- IAs: subtítulo en 2 líneas + IA Mentalidad y IA Consultiva (+10.000) actualizados
-- Stats: +10.000 Clientes, 13 Años, +1.000 Asesores, +40.000 USD/año
-- Título stats: "De 0 a +10.000 Clientes. Rompiendo todos los Esquemas."
-- Yami: "A los 16 años, trabajé como asesora," + valores Honestidad/Movimiento/Servicio actualizados
-- Módulos: "Solo se aprende haciendo" + "Todo va a ser NO, buscamos el SÍ"
-- Pricing: "ASESOR ELITE en el RUBRO SALUD", sin "Precio lanzamiento", botón "QUIERO SABER MÁS", "Gana +1.000 USD en 30 días"
-- FAQ: 4 preguntas (eliminadas "¿Qué pasa si no cierro?" y "¿Qué horarios IAs?")
-- Cierre Yami: sin comillas, 2 líneas, "en el Rubro Salud"
-- Botón final: "COMIENZA AHORA"
-- Footer: "© 2026 Escuela de Asesores en el Rubro Salud"
-
-### Página 2 (`/parte-2`) — parte-2/page.tsx — EN PROGRESO 🔄
-**Hecho:**
-- Botones top-right: "← Volver al INICIO" + "Iniciar Sesión"
-- Hero: "+1.000 USD en 30 días / o seguí como asesor tradicional"
-- IA Mentalidad: texto actualizado
-- Subtítulo módulos: "Certificación Internacional en Neuroventas / Aplicadas al consumidor de coberturas médicas"
-- Secciones eliminadas: MANIFIESTO y CIERRE YAMI (ya están en página 1)
-
-**PENDIENTE página 2:** el usuario dijo que tiene más cambios → retomar mañana
-
-## Modelos DB relevantes (Prisma)
-
-### SaleCommission
-```prisma
-model SaleCommission {
-  id          String    @id @default(cuid())
-  userId      String
-  clientId    String
-  amount      Float
-  description String?
-  saleDate    DateTime
-  cycleStart  DateTime   // 21 del mes
-  cycleEnd    DateTime   // 20 del mes siguiente
-  isPaid      Boolean    @default(false)
-  paidDate    DateTime?
-  source      String     @default("MANUAL")
-  externalRef String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-}
+### Docs importantes
+```
+docs/prompt-ia-coach.txt        — LUMA (IA Coach) — ADN escuela + Módulo 1 fichero + Módulo 2 caso Alejandro
+docs/prompt-ia-mentalidad.txt   — ALMA (IA Mentalidad) — ADN + voz Yami + límites sin terapia
+docs/prompt-ia-consultiva.txt   — NOVA (IA Consultiva) — ADN + fichero + cambio etario + solo base conocimiento
+docs/google-apps-script-lista-vip.js — Script para Sheet VIP (ver instrucciones adentro)
+docs/prompt-extraccion-gemini.txt   — Para extraer info de obras sociales con Gemini
+docs/template-obra-social.txt       — Template para cargar knowledge base de la Consultiva
 ```
 
-### Ciclo de comisiones
-- Ciclo: día 21 al día 20 del mes siguiente
-- Si `saleDate.day >= 21` → cycleStart = 21 del mes actual
-- Si `saleDate.day < 21` → cycleStart = 21 del mes anterior
+## Página 2 (`/parte-2`) — COMPLETADA ✅
 
-## Patrones de seguridad CRÍTICOS
-1. **Siempre** filtrar por `clientId: request.user.clientId` (del JWT, nunca del body)
-2. CLIENT role: verificar `user.role === 'STUDENT'` antes de operar
-3. Delete cascade manual: SaleCommission → Certificate → IAMetric → IAInteraction → Subscription → Profile → User
+### Sección Hero
+- Logo Neuroventas con glow dorado 3D
+- Título grande con "Internacional" en dorado + separador animado
+- 4 badges: 30 días · 15 módulos · 2 mentorías · 24/7 IAs
+- Card de impacto: "Escalá a +1.000 USD en 30 días"
+- Texto: "↓ Anotate más abajo antes de que cierren los cupos"
 
-## Score de ranking (IA Coach)
-```
-score = (engagementScore × 0.4 + completionRate × 0.3 + problemResolutionRate × 0.3) × 100
-status = EXCELENTE | BUENO | ALERTA
-```
+### Sección Asesores ELITE (id="asesores-elite")
+- Gancho precio: 150 USD con 80% dto → después 270 USD
+- **Cotización MEP en tiempo real** desde `dolarapi.com/v1/dolares/mep`
+- Formulario: nombre, email, WhatsApp → **Pagar con Mercado Pago**
+- Post-pago: MP redirige a `/parte-2?pago=exitoso` o `?pago=fallido`
+- Estado de éxito/falla mostrado automáticamente
+- Botón "Sumarme al Club de Asesores VIP ORO" → WhatsApp (PENDIENTE: cambiar link)
 
-## API Frontend — métodos por dominio
-```typescript
-authApi          — login, register, me, logout, refresh, forgotPassword, resetPassword
-subscriptionApi  — status, upgrade, cancel, history
-agentApi         — list, chat, metrics, reports
-metricsApi       — student, dashboard, generateReport, uploadParams
-rankingApi       — top10, student
-adminAgentApi    — list, create, update, uploadKnowledge, interactions, publish
-adminCourseApi   — list, create, update, remove
-adminUserApi     — search, resetPassword, resetStudentPassword, students, deleteStudent, ranking
-commissionApi    — list, create, remove   (alumno propio)
-adminCommissionApi — list, create, markPaid, remove, summary(cycleStart?)
-certificateApi   — list, verify, download
-```
+## Integración Mercado Pago (Lista VIP) ✅ DEPLOYADO
 
-## Commits recientes (sesión 2026-05-23/24)
-- `b9859f3` feat: cambios página 2 - hero y subtítulo módulos
-- `0bb2c48` fix: botón recuadro Asesor Elite → QUIERO SABER MÁS
-- `0dde2ec` fix: botón En 30 Días → QUIERO SABER MÁS
-- `8396c2e` feat: ajustes finales página 1
-- `e52a69f` feat: actualización de textos página 1 + página 2 + UX
-- `a3dba59` feat: botón fijo "Volver al INICIO" en login, registro y página 2
-- `5548366` fix: botones CTA dentro de cada recuadro en hero de página 1
-- `48c9b8a` fix: registro sin carácter especial + confirmar pwd con ojo
-- `afd0620` feat: comisiones, ranking, delete cascade + UI fixes
+**Flujo:**
+1. Usuario completa form → backend crea preferencia MP con monto en pesos (MEP del momento)
+2. Redirige al checkout oficial de MP (tarjeta crédito/débito)
+3. MP confirma → webhook → backend verifica firma HMAC → escribe en Google Sheet
+4. Sheet recibe: Fecha y hora | Nombre | Email | WhatsApp | Monto Página | Cotización MEP | Monto Recibido | CONFIRMADO
 
-## OBLIGATORIO antes de deploy backend
-```bash
-cd backend && npm run db:generate   # ✅ HECHO 2026-05-24 — usar npm run db:generate (NO npx, descarga v7)
-```
+**Variables de entorno en Render (todas cargadas excepto MP_WEBHOOK_SECRET):**
+| Variable | Estado |
+|---|---|
+| `MP_ACCESS_TOKEN` | ✅ cargada |
+| `MP_PUBLIC_KEY` | ✅ cargada |
+| `APPS_SCRIPT_VIP_URL` | ✅ cargada |
+| `BACKEND_URL` | ✅ `https://nucleo-estrategico-ia.onrender.com` |
+| `MP_WEBHOOK_SECRET` | ⏳ PENDIENTE — obtener en MP Developers → tu app → Webhooks → Secret key |
 
-## Pendiente de implementar
-- **Página 2:** más cambios pendientes (el usuario los pasa cuando quiera)
+**Google Sheet:** `escueladeasesoresmps@gmail.com`
+**Apps Script URL:** en variable de entorno del backend (no en el frontend)
+**Apps Script local:** `docs/google-apps-script-lista-vip.js` — tiene la función `procesarComprobantes` para automatización Gmail también
+
+## Ranking
+- Cron medianoche: recalcula automáticamente
+- Botón manual "Recalcular ahora" en admin → Ranking
+- Incluye TODOS los alumnos (con o sin métricas — score 0 si no usaron IAs)
+- Umbral: 0% (aparecen todos)
+
+## Panel Admin — Alumnos
+- Muestra: fecha de ingreso + días restantes (rojo si vencido, amarillo si ≤3 días)
+- Badge "Vencido" en rojo para suscripciones expiradas
+- Botón 📋 copiar datos: nombre, email, DNI, fecha ingreso, vencimiento, estado → portapapeles
+
+## IAs — Prompts cargados en el admin ✅
+| Agente | Nombre IA | Estado |
+|---|---|---|
+| COACH | LUMA | ✅ Cargado |
+| MENTALIDAD | ALMA | ✅ Cargado |
+| CONSULTIVA | NOVA | ✅ Cargado — solo base de conocimiento, sin internet |
 
 ## Flujo de carga — IA Consultiva (knowledge base)
-Sin integración a Drive. El flujo es manual asistido por IA:
-1. Subir PDFs/planillas de la obra social a Gemini AI Studio junto con `docs/prompt-extraccion-gemini.txt`
-2. Gemini extrae la info y llena el template (`docs/template-obra-social.txt`)
-3. Pegar el texto extraído como knowledge base desde el panel admin → IA Consultiva
+1. Subir PDFs de la obra social a Gemini AI Studio + `docs/prompt-extraccion-gemini.txt`
+2. Gemini llena el template (`docs/template-obra-social.txt`)
+3. Pegar texto en panel admin → IA Consultiva → knowledge base
+
+## Modelos DB relevantes (Prisma)
+### SaleCommission — ciclo 21→20 de cada mes
+### IAAgent — tipos: COACH | MENTALIDAD | CONSULTIVA
+
+## Patrones de seguridad ✅ AUDITADOS (2026-06-07)
+1. Filtrar siempre por `clientId: request.user.clientId` (nunca del body)
+2. CLIENT role: verificar `user.role === 'STUDENT'` antes de operar
+3. Delete cascade: SaleCommission → Certificate → IAMetric → IAInteraction → Subscription → Profile → User
+4. Logout revoca access token (Redis blacklist) + refresh token (Redis `bl:rt:userId:iat`)
+5. Webhook MP verifica firma HMAC-SHA256 con `timingSafeEqual`
+6. `requireActiveSubscription` en todas las rutas de contenido de alumnos
+7. Búsqueda knowledge base usa ORM Prisma (sin `$queryRawUnsafe`)
+
+## ⏳ PENDIENTE (próxima sesión)
+1. **MP_WEBHOOK_SECRET** en Render → MP Developers → tu app → Webhooks → Secret key
+2. **Link WhatsApp** del Club VIP ORO en `parte-2/page.tsx` (constante cerca del tope del archivo)
+   - Buscar: `href="https://chat.whatsapp.com/KORGh8M1Vbw46UQ1VqW2Gr"`
+   - Reemplazar con el link definitivo de Yami
+3. **Apps Script** — actualizar a la versión nueva en `docs/google-apps-script-lista-vip.js` y deployar nueva versión
+4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
+
+## Commits recientes (sesión 2026-06-07)
+- `33550ab` security: fix 5 vulnerabilidades
+- `bca2bd1` fix: Suspense para useSearchParams en Next.js 15
+- `35ff785` feat: espaciado módulos + submenú sidebar
+- `80f0469` feat: integración Mercado Pago VIP
+- `d50c19e` feat: automatización Gmail → Sheet
+- `1338ffc` feat: rediseño visual hero página 2
