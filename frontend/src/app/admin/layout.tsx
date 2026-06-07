@@ -22,7 +22,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {children}
         </div>
         <p className="text-center text-xs py-6" style={{ color: 'var(--color-text-muted)', opacity: 0.4 }}>
-          Desarrollado por: Nucleo Estratégico IA
+          Desarrollado por: Núcleo Estratégico IA
         </p>
       </main>
     </div>

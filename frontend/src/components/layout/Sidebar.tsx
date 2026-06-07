@@ -176,7 +176,7 @@ export function Sidebar() {
           Cerrar sesión
         </button>
         <p className="text-center text-xs mt-3" style={{ color: 'var(--color-text-muted)', opacity: 0.5 }}>
-          Desarrollado por: Nucleo Estratégico IA
+          Desarrollado por: Núcleo Estratégico IA
         </p>
       </div>
     </div>

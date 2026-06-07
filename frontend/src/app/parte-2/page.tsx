@@ -180,6 +180,7 @@ function Parte2Inner() {
               alt="Neuroventas"
               width={280}
               height={280}
+              priority
               style={{
                 objectFit: 'contain',
                 width: 'clamp(160px, 38vw, 260px)',
