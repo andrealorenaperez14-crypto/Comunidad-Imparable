@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 13). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 14). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -177,6 +177,13 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - **XSS en emails — CORREGIDO ✅**: `email.js` tenía 20+ interpolaciones de datos de usuario en HTML sin escapar. Agregada función `h()` (escapa `&<>"'`) aplicada a `firstName`, `studentName`, `schoolName`, `agentName`, `otp`, `email`, `tempPassword`, `m.agentName`, `m.status` en los 8 templates.
 - **Rate limiting agregado**: chat IA `30/min` por userId (keyGenerator decodifica JWT sin verificar, solo para clave), VIP create `5/10min` por IP.
 
+## Ingresos VIP en panel admin (sesión 14)
+- **`Subscription.amountPaid`**: nueva columna `FLOAT DEFAULT 0` aplicada en Supabase + schema.prisma actualizado
+- **Webhook MP**: guarda `montoReal` en `amountPaid` al crear/renovar suscripción 30_DAYS
+- **`admin/alumnos`**: muestra `💰 $X.XXX` en dorado para alumnos con `planType=30_DAYS` y `amountPaid > 0`
+- **`admin/metricas`**: 2 cards nuevas — "Ingresos VIP" (suma total $) y "Alumnos VIP" (cantidad que pagaron con MP)
+- **Fix dolarapi**: endpoint cambió de `/v1/dolares/mep` → `/v1/dolares/bolsa` (corregido en backend y parte-2)
+
 ## Flujo VIP completo (sesión 13)
 - **`parte-2` formulario**: agrega campos Apellido y DNI (validación 7-8 dígitos)
 - **Webhook MP**: escribe Sheet simplificado (fecha, nombre, DNI, email, WA, importe) + crea alumno nuevo con plan 30_DAYS y envía email con credenciales, o actualiza suscripción si el DNI ya existe
@@ -211,6 +218,8 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 1. **Mercado Pago** — hacer un pago de prueba real para confirmar webhook end-to-end (Sheet + creación de alumno en DB + email con credenciales)
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `eb71255` feat: importe VIP en panel alumnos + métricas de ingresos VIP
+- `46cb63c` fix: dolarapi endpoint mep → bolsa
 - `66458dc` security: escapeHtml en todos los templates de email
 - `c805d91` security: rate limiting chat 30/min + VIP create 5/10min
 - `80c8688` feat: VIP flow completo — DNI+apellido en form, Sheet simplificado, crear/actualizar alumno en DB
