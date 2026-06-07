@@ -1,5 +1,5 @@
 # EscuelaMPS — Snapshot del Codebase
-> Actualizado: 2026-06-07 (sesión 5). Leer este archivo para retomar sin leer archivos individuales.
+> Actualizado: 2026-06-07 (sesión 6). Leer este archivo para retomar sin leer archivos individuales.
 
 ## Stack
 - **Frontend:** Next.js 15 + React 19 + Tailwind 4 + Framer Motion + TanStack Query + Zustand (persist)
@@ -133,6 +133,12 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 - **Footer global:** "Desarrollado por: Núcleo Estratégico IA" — sidebar (bajo logout) + todos los paneles dashboard y admin (via layouts)
 - **Mi Curso:** gap entre módulos `5rem` inline style (antes `space-y-16`)
 
+## Performance — backend queries & caching (sesión 6)
+- **`services/ranking.js`**: `include: { user: true }` → `select` solo campos necesarios (userId ya está en la métrica); loop de N `create` → `createMany` en 1 llamada
+- **`middleware/auth.js` `requireActiveSubscription`**: cache Redis `sub:{userId}` con TTL 2min — evita query a DB en cada mensaje de chat. Valores: `ok` / `expired` / `none`
+- **`cron/jobs.js` 10pm**: N `iAMetric.update` individuales → 2 `updateMany` agrupados por status (`ALERTA` / `EXCELENTE`) + emails en paralelo
+- **`admin/users.js` ranking**: `iaMetrics` include tenía 3 registros por alumno pero solo usaba `[0]` → agregado `take: 1`
+
 ## Performance — backend & dependencias (sesión 5)
 - **N+1 fix en `GET /api/ranking`**: antes hacía 1 `findMany` + 10 `findFirst` = 11 queries. Ahora: 1 `findMany` rankings + 1 `findMany` profiles (userId `in` array) = 2 queries. Archivo: `backend/src/routes/ranking.js`
 - **Dependencias frontend removidas** (sin ningún uso en el código):
@@ -173,6 +179,7 @@ docs/template-obra-social.txt       — Template para cargar knowledge base de l
 4. **Mercado Pago** — confirmar que el webhook funcione en producción haciendo un pago de prueba
 
 ## Commits recientes (sesión 2026-06-07 noche)
+- `2f6d296` perf: 4 optimizaciones backend (ranking, subscription cache, cron, admin)
 - `639a848` perf: eliminar 4 deps sin uso (~39MB) + fix N+1 query ranking
 
 ## Commits sesión 2026-06-07 tarde
