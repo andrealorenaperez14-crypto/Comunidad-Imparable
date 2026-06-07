@@ -88,19 +88,19 @@ export default function ExpiredPage() {
             whileTap={{ scale: 0.98 }}
             className="flex items-center gap-4 p-5 rounded-2xl text-left w-full"
             style={{
-              background: 'rgba(37,211,102,0.08)',
-              border: '1px solid rgba(37,211,102,0.3)',
+              background: 'rgba(196,151,42,0.08)',
+              border: '1px solid var(--color-gold-border)',
               textDecoration: 'none'
             }}
           >
             <div
               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: '#25D366' }}
+              style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}
             >
-              <MessageCircle className="w-6 h-6" style={{ color: '#fff' }} strokeWidth={2} />
+              <MessageCircle className="w-6 h-6" style={{ color: 'var(--color-gold)' }} strokeWidth={2} />
             </div>
             <div>
-              <p className="font-bold text-base" style={{ color: '#25D366' }}>
+              <p className="font-bold text-base" style={{ color: 'var(--color-text)' }}>
                 Comenzar como ASESOR Tradicional
               </p>
               <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
