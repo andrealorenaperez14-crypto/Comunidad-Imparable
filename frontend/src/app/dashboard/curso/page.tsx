@@ -85,7 +85,7 @@ export default function CursoPage() {
           {paidContent.length > 0 && (
             <div className="text-center py-4">
               <Image
-                src="/assets/client1/LOGO_NEUROVENTAS.png"
+                src="/assets/client1/LOGO_NEUROVENTAS.webp"
                 alt="Neuroventas"
                 width={200}
                 height={80}

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: 'Escuela de Asesores',
   description: 'Formamos Líderes, No Vendedores. Transformamos Vidas, No Solo Negocios.',
   manifest: '/manifest.json',
-  icons: { icon: '/assets/client1/LOGO_y_nombre_ESCUELA_DE_ASESORES.png' }
+  icons: { icon: '/assets/client1/LOGO_y_nombre_ESCUELA_DE_ASESORES.webp' }
 }
 
 export const viewport: Viewport = {

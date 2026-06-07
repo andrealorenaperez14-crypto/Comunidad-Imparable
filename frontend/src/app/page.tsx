@@ -95,7 +95,7 @@ export default function HomePage() {
         >
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
             <Image
-              src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.png"
+              src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.webp"
               alt="Escuela de Asesores"
               width={300}
               height={300}
@@ -442,7 +442,7 @@ export default function HomePage() {
               style={{ display: 'flex', justifyContent: 'center' }}
             >
               <Image
-                src="/assets/client1/yami-gemini.png"
+                src="/assets/client1/yami-gemini.webp"
                 alt="Yami Mansilla"
                 width={400}
                 height={500}
@@ -582,7 +582,7 @@ export default function HomePage() {
 
               <div style={{ marginBottom: '2rem' }}>
                 <Image
-                  src="/assets/client1/LOGO_NEUROVENTAS.png"
+                  src="/assets/client1/LOGO_NEUROVENTAS.webp"
                   alt="Certificado Neuroventas"
                   width={100}
                   height={100}

@@ -176,7 +176,7 @@ function Parte2Inner() {
             style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem' }}
           >
             <Image
-              src="/assets/client1/LOGO_NEUROVENTAS.png"
+              src="/assets/client1/LOGO_NEUROVENTAS.webp"
               alt="Neuroventas"
               width={280}
               height={280}
