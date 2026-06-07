@@ -11,7 +11,27 @@ export async function agentRoutes(fastify) {
     return agents
   })
 
-  fastify.post('/:agentId/chat', { preHandler: requireActiveSubscription }, async (request, reply) => {
+  fastify.post('/:agentId/chat', {
+    config: {
+      rateLimit: {
+        max: 30,
+        timeWindow: '1 minute',
+        keyGenerator: (req) => {
+          // Decode JWT payload (sin verificar firma) solo para obtener userId como clave
+          // La verificación real ocurre en requireActiveSubscription
+          try {
+            const token = req.headers.authorization?.split(' ')[1]
+            if (token) {
+              const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+              return `chat:${payload.id}`
+            }
+          } catch {}
+          return `chat:${req.ip}`
+        }
+      }
+    },
+    preHandler: requireActiveSubscription
+  }, async (request, reply) => {
     const { agentId } = request.params
     const { message, history } = request.body || {}
 

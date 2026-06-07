@@ -38,7 +38,9 @@ async function getDefaultClientId(prisma) {
 
 export async function paymentRoutes(fastify) {
 
-  fastify.post('/vip/create', async (req, reply) => {
+  fastify.post('/vip/create', {
+    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } }
+  }, async (req, reply) => {
     const { nombre, apellido, dni, email, whatsapp } = req.body
     if (!nombre || !apellido || !dni || !email || !whatsapp) {
       return reply.code(400).send({ error: 'Faltan datos' })
