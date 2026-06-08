@@ -2,6 +2,11 @@ import { requireAuth, requireActiveSubscription } from '../middleware/auth.js'
 import { routeIaRequest } from '../services/iaRouter.js'
 import { updateMetricsAfterChat } from '../services/metrics.js'
 
+function getEndOfDayUnix() {
+  const now = new Date()
+  return Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() / 1000)
+}
+
 export async function agentRoutes(fastify) {
   fastify.get('/', { preHandler: [requireAuth] }, async (request, reply) => {
     const agents = await fastify.prisma.iAAgent.findMany({
@@ -44,6 +49,16 @@ export async function agentRoutes(fastify) {
 
     try {
       const isPrivileged = request.user.role === 'ADMIN' || request.user.role === 'CLIENT'
+
+      if (!isPrivileged && fastify.redis?.status === 'ready') {
+        const today = new Date().toISOString().slice(0, 10)
+        const limitKey = `ia:daily:${request.user.id}:${today}`
+        const count = await fastify.redis.get(limitKey)
+        if (count && parseInt(count) >= 15) {
+          return reply.status(429).send({ error: 'Alcanzaste el límite de 15 consultas diarias a las IAs. Volvé mañana.' })
+        }
+      }
+
       const agent = await fastify.prisma.iAAgent.findFirst({
         where: { id: agentId, clientId: request.user.clientId, ...(isPrivileged ? {} : { published: true }) }
       })
@@ -71,11 +86,21 @@ export async function agentRoutes(fastify) {
 
       await updateMetricsAfterChat(fastify.prisma, agent, request.user.id, result, duration)
 
+      let dailyRemaining = null
+      if (!isPrivileged && fastify.redis?.status === 'ready') {
+        const today = new Date().toISOString().slice(0, 10)
+        const limitKey = `ia:daily:${request.user.id}:${today}`
+        const newCount = await fastify.redis.incr(limitKey)
+        if (newCount === 1) await fastify.redis.expireat(limitKey, getEndOfDayUnix())
+        dailyRemaining = Math.max(0, 15 - newCount)
+      }
+
       return reply.send({
         response: result.response,
         modelUsed: result.modelUsed,
         interactionId: interaction.id,
-        duration
+        duration,
+        ...(dailyRemaining !== null && { dailyRemaining })
       })
     } catch (err) {
       fastify.log.error({ err: err.message, agentId }, 'Error en chat de agente IA')

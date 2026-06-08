@@ -19,15 +19,13 @@ async function sendEmail({ to, subject, html }) {
     return { id: 'simulated' }
   }
 
-  try {
-    const result = await resend.emails.send({ from: FROM, to, subject, html })
-    if (result.error) {
-      console.error('[EMAIL] Resend rechazó el envío:', JSON.stringify(result.error))
-    }
-    return result
-  } catch (err) {
-    console.error('[EMAIL] Error enviando email a', to, ':', err.message)
+  const result = await resend.emails.send({ from: FROM, to, subject, html })
+  if (result.error) {
+    const msg = typeof result.error === 'object' ? JSON.stringify(result.error) : String(result.error)
+    console.error('[EMAIL] Resend rechazó el envío:', msg)
+    throw new Error(`Email rechazado por Resend: ${msg}`)
   }
+  return result
 }
 
 export async function sendWelcomeEmail({ email, firstName, schoolName, trialDays = 5 }) {

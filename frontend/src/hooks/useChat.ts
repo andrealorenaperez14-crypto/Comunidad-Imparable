@@ -8,6 +8,7 @@ export function useChat(agentId: string) {
   const messagesRef = useRef<ChatMessage[]>(messages)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [dailyRemaining, setDailyRemaining] = useState<number | null>(null)
 
   messagesRef.current = messages
 
@@ -39,10 +40,12 @@ export function useChat(agentId: string) {
       }
 
       setMessages(prev => [...prev, assistantMessage])
+      if (data.dailyRemaining !== undefined) setDailyRemaining(data.dailyRemaining)
       return data
     } catch (err: any) {
       const errorMsg = err.response?.data?.error || 'Error al conectar con el agente. Por favor intenta nuevamente.'
       setError(errorMsg)
+      if (err.response?.status === 429) setDailyRemaining(0)
       setMessages(prev => [...prev, {
         id: `error-${Date.now()}`,
         role: 'assistant',
@@ -56,5 +59,5 @@ export function useChat(agentId: string) {
 
   const clearMessages = () => setMessages([])
 
-  return { messages, isLoading, error, sendMessage, clearMessages }
+  return { messages, isLoading, error, dailyRemaining, sendMessage, clearMessages }
 }

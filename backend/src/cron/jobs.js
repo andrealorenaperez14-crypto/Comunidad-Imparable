@@ -59,12 +59,16 @@ export function startCronJobs(fastify) {
       for (const sub of expiringSubs) {
         const daysRemaining = Math.ceil((sub.activeUntil - now) / (1000 * 60 * 60 * 24))
         if (sub.user.profile) {
-          await sendSuspensionCountdownEmail({
-            email: sub.user.email,
-            firstName: sub.user.profile.firstName,
-            schoolName: 'Escuela Digital Elite',
-            daysRemaining
-          })
+          try {
+            await sendSuspensionCountdownEmail({
+              email: sub.user.email,
+              firstName: sub.user.profile.firstName,
+              schoolName: 'Escuela Digital Elite',
+              daysRemaining
+            })
+          } catch (err) {
+            fastify.log.warn({ err: err.message, userId: sub.userId }, 'Error enviando email countdown')
+          }
         }
       }
 
@@ -84,11 +88,15 @@ export function startCronJobs(fastify) {
         })
 
         if (sub.user.profile) {
-          await sendSuspensionExecutedEmail({
-            email: sub.user.email,
-            firstName: sub.user.profile.firstName,
-            schoolName: 'Escuela Digital Elite'
-          })
+          try {
+            await sendSuspensionExecutedEmail({
+              email: sub.user.email,
+              firstName: sub.user.profile.firstName,
+              schoolName: 'Escuela Digital Elite'
+            })
+          } catch (err) {
+            fastify.log.warn({ err: err.message, userId: sub.userId }, 'Error enviando email suspensión')
+          }
         }
       }
 
@@ -148,17 +156,20 @@ export function startCronJobs(fastify) {
         if (alreadySent) continue
 
         const daysSince = Math.floor((Date.now() - new Date(profile.lastLoginAt).getTime()) / (1000 * 60 * 60 * 24))
-        await sendNoLoginWarningEmail({
-          email: profile.user.email,
-          firstName: profile.firstName,
-          schoolName: 'Escuela Digital Elite',
-          daysSinceLogin: daysSince
-        })
-
-        if (fastify.redis) {
-          await fastify.redis.setex(redisKey, 3 * 24 * 60 * 60, '1') // no repetir por 3 días
+        try {
+          await sendNoLoginWarningEmail({
+            email: profile.user.email,
+            firstName: profile.firstName,
+            schoolName: 'Escuela Digital Elite',
+            daysSinceLogin: daysSince
+          })
+          if (fastify.redis) {
+            await fastify.redis.setex(redisKey, 3 * 24 * 60 * 60, '1')
+          }
+          sent++
+        } catch (err) {
+          fastify.log.warn({ err: err.message, userId: profile.userId }, 'Error enviando email inactividad')
         }
-        sent++
       }
 
       fastify.log.info(`Alertas de inactividad enviadas: ${sent} (${inactiveProfiles.length} inactivos totales)`)
@@ -197,24 +208,32 @@ export function startCronJobs(fastify) {
 
         for (const metric of toAlert) {
           if (metric.user.profile) {
-            await sendLowPerformanceEmailStudent({
-              email: metric.user.email,
-              firstName: metric.user.profile.firstName,
-              schoolName: client.name,
-              agentName: metric.agent.name,
-              score: metric.engagementScore
-            })
+            try {
+              await sendLowPerformanceEmailStudent({
+                email: metric.user.email,
+                firstName: metric.user.profile.firstName,
+                schoolName: client.name,
+                agentName: metric.agent.name,
+                score: metric.engagementScore
+              })
+            } catch (err) {
+              fastify.log.warn({ err: err.message, userId: metric.userId }, 'Error enviando email bajo rendimiento')
+            }
           }
         }
         for (const metric of toExcel) {
           if (metric.user.profile) {
-            await sendHighPerformanceEmailStudent({
-              email: metric.user.email,
-              firstName: metric.user.profile.firstName,
-              schoolName: client.name,
-              agentName: metric.agent.name,
-              score: metric.engagementScore
-            })
+            try {
+              await sendHighPerformanceEmailStudent({
+                email: metric.user.email,
+                firstName: metric.user.profile.firstName,
+                schoolName: client.name,
+                agentName: metric.agent.name,
+                score: metric.engagementScore
+              })
+            } catch (err) {
+              fastify.log.warn({ err: err.message, userId: metric.userId }, 'Error enviando email alto rendimiento')
+            }
           }
         }
       }
@@ -240,17 +259,21 @@ export function startCronJobs(fastify) {
       for (const user of users) {
         if (!user.profile || !user.iaMetrics.length) continue
 
-        await sendWeeklyReportEmail({
-          email: user.email,
-          firstName: user.profile.firstName,
-          schoolName: user.client.name,
-          metrics: user.iaMetrics.map(m => ({
-            agentName: m.agent.name,
-            sessions: m.totalSessions,
-            completion: m.completionRate,
-            status: m.status
-          }))
-        })
+        try {
+          await sendWeeklyReportEmail({
+            email: user.email,
+            firstName: user.profile.firstName,
+            schoolName: user.client.name,
+            metrics: user.iaMetrics.map(m => ({
+              agentName: m.agent.name,
+              sessions: m.totalSessions,
+              completion: m.completionRate,
+              status: m.status
+            }))
+          })
+        } catch (err) {
+          fastify.log.warn({ err: err.message, userId: user.id }, 'Error enviando reporte semanal')
+        }
       }
 
       fastify.log.info('Reportes semanales enviados')

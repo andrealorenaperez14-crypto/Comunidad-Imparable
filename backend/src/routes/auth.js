@@ -266,14 +266,20 @@ export async function authPasswordRoutes(fastify) {
 
     const tempPassword = generateTempPassword()
     const passwordHash = await bcrypt.hash(tempPassword, 12)
-    await fastify.prisma.user.update({ where: { id: user.id }, data: { passwordHash } })
 
-    await sendPasswordResetEmail({
-      email: user.email,
-      firstName: user.profile?.firstName || 'Usuario',
-      schoolName: user.client?.name || 'Escuela de Asesores',
-      otp: tempPassword
-    })
+    try {
+      await sendPasswordResetEmail({
+        email: user.email,
+        firstName: user.profile?.firstName || 'Usuario',
+        schoolName: user.client?.name || 'Escuela de Asesores',
+        otp: tempPassword
+      })
+    } catch (err) {
+      fastify.log.error({ err: err.message, email: user.email }, 'Error enviando email de recuperación')
+      return reply.status(500).send({ error: 'No se pudo enviar el email. Revisá tu dirección o intentá más tarde.' })
+    }
+
+    await fastify.prisma.user.update({ where: { id: user.id }, data: { passwordHash } })
 
     return reply.send(ok)
   })

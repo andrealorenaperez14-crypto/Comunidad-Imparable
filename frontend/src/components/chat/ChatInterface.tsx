@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Send, Loader2, Bot, User, Zap, Copy, Check } from 'lucide-react'
+import { Send, Loader2, Bot, User, Zap, Copy, Check, MessageCircle } from 'lucide-react'
 import { useChat } from '@/hooks/useChat'
 import { cn } from '@/lib/utils'
 import type { IAAgent } from '@/types'
@@ -62,16 +62,18 @@ function CopyButton({ text }: { text: string }) {
 
 export function ChatInterface({ agent, agentId }: Props) {
   const [input, setInput] = useState('')
-  const { messages, isLoading, sendMessage } = useChat(agentId)
+  const { messages, isLoading, dailyRemaining, sendMessage } = useChat(agentId)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, isLoading])
 
+  const isLimitReached = dailyRemaining === 0
+
   const handleSend = async () => {
     const trimmed = input.trim()
-    if (!trimmed || isLoading) return
+    if (!trimmed || isLoading || isLimitReached) return
     setInput('')
     await sendMessage(trimmed)
   }
@@ -96,10 +98,31 @@ export function ChatInterface({ agent, agentId }: Props) {
         >
           <Bot className="w-5 h-5" strokeWidth={1.5} />
         </div>
-        <div>
+        <div className="flex-1 min-w-0">
           <h2 className="font-semibold" style={{ color: 'var(--color-text)' }}>{agent.name}</h2>
           <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{agent.description}</p>
         </div>
+        {dailyRemaining !== null && (
+          <div
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium flex-shrink-0"
+            style={{
+              background: dailyRemaining === 0
+                ? 'rgba(239,68,68,0.1)'
+                : dailyRemaining <= 5
+                  ? 'rgba(196,151,42,0.15)'
+                  : 'rgba(196,151,42,0.08)',
+              border: `1px solid ${dailyRemaining === 0 ? 'rgba(239,68,68,0.3)' : 'var(--color-gold-border)'}`,
+              color: dailyRemaining === 0
+                ? '#ef4444'
+                : dailyRemaining <= 5
+                  ? 'var(--color-gold)'
+                  : 'var(--color-text-muted)'
+            }}
+          >
+            <MessageCircle className="w-3 h-3" strokeWidth={1.5} />
+            <span>{dailyRemaining} / 15 hoy</span>
+          </div>
+        )}
       </div>
 
       {/* Messages */}
@@ -190,32 +213,43 @@ export function ChatInterface({ agent, agentId }: Props) {
 
       {/* Input */}
       <div className="px-4 pb-4 pt-2" style={{ borderTop: '1px solid var(--color-separator)' }}>
-        <div
-          className="flex items-end gap-3 rounded-2xl px-4 py-3 transition-colors"
-          style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}
-        >
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={`Escribe tu consulta para ${agent.name}...`}
-            rows={1}
-            className="flex-1 bg-transparent resize-none focus:outline-none text-sm leading-relaxed max-h-32"
-            style={{ minHeight: '24px', color: 'var(--color-text)' }}
-          />
-          <button
-            onClick={handleSend}
-            disabled={!input.trim() || isLoading}
-            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ background: 'var(--color-gold)' }}
-            aria-label="Enviar mensaje"
+        {isLimitReached ? (
+          <div
+            className="rounded-2xl px-4 py-3 text-sm text-center"
+            style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444' }}
           >
-            {isLoading
-              ? <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#0C0C0C' }} />
-              : <Send className="w-4 h-4" style={{ color: '#0C0C0C' }} strokeWidth={1.5} />}
-          </button>
-        </div>
-        <p className="text-xs mt-2 text-center" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>Enter para enviar · Shift+Enter para nueva línea</p>
+            Alcanzaste el límite de 15 consultas diarias. Volvé mañana.
+          </div>
+        ) : (
+          <div
+            className="flex items-end gap-3 rounded-2xl px-4 py-3 transition-colors"
+            style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}
+          >
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={`Escribe tu consulta para ${agent.name}...`}
+              rows={1}
+              className="flex-1 bg-transparent resize-none focus:outline-none text-sm leading-relaxed max-h-32"
+              style={{ minHeight: '24px', color: 'var(--color-text)' }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={!input.trim() || isLoading}
+              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{ background: 'var(--color-gold)' }}
+              aria-label="Enviar mensaje"
+            >
+              {isLoading
+                ? <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#0C0C0C' }} />
+                : <Send className="w-4 h-4" style={{ color: '#0C0C0C' }} strokeWidth={1.5} />}
+            </button>
+          </div>
+        )}
+        {!isLimitReached && (
+          <p className="text-xs mt-2 text-center" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>Enter para enviar · Shift+Enter para nueva línea</p>
+        )}
       </div>
     </div>
   )
