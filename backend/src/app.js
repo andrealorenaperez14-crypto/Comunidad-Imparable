@@ -54,7 +54,10 @@ export async function buildApp(opts = {}) {
 
   await app.register(rateLimit, {
     max: 100,
-    timeWindow: '1 minute'
+    timeWindow: '1 minute',
+    errorResponseBuilder: (req, context) => ({
+      error: `Demasiados intentos. Esperá ${Math.ceil(context.ttl / 1000)} segundos e intentá de nuevo.`
+    })
   })
 
   await app.register(sensible)

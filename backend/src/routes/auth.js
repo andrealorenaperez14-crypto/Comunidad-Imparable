@@ -27,7 +27,7 @@ const registerSchema = z.object({
 
 export async function authRoutes(fastify) {
   fastify.post('/login', {
-    config: { rateLimit: { max: 10, timeWindow: '1 minute' } }
+    config: { rateLimit: { max: 20, timeWindow: '1 minute' } }
   }, async (request, reply) => {
     const result = loginSchema.safeParse(request.body)
     if (!result.success) {
@@ -244,8 +244,8 @@ export async function authPasswordRoutes(fastify) {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ'
     const nums = '23456789'
     const part1 = Array.from({ length: 3 }, () => chars[randomInt(0, chars.length)]).join('')
-    const part2 = Array.from({ length: 3 }, () => nums[randomInt(0, nums.length)]).join('')
-    return `${part1}!${part2}`
+    const part2 = Array.from({ length: 4 }, () => nums[randomInt(0, nums.length)]).join('')
+    return `${part1}${part2}`
   }
 
   fastify.post('/forgot-password', {

@@ -217,14 +217,15 @@ export async function sendPasswordResetEmail({ email, firstName, schoolName, otp
     subject: `Tu contraseña provisoria — Escuela de Asesores MPS`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">Hola ${h(firstName)},</h2>
-      <p style="margin:0 0 16px;line-height:1.6">Recibimos una solicitud para restablecer tu contraseña. Acá está tu clave provisoria:</p>
-      <div style="background:#141414;border:1px solid rgba(196,151,42,0.3);border-radius:8px;padding:24px;text-align:center;margin:0 0 20px">
-        <p style="margin:0 0 8px;font-size:11px;color:#8A8A7A;letter-spacing:2px;text-transform:uppercase">Contraseña provisoria</p>
-        <span style="font-size:28px;font-weight:700;letter-spacing:0.25em;color:#C4972A;font-family:monospace">${h(otp)}</span>
+      <p style="margin:0 0 16px;line-height:1.6">Recibimos una solicitud para restablecer tu contraseña. Tu clave provisoria es:</p>
+      <div style="background:#141414;border:2px solid #C4972A;border-radius:8px;padding:28px;text-align:center;margin:0 0 20px">
+        <p style="margin:0 0 8px;font-size:11px;color:#8A8A7A;letter-spacing:2px;text-transform:uppercase">Copiá esta contraseña exactamente</p>
+        <span style="font-size:36px;font-weight:700;letter-spacing:0.3em;color:#C4972A;font-family:monospace">${h(otp)}</span>
       </div>
-      <p style="margin:0 0 12px;line-height:1.6">Usala para ingresar y cambiala desde tu perfil apenas puedas.</p>
-      <p style="margin:0;font-size:12px;color:#8A8A7A;line-height:1.6">Si no solicitaste este cambio, ignorá este email. Tu contraseña anterior no fue modificada.</p>
-      ${btn('Ir al login', `${APP_URL}/login`)}
+      <p style="margin:0 0 8px;line-height:1.6"><strong>Paso 1:</strong> Hacé clic en el botón de abajo para ir al login.</p>
+      <p style="margin:0 0 16px;line-height:1.6"><strong>Paso 2:</strong> Ingresá tu email y la contraseña de arriba <strong style="color:#C4972A">tal cual aparece</strong>.</p>
+      <p style="margin:0 0 16px;font-size:12px;color:#8A8A7A;line-height:1.6">Si no solicitaste este cambio, ignorá este email.</p>
+      ${btn('Ir al login ahora', `${APP_URL}/login`)}
     `)
   })
 }
