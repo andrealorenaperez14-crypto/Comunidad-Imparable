@@ -1,7 +1,16 @@
 import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const FROM = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
+
+// Gmail SMTP como alternativa a Resend (no requiere dominio propio)
+const gmailTransport = (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
+  ? nodemailer.createTransport({
+      service: 'gmail',
+      auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASSWORD }
+    })
+  : null
 
 function h(str) {
   return String(str ?? '')
@@ -13,21 +22,32 @@ function h(str) {
 }
 
 async function sendEmail({ to, subject, html, required = false }) {
-  if (!resend) {
-    if (required || process.env.NODE_ENV === 'production') {
-      throw new Error('RESEND_API_KEY no configurado — el email no puede enviarse.')
+  // Prioridad: Resend → Gmail SMTP → simulado/error
+  if (resend) {
+    const result = await resend.emails.send({ from: FROM, to, subject, html })
+    if (result.error) {
+      const msg = typeof result.error === 'object' ? JSON.stringify(result.error) : String(result.error)
+      console.error('[EMAIL] Resend rechazó el envío:', msg)
+      throw new Error(`Email rechazado por Resend: ${msg}`)
     }
-    console.log(`[EMAIL SIMULADO] Para: ${to} | Asunto: ${subject}`)
-    return { id: 'simulated' }
+    return result
   }
 
-  const result = await resend.emails.send({ from: FROM, to, subject, html })
-  if (result.error) {
-    const msg = typeof result.error === 'object' ? JSON.stringify(result.error) : String(result.error)
-    console.error('[EMAIL] Resend rechazó el envío:', msg)
-    throw new Error(`Email rechazado por Resend: ${msg}`)
+  if (gmailTransport) {
+    await gmailTransport.sendMail({
+      from: `"${process.env.GMAIL_FROM_NAME || 'Escuela de Asesores'}" <${process.env.GMAIL_USER}>`,
+      to,
+      subject,
+      html
+    })
+    return { id: 'gmail' }
   }
-  return result
+
+  if (required || process.env.NODE_ENV === 'production') {
+    throw new Error('Sin proveedor de email configurado (RESEND_API_KEY o GMAIL_USER+GMAIL_APP_PASSWORD).')
+  }
+  console.log(`[EMAIL SIMULADO] Para: ${to} | Asunto: ${subject}`)
+  return { id: 'simulated' }
 }
 
 export async function sendWelcomeEmail({ email, firstName, schoolName, trialDays = 5 }) {
