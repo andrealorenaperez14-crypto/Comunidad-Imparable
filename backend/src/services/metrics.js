@@ -24,7 +24,7 @@ export async function updateMetricsAfterChat(prisma, agent, userId, result, dura
     const habitStreak = calcularRacha(existing.habitStreak, existing.updatedAt)
 
     const status = calcularEstado(agent.type, {
-      engagementScore, completionRate, problemResolutionRate: existing.problemResolutionRate
+      engagementScore, completionRate, problemResolutionRate: existing.problemResolutionRate, totalSessions
     })
 
     await prisma.iAMetric.update({
@@ -64,15 +64,18 @@ function calcularRacha(currentStreak, lastUpdated) {
 }
 
 function calcularEstado(agentType, metrics) {
-  const { engagementScore, completionRate, problemResolutionRate } = metrics
+  const { engagementScore, completionRate, problemResolutionRate, totalSessions = 0 } = metrics
+
+  // Con menos de 5 sesiones no hay suficiente data para alertar
+  if (totalSessions < 5) return 'BUENO'
 
   if (agentType === 'CONSULTIVA') {
     if (problemResolutionRate > 0.8 || engagementScore > 0.8) return 'EXCELENTE'
-    if (engagementScore < 0.3) return 'ALERTA'
+    if (engagementScore < 0.1) return 'ALERTA'
     return 'BUENO'
   } else {
     if (engagementScore > 0.8 && completionRate > 0.9) return 'EXCELENTE'
-    if (engagementScore < 0.3 || completionRate < 0.3) return 'ALERTA'
+    if (engagementScore < 0.1 && completionRate < 0.1) return 'ALERTA'
     return 'BUENO'
   }
 }
@@ -100,7 +103,7 @@ export async function recalcularMetricasEstudiante(prisma, userId) {
   for (const [agentId, data] of Object.entries(metricsByAgent)) {
     const engagementScore = Math.min(1, data.sessions / 30)
     const completionRate = Math.min(1, data.sessions / 20)
-    const status = calcularEstado(data.agent.type, { engagementScore, completionRate, problemResolutionRate: 0.7 })
+    const status = calcularEstado(data.agent.type, { engagementScore, completionRate, problemResolutionRate: 0.7, totalSessions: data.sessions })
 
     await prisma.iAMetric.upsert({
       where: { agentId_userId: { agentId, userId } },

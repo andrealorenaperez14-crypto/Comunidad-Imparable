@@ -279,4 +279,17 @@ export async function adminUserRoutes(fastify) {
 
     return reply.send({ students: ranked, total, page: parseInt(page), pages: Math.ceil(total / take) })
   })
+
+  // Limpiar métricas IA de usuarios no-STUDENT (admin/client que usaron IAs para testear)
+  fastify.delete('/cleanup-non-student-metrics', { preHandler: requireAdmin }, async (request, reply) => {
+    const nonStudents = await fastify.prisma.user.findMany({
+      where: { clientId: request.user.clientId, role: { not: 'STUDENT' } },
+      select: { id: true }
+    })
+    const ids = nonStudents.map(u => u.id)
+    if (!ids.length) return reply.send({ deleted: 0 })
+
+    const result = await fastify.prisma.iAMetric.deleteMany({ where: { userId: { in: ids } } })
+    return reply.send({ deleted: result.count })
+  })
 }
