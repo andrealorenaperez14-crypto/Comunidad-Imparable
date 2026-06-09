@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Trophy, TrendingUp, Flame, Activity, Search, Loader2, RefreshCw } from 'lucide-react'
+import { Trophy, TrendingUp, Flame, Search, Loader2, RefreshCw, MessageSquare } from 'lucide-react'
 import { adminUserApi, rankingApi } from '@/lib/api'
 import type { AdminRankingEntry } from '@/types'
 
@@ -167,22 +167,52 @@ export default function AdminRankingPage() {
                   </p>
                 </div>
 
-                {/* Score + streak */}
-                <div className="flex items-center gap-4 flex-shrink-0">
-                  <div className="text-right">
-                    <div className="flex items-center gap-1.5">
-                      <Activity className="w-4 h-4" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
-                      <span className="font-bold text-lg" style={{ color: 'var(--color-gold)' }}>
-                        {s.score.toFixed(1)}
+                {/* Interacciones por IA + score */}
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  {/* Coach 20% */}
+                  <div className="text-center hidden sm:block">
+                    <div className="flex items-center gap-1 justify-center">
+                      <MessageSquare className="w-3 h-3" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
+                      <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>
+                        {s.interacciones?.COACH ?? 0}
                       </span>
                     </div>
+                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Coach 20%</p>
+                  </div>
+                  {/* Mentalidad 10% */}
+                  <div className="text-center hidden sm:block">
+                    <div className="flex items-center gap-1 justify-center">
+                      <MessageSquare className="w-3 h-3" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
+                      <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>
+                        {s.interacciones?.MENTALIDAD ?? 0}
+                      </span>
+                    </div>
+                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Mental 10%</p>
+                  </div>
+                  {/* Consultiva 70% */}
+                  <div className="text-center hidden sm:block">
+                    <div className="flex items-center gap-1 justify-center">
+                      <MessageSquare className="w-3 h-3" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+                      <span className="font-semibold text-sm" style={{ color: 'var(--color-gold)' }}>
+                        {s.interacciones?.CONSULTIVA ?? 0}
+                      </span>
+                    </div>
+                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consultiva 70%</p>
+                  </div>
+                  {/* Separador */}
+                  <div className="w-px h-8 hidden sm:block" style={{ background: 'var(--color-separator)' }} />
+                  {/* Score ponderado */}
+                  <div className="text-right">
+                    <span className="font-bold text-lg" style={{ color: 'var(--color-gold)' }}>
+                      {s.score.toFixed(1)}
+                    </span>
                     <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>puntos</p>
                   </div>
                   {s.habitStreak > 0 && (
                     <div className="text-right">
                       <div className="flex items-center gap-1">
                         <Flame className="w-4 h-4 text-orange-400" strokeWidth={1.5} />
-                        <span className="font-semibold" style={{ color: 'var(--color-text)' }}>{s.habitStreak}</span>
+                        <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{s.habitStreak}</span>
                       </div>
                       <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>racha</p>
                     </div>

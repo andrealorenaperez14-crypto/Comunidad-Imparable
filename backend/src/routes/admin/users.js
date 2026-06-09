@@ -204,8 +204,9 @@ export async function adminUserRoutes(fastify) {
     return reply.send({ ok: true, email: normalizedEmail })
   })
 
-  // Admin ranking — all students sorted by score, filter active/all
+  // Admin ranking — all students sorted by weighted IA interactions
   fastify.get('/ranking', { preHandler: requireAdminOrClient }, async (request, reply) => {
+    const WEIGHTS = { COACH: 0.20, MENTALIDAD: 0.10, CONSULTIVA: 0.70 }
     const { filter = 'all', page = '1' } = request.query
     const take = 50
     const skip = (parseInt(page) - 1) * take
@@ -214,28 +215,41 @@ export async function adminUserRoutes(fastify) {
       ? { subscriptions: { some: { status: { in: ['ACTIVE', 'TRIAL'] } } } }
       : {}
 
-    const students = await fastify.prisma.user.findMany({
-      where: { clientId: request.user.clientId, role: 'STUDENT', ...activeSubFilter },
-      include: {
-        profile: { select: { firstName: true, lastName: true } },
-        subscriptions: { where: { status: { in: ['ACTIVE', 'TRIAL'] } }, take: 1 },
-        iaMetrics: { select: { engagementScore: true, completionRate: true, problemResolutionRate: true, habitStreak: true, status: true }, take: 1 }
-      },
-      orderBy: { createdAt: 'desc' },
-      take,
-      skip
+    const [students, total] = await Promise.all([
+      fastify.prisma.user.findMany({
+        where: { clientId: request.user.clientId, role: 'STUDENT', ...activeSubFilter },
+        include: {
+          profile: { select: { firstName: true, lastName: true } },
+          subscriptions: { where: { status: { in: ['ACTIVE', 'TRIAL'] } }, take: 1 },
+          iaMetrics: { select: { habitStreak: true, status: true }, take: 1 }
+        },
+        orderBy: { createdAt: 'desc' },
+        take,
+        skip
+      }),
+      fastify.prisma.user.count({
+        where: { clientId: request.user.clientId, role: 'STUDENT', ...activeSubFilter }
+      })
+    ])
+
+    // Conteo acumulado de interacciones por alumno y tipo de IA
+    const studentIds = students.map(s => s.id)
+    const interactions = await fastify.prisma.iAInteraction.findMany({
+      where: { userId: { in: studentIds }, agent: { clientId: request.user.clientId } },
+      select: { userId: true, agent: { select: { type: true } } }
     })
 
-    const total = await fastify.prisma.user.count({
-      where: { clientId: request.user.clientId, role: 'STUDENT', ...activeSubFilter }
-    })
+    const intersByUser = {}
+    for (const i of interactions) {
+      const type = i.agent.type.toUpperCase()
+      if (!intersByUser[i.userId]) intersByUser[i.userId] = { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+      if (type in WEIGHTS) intersByUser[i.userId][type]++
+    }
 
     const ranked = students
       .map(s => {
-        const metric = s.iaMetrics[0]
-        const score = metric
-          ? (metric.engagementScore * 0.4 + metric.completionRate * 0.3 + metric.problemResolutionRate * 0.3) * 100
-          : 0
+        const inters = intersByUser[s.id] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+        const score = inters.CONSULTIVA * WEIGHTS.CONSULTIVA + inters.COACH * WEIGHTS.COACH + inters.MENTALIDAD * WEIGHTS.MENTALIDAD
         return {
           id: s.id,
           dni: s.dni,
@@ -243,9 +257,10 @@ export async function adminUserRoutes(fastify) {
           firstName: s.profile?.firstName || '',
           lastName: s.profile?.lastName || '',
           score: Math.round(score * 10) / 10,
-          status: metric?.status || 'BUENO',
-          habitStreak: metric?.habitStreak || 0,
-          isActive: s.subscriptions.length > 0
+          status: s.iaMetrics[0]?.status || 'BUENO',
+          habitStreak: s.iaMetrics[0]?.habitStreak || 0,
+          isActive: s.subscriptions.length > 0,
+          interacciones: inters
         }
       })
       .sort((a, b) => b.score - a.score)

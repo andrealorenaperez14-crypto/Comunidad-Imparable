@@ -138,6 +138,7 @@ export interface AdminRankingEntry {
   status: 'EXCELENTE' | 'BUENO' | 'ALERTA'
   habitStreak: number
   isActive: boolean
+  interacciones: { COACH: number; MENTALIDAD: number; CONSULTIVA: number }
 }
 
 export interface CommissionStudentSummary {

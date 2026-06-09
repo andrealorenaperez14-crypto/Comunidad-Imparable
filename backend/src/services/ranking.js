@@ -1,37 +1,32 @@
-export async function recalcularRanking(prisma, clientId) {
-  const topN = 10
+const WEIGHTS = { COACH: 0.20, MENTALIDAD: 0.10, CONSULTIVA: 0.70 }
+const TOP_N = 10
 
-  // Todos los alumnos del cliente
+export async function recalcularRanking(prisma, clientId) {
   const allStudents = await prisma.user.findMany({
     where: { clientId, role: 'STUDENT' },
     select: { id: true }
   })
 
-  // Métricas existentes (userId ya está en el modelo, no necesitamos join)
-  const metrics = await prisma.iAMetric.findMany({
-    where: { user: { clientId } },
-    select: { userId: true, engagementScore: true, completionRate: true, problemResolutionRate: true }
+  const interactions = await prisma.iAInteraction.findMany({
+    where: { agent: { clientId } },
+    select: { userId: true, agent: { select: { type: true } } }
   })
 
-  const scoreByUser = {}
-  for (const m of metrics) {
-    if (!scoreByUser[m.userId]) {
-      scoreByUser[m.userId] = { totalScore: 0, count: 0 }
-    }
-    const score = m.engagementScore * m.completionRate * Math.max(m.problemResolutionRate, 0.5)
-    scoreByUser[m.userId].totalScore += score
-    scoreByUser[m.userId].count++
+  const statsByUser = {}
+  for (const i of interactions) {
+    const type = i.agent.type.toUpperCase()
+    if (!statsByUser[i.userId]) statsByUser[i.userId] = { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+    if (type in WEIGHTS) statsByUser[i.userId][type]++
   }
 
-  // Incluir todos los alumnos — score 0 si no tienen métricas aún
   const userScores = allStudents
     .map(({ id: userId }) => {
-      const data = scoreByUser[userId]
-      const totalScore = data ? data.totalScore / data.count : 0
-      return { userId, totalScore, gainPercentage: totalScore * 100 }
+      const s = statsByUser[userId] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+      const totalScore = s.CONSULTIVA * WEIGHTS.CONSULTIVA + s.COACH * WEIGHTS.COACH + s.MENTALIDAD * WEIGHTS.MENTALIDAD
+      return { userId, totalScore, gainPercentage: totalScore }
     })
     .sort((a, b) => b.totalScore - a.totalScore)
-    .slice(0, topN)
+    .slice(0, TOP_N)
 
   const currentRankings = await prisma.ranking.findMany({ where: { clientId } })
   const currentByUser = Object.fromEntries(currentRankings.map(r => [r.userId, r]))
