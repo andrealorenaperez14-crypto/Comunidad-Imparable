@@ -62,9 +62,15 @@ export async function authRoutes(fastify) {
       { expiresIn: '7d', secret: process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET }
     )
 
+    let mustChangePassword = false
+    if (fastify.redis?.status === 'ready') {
+      mustChangePassword = !!(await fastify.redis.get(`force_pwd_change:${user.id}`))
+    }
+
     return reply.send({
       token,
       refreshToken,
+      mustChangePassword,
       user: {
         id: user.id,
         email: user.email,
@@ -281,6 +287,10 @@ export async function authPasswordRoutes(fastify) {
 
     await fastify.prisma.user.update({ where: { id: user.id }, data: { passwordHash } })
 
+    if (fastify.redis?.status === 'ready') {
+      await fastify.redis.setex(`force_pwd_change:${user.id}`, 86400, '1')
+    }
+
     return reply.send(ok)
   })
 
@@ -310,6 +320,10 @@ export async function authPasswordRoutes(fastify) {
 
     const passwordHash = await bcrypt.hash(newPassword, 12)
     await fastify.prisma.user.update({ where: { id: user.id }, data: { passwordHash } })
+
+    if (fastify.redis?.status === 'ready') {
+      await fastify.redis.del(`force_pwd_change:${request.user.id}`)
+    }
 
     return reply.send({ message: 'Contraseña actualizada correctamente.' })
   })

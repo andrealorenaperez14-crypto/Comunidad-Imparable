@@ -50,7 +50,9 @@ export const authApi = {
   forgotPassword: (email: string) =>
     api.post('/api/auth/forgot-password', { email }),
   resetPassword: (email: string, otp: string, newPassword: string) =>
-    api.post('/api/auth/reset-password', { email, otp, newPassword })
+    api.post('/api/auth/reset-password', { email, otp, newPassword }),
+  changePassword: (currentPassword: string, newPassword: string) =>
+    api.post('/api/auth/change-password', { currentPassword, newPassword })
 }
 
 // Subscription

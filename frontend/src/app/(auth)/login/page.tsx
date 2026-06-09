@@ -30,6 +30,10 @@ export default function LoginPage() {
     try {
       setError('')
       const result = await login(data.email, data.password)
+      if (result.mustChangePassword) {
+        router.push('/cambiar-contrasena')
+        return
+      }
       const role = result.user.role
       router.push(role === 'ADMIN' || role === 'CLIENT' ? '/admin' : '/dashboard')
     } catch (err: any) {
