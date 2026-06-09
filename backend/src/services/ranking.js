@@ -4,7 +4,7 @@ const TOP_N = 10
 export async function getRankingVitalicio(prisma, clientId) {
   // Solo usuarios con suscripción VITALICIO activa
   const vitalicioSubs = await prisma.subscription.findMany({
-    where: { status: 'ACTIVE', planType: 'VITALICIO', user: { clientId } },
+    where: { status: 'ACTIVE', planType: 'VITALICIO', user: { clientId, role: 'STUDENT' } },
     include: { user: { include: { profile: true } } },
     orderBy: { createdAt: 'asc' }
   })

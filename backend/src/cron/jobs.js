@@ -144,7 +144,7 @@ export function startCronJobs(fastify) {
       const inactiveProfiles = await prisma.profile.findMany({
         where: {
           lastLoginAt: { lte: threeDaysAgo },
-          user: { subscriptions: { some: { status: { in: ['ACTIVE', 'TRIAL'] } } } }
+          user: { role: 'STUDENT', subscriptions: { some: { status: { in: ['ACTIVE', 'TRIAL'] } } } }
         },
         include: { user: true }
       })
@@ -185,7 +185,7 @@ export function startCronJobs(fastify) {
 
       for (const client of clients) {
         const metrics = await prisma.iAMetric.findMany({
-          where: { user: { clientId: client.id } },
+          where: { user: { clientId: client.id, role: 'STUDENT' } },
           include: {
             user: { include: { profile: true } },
             agent: { select: { name: true } }
