@@ -112,12 +112,12 @@ export function Sidebar() {
                             href={`/dashboard/curso#modulo-${mod.id}`}
                             onClick={() => setMobileOpen(false)}
                             className="flex items-center gap-2 px-2 py-1 rounded text-xs transition-all hover:opacity-90"
-                            style={{ color: 'var(--color-text-muted)' }}
+                            style={{ color: 'var(--color-text-muted)', minWidth: 0 }}
                           >
                             <span style={{ color: 'var(--color-gold)', fontWeight: 700, flexShrink: 0, fontSize: '0.7rem' }}>
                               {String(idx + 1).padStart(2, '0')}
                             </span>
-                            <span className="truncate">{mod.title}</span>
+                            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0, flex: 1 }}>{mod.title}</span>
                           </Link>
                         ))}
                       </div>
