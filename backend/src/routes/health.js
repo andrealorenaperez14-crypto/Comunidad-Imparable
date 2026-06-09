@@ -2,6 +2,10 @@ import { GoogleGenAI } from '@google/genai'
 import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { requireAdmin } from '../middleware/auth.js'
+import {
+  sendLowPerformanceEmailStudent, sendHighPerformanceEmailStudent,
+  sendNoLoginWarningEmail, sendWelcomeEmail, sendWeeklyReportEmail
+} from '../services/email.js'
 
 export async function healthRoutes(fastify) {
   fastify.get('/health', async (request, reply) => {
@@ -108,5 +112,41 @@ export async function healthRoutes(fastify) {
     }
 
     return reply.send(results)
+  })
+
+  fastify.post('/health/test-email', { preHandler: requireAdmin }, async (request, reply) => {
+    const { type = 'low_performance', to } = request.body || {}
+    const email = to || request.user.email
+    const firstName = 'Andrea'
+    const schoolName = 'Escuela de Asesores MPS'
+
+    try {
+      switch (type) {
+        case 'low_performance':
+          await sendLowPerformanceEmailStudent({ email, firstName, schoolName, agentName: 'IA Consultiva', score: 0.42 })
+          break
+        case 'high_performance':
+          await sendHighPerformanceEmailStudent({ email, firstName, schoolName, agentName: 'IA Coach', score: 0.94 })
+          break
+        case 'no_login':
+          await sendNoLoginWarningEmail({ email, firstName, schoolName, daysSinceLogin: 4 })
+          break
+        case 'welcome':
+          await sendWelcomeEmail({ email, firstName, schoolName, trialDays: 5 })
+          break
+        case 'weekly':
+          await sendWeeklyReportEmail({ email, firstName, schoolName, metrics: [
+            { agentName: 'IA Coach', sessions: 8, completion: 0.85, status: 'EXCELENTE' },
+            { agentName: 'IA Mentalidad', sessions: 3, completion: 0.60, status: 'BUENO' },
+            { agentName: 'IA Consultiva', sessions: 12, completion: 0.91, status: 'EXCELENTE' }
+          ]})
+          break
+        default:
+          return reply.status(400).send({ error: 'Tipo inválido. Opciones: low_performance, high_performance, no_login, welcome, weekly' })
+      }
+      return reply.send({ ok: true, tipo: type, destinatario: email })
+    } catch (err) {
+      return reply.status(500).send({ error: err.message })
+    }
   })
 }
