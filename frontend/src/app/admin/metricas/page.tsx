@@ -4,11 +4,64 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import {
   BarChart2, Loader2, Upload, CheckCircle, AlertTriangle,
-  Trophy, DollarSign, Activity, Flame, Search
+  Trophy, DollarSign, Activity, Flame, Search, PlayCircle, X
 } from 'lucide-react'
-import { metricsApi, adminUserApi, adminCommissionApi } from '@/lib/api'
+import { metricsApi, adminUserApi, adminCommissionApi, api } from '@/lib/api'
 import { useAuth } from '@/hooks/useAuth'
 import type { AdminRankingEntry, CommissionStudentSummary } from '@/types'
+
+interface VideoProgressEntry { id: string; title: string; type: string; order: number; watchedPercent: number }
+
+function VideoProgressModal({ studentId, studentName, onClose }: { studentId: string; studentName: string; onClose: () => void }) {
+  const { data: progress = [], isLoading } = useQuery<VideoProgressEntry[]>({
+    queryKey: ['video-progress-admin', studentId],
+    queryFn: () => api.get(`/api/course/progress/${studentId}`).then(r => r.data)
+  })
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.7)' }}>
+      <div className="w-full max-w-lg rounded-2xl overflow-hidden" style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-gold-border)' }}>
+        <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid var(--color-separator)' }}>
+          <div>
+            <h3 className="font-semibold" style={{ color: 'var(--color-text)' }}>Progreso de videos</h3>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>{studentName}</p>
+          </div>
+          <button onClick={onClose} style={{ color: 'var(--color-text-muted)' }}>
+            <X className="w-5 h-5" strokeWidth={1.5} />
+          </button>
+        </div>
+        <div className="p-5 space-y-3 max-h-96 overflow-y-auto">
+          {isLoading ? (
+            <div className="flex justify-center py-8"><Loader2 className="w-6 h-6 animate-spin" style={{ color: 'var(--color-gold)' }} /></div>
+          ) : progress.length === 0 ? (
+            <p className="text-center py-8 text-sm" style={{ color: 'var(--color-text-muted)' }}>Sin módulos de curso cargados.</p>
+          ) : (
+            progress.map(m => {
+              const p = Math.round(m.watchedPercent)
+              const color = p >= 90 ? '#4ADE80' : p >= 50 ? 'var(--color-gold)' : 'var(--color-text-muted)'
+              return (
+                <div key={m.id}>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className="text-xs font-medium truncate flex-1 mr-3" style={{ color: 'var(--color-text)' }}>
+                      {m.order + 1}. {m.title}
+                    </span>
+                    <span className="text-xs font-bold flex-shrink-0" style={{ color }}>
+                      {p >= 90 && <CheckCircle className="w-3 h-3 inline mr-1" strokeWidth={2} />}
+                      {p}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                    <div className="h-full rounded-full transition-all" style={{ width: `${p}%`, background: color }} />
+                  </div>
+                </div>
+              )
+            })
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const COLORS = ['#C4972A', '#8B6914', '#D4A843', '#6B4F10']
 
@@ -29,6 +82,7 @@ export default function MetricasAdminPage() {
   const [uploadDone, setUploadDone] = useState(false)
   const [uploadName, setUploadName] = useState('')
 
+  const [videoProgressTarget, setVideoProgressTarget] = useState<{ id: string; name: string } | null>(null)
   const [rankFilter, setRankFilter] = useState<'all' | 'active'>('all')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [commissionFilter, setCommissionFilter] = useState<string>('all')
@@ -108,6 +162,7 @@ export default function MetricasAdminPage() {
   }
 
   return (
+    <>
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2" style={{ color: 'var(--color-text)' }}>
@@ -330,6 +385,15 @@ export default function MetricasAdminPage() {
                         <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>pagado</p>
                       </div>
                     )}
+
+                    <button
+                      onClick={() => setVideoProgressTarget({ id: s.id, name: `${s.firstName} ${s.lastName}` })}
+                      className="flex-shrink-0 p-1.5 rounded-lg transition-all hover:opacity-80"
+                      style={{ color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)', background: 'rgba(196,151,42,0.08)' }}
+                      title="Ver progreso de videos"
+                    >
+                      <PlayCircle className="w-4 h-4" strokeWidth={1.5} />
+                    </button>
                   </div>
                 </div>
               )
@@ -426,5 +490,14 @@ export default function MetricasAdminPage() {
         </div>
       )}
     </div>
+
+    {videoProgressTarget && (
+      <VideoProgressModal
+        studentId={videoProgressTarget.id}
+        studentName={videoProgressTarget.name}
+        onClose={() => setVideoProgressTarget(null)}
+      />
+    )}
+    </>
   )
 }

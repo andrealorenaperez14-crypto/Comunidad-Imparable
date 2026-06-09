@@ -23,6 +23,7 @@ model User {
   iaMetrics       IAMetric[]
   certificates    Certificate[]
   commissions     SaleCommission[]
+  videoProgress   VideoProgress[]
   createdAt       DateTime         @default(now())
   updatedAt       DateTime         @updatedAt
 
@@ -200,19 +201,35 @@ model Certificate {
 }
 
 model CourseContent {
-  id          String   @id @default(cuid())
-  clientId    String
-  client      Client   @relation(fields: [clientId], references: [id])
-  type        String   // 'FREE' | 'PAID'
-  title       String
-  description String   @db.Text
-  content     String   @db.Text
-  videoUrl    String?  @db.Text
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String          @id @default(cuid())
+  clientId       String
+  client         Client          @relation(fields: [clientId], references: [id])
+  type           String          // 'FREE' | 'PAID'
+  title          String
+  description    String          @db.Text
+  content        String          @db.Text
+  videoUrl       String?         @db.Text
+  order          Int             @default(0)
+  videoProgress  VideoProgress[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@index([clientId, type])
+}
+
+model VideoProgress {
+  id              String        @id @default(cuid())
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseContentId String
+  courseContent   CourseContent @relation(fields: [courseContentId], references: [id], onDelete: Cascade)
+  watchedPercent  Float         @default(0)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([userId, courseContentId])
+  @@index([userId])
+  @@index([courseContentId])
 }
 
 model DocumentChunk {
