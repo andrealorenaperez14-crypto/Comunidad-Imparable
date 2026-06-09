@@ -817,7 +817,7 @@ export default function HomePage() {
               <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.8"/>
               <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
             </svg>
-            Contacto — @escueladeasesoresmps
+            Contacto
           </a>
         </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
