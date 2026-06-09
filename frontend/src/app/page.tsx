@@ -809,7 +809,7 @@ export default function HomePage() {
         <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
           <Link href="/terminos" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Términos</Link>
           <Link href="/privacidad" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Privacidad</Link>
-          <Link href="#contacto" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Contacto</Link>
+          <a href="https://www.instagram.com/escueladeasesoresmps?igsh=MWw3a3I1dHp6ZG9wOQ==" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Contacto</a>
         </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
           © 2026 Escuela de Asesores en el Rubro Salud | Formamos Líderes, No Vendedores
