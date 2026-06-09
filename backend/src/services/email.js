@@ -12,10 +12,12 @@ function h(str) {
     .replace(/'/g, '&#x27;')
 }
 
-async function sendEmail({ to, subject, html }) {
+async function sendEmail({ to, subject, html, required = false }) {
   if (!resend) {
+    if (required || process.env.NODE_ENV === 'production') {
+      throw new Error('RESEND_API_KEY no configurado — el email no puede enviarse.')
+    }
     console.log(`[EMAIL SIMULADO] Para: ${to} | Asunto: ${subject}`)
-    console.warn('[EMAIL] RESEND_API_KEY no configurado — los emails no se envían en producción')
     return { id: 'simulated' }
   }
 
@@ -160,6 +162,7 @@ export async function sendSuspensionExecutedEmail({ email, firstName, schoolName
 
 export async function sendPasswordResetEmail({ email, firstName, schoolName, otp }) {
   await sendEmail({
+    required: true,
     to: email,
     subject: `Tu contraseña provisoria — ${h(schoolName)}`,
     html: `
