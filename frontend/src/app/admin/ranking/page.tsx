@@ -159,19 +159,18 @@ export default function AdminRankingPage() {
             {tab === 'general' ? `${total} alumnos · por interacciones ponderadas` : 'Alumnos vitalicios · por uso + antigüedad'}
           </p>
         </div>
-        {tab === 'general' && (
-          <button
-            onClick={() => recalcMutation.mutate()}
-            disabled={recalcMutation.isPending}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
-            style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(196,151,42,0.08)' }}
-          >
-            {recalcMutation.isPending
-              ? <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
-              : <RefreshCw className="w-4 h-4" strokeWidth={1.5} />}
-            Recalcular ahora
-          </button>
-        )}
+        <button
+          onClick={() => recalcMutation.mutate()}
+          disabled={recalcMutation.isPending}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
+          style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(196,151,42,0.08)' }}
+          title="Actualiza el Top 10 visible para los alumnos"
+        >
+          {recalcMutation.isPending
+            ? <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
+            : <RefreshCw className="w-4 h-4" strokeWidth={1.5} />}
+          Actualizar Top 10 alumnos
+        </button>
       </div>
 
       {/* Tabs */}

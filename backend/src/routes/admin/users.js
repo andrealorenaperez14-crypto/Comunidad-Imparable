@@ -221,7 +221,7 @@ export async function adminUserRoutes(fastify) {
         include: {
           profile: { select: { firstName: true, lastName: true } },
           subscriptions: { where: { status: { in: ['ACTIVE', 'TRIAL'] } }, take: 1 },
-          iaMetrics: { select: { habitStreak: true, status: true }, take: 1 }
+          iaMetrics: { select: { habitStreak: true }, take: 1 }
         },
         orderBy: { createdAt: 'desc' },
         take,
@@ -249,7 +249,18 @@ export async function adminUserRoutes(fastify) {
     const ranked = students
       .map(s => {
         const inters = intersByUser[s.id] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+        const totalInters = inters.COACH + inters.MENTALIDAD + inters.CONSULTIVA
         const score = inters.CONSULTIVA * WEIGHTS.CONSULTIVA + inters.COACH * WEIGHTS.COACH + inters.MENTALIDAD * WEIGHTS.MENTALIDAD
+
+        // Estado basado en interacciones — no en engagementScore (fórmula vieja)
+        const daysActive = Math.max(1, Math.floor(
+          (Date.now() - new Date(s.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+        ))
+        let status
+        if (totalInters === 0 && daysActive >= 3) status = 'ALERTA'
+        else if (score >= 10) status = 'EXCELENTE'
+        else status = 'BUENO'
+
         return {
           id: s.id,
           dni: s.dni,
@@ -257,7 +268,7 @@ export async function adminUserRoutes(fastify) {
           firstName: s.profile?.firstName || '',
           lastName: s.profile?.lastName || '',
           score: Math.round(score * 10) / 10,
-          status: s.iaMetrics[0]?.status || 'BUENO',
+          status,
           habitStreak: s.iaMetrics[0]?.habitStreak || 0,
           isActive: s.subscriptions.length > 0,
           interacciones: inters
