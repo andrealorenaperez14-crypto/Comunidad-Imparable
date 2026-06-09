@@ -185,10 +185,10 @@ export function startCronJobs(fastify) {
 
       for (const client of clients) {
         const metrics = await prisma.iAMetric.findMany({
-          where: { user: { clientId: client.id, role: 'STUDENT' } },
+          where: { user: { clientId: client.id, role: 'STUDENT' }, agent: { type: 'CONSULTIVA' } },
           include: {
             user: { include: { profile: true } },
-            agent: { select: { name: true } }
+            agent: { select: { name: true, type: true } }
           }
         })
 

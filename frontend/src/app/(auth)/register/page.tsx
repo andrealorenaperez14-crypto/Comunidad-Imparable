@@ -234,6 +234,7 @@ export default function RegisterPage() {
                   {...register('password', { onChange: e => setPasswordValue(e.target.value) })}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="Mín. 8 car., 1 mayúscula y 1 número"
+                  autoComplete="new-password"
                   className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
@@ -275,8 +276,11 @@ export default function RegisterPage() {
                 </div>
               )}
 
+              <p className="mt-2 text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)', opacity: 0.7 }}>
+                Si Google advierte "contraseña filtrada", elegí una que no hayas usado en otro sitio.
+              </p>
               {errors.password && (
-                <p className="mt-2 text-xs leading-relaxed" style={{ color: '#F87171' }}>
+                <p className="mt-1 text-xs leading-relaxed" style={{ color: '#F87171' }}>
                   {errors.password.message}
                 </p>
               )}
@@ -292,6 +296,7 @@ export default function RegisterPage() {
                   {...register('confirmPassword')}
                   type={showConfirmPassword ? 'text' : 'password'}
                   placeholder="Repite tu contraseña"
+                  autoComplete="new-password"
                   className="w-full rounded-xl px-4 py-10 focus:outline-none transition-all pr-12 text-base"
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}

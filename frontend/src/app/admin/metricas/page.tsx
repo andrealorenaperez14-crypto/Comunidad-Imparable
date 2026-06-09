@@ -276,7 +276,24 @@ export default function MetricasAdminPage() {
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-4 flex-shrink-0">
+                  <div className="flex items-center gap-3 flex-shrink-0">
+                    {/* Interacciones por IA */}
+                    <div className="hidden lg:flex items-center gap-3">
+                      <div className="text-center">
+                        <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{s.interacciones?.COACH ?? 0}</span>
+                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Coach</p>
+                      </div>
+                      <div className="text-center">
+                        <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{s.interacciones?.MENTALIDAD ?? 0}</span>
+                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Mental</p>
+                      </div>
+                      <div className="text-center">
+                        <span className="font-semibold text-sm" style={{ color: 'var(--color-gold)' }}>{s.interacciones?.CONSULTIVA ?? 0}</span>
+                        <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consult.</p>
+                      </div>
+                      <div className="w-px h-8" style={{ background: 'var(--color-separator)' }} />
+                    </div>
+
                     <div className="text-right hidden sm:block">
                       <div className="flex items-center gap-1.5">
                         <Activity className="w-4 h-4" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
