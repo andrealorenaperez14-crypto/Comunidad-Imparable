@@ -54,8 +54,8 @@ export async function agentRoutes(fastify) {
         const today = new Date().toISOString().slice(0, 10)
         const limitKey = `ia:daily:${request.user.id}:${today}`
         const count = await fastify.redis.get(limitKey)
-        if (count && parseInt(count) >= 15) {
-          return reply.status(429).send({ error: 'Alcanzaste el límite de 15 consultas diarias a las IAs. Volvé mañana.' })
+        if (count && parseInt(count) >= 5) {
+          return reply.status(429).send({ error: 'Alcanzaste el límite de 5 consultas diarias a las IAs. Volvé mañana.' })
         }
       }
 
@@ -92,7 +92,7 @@ export async function agentRoutes(fastify) {
         const limitKey = `ia:daily:${request.user.id}:${today}`
         const newCount = await fastify.redis.incr(limitKey)
         if (newCount === 1) await fastify.redis.expireat(limitKey, getEndOfDayUnix())
-        dailyRemaining = Math.max(0, 15 - newCount)
+        dailyRemaining = Math.max(0, 5 - newCount)
       }
 
       return reply.send({

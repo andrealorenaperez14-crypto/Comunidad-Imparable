@@ -108,19 +108,19 @@ export function ChatInterface({ agent, agentId }: Props) {
             style={{
               background: dailyRemaining === 0
                 ? 'rgba(239,68,68,0.1)'
-                : dailyRemaining <= 5
+                : dailyRemaining <= 2
                   ? 'rgba(196,151,42,0.15)'
                   : 'rgba(196,151,42,0.08)',
               border: `1px solid ${dailyRemaining === 0 ? 'rgba(239,68,68,0.3)' : 'var(--color-gold-border)'}`,
               color: dailyRemaining === 0
                 ? '#ef4444'
-                : dailyRemaining <= 5
+                : dailyRemaining <= 2
                   ? 'var(--color-gold)'
                   : 'var(--color-text-muted)'
             }}
           >
             <MessageCircle className="w-3 h-3" strokeWidth={1.5} />
-            <span>{dailyRemaining} / 15 hoy</span>
+            <span>{dailyRemaining} / 5 hoy</span>
           </div>
         )}
       </div>
@@ -218,7 +218,7 @@ export function ChatInterface({ agent, agentId }: Props) {
             className="rounded-2xl px-4 py-3 text-sm text-center"
             style={{ background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#ef4444' }}
           >
-            Alcanzaste el límite de 15 consultas diarias. Volvé mañana.
+            Alcanzaste el límite de 5 consultas diarias. Volvé mañana.
           </div>
         ) : (
           <div
