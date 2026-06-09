@@ -1,6 +1,55 @@
 const WEIGHTS = { COACH: 0.20, MENTALIDAD: 0.10, CONSULTIVA: 0.70 }
 const TOP_N = 10
 
+export async function getRankingVitalicio(prisma, clientId) {
+  // Solo usuarios con suscripción VITALICIO activa
+  const vitalicioSubs = await prisma.subscription.findMany({
+    where: { status: 'ACTIVE', planType: 'VITALICIO', user: { clientId } },
+    include: { user: { include: { profile: true } } },
+    orderBy: { createdAt: 'asc' }
+  })
+
+  if (!vitalicioSubs.length) return []
+
+  const userIds = vitalicioSubs.map(s => s.userId)
+
+  const interactions = await prisma.iAInteraction.findMany({
+    where: { userId: { in: userIds }, agent: { clientId } },
+    select: { userId: true, agent: { select: { type: true } } }
+  })
+
+  const statsByUser = {}
+  for (const i of interactions) {
+    const type = i.agent.type.toUpperCase()
+    if (!statsByUser[i.userId]) statsByUser[i.userId] = { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+    if (type in WEIGHTS) statsByUser[i.userId][type]++
+  }
+
+  const now = Date.now()
+
+  return vitalicioSubs
+    .map(sub => {
+      const stats = statsByUser[sub.userId] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+      const weightedInteractions = stats.CONSULTIVA * WEIGHTS.CONSULTIVA + stats.COACH * WEIGHTS.COACH + stats.MENTALIDAD * WEIGHTS.MENTALIDAD
+      const daysInApp = Math.max(1, Math.floor((now - new Date(sub.createdAt).getTime()) / (1000 * 60 * 60 * 24)))
+      // score = interacciones ponderadas × (1 + días/100) — la antigüedad multiplica el uso
+      const score = weightedInteractions * (1 + daysInApp / 100)
+      return {
+        userId: sub.userId,
+        firstName: sub.user.profile?.firstName || '',
+        lastName: sub.user.profile?.lastName || '',
+        email: sub.user.email,
+        dni: sub.user.dni,
+        daysInApp,
+        interacciones: stats,
+        weightedInteractions: Math.round(weightedInteractions * 10) / 10,
+        score: Math.round(score * 10) / 10
+      }
+    })
+    .sort((a, b) => b.score - a.score)
+    .map((e, i) => ({ ...e, position: i + 1 }))
+}
+
 export async function recalcularRanking(prisma, clientId) {
   const allStudents = await prisma.user.findMany({
     where: { clientId, role: 'STUDENT' },

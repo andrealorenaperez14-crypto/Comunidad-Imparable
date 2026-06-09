@@ -127,6 +127,19 @@ export interface SaleCommission {
   user?: { id: string; email: string; dni: string; profile?: { firstName: string; lastName: string } | null }
 }
 
+export interface VitalicioRankingEntry {
+  position: number
+  userId: string
+  firstName: string
+  lastName: string
+  email: string
+  dni: string
+  daysInApp: number
+  interacciones: { COACH: number; MENTALIDAD: number; CONSULTIVA: number }
+  weightedInteractions: number
+  score: number
+}
+
 export interface AdminRankingEntry {
   position: number
   id: string

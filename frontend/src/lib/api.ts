@@ -112,7 +112,8 @@ export const metricsApi = {
 export const rankingApi = {
   top10: () => api.get('/api/ranking'),
   student: (studentId: string) => api.get(`/api/ranking/student/${studentId}`),
-  recalculate: () => api.post('/api/ranking/recalculate')
+  recalculate: () => api.post('/api/ranking/recalculate'),
+  vitalicio: () => api.get('/api/ranking/vitalicio')
 }
 
 // Admin users

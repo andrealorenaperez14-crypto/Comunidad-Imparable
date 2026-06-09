@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { Trophy, TrendingUp, Flame, Search, Loader2, RefreshCw, MessageSquare } from 'lucide-react'
+import { Trophy, TrendingUp, Flame, Search, Loader2, RefreshCw, MessageSquare, Crown, CalendarDays } from 'lucide-react'
 import { adminUserApi, rankingApi } from '@/lib/api'
-import type { AdminRankingEntry } from '@/types'
+import type { AdminRankingEntry, VitalicioRankingEntry } from '@/types'
 
 const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }> = {
   EXCELENTE: { bg: 'rgba(74,222,128,0.1)', color: '#4ADE80', label: 'Excelente' },
@@ -11,7 +11,113 @@ const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }>
   ALERTA:    { bg: 'rgba(239,68,68,0.1)',  color: '#F87171', label: 'Alerta' }
 }
 
+function VitalicioRankingTab() {
+  const { data: ranking = [], isLoading } = useQuery<VitalicioRankingEntry[]>({
+    queryKey: ['ranking-vitalicio'],
+    queryFn: () => rankingApi.vitalicio().then(r => r.data)
+  })
+
+  if (isLoading) return (
+    <div className="flex justify-center py-16">
+      <Loader2 className="w-8 h-8 animate-spin" style={{ color: 'var(--color-gold)' }} />
+    </div>
+  )
+
+  if (!ranking.length) return (
+    <div className="card text-center py-12">
+      <Crown className="w-12 h-12 mx-auto mb-3" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
+      <p style={{ color: 'var(--color-text-muted)' }}>No hay alumnos vitalicios aún</p>
+    </div>
+  )
+
+  return (
+    <div className="space-y-2">
+      {/* Header */}
+      <div className="hidden md:flex items-center gap-4 px-4 pb-1 text-xs font-medium" style={{ color: 'var(--color-text-muted)' }}>
+        <div className="w-10 flex-shrink-0" />
+        <div className="flex-1">Alumno</div>
+        <div className="w-20 text-center">Días en app</div>
+        <div className="w-20 text-center">Coach 20%</div>
+        <div className="w-20 text-center">Mental 10%</div>
+        <div className="w-24 text-center">Consultiva 70%</div>
+        <div className="w-1 mx-2" />
+        <div className="w-20 text-right">Score</div>
+      </div>
+
+      {ranking.map(e => (
+        <div
+          key={e.userId}
+          className="flex items-center gap-4 p-4 rounded-xl"
+          style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}
+        >
+          {/* Posición */}
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm font-bold"
+            style={e.position <= 3
+              ? { background: 'rgba(196,151,42,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
+              : { background: 'var(--color-bg)', color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }
+            }
+          >
+            #{e.position}
+          </div>
+
+          {/* Info */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <p className="font-medium truncate" style={{ color: 'var(--color-text)' }}>
+                {e.firstName} {e.lastName}
+              </p>
+              <Crown className="w-3.5 h-3.5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            </div>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>DNI {e.dni} · {e.email}</p>
+          </div>
+
+          {/* Días */}
+          <div className="w-20 text-center hidden md:block">
+            <div className="flex items-center justify-center gap-1">
+              <CalendarDays className="w-3.5 h-3.5" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
+              <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{e.daysInApp}</span>
+            </div>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>días</p>
+          </div>
+
+          {/* Coach */}
+          <div className="w-20 text-center hidden md:block">
+            <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{e.interacciones.COACH}</span>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Coach 20%</p>
+          </div>
+
+          {/* Mentalidad */}
+          <div className="w-20 text-center hidden md:block">
+            <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{e.interacciones.MENTALIDAD}</span>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Mental 10%</p>
+          </div>
+
+          {/* Consultiva */}
+          <div className="w-24 text-center hidden md:block">
+            <span className="font-semibold text-sm" style={{ color: 'var(--color-gold)' }}>{e.interacciones.CONSULTIVA}</span>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consultiva 70%</p>
+          </div>
+
+          <div className="w-px h-8 hidden md:block" style={{ background: 'var(--color-separator)' }} />
+
+          {/* Score */}
+          <div className="text-right w-20">
+            <span className="font-bold text-lg" style={{ color: 'var(--color-gold)' }}>{e.score.toFixed(1)}</span>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>puntos</p>
+          </div>
+        </div>
+      ))}
+
+      <p className="text-xs text-center pt-2" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>
+        Score = interacciones ponderadas × (1 + días/100)
+      </p>
+    </div>
+  )
+}
+
 export default function AdminRankingPage() {
+  const [tab, setTab] = useState<'general' | 'vitalicio'>('general')
   const [filter, setFilter] = useState<'all' | 'active'>('all')
   const [statusFilter, setStatusFilter] = useState<string>('all')
   const [page, setPage] = useState(1)
@@ -50,22 +156,51 @@ export default function AdminRankingPage() {
             Ranking de Alumnos
           </h1>
           <p style={{ color: 'var(--color-text-muted)' }}>
-            {total} alumnos en total · ordenados por puntuación
+            {tab === 'general' ? `${total} alumnos · por interacciones ponderadas` : 'Alumnos vitalicios · por uso + antigüedad'}
           </p>
         </div>
+        {tab === 'general' && (
+          <button
+            onClick={() => recalcMutation.mutate()}
+            disabled={recalcMutation.isPending}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
+            style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(196,151,42,0.08)' }}
+          >
+            {recalcMutation.isPending
+              ? <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
+              : <RefreshCw className="w-4 h-4" strokeWidth={1.5} />}
+            Recalcular ahora
+          </button>
+        )}
+      </div>
+
+      {/* Tabs */}
+      <div className="flex rounded-xl overflow-hidden w-fit" style={{ border: '1px solid var(--color-separator)' }}>
         <button
-          onClick={() => recalcMutation.mutate()}
-          disabled={recalcMutation.isPending}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
-          style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(196,151,42,0.08)' }}
+          onClick={() => setTab('general')}
+          className="flex items-center gap-2 px-5 py-2 text-sm font-medium transition-all"
+          style={tab === 'general'
+            ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+            : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}
         >
-          {recalcMutation.isPending
-            ? <Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} />
-            : <RefreshCw className="w-4 h-4" strokeWidth={1.5} />}
-          Recalcular ahora
+          <Trophy className="w-4 h-4" strokeWidth={1.5} />
+          General
+        </button>
+        <button
+          onClick={() => setTab('vitalicio')}
+          className="flex items-center gap-2 px-5 py-2 text-sm font-medium transition-all"
+          style={tab === 'vitalicio'
+            ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+            : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}
+        >
+          <Crown className="w-4 h-4" strokeWidth={1.5} />
+          Vitalicio
         </button>
       </div>
 
+      {tab === 'vitalicio' && <VitalicioRankingTab />}
+
+      {tab === 'general' && <>
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
         {/* Subscription filter */}
@@ -248,6 +383,7 @@ export default function AdminRankingPage() {
           </button>
         </div>
       )}
+      </>}
     </div>
   )
 }

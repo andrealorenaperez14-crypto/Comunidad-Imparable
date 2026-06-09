@@ -1,5 +1,5 @@
-import { requireAuth, requireAdmin } from '../middleware/auth.js'
-import { recalcularRanking } from '../services/ranking.js'
+import { requireAuth, requireAdmin, requireAdminOrClient } from '../middleware/auth.js'
+import { recalcularRanking, getRankingVitalicio } from '../services/ranking.js'
 
 export async function rankingRoutes(fastify) {
   fastify.get('/', { preHandler: requireAuth }, async (request, reply) => {
@@ -55,6 +55,11 @@ export async function rankingRoutes(fastify) {
       daysInTop10: ranking?.daysInTop10 || 0,
       totalStudents
     })
+  })
+
+  fastify.get('/vitalicio', { preHandler: requireAdminOrClient }, async (request, reply) => {
+    const ranking = await getRankingVitalicio(fastify.prisma, request.user.clientId)
+    return reply.send(ranking)
   })
 
   fastify.post('/recalculate', { preHandler: requireAdmin }, async (request, reply) => {
