@@ -2,6 +2,11 @@ import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { encrypt } from '../src/utils/encryption.js'
+import { readFileSync, readdirSync } from 'fs'
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const prisma = new PrismaClient()
 
@@ -78,10 +83,53 @@ async function main() {
 
   console.log('✅ Client creado:', clientUser.email)
 
+  // --- Prompts reales desde docs/ ---
+  function extractSection(txt, startMarker, endMarker) {
+    const start = txt.indexOf(startMarker)
+    if (start === -1) return txt
+    const content = txt.slice(start + startMarker.length)
+    if (!endMarker) return content.trim()
+    const end = content.indexOf(endMarker)
+    return (end === -1 ? content : content.slice(0, end)).trim()
+  }
+
+  const coachTxt = readFileSync(join(__dirname, '../../docs/prompt-ia-coach.txt'), 'utf8')
+  const mentalidadTxt = readFileSync(join(__dirname, '../../docs/prompt-ia-mentalidad.txt'), 'utf8')
+  const consultivaTxt = readFileSync(join(__dirname, '../../docs/prompt-ia-consultiva.txt'), 'utf8')
+
+  const SYSTEM_MARKER = 'SYSTEM PROMPT'
+  const INSTRUCCIONES_MARKER = '====================================================\nINSTRUCCIONES'
+
+  function parsePromptFile(txt) {
+    const systemStart = txt.indexOf('====================================================\n', txt.indexOf(SYSTEM_MARKER))
+    const instrStart = txt.indexOf(INSTRUCCIONES_MARKER)
+    const systemRaw = systemStart !== -1 && instrStart !== -1
+      ? txt.slice(systemStart, instrStart)
+      : txt
+    const systemClean = systemRaw
+      .replace(/^={2,}[\s\S]*?={2,}\n/, '')
+      .replace(/^={2,}[\s\S]*?={2,}\n/, '')
+      .trim()
+
+    const instrRaw = instrStart !== -1 ? txt.slice(instrStart) : ''
+    const instrClean = instrRaw
+      .replace(/^={2,}[\s\S]*?={2,}\n/, '')
+      .replace(/^={2,}[\s\S]*?={2,}\n/, '')
+      .trim()
+
+    return { systemPrompt: systemClean, instructions: instrClean }
+  }
+
+  const coachPrompts = parsePromptFile(coachTxt)
+  const mentalidadPrompts = parsePromptFile(mentalidadTxt)
+  const consultivaPrompts = parsePromptFile(consultivaTxt)
+
   // Agente COACH — pipeline: Claude(primary) → Gemini(backup) → OpenAI
   const consultivo = await prisma.iAAgent.upsert({
     where: { clientId_type: { clientId: client.id, type: 'COACH' } },
     update: {
+      systemPrompt: coachPrompts.systemPrompt,
+      instructions: coachPrompts.instructions,
       primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
       backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
     },
@@ -91,14 +139,10 @@ async function main() {
       name: 'IA Coach',
       description: 'Acompaña tu proceso de aprendizaje 24/7',
       icon: '🔍',
-      systemPrompt: 'Eres la IA Coach de Escuela de Asesores. Tu rol es acompañar al estudiante durante su proceso de aprendizaje, responder preguntas sobre el contenido del curso y guiarlo para que avance con claridad. Habla siempre en español latinoamericano, de forma clara y empática.',
-      instructions: 'Responde siempre en español. Usa ejemplos prácticos. Mantén el contexto de la conversación para dar respuestas coherentes. Si la pregunta no está relacionada con el curso, redirige amablemente al estudiante.',
+      systemPrompt: coachPrompts.systemPrompt,
+      instructions: coachPrompts.instructions,
       knowledgeBase: '[]',
-      metricsConfig: {
-        alertThresholdLow: 0.6,
-        alertThresholdHigh: 0.9,
-        reportingSchedule: 'weekly'
-      },
+      metricsConfig: { alertThresholdLow: 0.6, alertThresholdHigh: 0.9, reportingSchedule: 'weekly' },
       primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
       backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
       published: true,
@@ -110,6 +154,8 @@ async function main() {
   const mentor = await prisma.iAAgent.upsert({
     where: { clientId_type: { clientId: client.id, type: 'MENTALIDAD' } },
     update: {
+      systemPrompt: mentalidadPrompts.systemPrompt,
+      instructions: mentalidadPrompts.instructions,
       primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
       backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
     },
@@ -119,14 +165,10 @@ async function main() {
       name: 'IA Mentalidad',
       description: 'Trabaja tus miedos y bloqueos personales',
       icon: '🎯',
-      systemPrompt: 'Eres la IA de Mentalidad de Escuela de Asesores. Tu misión es ayudar al estudiante a trabajar sus miedos, bloqueos y limitaciones mentales que le impiden crecer. Eres empático, contenedor y orientado a la acción. Usa técnicas de coaching y PNL adaptadas al mundo de las ventas. Habla siempre en español latinoamericano.',
-      instructions: 'Mantén un tono positivo y alentador. Ayuda al estudiante a identificar sus bloqueos concretos. Usa el historial de la conversación para hacer seguimiento y profundizar. Cuando detectes desmotivación, aplica técnicas de reencuadre.',
+      systemPrompt: mentalidadPrompts.systemPrompt,
+      instructions: mentalidadPrompts.instructions,
       knowledgeBase: '[]',
-      metricsConfig: {
-        alertThresholdLow: 0.6,
-        alertThresholdHigh: 0.9,
-        reportingSchedule: 'weekly'
-      },
+      metricsConfig: { alertThresholdLow: 0.6, alertThresholdHigh: 0.9, reportingSchedule: 'weekly' },
       primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
       backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
       published: true,
@@ -134,7 +176,61 @@ async function main() {
     }
   })
 
-  console.log('✅ Agentes IA creados:', consultivo.name, '|', mentor.name)
+  // Agente CONSULTIVA (NOVA) — pipeline: Claude(primary) → Gemini(backup) → OpenAI
+  const consultiva = await prisma.iAAgent.upsert({
+    where: { clientId_type: { clientId: client.id, type: 'CONSULTIVA' } },
+    update: {
+      systemPrompt: consultivaPrompts.systemPrompt,
+      instructions: consultivaPrompts.instructions,
+      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
+      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
+    },
+    create: {
+      clientId: client.id,
+      type: 'CONSULTIVA',
+      name: 'IA Consultiva',
+      description: 'Consultora experta en obras sociales y prepagas',
+      icon: '📊',
+      systemPrompt: consultivaPrompts.systemPrompt,
+      instructions: consultivaPrompts.instructions,
+      knowledgeBase: '[]',
+      metricsConfig: { alertThresholdLow: 0.6, alertThresholdHigh: 0.9, reportingSchedule: 'weekly' },
+      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
+      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
+      published: true,
+      publishedDate: new Date()
+    }
+  })
+
+  // Cargar base de conocimiento de NOVA (15 obras sociales)
+  const kbDir = join(__dirname, '../../docs/knowledge-base')
+  try {
+    const kbFiles = readdirSync(kbDir).filter(f => f.endsWith('.txt'))
+    for (const filename of kbFiles) {
+      const text = readFileSync(join(kbDir, filename), 'utf8')
+      const paragraphs = text.split(/(\r?\n){2,}/).map(p => p.trim()).filter(p => p.length > 50)
+      const chunks = []
+      let chunkIndex = 0
+      let current = ''
+      for (const para of paragraphs) {
+        if ((current + para).length > 1000 && current.length > 0) {
+          chunks.push({ agentId: consultiva.id, filename, chunkIndex: chunkIndex++, content: current.trim() })
+          current = para
+        } else {
+          current = current ? `${current}\n\n${para}` : para
+        }
+      }
+      if (current.trim()) chunks.push({ agentId: consultiva.id, filename, chunkIndex, content: current.trim() })
+      await prisma.documentChunk.deleteMany({ where: { agentId: consultiva.id, filename } })
+      await prisma.documentChunk.createMany({ data: chunks })
+      console.log(`  📄 ${filename}: ${chunks.length} chunks`)
+    }
+    console.log(`✅ Base de conocimiento NOVA cargada: ${kbFiles.length} archivos`)
+  } catch (err) {
+    console.warn('⚠️  No se pudo cargar knowledge-base:', err.message)
+  }
+
+  console.log('✅ Agentes IA creados:', consultivo.name, '|', mentor.name, '|', consultiva.name)
 
   // Contenido del curso
   await prisma.courseContent.createMany({
@@ -201,7 +297,7 @@ async function main() {
       }
     })
 
-    for (const agent of [consultivo, mentor]) {
+    for (const agent of [consultivo, mentor, consultiva]) {
       await prisma.iAMetric.upsert({
         where: { agentId_userId: { agentId: agent.id, userId: user.id } },
         update: {},
