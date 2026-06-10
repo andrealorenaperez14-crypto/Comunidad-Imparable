@@ -1,0 +1,134 @@
+====================================================
+OBRA SOCIAL: AVALIAN
+TIPO: Prepaga | Ingreso: Relación de dependencia | Monotributo | Particular
+====================================================
+
+CUÁNDO OFRECERLA:
+- Cliente entre 18 y 60 años que acepta pagar diferencia.
+- Menor solo desde 13 años (sin descuentos aplicables).
+- Aplica para dependencia, monotributistas y particulares.
+- Cobertura nacional + asistencia al viajero + países limítrofes según plan.
+- NO aplica para: mayores de 60 años (derivar a Swiss Medical hasta 65a11m o Salud Central).
+
+====================================================
+EDADES
+
+Titular: 18 a 60 años inclusive.
+Hijos: hasta 21 años. Hasta 25 años con certificado de alumno regular vigente.
+Menor solo: desde 13 años. Sin descuentos aplicables.
+Cónyuge/concubino: permitido.
+
+====================================================
+ZONA DE COBERTURA
+
+Nacional. CABA | GBA Norte | GBA Oeste | GBA Sur | Interior de Buenos Aires | Interior del país.
+Urgencias: cobertura nacional.
+Adicional: asistencia al viajero nacional + cobertura en países limítrofes según plan.
+
+====================================================
+INGRESO SEGÚN CONDICIÓN LABORAL
+
+Relación de dependencia:
+- Aporte estimado: 7,42% del salario bruto.
+- Derivación a Avalian o OSDEPYM.
+- Siempre puede existir diferencia según edad y plan — NO es PMO.
+- Documentación: DNI + último recibo de sueldo + declaración jurada médica.
+
+Monotributista:
+- Mediante derivación de aportes.
+- Sujeto a condiciones comerciales vigentes.
+- Documentación: [Pendiente completar].
+
+Particular:
+- Ingreso voluntario hasta los 60 años.
+- Pago por tarjeta de crédito o CBU.
+
+====================================================
+PLANES DISPONIBLES
+
+Plan AS100 — Con copagos | Cobertura nacional.
+Plan AS200 — Con copagos | Cobertura nacional.
+Plan AS204 — Con copagos | Cobertura nacional.
+Planes superiores — Sin copagos | Cobertura nacional.
+
+PLAN HOY (promocional para jóvenes):
+- Sin hijos.
+- Con copagos.
+- Bonificación durante 12 meses.
+- [Pendiente — confirmar rango etario exacto de aplicación]
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan            | Copagos | Cobertura nacional | Diferencial
+AS100           | Si      | Si                 | —
+AS200           | Si      | Si                 | —
+AS204           | Si      | Si                 | —
+Planes sup.     | No      | Si                 | —
+HOY             | Si      | —                  | Jóvenes sin hijos, bonificado 12 meses
+
+====================================================
+PRECIOS Y PROMOCIONES
+
+Descuentos escalonados según: edad | plan contratado | medio de pago | campaña vigente.
+Plan HOY: bonificación especial 12 meses.
+Pago: tarjeta de crédito o CBU.
+
+[Pendiente — cargar tabla de precios por rango etario y plan]
+
+====================================================
+CARTILLA
+
+Capital Federal:
+- Alexander Fleming | Sanatorio Anchorena | Sanatorio Finocchietto | Sanatorio Mater Dei
+- Sanatorio Otamendi | Clínica Bazterrica | Hospital Británico | Hospital Italiano
+- Hospital Alemán | Fundación Favaloro | FLENI
+
+Zona Norte:
+- Hospital Austral | Trinidad San Isidro | Sanatorio Las Lomas | Sanatorio San Lucas
+- Clínica Delta | Modelo Vicente López
+
+Zona Oeste:
+- Hospital Italiano San Justo | Clínica Modelo Morón
+
+Zona Sur:
+- Sanatorio Juncal | Sanatorio Itoiz | Clínica del Niño y la Familia | Clínica Modelo Quilmes
+
+La Plata: Hospital Español de La Plata.
+
+La red prestacional puede variar según plan contratado y región.
+
+====================================================
+MEDICAMENTOS
+
+Según PMO y condiciones contractuales del plan.
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Turnos: app + web + prestadores de cartilla.
+Copagos: AS100/AS200/AS204 con copagos. Planes superiores sin copagos.
+Urgencias: cobertura nacional.
+Internación: según plan contratado.
+Autorización de estudios: según normativa y tipo de prestación.
+Atención al cliente: app + web + canales digitales.
+
+====================================================
+PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+
+Declaración jurada médica obligatoria al ingresar.
+Estudios complementarios cuando auditoría lo requiera.
+Urgencias y emergencias: sin carencia según condiciones del plan.
+Resto de carencias según auditoría médica y normativa vigente.
+Siempre informar al cliente desde el inicio. Nunca ocultar.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. Edad máxima 60 años inclusive — un año más que otras prepagas similares. Mencionar si aplica.
+2. Menor solo desde 13 años — sin descuentos. Avalian no aplica descuentos en menores solos.
+3. Siempre hay diferencia de cuota — no es PMO en ningún plan.
+4. Plan HOY: verificar condiciones exactas antes de ofrecer (jóvenes sin hijos, vigencia 12 meses).
+5. Cartilla de alta complejidad en Capital: FLENI, Favaloro, Alemán — diferenciador premium.
+6. Cobertura en países limítrofes: aclarar qué plan la incluye antes de mencionarlo como beneficio.
+7. Derivación posible a Avalian o OSDEPYM en dependencia — confirmar con el cliente cuál aplica.
