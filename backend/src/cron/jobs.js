@@ -1,6 +1,6 @@
 import cron from 'node-cron'
 import { recalcularRanking } from '../services/ranking.js'
-import { issueCertificate } from '../services/certificates.js'
+
 import { startKeepAlive } from './keepAlive.js'
 import {
   sendLowPerformanceEmailStudent,
@@ -235,39 +235,6 @@ export function startCronJobs(fastify) {
             } catch (err) {
               fastify.log.warn({ err: err.message, userId: metric.userId }, 'Error enviando email alto rendimiento')
             }
-          }
-        }
-      }
-
-      // Emitir certificados a alumnos PAID con completionRate >= 90% que aún no lo tienen
-      const paidStudents = await prisma.user.findMany({
-        where: {
-          role: 'STUDENT',
-          subscriptions: { some: { planType: { in: ['30_DAYS', 'VITALICIO'] }, status: 'ACTIVE' } }
-        },
-        include: {
-          iaMetrics: { select: { completionRate: true } },
-          certificates: { select: { id: true } },
-          client: { select: { id: true, name: true } }
-        }
-      })
-
-      for (const student of paidStudents) {
-        if (student.certificates.length > 0) continue
-        const avgCompletion = student.iaMetrics.length
-          ? student.iaMetrics.reduce((s, m) => s + (m.completionRate || 0), 0) / student.iaMetrics.length
-          : 0
-        if (avgCompletion >= 0.9) {
-          try {
-            await issueCertificate(
-              prisma,
-              student.id,
-              student.clientId,
-              student.client?.name || 'Escuela de Asesores'
-            )
-            fastify.log.info({ userId: student.id }, 'Certificado emitido automáticamente')
-          } catch (err) {
-            fastify.log.warn({ err: err.message, userId: student.id }, 'Error emitiendo certificado')
           }
         }
       }
