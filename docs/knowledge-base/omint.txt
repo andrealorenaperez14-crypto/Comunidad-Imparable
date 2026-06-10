@@ -1,0 +1,121 @@
+====================================================
+OBRA SOCIAL: OMINT
+TIPO: Prepaga | Ingreso: Relación de dependencia | Monotributo | Particular
+====================================================
+
+CUÁNDO OFRECERLA:
+- Cliente entre 18 y 59 años que acepta pagar diferencia.
+- Busca prepaga con clínicas propias de primer nivel (Santa Isabel, Bazterrica, Del Sol).
+- Aplica para dependencia (desde Plan 1500), monotributistas (desde Plan 1500)
+  y particulares (desde Plan 4021).
+- Cobertura nacional.
+- NO aplica para: mayores de 59 años (derivar a Swiss Medical o Salud Central).
+
+====================================================
+EDADES
+
+Titular: 18 a 59 años.
+Hijos: [Pendiente completar].
+Cónyuge/concubino: permitido.
+
+====================================================
+ZONA DE COBERTURA
+
+Nacional. CABA | GBA Norte | GBA Oeste | GBA Sur | Interior de Buenos Aires | Interior del país.
+Urgencias: cobertura nacional.
+Red propia + prestadores complementarios en todo el país.
+
+====================================================
+INGRESO SEGÚN CONDICIÓN LABORAL
+
+Relación de dependencia:
+- Aporte estimado: 6,68% del salario bruto.
+- Disponible desde Plan 1500 en adelante.
+- Siempre existe diferencia de cuota — NO es PMO.
+- Documentación: DNI + último recibo de sueldo + declaración jurada médica.
+
+Monotributista:
+- Disponible desde Plan 1500.
+- Siempre existe diferencia de cuota.
+- Documentación: [Pendiente completar].
+
+Particular:
+- Desde Plan 4021 en adelante.
+- Lista de precios voluntarios según edad y composición familiar.
+
+====================================================
+PLANES DISPONIBLES
+
+Plan 1500 — Relación de dependencia | Monotributistas.
+Plan 2500 — Relación de dependencia | Monotributistas.
+Plan 3500 — Relación de dependencia | Monotributistas.
+Plan 4021 — Particulares | Relación de dependencia | Monotributistas.
+Planes superiores — Según comercialización vigente.
+
+Importante: el nivel de cobertura del prestador varía según el plan contratado:
+- Consultorios externos únicamente.
+- Guardia únicamente.
+- Guardia e internación.
+- Cobertura integral: guardia + internación + estudios + consultas.
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan          | Disponible para                          | Copagos
+1500          | Dependencia | Monotributistas             | [Pendiente]
+2500          | Dependencia | Monotributistas             | [Pendiente]
+3500          | Dependencia | Monotributistas             | [Pendiente]
+4021          | Particulares | Dependencia | Monotributo  | [Pendiente]
+Superiores    | Según comercialización                   | [Pendiente]
+
+====================================================
+PRECIOS
+
+Listas diferenciadas por segmento: voluntarios | monotributistas | PyME | relación de dependencia.
+[Pendiente — cargar tabla de precios por rango etario y plan]
+
+====================================================
+CARTILLA
+
+Prestadores propios Grupo Omint:
+- Clínica Santa Isabel | Clínica Bazterrica | Clínica del Sol | Centros Médicos Omint
+
+Red complementaria: clínicas y sanatorios de primer nivel en CABA, GBA y todo el país.
+La cobertura del prestador (consultas / guardia / internación / integral) varía según plan contratado.
+
+====================================================
+MEDICAMENTOS
+
+Según PMO y condiciones del plan contratado.
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Turnos: app + portal web + prestadores de cartilla.
+Copagos: [Pendiente completar por plan].
+Urgencias: cobertura nacional. Sin carencia.
+Internación: según plan y prestador.
+Autorización de estudios: según normativa y tipo de prestación.
+Atención al cliente: app propia + portal web + centros de atención.
+Pago: tarjeta de crédito | débito automático | CBU.
+
+====================================================
+PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+
+Declaración jurada médica obligatoria al ingresar.
+Estudios complementarios cuando auditoría lo requiera.
+Urgencias y emergencias: sin carencia según condiciones del plan.
+Resto de carencias según auditoría médica y normativa vigente.
+Siempre informar al cliente desde el inicio. Nunca ocultar.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. Edad máxima 59 años — verificar antes de ofrecer.
+2. Particulares: plan mínimo es el 4021 — no pueden acceder a los planes 1500/2500/3500.
+3. Dependencia y monotributistas: plan mínimo es el 1500.
+4. Antes de mencionar una clínica de cartilla, verificar qué nivel de cobertura tiene en el plan
+   elegido — algunos prestadores solo dan consultorios, no internación.
+5. Clínicas propias (Santa Isabel, Bazterrica, Del Sol) son diferenciador fuerte — mencionar siempre.
+6. Siempre hay diferencia de cuota — no es PMO en ningún plan.
+7. Lista de precios diferenciada por segmento — usar la correcta según el perfil del cliente.
