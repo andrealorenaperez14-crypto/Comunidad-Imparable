@@ -1,0 +1,131 @@
+====================================================
+OBRA SOCIAL: SANCOR SALUD
+TIPO: Prepaga | Ingreso: Relación de dependencia | Monotributo | Particular
+====================================================
+
+CUÁNDO OFRECERLA:
+- Cliente entre 18 y 59 años que acepta pagar diferencia.
+- Menor solo desde 16 años.
+- Aplica para dependencia, monotributistas, responsables inscriptos y particulares.
+- NO aplica para: embarazadas, mayores de 59 años, IMC mayor a 32.
+- Zonas habilitadas: CABA, AMBA, Rosario, Córdoba, Mendoza, San Juan, San Luis.
+
+====================================================
+EDADES
+
+Titular: 18 a 59 años.
+Hijos: hasta 25 años inclusive.
+Menor solo: desde 16 años.
+Cónyuge/concubino: permitido.
+
+====================================================
+ZONA DE COBERTURA
+
+Comercialización habilitada: CABA | AMBA | Rosario | Córdoba | Mendoza | San Juan | San Luis.
+Cobertura nacional: si, desde determinados planes (ver tabla de planes).
+
+====================================================
+INGRESO SEGÚN CONDICIÓN LABORAL
+
+Relación de dependencia:
+- Aporte estimado: 7,65% del salario bruto.
+- Siempre existe diferencia de cuota — NO es PMO.
+- Documentación: DNI + último recibo de sueldo + declaración jurada médica.
+
+Monotributista:
+- Permite derivación de aportes.
+- Siempre existe diferencia de cuota.
+
+Particular:
+- Ingreso voluntario directo.
+- Pago obligatorio por CBU o tarjeta de crédito.
+
+====================================================
+PLANES DISPONIBLES
+
+Plan 700 — Con copagos | Cobertura regional
+Plan 800 — Con copagos | Cobertura Buenos Aires
+Plan 1000 — Con copagos | Cobertura nacional
+Plan 800 Superior — Sin copagos | Cobertura regional
+Plan 1000 Superior — Sin copagos | Cobertura nacional
+Plan 1500 — Sin copagos | Habitación individual
+Plan 3000 — Sin copagos | Cobertura nacional | Plan abierto | Prestadores primer nivel | Hospitales Italianos destacados
+Plan 4500 — Sin copagos | Plan abierto
+Plan 5000 — Sin copagos | Plan abierto
+Plan 6000 — Sin copagos | Plan premium | Incluye cirugías estéticas
+
+PLAN GEN (exclusivo hasta 35 años):
+- Cobertura especial para jóvenes.
+- Beneficios odontológicos ampliados.
+- Ortodoncia incluida.
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan          | Copagos | Cobertura nacional | Hab. individual | Diferencial
+700           | Si      | No (regional)      | No              | —
+800           | Si      | No (Bs. As.)       | No              | —
+1000          | Si      | Si                 | No              | —
+800 Superior  | No      | No (regional)      | No              | —
+1000 Superior | No      | Si                 | No              | —
+1500          | No      | Si                 | Si              | —
+3000          | No      | Si                 | Si              | Abierto + Hosp. Italiano
+4500          | No      | Si                 | Si              | Abierto
+5000          | No      | Si                 | Si              | Abierto
+6000          | No      | Si                 | Si              | Premium + cirugías estéticas
+GEN           | —       | —                  | —               | Solo hasta 35 años
+
+====================================================
+PRECIOS
+
+[Pendiente — cargar tabla por rango etario y plan]
+
+====================================================
+CARTILLA
+
+Planes 700 a 1500: cartilla cerrada según zona.
+Planes 3000 en adelante: prestadores abiertos + clínicas alta complejidad + Hospitales Italianos destacados.
+La cartilla se amplía progresivamente según el plan contratado.
+
+Prestadores destacados: Hospital Italiano (según zona de referencia).
+
+====================================================
+MEDICAMENTOS
+
+Ambulatorios: 40%.
+Resolución 310: 70%.
+Cobertura total: 100% según normativa vigente.
+Medicación crónica: 70% (Res. 310) o 100% según normativa.
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Turnos: mediante aplicación y prestadores de cartilla.
+Autorización de estudios: según normativa y complejidad.
+Urgencias: cobertura según plan contratado.
+Internación: según plan contratado.
+Habitación individual: desde Plan 1500.
+Atención al cliente: app + web + canales digitales.
+Pago: CBU o tarjeta de crédito obligatorio para afiliación.
+
+====================================================
+PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+
+Declaración jurada médica obligatoria al ingresar.
+IMC máximo permitido: 32. Si el cliente supera ese índice, no puede afiliarse.
+Carencias: según auditoría médica y normativa vigente.
+Embarazadas: NO admite nuevas afiliaciones. Informar desde el inicio.
+Cirugías estéticas: solo disponibles desde Plan 6000.
+
+Siempre informar al cliente las carencias antes de avanzar. Nunca ocultar.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. Verificar IMC antes de ofrecer — si supera 32, no puede ingresar.
+2. No admite embarazadas — derivar a Hominis si ese es el caso.
+3. No es PMO en ningún plan — siempre hay diferencia de cuota.
+4. Menor solo: ingreso desde 16 años (otras prepagas desde 12).
+5. Verificar que el cliente esté en zona habilitada de comercialización.
+6. Plan GEN: diferenciador fuerte para clientes jóvenes hasta 35 años.
+7. Cobertura nacional solo desde Plan 1000 en adelante.
