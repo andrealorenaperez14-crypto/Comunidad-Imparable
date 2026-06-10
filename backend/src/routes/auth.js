@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import { randomUUID, randomInt } from 'crypto'
 import { z } from 'zod'
 import { requireAuth } from '../middleware/auth.js'
-import { sendPasswordResetEmail } from '../services/email.js'
+import { sendPasswordResetEmail, sendWelcomeEmail } from '../services/email.js'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -129,6 +129,15 @@ export async function authRoutes(fastify) {
       },
       include: { profile: true }
     })
+
+    const client = await fastify.prisma.client.findUnique({ where: { id: resolvedClientId } })
+
+    sendWelcomeEmail({
+      email: user.email,
+      firstName: firstName,
+      schoolName: client?.name || 'Escuela de Asesores',
+      trialDays
+    }).catch(err => fastify.log.error({ err }, 'welcome email failed'))
 
     const token = fastify.jwt.sign({
       jti: randomUUID(),
