@@ -131,3 +131,25 @@ describe('promptGuard', () => {
     expect(redis.setex).toHaveBeenCalledWith('security:banned:user-spammer', 3600, '1')
   })
 })
+
+import { buildApp } from '../src/app.js'
+
+describe('GET /api/admin/security/events', () => {
+  let app
+
+  beforeAll(async () => {
+    process.env.NODE_ENV = 'test'
+    app = await buildApp({ logger: false })
+    await app.ready()
+  })
+
+  afterAll(async () => { await app.close() })
+
+  it('rechaza sin token (401)', async () => {
+    const res = await app.inject({
+      method: 'GET',
+      url: '/api/admin/security/events'
+    })
+    expect(res.statusCode).toBe(401)
+  })
+})
