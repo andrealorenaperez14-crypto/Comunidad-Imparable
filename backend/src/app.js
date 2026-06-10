@@ -39,7 +39,19 @@ export async function buildApp(opts = {}) {
   }
 
   await app.register(helmet, {
-    contentSecurityPolicy: false
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc:  ["'self'"],
+        scriptSrc:   ["'self'", 'https://www.google.com', 'https://www.gstatic.com'],
+        frameSrc:    ["'self'", 'https://www.google.com'],
+        imgSrc:      ["'self'", 'data:', 'https:'],
+        connectSrc:  ["'self'", 'https://dolarapi.com'],
+        styleSrc:    ["'self'", "'unsafe-inline'"],
+        fontSrc:     ["'self'", 'https:', 'data:'],
+        objectSrc:   ["'none'"],
+        upgradeInsecureRequests: []
+      }
+    }
   })
 
   const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000')
