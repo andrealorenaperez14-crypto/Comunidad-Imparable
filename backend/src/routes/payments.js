@@ -3,6 +3,7 @@ import { createHmac, timingSafeEqual, randomInt } from 'crypto'
 import bcrypt from 'bcryptjs'
 import { sendVIPWelcomeEmail } from '../services/email.js'
 import { sanitizeFields } from '../middleware/sanitizeInput.js'
+import { makeVerifyRecaptcha } from '../middleware/verifyRecaptcha.js'
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
@@ -40,7 +41,8 @@ async function getDefaultClientId(prisma) {
 export async function paymentRoutes(fastify) {
 
   fastify.post('/vip/create', {
-    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } }
+    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
+    preHandler: makeVerifyRecaptcha('vip_payment')
   }, async (req, reply) => {
     const { nombre, apellido, dni, email, whatsapp } = req.body
     if (!nombre || !apellido || !dni || !email || !whatsapp) {

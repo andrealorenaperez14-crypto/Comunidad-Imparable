@@ -4,6 +4,7 @@ import { z } from 'zod'
 import { requireAuth } from '../middleware/auth.js'
 import { sendPasswordResetEmail } from '../services/email.js'
 import { sanitizeFields } from '../middleware/sanitizeInput.js'
+import { makeVerifyRecaptcha } from '../middleware/verifyRecaptcha.js'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -28,7 +29,8 @@ const registerSchema = z.object({
 
 export async function authRoutes(fastify) {
   fastify.post('/login', {
-    config: { rateLimit: { max: 20, timeWindow: '1 minute' } }
+    config: { rateLimit: { max: 20, timeWindow: '1 minute' } },
+    preHandler: makeVerifyRecaptcha('login')
   }, async (request, reply) => {
     const result = loginSchema.safeParse(request.body)
     if (!result.success) {
@@ -85,7 +87,8 @@ export async function authRoutes(fastify) {
   })
 
   fastify.post('/register', {
-    config: { rateLimit: { max: 5, timeWindow: '1 minute' } }
+    config: { rateLimit: { max: 5, timeWindow: '1 minute' } },
+    preHandler: makeVerifyRecaptcha('register')
   }, async (request, reply) => {
     const result = registerSchema.safeParse(request.body)
     if (!result.success) {
@@ -259,7 +262,8 @@ export async function authPasswordRoutes(fastify) {
   }
 
   fastify.post('/forgot-password', {
-    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } }
+    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
+    preHandler: makeVerifyRecaptcha('forgot_password')
   }, async (request, reply) => {
     const { email } = request.body || {}
     if (!email || typeof email !== 'string') {
