@@ -2,16 +2,8 @@ import cron from 'node-cron'
 import { recalcularRanking } from '../services/ranking.js'
 
 import { startKeepAlive } from './keepAlive.js'
-import {
-  sendLowPerformanceEmailStudent,
-  sendLowPerformanceEmailClient,
-  sendHighPerformanceEmailStudent,
-  sendHighPerformanceEmailClient,
-  sendNoLoginWarningEmail,
-  sendSuspensionCountdownEmail,
-  sendSuspensionExecutedEmail,
-  sendWeeklyReportEmail
-} from '../services/email.js'
+// Emails deshabilitados por ahora — solo se envía recupero de contraseña (auth.js)
+// Pendiente habilitar cuando se defina la estrategia de comunicación con alumnos
 
 export function startCronJobs(fastify) {
   const { prisma } = fastify
@@ -57,21 +49,7 @@ export function startCronJobs(fastify) {
         include: { user: { include: { profile: true } } }
       })
 
-      for (const sub of expiringSubs) {
-        const daysRemaining = Math.ceil((sub.activeUntil - now) / (1000 * 60 * 60 * 24))
-        if (sub.user.profile) {
-          try {
-            await sendSuspensionCountdownEmail({
-              email: sub.user.email,
-              firstName: sub.user.profile.firstName,
-              schoolName: 'Escuela Digital Elite',
-              daysRemaining
-            })
-          } catch (err) {
-            fastify.log.warn({ err: err.message, userId: sub.userId }, 'Error enviando email countdown')
-          }
-        }
-      }
+      // Email countdown deshabilitado — pendiente fase paga Asesor Elite
 
       // Suspender cuentas vencidas
       const toSuspend = await prisma.subscription.findMany({
@@ -88,17 +66,7 @@ export function startCronJobs(fastify) {
           data: { status: 'SUSPENDED' }
         })
 
-        if (sub.user.profile) {
-          try {
-            await sendSuspensionExecutedEmail({
-              email: sub.user.email,
-              firstName: sub.user.profile.firstName,
-              schoolName: 'Escuela Digital Elite'
-            })
-          } catch (err) {
-            fastify.log.warn({ err: err.message, userId: sub.userId }, 'Error enviando email suspensión')
-          }
-        }
+        // Email suspensión deshabilitado — pendiente fase paga Asesor Elite
       }
 
       // CICLO PARTE PAGA (Asesor Elite): suspensión día 35 → datos guardados 10 días → eliminado día 45
@@ -139,47 +107,7 @@ export function startCronJobs(fastify) {
     }
   })
 
-  // 8am: alertas de sin ingreso (3 días inactivos) — máx 1 email cada 3 días por usuario
-  cron.schedule('0 8 * * *', async () => {
-    try {
-      const threeDaysAgo = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000)
-
-      const inactiveProfiles = await prisma.profile.findMany({
-        where: {
-          lastLoginAt: { lte: threeDaysAgo },
-          user: { role: 'STUDENT', subscriptions: { some: { status: { in: ['ACTIVE', 'TRIAL'] } } } }
-        },
-        include: { user: true }
-      })
-
-      let sent = 0
-      for (const profile of inactiveProfiles) {
-        const redisKey = `warn_email:${profile.userId}`
-        const alreadySent = fastify.redis ? await fastify.redis.get(redisKey) : null
-        if (alreadySent) continue
-
-        const daysSince = Math.floor((Date.now() - new Date(profile.lastLoginAt).getTime()) / (1000 * 60 * 60 * 24))
-        try {
-          await sendNoLoginWarningEmail({
-            email: profile.user.email,
-            firstName: profile.firstName,
-            schoolName: 'Escuela Digital Elite',
-            daysSinceLogin: daysSince
-          })
-          if (fastify.redis) {
-            await fastify.redis.setex(redisKey, 3 * 24 * 60 * 60, '1')
-          }
-          sent++
-        } catch (err) {
-          fastify.log.warn({ err: err.message, userId: profile.userId }, 'Error enviando email inactividad')
-        }
-      }
-
-      fastify.log.info(`Alertas de inactividad enviadas: ${sent} (${inactiveProfiles.length} inactivos totales)`)
-    } catch (err) {
-      fastify.log.error({ err }, 'Error enviando alertas de inactividad')
-    }
-  })
+  // 8am: email inactividad — deshabilitado, pendiente definir con cliente
 
   // 10pm: alertas de rendimiento
   cron.schedule('0 22 * * *', async () => {
@@ -209,36 +137,7 @@ export function startCronJobs(fastify) {
           })
         ])
 
-        for (const metric of toAlert) {
-          if (metric.user.profile) {
-            try {
-              await sendLowPerformanceEmailStudent({
-                email: metric.user.email,
-                firstName: metric.user.profile.firstName,
-                schoolName: client.name,
-                agentName: metric.agent.name,
-                score: metric.engagementScore
-              })
-            } catch (err) {
-              fastify.log.warn({ err: err.message, userId: metric.userId }, 'Error enviando email bajo rendimiento')
-            }
-          }
-        }
-        for (const metric of toExcel) {
-          if (metric.user.profile) {
-            try {
-              await sendHighPerformanceEmailStudent({
-                email: metric.user.email,
-                firstName: metric.user.profile.firstName,
-                schoolName: client.name,
-                agentName: metric.agent.name,
-                score: metric.engagementScore
-              })
-            } catch (err) {
-              fastify.log.warn({ err: err.message, userId: metric.userId }, 'Error enviando email alto rendimiento')
-            }
-          }
-        }
+        // Emails bajo/alto rendimiento deshabilitados — pendiente definir con cliente
       }
 
       fastify.log.info('Alertas de rendimiento procesadas')
@@ -247,43 +146,7 @@ export function startCronJobs(fastify) {
     }
   })
 
-  // Lunes 9am: reportes semanales
-  cron.schedule('0 9 * * 1', async () => {
-    try {
-      const users = await prisma.user.findMany({
-        where: { role: 'STUDENT', subscriptions: { some: { status: { in: ['ACTIVE', 'TRIAL'] } } } },
-        include: {
-          profile: true,
-          iaMetrics: { include: { agent: { select: { name: true } } } },
-          client: true
-        }
-      })
-
-      for (const user of users) {
-        if (!user.profile || !user.iaMetrics.length) continue
-
-        try {
-          await sendWeeklyReportEmail({
-            email: user.email,
-            firstName: user.profile.firstName,
-            schoolName: user.client.name,
-            metrics: user.iaMetrics.map(m => ({
-              agentName: m.agent.name,
-              sessions: m.totalSessions,
-              completion: m.completionRate,
-              status: m.status
-            }))
-          })
-        } catch (err) {
-          fastify.log.warn({ err: err.message, userId: user.id }, 'Error enviando reporte semanal')
-        }
-      }
-
-      fastify.log.info('Reportes semanales enviados')
-    } catch (err) {
-      fastify.log.error({ err }, 'Error enviando reportes semanales')
-    }
-  })
+  // Lunes 9am: reporte semanal — deshabilitado, pendiente definir con cliente
 
   startKeepAlive(fastify)
   fastify.log.info('Cron jobs iniciados')
