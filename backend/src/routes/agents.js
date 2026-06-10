@@ -1,4 +1,5 @@
 import { requireAuth, requireActiveSubscription } from '../middleware/auth.js'
+import { promptGuard } from '../middleware/promptGuard.js'
 import { routeIaRequest } from '../services/iaRouter.js'
 import { updateMetricsAfterChat } from '../services/metrics.js'
 
@@ -35,7 +36,7 @@ export async function agentRoutes(fastify) {
         }
       }
     },
-    preHandler: requireActiveSubscription
+    preHandler: [requireActiveSubscription, promptGuard]
   }, async (request, reply) => {
     const { agentId } = request.params
     const { message, history } = request.body || {}

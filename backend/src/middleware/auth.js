@@ -1,12 +1,16 @@
 export async function requireAuth(request, reply) {
   try {
     await request.jwtVerify()
-    const { jti } = request.user
-    if (jti) {
-      const redis = request.server.redis
-      if (redis) {
+    const { jti, id } = request.user
+    const redis = request.server.redis
+    if (redis) {
+      if (jti) {
         const revoked = await redis.get(`bl:${jti}`)
         if (revoked) return reply.status(401).send({ error: 'Sesión expirada. Inicia sesión nuevamente.' })
+      }
+      if (id) {
+        const banned = await redis.get(`security:banned:${id}`)
+        if (banned) return reply.status(403).send({ error: 'Tu cuenta está temporalmente bloqueada por actividad sospechosa.' })
       }
     }
   } catch {
