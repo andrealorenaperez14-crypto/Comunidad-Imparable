@@ -77,28 +77,24 @@ export function startCronJobs(fastify) {
           status: 'SUSPENDED',
           suspensionDate: { lte: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000) }
         },
-        include: { user: { include: { profile: true, iaMetrics: true, certificates: true } } }
+        include: { user: { include: { profile: true } } }
       })
 
       for (const sub of toArchive) {
         const user = sub.user
-        await prisma.studentsPrevious.upsert({
+        const nombreCompleto = [user.profile?.firstName, user.profile?.lastName].filter(Boolean).join(' ') || user.email
+
+        // Guardar en Registro simple (upsert por DNI para no duplicar)
+        await prisma.registro.upsert({
           where: { dni: user.dni },
-          create: {
-            dni: user.dni,
-            clientId: user.clientId,
-            lastEmail: user.email,
-            lastMetrics: user.iaMetrics,
-            completedCourses: 0,
-            certificatesIssued: user.certificates.length,
-            lastActive: user.profile?.lastLoginAt || sub.suspensionDate
-          },
-          update: {
-            lastEmail: user.email,
-            lastMetrics: user.iaMetrics,
-            archivedAt: new Date()
-          }
+          update: { email: user.email, nombreCompleto },
+          create: { dni: user.dni, email: user.email, nombreCompleto, whatsapp: '' }
         })
+
+        // Eliminar usuario (cascada borra subscriptions, métricas, interacciones)
+        await prisma.user.delete({ where: { id: user.id } })
+
+        fastify.log.info({ dni: user.dni }, 'Usuario archivado y eliminado')
       }
 
       fastify.log.info('Verificación de suscripciones completada')
