@@ -264,3 +264,15 @@ model StudentsPrevious {
   lastActive         DateTime
   archivedAt         DateTime @default(now())
 }
+
+model Registro {
+  id            String   @id @default(cuid())
+  dni           String   @unique
+  email         String
+  nombreCompleto String
+  whatsapp      String
+  fechaIngreso  DateTime @default(now())
+
+  @@index([email])
+  @@index([fechaIngreso])
+}

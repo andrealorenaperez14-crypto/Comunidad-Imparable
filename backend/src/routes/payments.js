@@ -128,7 +128,16 @@ export async function paymentRoutes(fastify) {
         })
       }
 
-      // 2 — Crear o actualizar alumno en DB
+      // 2 — Guardar en tabla Registro
+      if (dni) {
+        await fastify.prisma.registro.upsert({
+          where: { dni },
+          update: { email, nombreCompleto, whatsapp },
+          create: { dni, email, nombreCompleto, whatsapp }
+        }).catch(() => {})
+      }
+
+      // 3 — Crear o actualizar alumno en DB
       if (dni) {
         const prisma    = fastify.prisma
         const now       = new Date()

@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Brain, Target, TrendingUp, Trophy, Award, BookOpen,
-  LogOut, Menu, X, ChevronRight, ChevronDown, BarChart2, Users
+  LogOut, Menu, X, ChevronRight, ChevronDown, BarChart2, Users, ClipboardList
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
@@ -38,7 +38,8 @@ const adminNav = [
   { href: '/admin/alumnos', icon: Award, label: 'Alumnos' },
   { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
   { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
-  { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' }
+  { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
+  { href: '/admin/registros', icon: ClipboardList, label: 'Registros' }
 ]
 
 const clientNav = [
@@ -49,6 +50,7 @@ const clientNav = [
   { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
   { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
+  { href: '/admin/registros', icon: ClipboardList, label: 'Registros' },
   { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' },
   { href: '/dashboard/agente-consultivo', icon: Brain, label: 'IA Coach' },
   { href: '/dashboard/agente-mentor', icon: Target, label: 'IA Mentalidad' },
