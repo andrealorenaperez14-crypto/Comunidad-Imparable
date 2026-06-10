@@ -44,6 +44,15 @@ function VideoWithTracking({ videoId, contentId, initialPercent, onProgress }: {
   const divId = `yt-player-${contentId}`
 
   useEffect(() => {
+    const trackProgress = () => {
+      const player = playerRef.current
+      if (!player?.getCurrentTime || !player?.getDuration) return
+      const duration = player.getDuration()
+      if (!duration) return
+      const percent = (player.getCurrentTime() / duration) * 100
+      onProgress(contentId, percent)
+    }
+
     const loadPlayer = () => {
       if (!(window as any).YT?.Player) return
       playerRef.current = new (window as any).YT.Player(divId, {
@@ -56,34 +65,22 @@ function VideoWithTracking({ videoId, contentId, initialPercent, onProgress }: {
       })
     }
 
-    const trackProgress = () => {
-      const player = playerRef.current
-      if (!player?.getCurrentTime || !player?.getDuration) return
-      const duration = player.getDuration()
-      if (!duration) return
-      const percent = (player.getCurrentTime() / duration) * 100
-      onProgress(contentId, percent)
-    }
-
     if ((window as any).YT?.Player) {
       loadPlayer()
     } else {
-      if (!(window as any).onYouTubeIframeAPIReady) {
+      if (!document.querySelector('script[src="https://www.youtube.com/iframe_api"]')) {
         const tag = document.createElement('script')
         tag.src = 'https://www.youtube.com/iframe_api'
         document.head.appendChild(tag)
       }
-      ;(window as any).onYouTubeIframeAPIReady = loadPlayer
+      const prev = (window as any).onYouTubeIframeAPIReady
+      ;(window as any).onYouTubeIframeAPIReady = () => {
+        if (prev) prev()
+        loadPlayer()
+      }
     }
 
-    intervalRef.current = setInterval(() => {
-      const player = playerRef.current
-      if (!player?.getCurrentTime || !player?.getDuration) return
-      const duration = player.getDuration()
-      if (!duration) return
-      const percent = (player.getCurrentTime() / duration) * 100
-      onProgress(contentId, percent)
-    }, 10000)
+    intervalRef.current = setInterval(trackProgress, 10000)
 
     return () => {
       clearInterval(intervalRef.current)
