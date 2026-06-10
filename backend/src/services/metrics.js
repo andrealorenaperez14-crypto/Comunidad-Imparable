@@ -63,21 +63,9 @@ function calcularRacha(currentStreak, lastUpdated) {
   return currentStreak
 }
 
-function calcularEstado(agentType, metrics) {
-  const { engagementScore, completionRate, problemResolutionRate, totalSessions = 0 } = metrics
-
-  // Con menos de 5 sesiones no hay suficiente data para alertar
-  if (totalSessions < 5) return 'BUENO'
-
-  if (agentType === 'CONSULTIVA') {
-    if (problemResolutionRate > 0.8 || engagementScore > 0.8) return 'EXCELENTE'
-    if (engagementScore < 0.1) return 'ALERTA'
-    return 'BUENO'
-  } else {
-    if (engagementScore > 0.8 && completionRate > 0.9) return 'EXCELENTE'
-    if (engagementScore < 0.1 && completionRate < 0.1) return 'ALERTA'
-    return 'BUENO'
-  }
+function calcularEstado(_agentType, _metrics) {
+  // Alertas deshabilitadas — pendiente para parte paga (Asesor Elite)
+  return 'BUENO'
 }
 
 export async function recalcularMetricasEstudiante(prisma, userId) {

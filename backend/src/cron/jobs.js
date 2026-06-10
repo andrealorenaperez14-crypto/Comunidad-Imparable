@@ -109,42 +109,8 @@ export function startCronJobs(fastify) {
 
   // 8am: email inactividad — deshabilitado, pendiente definir con cliente
 
-  // 10pm: alertas de rendimiento
-  cron.schedule('0 22 * * *', async () => {
-    try {
-      const clients = await prisma.client.findMany()
-
-      for (const client of clients) {
-        const metrics = await prisma.iAMetric.findMany({
-          where: { user: { clientId: client.id, role: 'STUDENT' }, agent: { type: 'CONSULTIVA' } },
-          include: {
-            user: { include: { profile: true } },
-            agent: { select: { name: true, type: true } }
-          }
-        })
-
-        const toAlert = metrics.filter(m => m.engagementScore < 0.6 && m.status !== 'ALERTA')
-        const toExcel = metrics.filter(m => m.engagementScore > 0.9 && m.status !== 'EXCELENTE')
-
-        await Promise.all([
-          toAlert.length && prisma.iAMetric.updateMany({
-            where: { id: { in: toAlert.map(m => m.id) } },
-            data: { status: 'ALERTA', alertMessage: 'Rendimiento bajo detectado' }
-          }),
-          toExcel.length && prisma.iAMetric.updateMany({
-            where: { id: { in: toExcel.map(m => m.id) } },
-            data: { status: 'EXCELENTE' }
-          })
-        ])
-
-        // Emails bajo/alto rendimiento deshabilitados — pendiente definir con cliente
-      }
-
-      fastify.log.info('Alertas de rendimiento procesadas')
-    } catch (err) {
-      fastify.log.error({ err }, 'Error procesando alertas de rendimiento')
-    }
-  })
+  // Alertas de rendimiento deshabilitadas — pendiente para parte paga (Asesor Elite)
+  // Las métricas de uso (sesiones, preguntas, engagementScore) siguen activas sin generar alertas
 
   // Lunes 9am: reporte semanal — deshabilitado, pendiente definir con cliente
 

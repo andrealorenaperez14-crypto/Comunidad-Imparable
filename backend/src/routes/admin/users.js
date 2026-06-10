@@ -252,14 +252,8 @@ export async function adminUserRoutes(fastify) {
         const totalInters = inters.COACH + inters.MENTALIDAD + inters.CONSULTIVA
         const score = inters.CONSULTIVA * WEIGHTS.CONSULTIVA + inters.COACH * WEIGHTS.COACH + inters.MENTALIDAD * WEIGHTS.MENTALIDAD
 
-        // Estado basado en interacciones — no en engagementScore (fórmula vieja)
-        const daysActive = Math.max(1, Math.floor(
-          (Date.now() - new Date(s.createdAt).getTime()) / (1000 * 60 * 60 * 24)
-        ))
-        let status
-        if (totalInters === 0 && daysActive >= 3) status = 'ALERTA'
-        else if (score >= 10) status = 'EXCELENTE'
-        else status = 'BUENO'
+        // Alertas deshabilitadas — pendiente para parte paga (Asesor Elite)
+        const status = 'BUENO'
 
         return {
           id: s.id,
