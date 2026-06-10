@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { motion } from 'framer-motion'
 import { KeyRound, Loader2, ArrowLeft, CheckCircle } from 'lucide-react'
 import { authApi } from '@/lib/api'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 const schema = z.object({ email: z.string().email('Email inválido') })
 type FormData = z.infer<typeof schema>
@@ -14,6 +15,7 @@ type FormData = z.infer<typeof schema>
 export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
+  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const { register, handleSubmit, getValues, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema)
@@ -22,7 +24,8 @@ export default function ForgotPasswordPage() {
   const onSubmit = async (data: FormData) => {
     try {
       setError('')
-      await authApi.forgotPassword(data.email)
+      const recaptchaToken = executeRecaptcha ? await executeRecaptcha('forgot_password') : undefined
+      await authApi.forgotPassword(data.email, recaptchaToken)
       setSent(true)
     } catch {
       setError('Error al enviar el email. Intenta nuevamente.')

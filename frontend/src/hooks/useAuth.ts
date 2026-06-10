@@ -18,14 +18,14 @@ export function useAuth() {
     }
   }, [token, user, _hasHydrated])
 
-  const login = async (email: string, password: string) => {
-    const { data } = await authApi.login({ email, password })
+  const login = async (email: string, password: string, recaptchaToken?: string) => {
+    const { data } = await authApi.login({ email, password, recaptchaToken })
     setAuth(data.user, data.token, data.refreshToken)
     return data
   }
 
   const register = async (formData: {
-    email: string; dni: string; password: string; firstName: string; lastName: string
+    email: string; dni: string; password: string; firstName: string; lastName: string; recaptchaToken?: string
   }) => {
     const { data } = await authApi.register(formData)
     setAuth(data.user, data.token)

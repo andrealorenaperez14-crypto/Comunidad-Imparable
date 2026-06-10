@@ -40,15 +40,18 @@ api.interceptors.response.use(
 
 // Auth
 export const authApi = {
-  login: (data: { email: string; password: string }) =>
+  login: (data: { email: string; password: string; recaptchaToken?: string }) =>
     api.post('/api/auth/login', data),
-  register: (data: { email: string; dni: string; password: string; firstName: string; lastName: string }) =>
+  register: (data: {
+    email: string; dni: string; password: string;
+    firstName: string; lastName: string; recaptchaToken?: string
+  }) =>
     api.post('/api/auth/register', data),
   me: () => api.get('/api/auth/me'),
   logout: () => api.post('/api/auth/logout'),
   refresh: (refreshToken: string) => api.post('/api/auth/refresh', { refreshToken }),
-  forgotPassword: (email: string) =>
-    api.post('/api/auth/forgot-password', { email }),
+  forgotPassword: (email: string, recaptchaToken?: string) =>
+    api.post('/api/auth/forgot-password', { email, recaptchaToken }),
   resetPassword: (email: string, otp: string, newPassword: string) =>
     api.post('/api/auth/reset-password', { email, otp, newPassword }),
   changePassword: (currentPassword: string, newPassword: string) =>
