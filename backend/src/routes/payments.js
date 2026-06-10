@@ -2,6 +2,7 @@ import { MercadoPagoConfig, Preference, Payment } from 'mercadopago'
 import { createHmac, timingSafeEqual, randomInt } from 'crypto'
 import bcrypt from 'bcryptjs'
 import { sendVIPWelcomeEmail } from '../services/email.js'
+import { sanitizeFields } from '../middleware/sanitizeInput.js'
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
@@ -110,7 +111,11 @@ export async function paymentRoutes(fastify) {
       const ref = JSON.parse(paymentData.external_reference || '{}')
       const { nombre, apellido = '', dni, email, whatsapp } = ref
       const montoReal  = paymentData.transaction_amount
-      const nombreCompleto = `${nombre} ${apellido}`.trim()
+      const cleanRef = sanitizeFields({ nombre, apellido, whatsapp }, ['nombre', 'apellido', 'whatsapp'])
+      const cleanNombre = cleanRef.nombre
+      const cleanApellido = cleanRef.apellido
+      const cleanWhatsapp = cleanRef.whatsapp
+      const nombreCompleto = `${cleanNombre} ${cleanApellido}`.trim()
 
       // 1 — Escribir en Google Sheet (columnas: fecha, nombre, DNI, email, WA, importe)
       if (APPS_SCRIPT_URL) {
@@ -122,7 +127,7 @@ export async function paymentRoutes(fastify) {
             nombre:        nombreCompleto,
             dni:           dni || '',
             email,
-            whatsapp,
+            whatsapp:      cleanWhatsapp,
             importePagado: `$${montoReal?.toLocaleString('es-AR')}`
           })
         })
@@ -132,8 +137,8 @@ export async function paymentRoutes(fastify) {
       if (dni) {
         await fastify.prisma.registro.upsert({
           where: { dni },
-          update: { email, nombreCompleto, whatsapp },
-          create: { dni, email, nombreCompleto, whatsapp }
+          update: { email, nombreCompleto, whatsapp: cleanWhatsapp },
+          create: { dni, email, nombreCompleto, whatsapp: cleanWhatsapp }
         }).catch(() => {})
       }
 
@@ -169,7 +174,7 @@ export async function paymentRoutes(fastify) {
               passwordHash,
               role:     'STUDENT',
               clientId,
-              profile:  { create: { firstName: nombre, lastName: apellido } },
+              profile:  { create: { firstName: cleanNombre, lastName: cleanApellido } },
               subscriptions: {
                 create: { planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now, amountPaid: montoReal || 0 }
               }
@@ -178,7 +183,7 @@ export async function paymentRoutes(fastify) {
 
           await sendVIPWelcomeEmail({
             email,
-            firstName:    nombre,
+            firstName:    cleanNombre,
             tempPassword,
             loginUrl:     `${FRONTEND_URL}/login`
           })
