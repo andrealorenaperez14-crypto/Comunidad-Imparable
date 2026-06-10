@@ -1,0 +1,136 @@
+====================================================
+OBRA SOCIAL: HOMINIS
+TIPO: Obra Social / Prepaga | Ingreso: Dependencia | Monotributo | Particular
+====================================================
+
+CUÁNDO OFRECERLA:
+- Embarazada hasta 35 años y hasta el quinto mes de gestación -> ÚNICA opción disponible.
+- Menor solo desde 6 años -> primera opción (edad mínima más baja del portafolio).
+- Cliente entre 18 y 64 años que acepta diferencia, con cobertura en CABA/AMBA.
+- Mayor de 65 años: solo si el cónyuge es menor de 64 años.
+- Cobertura: CABA y AMBA únicamente — sin cobertura nacional.
+
+====================================================
+EDADES
+
+Titular: 18 a 64 años.
+Mayor de 65: solo si cónyuge es menor de 64 años.
+Menor solo: 6 a 17 años (sin estudios médicos ni certificado de alta salud requeridos).
+Hijos: [Pendiente completar].
+Cónyuge/concubino: permitido.
+
+====================================================
+ZONA DE COBERTURA
+
+CABA | Zona Norte | Zona Oeste | Zona Sur GBA.
+Cobertura nacional: No.
+Si el cliente necesita cobertura nacional, evaluar otra opción.
+
+====================================================
+INGRESO SEGÚN CONDICIÓN LABORAL
+
+Relación de dependencia:
+- Permite derivación de aportes.
+- Siempre puede existir diferencia — NO es PMO.
+
+Monotributista:
+- Permite derivación de aportes según categoría vigente.
+- Puede acceder a promociones comerciales.
+
+Particular:
+- Ingreso voluntario directo.
+
+====================================================
+PLANES DISPONIBLES
+
+OMINIS AQUA — Con copagos | CABA y AMBA.
+OMINIS VITA — Sin copagos | CABA y AMBA.
+Plan Juvenil — 18 a 25 años | Promociones especiales aplicables.
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan         | Copagos | Cobertura     | Diferencial
+OMINIS AQUA  | Si      | CABA y AMBA   | —
+OMINIS VITA  | No      | CABA y AMBA   | —
+Juvenil      | —       | —             | Solo 18-25 años, con promociones
+
+====================================================
+MÓDULO EMBARAZO — DATO CRÍTICO
+
+Única cobertura del portafolio que acepta embarazadas.
+Condiciones obligatorias que informás desde el inicio:
+- Titular: hasta 35 años.
+- Gestación: hasta el quinto mes inclusive.
+- Documentación: ecografía + estudios de laboratorio.
+- Valor del módulo: $1.797.961 (valor abril — pendiente actualización).
+- Es un módulo especial adicional — no está incluido en el plan base.
+- Carencia de maternidad: se comercializa mediante módulo especial.
+
+Si la cliente supera los 35 años o está en el sexto mes o más: no aplica. No hay otra opción en el portafolio.
+
+====================================================
+PRECIOS
+
+[Pendiente — cargar tabla de precios por rango etario y plan]
+
+====================================================
+CARTILLA
+
+Capital Federal:
+- Sanatorio Güemes | Clínica Santa Isabel | Clínica Santa Bárbara | Clínica del Parque
+
+Zona Norte:
+- Fátima Pilar | Fátima Escobar | Sanatorio Independencia | Sanatorio San Pablo
+- Modelo Caseros | Corporación Médica San Martín
+
+Zona Oeste:
+- Clínica Modelo Morón | Sanatorio del Oeste | Sanatorio de Ituzaingó
+- Clínica Cruz Celeste | Sanatorio AMTA | Clínica Buen Pastor
+
+Zona Sur:
+- Clínica Modelo Monte Grande | Clínica Boedo | Sanatorio Bernal
+- Clínica del Niño y la Familia | Sanatorio Modelo Adrogué | Sanatorio Modelo Burzaco
+- Policlínico de Lomas de Zamora | Clínica Luján | Clínica Dulce Espera
+
+Más centros médicos y prestadores complementarios según cartilla vigente.
+Auditoría presencial para mayores de 55 años: Sanatorio Güemes.
+
+====================================================
+MEDICAMENTOS
+
+Ambulatorios: 40%.
+Resolución 310: 70%.
+Medicación crónica: 100%.
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Turnos: app propia + prestadores de cartilla.
+Copagos: OMINIS AQUA sí | OMINIS VITA no.
+Urgencias: cobertura según plan contratado.
+Internación: según plan contratado.
+Autorización de estudios: según normativa y prestador.
+Atención al cliente: app propia + canales digitales.
+
+====================================================
+PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+
+Declaración obligatoria: antecedentes médicos + patologías actuales + cirugías previas.
+Mayores de 55 años: estudios médicos o auditoría presencial en Sanatorio Güemes.
+Carencias según evaluación médica y normativa vigente.
+Alta complejidad: [Pendiente completar].
+Sin carencia: [Pendiente completar].
+Siempre informar al cliente desde el inicio. Nunca ocultar.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. Embarazada: informar valor del módulo ($1.797.961 — actualizar) y que es adicional al plan.
+   Sin módulo no hay cobertura de maternidad. Aclararlo antes de cerrar el alta.
+2. Menor solo desde 6 años: sin estudios médicos ni certificado de alta salud.
+   Los padres son responsables de la facturación. Proceso simple.
+3. Mayor de 65 años: solo aplica si el cónyuge es menor de 64. Verificar siempre.
+4. Mayores de 55 años: auditoría presencial obligatoria en Sanatorio Güemes. Coordinarlo al inicio.
+5. Sin cobertura nacional — si el cliente viaja o vive en interior, no aplica.
+6. Siempre hay diferencia de cuota — no es PMO puro en ningún plan.
