@@ -41,6 +41,17 @@ const adminNav = [
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' }
 ]
 
+const clientNav = [
+  { href: '/admin', icon: LayoutDashboard, label: 'Panel Admin' },
+  { href: '/admin/agentes', icon: Brain, label: 'Agentes IA' },
+  { href: '/admin/cursos', icon: BookOpen, label: 'Cursos' },
+  { href: '/admin/alumnos', icon: Award, label: 'Alumnos' },
+  { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
+  { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
+  { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
+  { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' }
+]
+
 export function Sidebar() {
   const pathname   = usePathname()
   const { user, logout, isAdmin, isClient } = useAuth()
@@ -57,7 +68,7 @@ export function Sidebar() {
   })
 
   const isPaid = subData?.planType === '30_DAYS' || subData?.planType === 'VITALICIO'
-  const navItems = (isAdmin || isClient) ? adminNav : isPaid ? studentNavPaid : studentNavTrial
+  const navItems = isAdmin ? adminNav : isClient ? clientNav : isPaid ? studentNavPaid : studentNavTrial
 
   const { data: modules = [] } = useQuery({
     queryKey: ['course-content-sidebar'],
