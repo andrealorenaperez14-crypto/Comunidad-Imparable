@@ -3,6 +3,7 @@ import { randomUUID, randomInt } from 'crypto'
 import { z } from 'zod'
 import { requireAuth } from '../middleware/auth.js'
 import { sendPasswordResetEmail } from '../services/email.js'
+import { sanitizeFields } from '../middleware/sanitizeInput.js'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -92,6 +93,9 @@ export async function authRoutes(fastify) {
     }
 
     const { email, dni, password, firstName, lastName, clientId } = result.data
+    const sanitized = sanitizeFields({ firstName, lastName }, ['firstName', 'lastName'])
+    const cleanFirstName = sanitized.firstName
+    const cleanLastName = sanitized.lastName
 
     const existingEmail = await fastify.prisma.user.findUnique({ where: { email } })
     if (existingEmail) {
@@ -117,7 +121,7 @@ export async function authRoutes(fastify) {
         role: 'STUDENT',
         clientId: resolvedClientId,
         profile: {
-          create: { firstName, lastName }
+          create: { firstName: cleanFirstName, lastName: cleanLastName }
         },
         subscriptions: {
           create: {
