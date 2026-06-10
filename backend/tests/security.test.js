@@ -132,6 +132,72 @@ describe('promptGuard', () => {
   })
 })
 
+import { makeVerifyRecaptcha } from '../src/middleware/verifyRecaptcha.js'
+
+describe('makeVerifyRecaptcha', () => {
+  const originalEnv = process.env.RECAPTCHA_SECRET_KEY
+
+  afterEach(() => {
+    process.env.RECAPTCHA_SECRET_KEY = originalEnv
+    vi.restoreAllMocks()
+  })
+
+  it('pasa (skip) cuando RECAPTCHA_SECRET_KEY no está configurada', async () => {
+    delete process.env.RECAPTCHA_SECRET_KEY
+    const middleware = makeVerifyRecaptcha('login')
+    const reply = { status: vi.fn(), send: vi.fn() }
+    const request = { body: {} }
+    await middleware(request, reply)
+    expect(reply.status).not.toHaveBeenCalled()
+  })
+
+  it('rechaza cuando no hay token en el body', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret'
+    const middleware = makeVerifyRecaptcha('login')
+    const reply = { status: vi.fn().mockReturnThis(), send: vi.fn() }
+    const request = { body: {}, server: { log: { warn: vi.fn() } } }
+    await middleware(request, reply)
+    expect(reply.status).toHaveBeenCalledWith(400)
+    expect(reply.send).toHaveBeenCalledWith({
+      error: 'Verificación de seguridad fallida. Intentá de nuevo.'
+    })
+  })
+
+  it('pasa cuando Google responde con score >= 0.5 y action correcta', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret'
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      json: () => Promise.resolve({ success: true, score: 0.9, action: 'login' })
+    }))
+    const middleware = makeVerifyRecaptcha('login')
+    const reply = { status: vi.fn(), send: vi.fn() }
+    const request = { body: { recaptchaToken: 'valid-token' }, server: { log: { warn: vi.fn() } } }
+    await middleware(request, reply)
+    expect(reply.status).not.toHaveBeenCalled()
+  })
+
+  it('rechaza cuando score es bajo', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret'
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      json: () => Promise.resolve({ success: true, score: 0.2, action: 'login' })
+    }))
+    const middleware = makeVerifyRecaptcha('login')
+    const reply = { status: vi.fn().mockReturnThis(), send: vi.fn() }
+    const request = { body: { recaptchaToken: 'bot-token' }, server: { log: { warn: vi.fn() } } }
+    await middleware(request, reply)
+    expect(reply.status).toHaveBeenCalledWith(400)
+  })
+
+  it('falla abierto si Google API no está disponible', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret'
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Network error')))
+    const middleware = makeVerifyRecaptcha('login')
+    const reply = { status: vi.fn(), send: vi.fn() }
+    const request = { body: { recaptchaToken: 'any-token' }, server: { log: { warn: vi.fn() } } }
+    await middleware(request, reply)
+    expect(reply.status).not.toHaveBeenCalled()
+  })
+})
+
 import { buildApp } from '../src/app.js'
 
 describe('GET /api/admin/security/events', () => {
