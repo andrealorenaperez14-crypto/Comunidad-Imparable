@@ -1,0 +1,139 @@
+====================================================
+OBRA SOCIAL: PREMEDIC
+TIPO: Obra Social + Planes Privados | Ingreso: Dependencia | Monotributo | Particular
+====================================================
+
+CUÁNDO OFRECERLA:
+- PMO alternativo cuando Doctor Red no aplica (cobertura en Bs. As., Córdoba, Tucumán, Mendoza, Misiones).
+- Cliente hasta 59 años con recibo de sueldo o monotributo.
+- Particular hasta 63 años (con auditoría presencial).
+- Menor solo desde 7 años (Planes 200 o 300).
+- NO aplica para: embarazadas, bebés menores de 7 meses, mayores de 63 años.
+
+====================================================
+EDADES
+
+Titular con recibo de sueldo: 18 a 59 años.
+Titular particular: 18 a 63 años (auditoría presencial obligatoria desde los 60).
+Hijos: hasta 21 años. Hasta 25 años con certificado de alumno regular [Pendiente confirmar].
+Menor solo: 7 a 17 años — Planes 200 y 300 únicamente.
+Cónyuge/concubino: permitido.
+
+====================================================
+ZONA DE COBERTURA
+
+Provincias con estructura operativa: Buenos Aires | Córdoba | Tucumán | Mendoza | Misiones.
+Cobertura nacional: parcial — limitada a las provincias con oficinas.
+Si el cliente vive fuera de estas provincias, verificar disponibilidad antes de ofrecer.
+
+====================================================
+INGRESO SEGÚN CONDICIÓN LABORAL
+
+Relación de dependencia:
+- Aporte: 7,65% del salario bruto.
+- Cápita mínima: $14.000 por integrante del grupo familiar.
+  Si el aporte dividido por integrantes no llega a $14.000 por persona, puede haber diferencia.
+- Documentación: DNI + último recibo de sueldo + declaración jurada médica.
+- Acceso a PMO y planes superadores.
+
+Monotributista:
+- Permite derivación de aportes con descuentos especiales.
+- Documentación: [Pendiente completar].
+
+Particular:
+- Hasta 63 años con auditoría presencial.
+- Ingreso voluntario directo.
+
+====================================================
+PLANES DISPONIBLES
+
+Plan Ambulatorio — Valor referencial $30.000 | Solo CABA, AMBA, Córdoba, Tucumán.
+  Incluye: consultas y atención ambulatoria.
+  NO incluye: guardia, urgencias, internación.
+
+PMO — Con copagos.
+Plan 100 — Con copagos.
+Plan 200 — Con copagos.
+Plan 300 — Sin copagos. Disponible para menores solos.
+Plan 400 — Sin copagos.
+Plan 500 — Sin copagos. Mayor cobertura y cartilla ampliada.
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan          | Copagos | Menores solos | Diferencial
+Ambulatorio   | —       | No            | Solo ambulatorio, sin guardia ni internación
+PMO           | Si      | No            | Base PMO
+100           | Si      | No            | —
+200           | Si      | Si (7-17 años)| —
+300           | No      | Si (7-17 años)| Disponible en grupos de afinidad sin diferencia
+400           | No      | No            | —
+500           | No      | No            | Cartilla ampliada
+
+====================================================
+GRUPOS DE AFINIDAD — PLAN 300 SIN DIFERENCIA
+
+Empresas habilitadas: Correo Argentino | Bagley | Renault Argentina | Trenes Argentinos |
+  Empresas ferroviarias | Subte | Transporte | Colectivos | Coto | Walmart | ChangoMás.
+Beneficio: acceso al Plan 300 para grupo familiar sin diferencia de cuota.
+Condición: sujeto a validación de convenio vigente con la empresa empleadora.
+
+====================================================
+PRECIOS
+
+[Pendiente — cargar tabla por rango etario y plan]
+
+====================================================
+CARTILLA
+
+Prestadores destacados: Trinidades | Anchorena | Clínica Bazterrica | Clínica Santa Isabel.
+Centros propios: Centros Médicos Premedic | Centros Odontológicos Premedic.
+Red regional por provincia: Buenos Aires | Córdoba | Tucumán | Mendoza | Misiones.
+La cartilla se amplía según el plan contratado.
+
+====================================================
+COPAGOS Y COBERTURAS ESPECIALES
+
+Especialistas: $4.000 por consulta.
+Sin copago: guardia | internación | clínica médica | pediatría | ginecología | médico a domicilio.
+Estudios: el afiliado paga 30% — la obra social cubre 70%.
+Urgencias: servicio de ambulancias ECO.
+
+====================================================
+MEDICAMENTOS
+
+Ambulatorios: 40%.
+Resolución 310: 70%.
+Medicamentos crónicos: 100%.
+Anticonceptivos: 100%.
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Turnos: centros médicos y prestadores de cartilla.
+Urgencias: ambulancias ECO.
+Internación: según plan contratado.
+Atención al cliente: oficinas + canales digitales.
+Promociones: diferenciadas por tipo de afiliación, edad y plan. NO acumulables.
+
+====================================================
+PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+
+Declaración jurada médica obligatoria al ingresar.
+Carencias según auditoría médica y normativa vigente.
+Medicación crónica: 100%.
+Siempre informar al cliente desde el inicio. Nunca ocultar.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. NO admite embarazadas — derivar a Hominis.
+2. NO admite bebés menores de 7 meses — informar antes de gestionar.
+3. Menor solo: desde 7 años, solo Planes 200 y 300. Verificar responsable legal.
+4. Desde los 60 años: ingreso particular posible hasta 63 pero requiere auditoría presencial.
+   Coordinarlo desde el primer contacto.
+5. Cápita mínima $14.000 por integrante en dependencia — calcular antes de ofrecer.
+6. Cobertura limitada a 5 provincias — verificar localidad del cliente antes de ofrecer.
+7. Grupos de afinidad: si el cliente trabaja en empresa convenio, puede acceder al Plan 300 sin diferencia.
+   Siempre preguntar empleador.
+8. Promociones no acumulables — el cliente accede solo a una vigente al momento del alta.
