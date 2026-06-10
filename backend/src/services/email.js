@@ -55,7 +55,7 @@ function layout(content) {
   return `
     <div style="font-family:'DM Sans',Arial,sans-serif;max-width:520px;margin:0 auto;background:#0C0C0C;color:#F5F0E8;border-radius:12px;overflow:hidden">
       <div style="background:#0C0C0C;padding:28px 32px 0;border-bottom:1px solid rgba(196,151,42,0.2)">
-        <p style="margin:0 0 4px;font-size:11px;letter-spacing:3px;color:#C4972A;text-transform:uppercase">Escuela de Asesores MPS</p>
+        <p style="margin:0 0 4px;font-size:11px;letter-spacing:3px;color:#C4972A;text-transform:uppercase">Escuela de Asesores MPS by Yami Mansilla</p>
         <p style="margin:0 0 20px;font-size:10px;letter-spacing:1px;color:#8A8A7A">Formamos Líderes, No Vendedores</p>
       </div>
       <div style="padding:32px">
