@@ -49,7 +49,10 @@ const clientNav = [
   { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
   { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
-  { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' }
+  { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' },
+  { href: '/dashboard/agente-consultivo', icon: Brain, label: 'IA Coach' },
+  { href: '/dashboard/agente-mentor', icon: Target, label: 'IA Mentalidad' },
+  { href: '/dashboard/agente-consultiva', icon: TrendingUp, label: 'IA Consultiva' }
 ]
 
 export function Sidebar() {
