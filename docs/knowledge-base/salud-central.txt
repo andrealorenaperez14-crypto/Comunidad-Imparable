@@ -1,0 +1,104 @@
+====================================================
+OBRA SOCIAL: SALUD CENTRAL
+TIPO: Prepaga | Ingreso: Solo particular (voluntario)
+====================================================
+
+CUÁNDO OFRECERLA:
+- Cliente entre 65 y 85 años -> PRIMERA opción siempre.
+- También aplica para adultos entre 18 y 64 que quieran prepaga privada en AMBA.
+- NO acepta aportes por recibo de sueldo ni monotributo.
+
+====================================================
+EDADES
+
+Titular: 18 a 85 años.
+Hijos: [Pendiente]
+Cónyuge/conviviente: permitido.
+
+Alertas obligatorias por edad:
+- Mayores de 60 -> deben presentar laboratorio o electrocardiograma al ingresar.
+- Mayores de 70 -> requieren auditoría médica presencial antes del alta.
+- Menores de edad -> Solicitud de Alta firmada por pediatra.
+
+====================================================
+ZONA DE COBERTURA
+
+Principal: CABA | GBA Norte | GBA Sur | GBA Oeste.
+Nacional: parcial, solo en planes SC90 y SC110.
+Internacional: asistencia al viajero en SC90 y SC110.
+
+====================================================
+PLANES DISPONIBLES
+
+SC30 — Con copagos
+Cartilla reducida.
+Capital Federal: Sanatorio Colegiales, Clínica Santa Bárbara, Clínica Santa Clara,
+  Hospital Militar Central, centros médicos de zona.
+Zona Sur: Sanatorio Bernal, Clínica Ranelagh, Sanatorio San Francisco de Wilde,
+  Clínica San Juan de Lanús, Policlínico de Lomas de Zamora.
+NO incluye: Anchorena Avellaneda (Ex Itoiz).
+
+SC50 — Con copagos
+Cartilla ampliada. Incluye SC30 más:
+Capital Federal: CEMIC Saavedra, CEMIC Recoleta, CEMIC San Isidro, Clínica del Sol,
+  Clínica Bazterrica, Clínica Santa Isabel, Adventista de Belgrano,
+  Fundación Hospitalaria, Hospital Británico, Fundación Favaloro (por derivación).
+Zona Norte: Diagnóstico Maipú, Deragopyan, Sanatorio San Lucas.
+Zona Noroeste: Anchorena San Martín.
+Zona Sur: Anchorena Avellaneda (Ex Itoiz), Policlínico Niño y Familia de Quilmes,
+  Clínica Solano de Florencio Varela.
+Zona Oeste (todos los planes): Clínica Sarmiento, Clínica Alcorta,
+  Clínica Buen Pastor, centros médicos de zona.
+
+SC70 — Sin copagos
+Misma cartilla que SC50. Diferencia clave: sin copagos en consultas.
+
+SC90 — Con copagos | Cobertura nacional | Asistencia viajero internacional
+Toda la cartilla SC50 más: Sanatorio Austral.
+Habitación individual en internación.
+
+SC110 — Sin copagos | Cobertura nacional | Asistencia viajero internacional
+Misma cartilla que SC90. Sin copagos. Habitación individual.
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan  | Copagos | Cartilla         | Cobertura nacional
+SC30  | Si      | Basica           | No
+SC50  | Si      | Ampliada         | No
+SC70  | No      | Ampliada         | No
+SC90  | Si      | Ampliada+Austral | Si + viajero
+SC110 | No      | Ampliada+Austral | Si + viajero
+
+====================================================
+PRECIOS
+
+[Pendiente — cargar tabla por rango etario]
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Autorización de estudios: por WhatsApp o email. Hasta 72 hs hábiles.
+Turnos: según prestador.
+Internación: en clínicas de cartilla según plan contratado.
+Urgencias: cobertura mediante cartilla prestacional.
+Medicamentos: [Pendiente]
+
+====================================================
+PREEXISTENCIAS
+
+Acepta determinadas patologías preexistentes. Sujeto a auditoría individual.
+Siempre informar al cliente desde el inicio — nunca ocultar.
+Detallar carencias específicas cuando estén disponibles.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. Si el cliente tiene más de 70 -> auditoría presencial obligatoria antes del alta.
+   Coordinarlo con el cliente desde el primer contacto.
+2. Si el cliente está cerca de los 65 -> es el momento ideal para ingresar.
+   Después de los 85 no hay ingreso posible.
+3. No ofrecer como opción a monotributistas ni empleados en relación de dependencia
+   que quieran usar su aporte — no aplica.
+4. Zona Oeste aplica en TODOS los planes.
+   Anchorena Avellaneda solo desde SC50 en adelante.
