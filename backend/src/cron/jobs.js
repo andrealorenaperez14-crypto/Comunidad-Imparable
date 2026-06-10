@@ -101,11 +101,13 @@ export function startCronJobs(fastify) {
         }
       }
 
-      // Archivar y eliminar datos de cuentas suspendidas hace más de 15 días
+      // CICLO PARTE PAGA (Asesor Elite): suspensión día 35 → datos guardados 10 días → eliminado día 45
+      // No confundir con el trial FREE (5 días) que solo muestra la página /expired sin eliminar nada.
+      // Archivar y eliminar datos de cuentas suspendidas hace más de 10 días
       const toArchive = await prisma.subscription.findMany({
         where: {
           status: 'SUSPENDED',
-          suspensionDate: { lte: new Date(now.getTime() - 15 * 24 * 60 * 60 * 1000) }
+          suspensionDate: { lte: new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000) }
         },
         include: { user: { include: { profile: true, iaMetrics: true, certificates: true } } }
       })
