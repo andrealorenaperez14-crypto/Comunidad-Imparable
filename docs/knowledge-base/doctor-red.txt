@@ -1,0 +1,124 @@
+====================================================
+OBRA SOCIAL: DOCTOR RED
+TIPO: Obra Social + Prepaga | Ingreso: Relación de dependencia | Particular
+====================================================
+
+CUÁNDO OFRECERLA:
+- PMO PRINCIPAL del portafolio para trabajadores en relación de dependencia hasta 60 años.
+- Plan 500: primera opción PMO con cobertura nacional, sin copagos, sin carencias.
+- Planes 1000/2000/3000: prepaga premium para quienes quieren cartilla ampliada en Buenos Aires.
+- NO acepta monotributistas.
+- NO acepta menores solos.
+
+====================================================
+EDADES
+
+Plan 500: hasta 55 años.
+Planes 1000, 2000 y 3000: hasta 60 años y 11 meses.
+Mayores de 60 años: deben presentar laboratorio y electrocardiograma.
+Hijos: hasta 21 años. Hasta 25 años con certificado de estudios vigente.
+Hijos del cónyuge: aceptados.
+Menores bajo guarda o tutela judicial: con antigüedad mínima de 12 meses.
+Abuelos con nietos: ingreso privado permitido.
+Menores solos: NO permitido.
+
+====================================================
+ZONA DE COBERTURA
+
+Plan 500: cobertura nacional.
+Planes 1000, 2000 y 3000: solo Buenos Aires (CABA + GBA + interior PBA).
+
+====================================================
+INGRESO SEGÚN CONDICIÓN LABORAL
+
+Relación de dependencia:
+- Aporte: 7,42% del salario bruto.
+- Cápita mínima: $20.000 por integrante del grupo familiar.
+  El aporte total se divide por la cantidad de integrantes — debe alcanzar $20.000 por persona.
+- Documentación: último recibo de sueldo o dos quincenas consecutivas.
+- Permite acceso al PMO mediante derivación de aportes.
+
+Monotributista: NO disponible.
+Particular: ingreso desde 18 años.
+
+====================================================
+PLANES DISPONIBLES
+
+Plan 500 — PMO | Sin copagos | Sin carencias | Cobertura nacional.
+  Cartilla base CABA: Clínica Santa Isabel | Clínica Bazterrica | Sanatorio Colegiales | Hospital Militar Central.
+  Zona Sur: Clínica Dulce Espera | Sanatorio Bernal | Clínica del Niño y la Familia de Solano
+    | Clínica del Niño y la Familia de Quilmes | Clínica Ranelagh | Clínica Calchaquí
+    | Policlínico de Lomas de Zamora | Modelo de Burzaco | Modelo de Adrogué.
+  Zona Oeste: Modelo de Caseros | Clínica Buen Pastor | Instituto Médico Agüero.
+  Zona Norte: Deragopyan | Fátima Pilar | Fátima Escobar | Centro Médico Ballester
+    | Grupo Pediátrico Ballester | Clínica Santa María | Sanatorio San Pablo de San Fernando.
+
+Plan 1000 — Sin copagos | Sin carencias | Solo Buenos Aires.
+  Todo el Plan 500 más: Anchorena Recoleta | Anchorena San Martín | Anchorena Avellaneda (Ex Itoiz) | CEMIC.
+
+Plan 2000 — Sin copagos | Sin carencias | Solo Buenos Aires.
+  Todo el Plan 1000 más: Trinidad Ramos Mejía | Trinidad Quilmes | Hospital Alemán | Sanatorio Finocchietto.
+  Adicionales: habitación individual | mayor cobertura odontológica.
+
+Plan 3000 — Sin copagos | Sin carencias | Solo Buenos Aires.
+  Todo el Plan 2000 más: Fleming | Fundación Favaloro | Prestadores premium adicionales.
+  Adicionales: más sesiones de psicología | más cobertura de kinesiología | habitación individual.
+
+====================================================
+TABLA RESUMEN DE PLANES
+
+Plan  | Copagos | Carencias | Cobertura       | Diferencial
+500   | No      | No        | Nacional        | PMO principal — primera opción
+1000  | No      | No        | Solo Bs. As.    | + Anchorena + CEMIC
+2000  | No      | No        | Solo Bs. As.    | + Trinidad + Alemán + Finocchietto + hab. individual
+3000  | No      | No        | Solo Bs. As.    | + Fleming + Favaloro + más psicología/kinesio
+
+====================================================
+CÁPITA MÍNIMA — CÁLCULO OBLIGATORIO ANTES DE OFRECER
+
+Fórmula: aporte del empleado / cantidad de integrantes >= $20.000 por persona.
+Si no llega al mínimo, no puede ingresar o debe pagar diferencia.
+Calcularlo con el cliente antes de avanzar para evitar sorpresas.
+
+====================================================
+PRECIOS
+
+[Pendiente — cargar tabla de precios por rango etario y plan]
+
+====================================================
+MEDICAMENTOS
+
+Ambulatorios: 40%.
+Patologías crónicas: 70%.
+Medicación contemplada por ley: 100%.
+
+====================================================
+CONDICIONES OPERATIVAS
+
+Turnos: app propia + canales oficiales.
+Copagos: No en ningún plan.
+Carencias: No en ningún plan.
+Autorización de estudios: no requerida para prestaciones habituales.
+  Requiere autorización: estudios complejos + cirugías programadas.
+Urgencias: cobertura completa según cartilla.
+Internación: cobertura completa según plan.
+Atención al cliente: app propia + web oficial + canales de atención.
+
+====================================================
+PREEXISTENCIAS Y MEDICACIÓN CRÓNICA
+
+[Pendiente — completar política de preexistencias y carencias específicas]
+Siempre informar al cliente desde el inicio. Nunca ocultar.
+
+====================================================
+ALERTAS PARA EL ASESOR
+
+1. Plan 500 = PMO principal del portafolio. Primera opción para dependencia con cobertura nacional.
+2. Verificar cápita mínima ($20.000 por integrante) antes de cerrar el alta.
+   Si el aporte no alcanza, el plan no puede activarse.
+3. Mayores de 60 años: presentar laboratorio y electrocardiograma — coordinarlo desde el inicio.
+4. Planes 1000/2000/3000: solo Buenos Aires — aclarar al cliente que no tiene cobertura nacional.
+5. NO acepta monotributistas — derivar a Diagnos Salud.
+6. NO acepta menores solos — derivar a Hominis (desde 6 años) o Premedic (desde 7 años).
+7. Guarda/tutela: antigüedad mínima 12 meses — verificar antes de incluir al menor.
+8. Sin copagos y sin carencias en todos los planes — diferenciador fuerte al presentar.
