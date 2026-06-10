@@ -154,6 +154,13 @@ export const adminCommissionApi = {
     api.get('/api/admin/commissions/summary', cycleStart ? { params: { cycleStart } } : {})
 }
 
+// Admin security
+export const adminApi = {
+  getSecurityEvents: () => api.get('/api/admin/security/events'),
+  banUser: (userId: string, ttlSeconds = 3600) =>
+    api.post(`/api/admin/security/ban/${userId}`, { ttlSeconds }),
+}
+
 // Certificates
 export const certificateApi = {
   list: (studentId: string) => api.get(`/api/certificates/${studentId}`),

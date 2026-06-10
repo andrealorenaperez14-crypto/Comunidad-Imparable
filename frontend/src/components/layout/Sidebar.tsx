@@ -4,7 +4,8 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Brain, Target, TrendingUp, Trophy, Award, BookOpen,
-  LogOut, Menu, X, ChevronRight, ChevronDown, BarChart2, Users, ClipboardList
+  LogOut, Menu, X, ChevronRight, ChevronDown, BarChart2, Users, ClipboardList,
+  ShieldAlert
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
@@ -39,7 +40,8 @@ const adminNav = [
   { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
   { href: '/admin/usuarios', icon: Users, label: 'Usuarios' },
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
-  { href: '/admin/registros', icon: ClipboardList, label: 'Registros' }
+  { href: '/admin/registros', icon: ClipboardList, label: 'Registros' },
+  { href: '/admin/seguridad', icon: ShieldAlert, label: 'Seguridad' },
 ]
 
 const clientNav = [
