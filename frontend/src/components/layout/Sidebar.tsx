@@ -46,7 +46,6 @@ const adminNav = [
 
 const clientNav = [
   { href: '/admin', icon: LayoutDashboard, label: 'Panel Admin' },
-  { href: '/admin/agentes', icon: Brain, label: 'Agentes IA' },
   { href: '/admin/cursos', icon: BookOpen, label: 'Cursos' },
   { href: '/admin/alumnos', icon: Award, label: 'Alumnos' },
   { href: '/admin/ranking', icon: Trophy, label: 'Ranking' },
