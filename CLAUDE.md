@@ -16,3 +16,51 @@ La branch `claude/...` queda suelta en remoto — borrarla manualmente en GitHub
 
 ## Skills Activos
 - consejero: análisis adversarial. Activar con: `Usar skill consejero para [consulta]`
+
+## Patrones críticos — lecciones aprendidas
+
+### Fetch autenticado (NO usar axios/api para pagos)
+Los endpoints de pago usan `fetch` nativo. El token vive en `localStorage`, NO en cookies.
+Siempre incluir:
+```ts
+const token = localStorage.getItem('token')
+await fetch(`${API_URL}/api/payments/...`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  },
+  body: '{}',          // ← obligatorio aunque no haya datos, Fastify rechaza sin body
+  credentials: 'include'
+})
+```
+
+### reCAPTCHA — cobertura
+- `/api/auth/register` ✓
+- `/api/auth/login` ✓  
+- `/api/auth/forgot-password` ✓
+- `/api/payments/vip/create` ✓
+- `/api/payments/renewal/create` ✗ eliminado — usuario ya autenticado, rate limit suficiente
+
+### Rate limit — ventanas recomendadas
+- Pagos VIP: 5 req / 10 min
+- Renovación: 10 req / 1 min (usuarios legítimos pueden reintentar rápido)
+- Chat IA: 30 req / 1 min por usuario
+
+### Roles y acceso a IAs
+- `STUDENT`: acceso normal con límite 15 consultas/día por IA
+- `CLIENT`: sin límite diario, sin check de suscripción — si `clientId` es null en JWT, el backend hace fallback al primer `Client` de la DB
+- `ADMIN`: igual que CLIENT
+
+### Renovación 20 USD — flujo completo
+1. Usuario con plan vencido entra → dashboard layout detecta `isExpired` → muestra `ExpiredPage`
+2. `ExpiredPage` muestra botón "Renovar 20 USD" solo si `isPaidExpired` (`isExpired && !isTrial`)
+3. Dashboard activo (plan 30_DAYS no vencido) muestra botón "Renovar ahora" para acumular días
+4. Backend `/renewal/create` valida historial VIP (`subscription.planType = '30_DAYS'` o DNI en `Registro`)
+5. Webhook detecta `ref.type === 'renewal'` → suma 30 días desde `activeUntil` vigente (intercalable)
+6. Si el usuario estuvo meses sin entrar: login → dashboard → ExpiredPage → renueva normal
+
+### Activación manual de plan (admin)
+En `/admin/alumnos` hay dos botones por alumno:
+- **30 días**: activa plan `30_DAYS` desde hoy (para pruebas, cortesías, pagos fuera de MP)
+- **Vitalicio**: activa plan `VITALICIO` permanente
