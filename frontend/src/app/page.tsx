@@ -187,7 +187,7 @@ export default function HomePage() {
                       <p style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', lineHeight: 1 }}>
                         150 USD
                       </p>
-                      <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#4ade80', marginTop: '0.25rem', letterSpacing: '0.04em' }}>
+                      <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#EAB308', marginTop: '0.25rem', letterSpacing: '0.04em' }}>
                         56% de AHORRO · Por ÚNICA vez
                       </p>
                     </div>
@@ -615,7 +615,7 @@ export default function HomePage() {
                 <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', lineHeight: 1 }}>
                   150 USD
                 </p>
-                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#4ade80', marginTop: '0.25rem' }}>56% de AHORRO · Por ÚNICA vez</p>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#EAB308', marginTop: '0.25rem' }}>56% de AHORRO · Por ÚNICA vez</p>
                 <p style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600, marginTop: '0.4rem' }}>⚡ Precio sube a 270 USD el 1 jul</p>
                 <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem', color: 'var(--color-text-muted)' }}>+ 20 USD / mes<br />(membresía opcional)</p>
               </div>

@@ -451,7 +451,7 @@ function Parte2Inner() {
               <p style={{ fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.15rem', lineHeight: 1 }}>
                 150 USD
               </p>
-              <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#4ade80', marginBottom: '0.25rem' }}>
+              <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#EAB308', marginBottom: '0.25rem' }}>
                 56% de AHORRO · Por ÚNICA vez
               </p>
               <p style={{ fontSize: '0.75rem', color: '#f87171', fontWeight: 600 }}>
