@@ -48,9 +48,27 @@ function Parte2Inner() {
   const [formError, setFormError]           = useState('')
   const [mepRate, setMepRate]               = useState<number | null>(null)
   const [mepLoading, setMepLoading]         = useState(true)
+  const [countdown, setCountdown]           = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const router       = useRouter()
   const searchParams = useSearchParams()
   const pagoStatus   = searchParams.get('pago') // 'exitoso' | 'fallido' | 'pendiente'
+
+  useEffect(() => {
+    const target = new Date('2026-07-01T00:00:00-03:00').getTime()
+    function tick() {
+      const diff = target - Date.now()
+      if (diff <= 0) { setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 }); return }
+      setCountdown({
+        days:    Math.floor(diff / 86400000),
+        hours:   Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000)  / 60000),
+        seconds: Math.floor((diff % 60000)    / 1000),
+      })
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
 
   useEffect(() => {
     fetch('https://dolarapi.com/v1/dolares/bolsa')
@@ -439,6 +457,37 @@ function Parte2Inner() {
             background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem'
           }}>
+
+            {/* Countdown */}
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--color-text-muted)', marginBottom: '0.75rem' }}>
+                Precio pre-lanzamiento termina en
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem' }}>
+                {[
+                  { v: countdown.days,    l: 'días' },
+                  { v: countdown.hours,   l: 'hs' },
+                  { v: countdown.minutes, l: 'min' },
+                  { v: countdown.seconds, l: 'seg' },
+                ].map(({ v, l }) => (
+                  <div key={l} style={{
+                    display: 'flex', flexDirection: 'column', alignItems: 'center',
+                    minWidth: 'clamp(3rem,10vw,4rem)',
+                    padding: '0.625rem 0.5rem',
+                    borderRadius: '0.5rem',
+                    border: '1px solid var(--color-gold-border)',
+                    background: 'rgba(196,151,42,0.06)',
+                  }}>
+                    <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(1.25rem,4vw,1.75rem)', color: 'var(--color-gold)', lineHeight: 1 }}>
+                      {String(v).padStart(2, '0')}
+                    </span>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', marginTop: '0.25rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                      {l}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
             {/* Gancho precio */}
             <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.07)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
