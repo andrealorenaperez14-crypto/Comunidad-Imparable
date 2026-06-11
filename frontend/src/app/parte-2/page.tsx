@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { trackEvent } from '@/lib/analytics'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 const USD_AMOUNT  = 150
 const API_URL     = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
@@ -90,9 +91,10 @@ function Parte2Inner() {
   const [mepRate, setMepRate]               = useState<number | null>(null)
   const [mepLoading, setMepLoading]         = useState(true)
   const [countdown, setCountdown]           = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-  const router       = useRouter()
-  const searchParams = useSearchParams()
-  const pagoStatus   = searchParams.get('pago') // 'exitoso' | 'fallido' | 'pendiente'
+  const router              = useRouter()
+  const searchParams        = useSearchParams()
+  const pagoStatus          = searchParams.get('pago')
+  const { executeRecaptcha } = useGoogleReCaptcha() // 'exitoso' | 'fallido' | 'pendiente'
 
   useEffect(() => {
     const target = new Date('2026-07-01T00:00:00-03:00').getTime()
@@ -134,10 +136,11 @@ function Parte2Inner() {
     setSending(true)
     setFormError('')
     try {
+      const recaptchaToken = executeRecaptcha ? await executeRecaptcha('vip_payment') : undefined
       const res  = await fetch(`${API_URL}/api/payments/vip/create`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(form)
+        body:    JSON.stringify({ ...form, recaptchaToken })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
