@@ -97,7 +97,7 @@ export async function paymentRoutes(fastify) {
 
   // ── Renovación mensual 20 USD ─────────────────────────────────────────────
   fastify.post('/renewal/create', {
-    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
+    config: { rateLimit: { max: 10, timeWindow: '1 minute' } },
     preHandler: [requireAuth]
   }, async (req, reply) => {
     const user = req.user
