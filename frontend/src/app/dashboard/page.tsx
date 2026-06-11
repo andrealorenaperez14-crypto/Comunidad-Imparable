@@ -130,7 +130,7 @@ export default function DashboardPage() {
       )}
 
       {/* Welcome video */}
-      <section className="overflow-hidden">
+      <section className="overflow-hidden" style={{ marginTop: '2rem' }}>
         <WelcomeVideo />
       </section>
 
