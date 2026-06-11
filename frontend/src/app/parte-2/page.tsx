@@ -296,7 +296,7 @@ function Parte2Inner() {
           >
             Precio de pre-lanzamiento disponible <strong style={{ color: 'var(--color-gold)' }}>hasta el 1 de julio</strong>.<br />
             <span style={{ color: '#f87171', fontWeight: 700 }}>
-              ⚡ Después sube a 270 USD. Reservá tu lugar ahora ↓
+              Después sube a 270 USD. Reservá tu lugar ahora ↓
             </span>
           </motion.p>
 
@@ -455,7 +455,7 @@ function Parte2Inner() {
                 56% de AHORRO · Por ÚNICA vez
               </p>
               <p style={{ fontSize: '0.75rem', color: '#f87171', fontWeight: 600 }}>
-                ⚡ Precio sube el 1 jul · Quedan pocos cupos
+                Precio sube el 1 jul · Quedan pocos cupos
               </p>
             </div>
 
@@ -511,7 +511,7 @@ function Parte2Inner() {
                   <span style={{ fontSize: '0.78em', fontWeight: 600, opacity: 0.85 }}>Acceso inmediato · Pago seguro con Mercado Pago</span>
                 </button>
                 <p style={{ fontSize: '0.75rem', color: '#f87171', fontWeight: 600, textAlign: 'center' }}>
-                  ⚡ El precio sube a 270 USD el 1 de julio
+                  El precio sube a 270 USD el 1 de julio
                 </p>
               </div>
             ) : (

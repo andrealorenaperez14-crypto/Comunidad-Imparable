@@ -145,7 +145,7 @@ export default function HomePage() {
           }}>
             {([
               { id: 'junior', title: 'Reto 3 Días', desc: 'Probá el método desde adentro: accedé a las IAs coaches, las técnicas de Neuroventas y sentí la diferencia antes de invertir.', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
-              { id: 'elite', title: 'Asesor Elite — 30 Días', desc: 'Neuroventas + PNL aplicados al Rubro Salud. Método exclusivo de Yami Mansilla. 3 IAs coaches disponibles 24/7. Certificación Internacional.', price: '150 USD', cta: 'RESERVAR LUGAR ELITE', href: '/parte-2', note: '⚡ Precio sube a 270 USD el 1 jul' }
+              { id: 'elite', title: 'Asesor Elite — 30 Días', desc: 'Neuroventas + PNL aplicados al Rubro Salud. Método exclusivo de Yami Mansilla. 3 IAs coaches disponibles 24/7. Certificación Internacional.', price: '150 USD', cta: 'RESERVAR LUGAR ELITE', href: '/parte-2', note: 'Precio sube a 270 USD el 1 jul' }
             ] as const).map(({ id, title, desc, price, cta, href, note }) => (
               <motion.div
                 key={id}
@@ -616,7 +616,7 @@ export default function HomePage() {
                   150 USD
                 </p>
                 <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#EAB308', marginTop: '0.25rem' }}>56% de AHORRO · Por ÚNICA vez</p>
-                <p style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600, marginTop: '0.4rem' }}>⚡ Precio sube a 270 USD el 1 jul</p>
+                <p style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600, marginTop: '0.4rem' }}>Precio sube a 270 USD el 1 jul</p>
                 <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem', color: 'var(--color-text-muted)' }}>+ 20 USD / mes<br />(membresía opcional)</p>
               </div>
 
