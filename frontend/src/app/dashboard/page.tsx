@@ -1,12 +1,15 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation } from '@tanstack/react-query'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle, CalendarDays, Star, MessageCircle } from 'lucide-react'
+import { Brain, Target, TrendingUp, Trophy, Award, Clock, BarChart2, Flame, AlertCircle, CalendarDays, Star, MessageCircle, RefreshCw, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
 import type { IAMetric } from '@/types'
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
 
 function WelcomeVideo() {
   return (
@@ -39,6 +42,50 @@ function MetricCard({ label, value, icon }: { label: string; value: string; icon
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>{value}</p>
       <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{label}</p>
+    </div>
+  )
+}
+
+function RenewalButton({ daysRemaining }: { daysRemaining: number }) {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleRenewal() {
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch(`${API_URL}/api/payments/renewal/create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Error al generar el pago')
+      window.location.href = data.init_point
+    } catch (err: any) {
+      setError(err.message || 'Hubo un error. Intentá de nuevo.')
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      <button
+        onClick={handleRenewal}
+        disabled={loading}
+        className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50"
+        style={{ background: 'rgba(196,151,42,0.12)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+      >
+        {loading
+          ? <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" strokeWidth={2} />
+          : <RefreshCw className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
+        }
+        Renovar ahora — 20 USD
+      </button>
+      <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>
+        Los {daysRemaining} días restantes se acumulan · Acceso extendido desde hoy
+      </p>
+      {error && <p className="text-xs" style={{ color: '#F87171' }}>{error}</p>}
     </div>
   )
 }
@@ -184,19 +231,26 @@ export default function DashboardPage() {
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
         >
           <div className="card space-y-4">
-            <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} />
-              <div>
-                <p className="font-medium" style={{ color: 'var(--color-text)' }}>
-                  {subData.isVitalicio ? 'Plan Vitalicio' : getSubscriptionStatusLabel(subData.status)}
-                </p>
-                <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                  {subData.isVitalicio ? 'Acceso permanente activo' : `${daysRemaining} días restantes`}
-                </p>
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Clock className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} />
+                <div>
+                  <p className="font-medium" style={{ color: 'var(--color-text)' }}>
+                    {subData.isVitalicio ? 'Plan Vitalicio' : getSubscriptionStatusLabel(subData.status)}
+                  </p>
+                  <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+                    {subData.isVitalicio ? 'Acceso permanente activo' : `${daysRemaining} días restantes`}
+                  </p>
+                </div>
               </div>
+
+              {/* Botón renovar anticipado — solo VIP 30_DAYS activo */}
+              {subData.planType === '30_DAYS' && !subData.isExpired && (
+                <RenewalButton daysRemaining={daysRemaining} />
+              )}
             </div>
 
-            {!subData.isVitalicio && (
+            {!subData.isVitalicio && subData.planType !== '30_DAYS' && (
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   href="/parte-2"
