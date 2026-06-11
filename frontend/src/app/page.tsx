@@ -130,142 +130,92 @@ export default function HomePage() {
               color: 'var(--color-gold)',
               marginBottom: '1.25rem'
             }}>
-              Elige tu camino
+              Método exclusivo · Rubro Salud
             </p>
             <h1 style={{
               fontFamily: 'Cinzel, serif',
-              fontSize: 'clamp(1.2rem, 3.5vw, 2.4rem)',
+              fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
               fontWeight: 700,
-              lineHeight: 1.25,
-              marginBottom: '1rem'
+              lineHeight: 1.2,
+              marginBottom: '1.25rem'
             }}>
-              ¿Vas a seguir siendo un Vendedor Tradicional{' '}
-              o das el salto a{' '}
-              <span style={{ color: 'var(--color-gold)' }}>Asesor de Elite en el Rubro Salud</span>?
+              Dejá de vender.<br />
+              <span style={{ color: 'var(--color-gold)' }}>Empezá a cerrar.</span>
             </h1>
             <p style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
               color: 'var(--color-text-muted)',
-              lineHeight: 1.7,
-              maxWidth: '620px',
-              margin: '0 auto 2.5rem'
+              lineHeight: 1.75,
+              maxWidth: '560px',
+              margin: '0 auto 0.75rem'
             }}>
-              Ayudamos a asesores y/o profesionales<br />a escalar a <strong style={{ color: 'var(--color-gold)' }}>+1.000 USD por mes</strong>,<br />implementando Neuroventas con la "IA Consultiva" entrenada como TU SOCIA.
+              Neuroventas + PNL aplicados al Rubro Salud.<br />
+              3 IAs coaches disponibles <strong style={{ color: 'var(--color-text)' }}>24/7</strong> que te acompañan en cada cierre.<br />
+              Método de <strong style={{ color: 'var(--color-gold)' }}>Yami Mansilla</strong> — 13 años, +1.000 asesores formados.
+            </p>
+            <p style={{
+              fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
+              color: 'var(--color-text-muted)',
+              marginBottom: '2.5rem'
+            }}>
+              Probalo gratis 3 días. Sin tarjeta.
             </p>
           </motion.div>
 
-          {/* Cards */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '1rem',
-            marginBottom: '2rem'
-          }}>
-            {([
-              { id: 'junior', title: 'Reto 3 Días', desc: 'Probá el método desde adentro: accedé a las IAs coaches, las técnicas de Neuroventas y sentí la diferencia antes de invertir.', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
-              { id: 'elite', title: 'Asesor Elite — 30 Días', desc: 'Neuroventas + PNL aplicados al Rubro Salud. Método exclusivo de Yami Mansilla. 3 IAs coaches disponibles 24/7. Certificación Internacional.', price: '150 USD', cta: 'RESERVAR LUGAR ELITE', href: '/parte-2', note: '' }
-            ] as const).map(({ id, title, desc, price, cta, href, note }) => (
-              <motion.div
-                key={id}
-                whileHover={{ scale: 1.02 }}
-                style={{
-                  padding: 'clamp(1.5rem,4vw,2rem)',
-                  borderRadius: '0.75rem',
-                  border: '2px solid var(--color-gold-border)',
-                  background: 'rgba(20,20,20,0.8)',
-                  textAlign: 'center',
-                  display: 'flex',
-                  flexDirection: 'column'
-                }}
-              >
-                <h2 style={{
-                  fontFamily: 'Cinzel, serif',
-                  fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
-                  fontWeight: 700,
-                  color: 'var(--color-gold)',
-                  marginBottom: '0.75rem'
-                }}>
-                  {title}
-                </h2>
-                <p style={{
-                  fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
-                  color: 'var(--color-text-muted)',
-                  lineHeight: 1.6,
-                  marginBottom: '1.25rem',
-                  flexGrow: 1
-                }}>
-                  {desc}
-                </p>
-                <div style={{ borderTop: '1px solid var(--color-gold-border)', paddingTop: '1rem' }}>
-                  {id === 'elite' ? (
-                    <div style={{ marginBottom: '1rem' }}>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textDecoration: 'line-through', marginBottom: '0.15rem' }}>
-                        270 USD
-                      </p>
-                      <p style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', lineHeight: 1 }}>
-                        150 USD
-                      </p>
-                      <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#EAB308', marginTop: '0.25rem', letterSpacing: '0.04em' }}>
-                        56% de AHORRO · Por ÚNICA vez
-                      </p>
-                    </div>
-                  ) : (
-                    <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1rem' }}>
-                      {price}
-                    </p>
-                  )}
-                  <button
-                    onClick={() => { trackEvent('cta_clicked', { cta_type: id }); router.push(href) }}
-                    style={{
-                      width: '100%',
-                      padding: '0.875rem 1rem',
-                      background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                      color: '#000',
-                      fontWeight: 700,
-                      borderRadius: '0.625rem',
-                      fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
-                      letterSpacing: '0.05em',
-                      boxShadow: '0 6px 20px rgba(196,151,42,0.4)',
-                      cursor: 'pointer',
-                      transition: 'opacity 0.2s'
-                    }}
-                  >
-                    {cta}
-                  </button>
-                  {id === 'elite' && (
-                    <div style={{ marginTop: '0.75rem' }}>
-                      <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-text-muted)', marginBottom: '0.4rem' }}>
-                        Precio pre-lanzamiento termina en
-                      </p>
-                      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.4rem' }}>
-                        {[
-                          { v: countdown.days,    l: 'días' },
-                          { v: countdown.hours,   l: 'hs' },
-                          { v: countdown.minutes, l: 'min' },
-                          { v: countdown.seconds, l: 'seg' },
-                        ].map(({ v, l }) => (
-                          <div key={l} style={{
-                            display: 'flex', flexDirection: 'column', alignItems: 'center',
-                            minWidth: '2.5rem', padding: '0.35rem 0.25rem',
-                            borderRadius: '0.375rem',
-                            border: '1px solid var(--color-gold-border)',
-                            background: 'rgba(196,151,42,0.06)',
-                          }}>
-                            <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-gold)', lineHeight: 1 }}>
-                              {String(v).padStart(2, '0')}
-                            </span>
-                            <span style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)', marginTop: '0.15rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                              {l}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {/* CTA principal — Reto gratis */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '1.75rem' }}
+          >
+            <button
+              onClick={() => { trackEvent('cta_clicked', { cta_type: 'junior' }); router.push('/register') }}
+              style={{
+                padding: 'clamp(1rem,3vw,1.25rem) clamp(2.5rem,6vw,4rem)',
+                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                color: '#000',
+                fontWeight: 700,
+                borderRadius: '0.75rem',
+                fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+                letterSpacing: '0.06em',
+                boxShadow: '0 10px 36px rgba(196,151,42,0.5)',
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: '420px',
+                transition: 'opacity 0.2s'
+              }}
+            >
+              EMPEZAR RETO GRATIS — 3 DÍAS
+            </button>
+            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', letterSpacing: '0.04em' }}>
+              Sin tarjeta · Acceso por ÚNICA vez · Entrás directo a las IAs
+            </p>
+          </motion.div>
+
+          {/* Gancho secundario — Elite para el que ya sabe */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <button
+              onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_skip' }); router.push('/parte-2') }}
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'var(--color-text-muted)',
+                fontSize: 'clamp(0.78rem, 1.6vw, 0.875rem)',
+                cursor: 'pointer',
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
+                letterSpacing: '0.02em'
+              }}
+            >
+              Ya conozco el método, quiero el Asesor Elite →
+            </button>
+          </motion.div>
+
         </motion.div>
       </section>
 
