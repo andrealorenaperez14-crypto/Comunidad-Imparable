@@ -96,7 +96,8 @@ Certificación → Trabajo en campo → [IA Consultiva activa] + [IA Mentalidad 
 ---
 
 ## USUARIOS & SUSCRIPCIÓN
-UID = DNI. Roles: ADMIN | STUDENT | CLIENT.
+**El DNI es el identificador único e irremplazable del usuario.** Valida continuidad, reingreso, historial de pagos y acceso. Un mismo DNI no puede tener dos cuentas. Si el usuario vuelve a registrarse después de que venció su acceso, el sistema lo reconoce por DNI y le asigna el plan correcto.
+Roles: ADMIN | STUDENT | CLIENT.
 
 **Lifecycle:** FREE(5d) → acceso vence → página /expired → puede comprar Elite (150 USD, una vez). PAID(30d) → acceso vence → página /expired → puede renovar (20 USD/mes, intercalable, cada pago activa 30 días desde la fecha de pago). No hay suspensión ni eliminación automática de datos. El usuario puede volver cuando quiera pagando la renovación.
 
