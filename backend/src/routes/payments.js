@@ -101,6 +101,19 @@ export async function paymentRoutes(fastify) {
     preHandler: [requireAuth, makeVerifyRecaptcha('renewal_payment')]
   }, async (req, reply) => {
     const user = req.user
+
+    // Solo pueden renovar quienes alguna vez tuvieron plan 30_DAYS (pagaron VIP)
+    // o están en la tabla Registro (pagaron pero aún no completaron el registro)
+    const hasPaidHistory = await fastify.prisma.subscription.findFirst({
+      where: { userId: user.id, planType: '30_DAYS' }
+    })
+    const inRegistro = user.dni
+      ? await fastify.prisma.registro.findUnique({ where: { dni: user.dni } })
+      : null
+    if (!hasPaidHistory && !inRegistro) {
+      return reply.code(403).send({ error: 'La renovación de 20 USD es exclusiva para miembros ELITE. Si aún no sos miembro, ingresá al programa desde la sección de planes.' })
+    }
+
     const mepRate = await getMepRate()
     if (!mepRate) return reply.code(503).send({ error: 'No se pudo obtener la cotización MEP' })
 
