@@ -85,6 +85,50 @@ export default function DashboardPage() {
         <p style={{ color: 'var(--color-text-muted)' }}>Aquí está tu resumen de aprendizaje</p>
       </section>
 
+      {/* Subscription lifecycle info */}
+      {subData?.isTrial && !subData?.isTrialExpired && (
+        <section className="overflow-hidden">
+          <div className="rounded-2xl p-5 space-y-4" style={{ background: 'rgba(196,151,42,0.06)', border: '1px solid var(--color-gold-border)' }}>
+            <p className="text-sm font-semibold uppercase tracking-widest" style={{ color: 'var(--color-gold)' }}>Cómo funciona tu acceso</p>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="flex items-start gap-3">
+                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>1</span>
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Período gratuito — 5 días</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Acceso completo a la plataforma y las 3 IAs. Sin tarjeta.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>2</span>
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Asesor ELITE — 30 días</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>150 USD por única vez. Formación completa en Neuroventas + certificación internacional.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>3</span>
+                <div>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Renovación mensual</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>20 USD/mes para seguir con acceso. Intercalado — pagás cuando querés, cada pago suma 30 días.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {subData && !subData.isTrial && !subData.isVitalicio && (
+        <section className="overflow-hidden">
+          <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: 'rgba(196,151,42,0.06)', border: '1px solid var(--color-gold-border)' }}>
+            <Clock className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
+              Tu acceso vence en <span style={{ color: 'var(--color-text)', fontWeight: 600 }}>{daysRemaining} día{daysRemaining !== 1 ? 's' : ''}</span>.
+              Al vencer, podés renovar por <span style={{ color: 'var(--color-gold)', fontWeight: 600 }}>20 USD/mes</span> — intercalado, sin compromiso mensual.
+            </p>
+          </div>
+        </section>
+      )}
+
       {/* Welcome video */}
       <section className="overflow-hidden">
         <WelcomeVideo />
