@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Users, TrendingUp, Loader2, Search, KeyRound, Eye, EyeOff, CheckCircle, X, Trash2, DollarSign, Plus, BadgeCheck, Clock, Star, Mail, Copy, Check } from 'lucide-react'
+import { Users, TrendingUp, Loader2, Search, KeyRound, Eye, EyeOff, CheckCircle, X, Trash2, DollarSign, Plus, BadgeCheck, Clock, Star, Mail, Copy, Check, CalendarDays } from 'lucide-react'
 import { metricsApi, adminUserApi, adminCommissionApi, subscriptionApi } from '@/lib/api'
 import { getStatusBg } from '@/lib/utils'
 import type { SaleCommission } from '@/types'
@@ -109,6 +109,52 @@ function ResetPasswordModal({ student, onClose }: { student: Student; onClose: (
                 {isPending ? <><Loader2 className="w-4 h-4 animate-spin" />Actualizando...</> : 'Actualizar contraseña'}
               </button>
             </form>
+          </>
+        )}
+      </motion.div>
+    </div>
+  )
+}
+
+function Activate30DaysModal({ student, onClose, onDone }: { student: Student; onClose: () => void; onDone: () => void }) {
+  const name = student.profile ? `${student.profile.firstName} ${student.profile.lastName}` : student.email
+  const { mutate, isPending, error, isSuccess } = useMutation({
+    mutationFn: () => subscriptionApi.upgrade(student.id, '30_DAYS'),
+    onSuccess: () => { onDone() }
+  })
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: 'rgba(0,0,0,0.75)' }}>
+      <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
+        className="card w-full max-w-sm text-center"
+      >
+        {isSuccess ? (
+          <div className="py-4 space-y-3">
+            <CheckCircle className="w-12 h-12 mx-auto" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            <p className="font-semibold" style={{ color: 'var(--color-text)' }}>Plan 30 días activado</p>
+            <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>{name}</p>
+            <button onClick={onClose} className="btn-primary mt-2">Cerrar</button>
+          </div>
+        ) : (
+          <>
+            <CalendarDays className="w-10 h-10 mx-auto mb-3" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
+            <h3 className="font-semibold mb-1" style={{ color: 'var(--color-text)' }}>Activar Plan 30 días</h3>
+            <p className="text-sm mb-2" style={{ color: 'var(--color-text-muted)' }}>{name}</p>
+            <p className="text-xs mb-6" style={{ color: 'var(--color-text-muted)' }}>
+              Activa 30 días de acceso ELITE desde hoy. La suscripción actual será reemplazada.
+            </p>
+            {(error as any)?.response?.data?.error && (
+              <p className="text-sm mb-4" style={{ color: '#F87171' }}>{(error as any).response.data.error}</p>
+            )}
+            <div className="flex gap-3">
+              <button onClick={onClose} className="flex-1 py-2.5 rounded-xl text-sm" style={{ border: '1px solid var(--color-separator)', color: 'var(--color-text-muted)' }}>
+                Cancelar
+              </button>
+              <button onClick={() => mutate()} disabled={isPending} className="flex-1 py-2.5 rounded-xl text-sm font-medium disabled:opacity-50"
+                style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>
+                {isPending ? 'Activando...' : 'Confirmar'}
+              </button>
+            </div>
           </>
         )}
       </motion.div>
@@ -446,6 +492,7 @@ export default function AlumnosPage() {
   const [deleteTarget, setDeleteTarget] = useState<Student | null>(null)
   const [commissionTarget, setCommissionTarget] = useState<Student | null>(null)
   const [upgradeTarget, setUpgradeTarget] = useState<Student | null>(null)
+  const [upgrade30Target, setUpgrade30Target] = useState<Student | null>(null)
   const [editEmailTarget, setEditEmailTarget] = useState<Student | null>(null)
   const [copiedId, setCopiedId] = useState<string | null>(null)
 
@@ -585,12 +632,20 @@ export default function AlumnosPage() {
                         : <Copy className="w-4 h-4" strokeWidth={1.5} />}
                     </button>
                     {sub?.planType !== 'VITALICIO' && (
-                      <button onClick={() => setUpgradeTarget(student)}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
-                        style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
-                        <Star className="w-4 h-4" strokeWidth={1.5} />
-                        <span className="hidden lg:inline">Vitalicio</span>
-                      </button>
+                      <>
+                        <button onClick={() => setUpgrade30Target(student)}
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
+                          style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+                          <CalendarDays className="w-4 h-4" strokeWidth={1.5} />
+                          <span className="hidden lg:inline">30 días</span>
+                        </button>
+                        <button onClick={() => setUpgradeTarget(student)}
+                          className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
+                          style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+                          <Star className="w-4 h-4" strokeWidth={1.5} />
+                          <span className="hidden lg:inline">Vitalicio</span>
+                        </button>
+                      </>
                     )}
                     <button onClick={() => setEditEmailTarget(student)}
                       className="p-2 rounded-xl" style={{ color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}>
@@ -660,6 +715,16 @@ export default function AlumnosPage() {
           />
         )}
         {commissionTarget && <CommissionsModal student={commissionTarget} onClose={() => setCommissionTarget(null)} />}
+        {upgrade30Target && (
+          <Activate30DaysModal
+            student={upgrade30Target}
+            onClose={() => setUpgrade30Target(null)}
+            onDone={() => {
+              qc.invalidateQueries({ queryKey: ['admin-students'] })
+              setUpgrade30Target(null)
+            }}
+          />
+        )}
         {upgradeTarget && (
           <UpgradeVitalicioModal
             student={upgradeTarget}
