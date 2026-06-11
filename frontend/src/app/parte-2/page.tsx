@@ -32,6 +32,47 @@ const fadeUp = {
 }
 
 
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      style={{ border: '1px solid var(--color-gold-border)', borderRadius: '0.75rem', overflow: 'hidden' }}
+    >
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%', padding: '1rem 1.25rem',
+          textAlign: 'left', fontWeight: 600,
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          fontSize: 'clamp(0.85rem, 1.8vw, 1rem)',
+          background: open ? 'rgba(196,151,42,0.1)' : 'transparent',
+          cursor: 'pointer', color: 'var(--color-text)', border: 'none'
+        }}
+      >
+        <span>{q}</span>
+        <span style={{ color: 'var(--color-gold)', fontSize: '1.25rem', flexShrink: 0, marginLeft: '1rem' }}>
+          {open ? '−' : '+'}
+        </span>
+      </button>
+      {open && (
+        <div style={{
+          padding: '1rem 1.25rem',
+          borderTop: '1px solid var(--color-gold-border)',
+          background: 'rgba(196,151,42,0.05)',
+          color: 'var(--color-text-muted)',
+          fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
+          lineHeight: 1.7, textAlign: 'left'
+        }}>
+          {a}
+        </div>
+      )}
+    </motion.div>
+  )
+}
+
 export default function Parte2() {
   return (
     <Suspense>
@@ -671,6 +712,37 @@ function Parte2Inner() {
               CEO & Fundadora | Escuela de Asesores en el Rubro Salud
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════ FAQ ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+          <motion.h2
+            {...fadeUp}
+            style={{
+              fontFamily: 'Cinzel, serif',
+              fontSize: 'clamp(1.2rem, 3vw, 2rem)',
+              fontWeight: 700,
+              textAlign: 'center',
+              marginBottom: '3rem'
+            }}
+          >
+            Preguntas frecuentes
+          </motion.h2>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+            {[
+              { q: '¿Necesito experiencia previa en ventas?', a: 'No. El programa está diseñado para asesores que están empezando y para los que ya venden pero quieren dar el salto. El método de Yami Mansilla parte desde cero y se adapta a tu nivel.' },
+              { q: '¿Puedo cursarlo mientras trabajo?', a: 'Sí. Los 30 días están organizados para que puedas avanzar a tu ritmo. Además tenés las 3 IAs disponibles 24/7 para consultar en cualquier momento, sin depender de un horario fijo.' },
+              { q: '¿Qué pasa si no puedo seguir el ritmo?', a: 'El acceso no vence con los 30 días de formación. Podés repasar los módulos cuando necesites. Las IAs coaches siguen disponibles para acompañarte en cada cierre.' },
+              { q: '¿Puedo pagar en cuotas?', a: 'Sí. Mercado Pago acepta tarjeta de crédito con cuotas según tu banco. El monto en pesos se calcula al Dólar MEP del día del pago.' },
+              { q: '¿Qué incluye la membresía de 20 USD/mes?', a: 'Es completamente opcional. Incluye acceso continuo al Club de Asesores VIP ORO, actualizaciones del método y acceso a los nuevos módulos que se vayan sumando. Si no la activás, conservás todo lo del programa principal.' },
+              { q: '¿La certificación es reconocida internacionalmente?', a: 'Sí. Al completar el módulo 15 recibís la Certificación Internacional en Neuroventas aplicadas al Consumidor de Salud, avalada por el método de Yami Mansilla con más de 13 años de trayectoria y +1.000 asesores formados.' },
+            ].map((f, i) => (
+              <FaqItem key={i} q={f.q} a={f.a} />
+            ))}
+          </div>
         </div>
       </section>
 
