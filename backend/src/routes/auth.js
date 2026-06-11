@@ -5,6 +5,7 @@ import { requireAuth } from '../middleware/auth.js'
 import { sendPasswordResetEmail } from '../services/email.js'
 import { sanitizeFields } from '../middleware/sanitizeInput.js'
 import { makeVerifyRecaptcha } from '../middleware/verifyRecaptcha.js'
+import { promptGuard } from '../middleware/promptGuard.js'
 
 const loginSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -88,7 +89,7 @@ export async function authRoutes(fastify) {
 
   fastify.post('/register', {
     config: { rateLimit: { max: 5, timeWindow: '1 minute' } },
-    preHandler: makeVerifyRecaptcha('register')
+    preHandler: [makeVerifyRecaptcha('register'), promptGuard]
   }, async (request, reply) => {
     const result = registerSchema.safeParse(request.body)
     if (!result.success) {
@@ -263,7 +264,7 @@ export async function authPasswordRoutes(fastify) {
 
   fastify.post('/forgot-password', {
     config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
-    preHandler: makeVerifyRecaptcha('forgot_password')
+    preHandler: [makeVerifyRecaptcha('forgot_password'), promptGuard]
   }, async (request, reply) => {
     const { email } = request.body || {}
     if (!email || typeof email !== 'string') {

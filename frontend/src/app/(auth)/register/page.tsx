@@ -9,6 +9,7 @@ import { motion } from 'framer-motion'
 import { Brain, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
+import { sanitizeHtml } from '@/lib/sanitize'
 
 const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número'
 
@@ -74,11 +75,11 @@ export default function RegisterPage() {
       setError('')
       const recaptchaToken = executeRecaptcha ? await executeRecaptcha('register') : undefined
       await registerUser({
-        email: data.email,
-        dni: data.dni,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        email:        data.email.trim(),
+        dni:          data.dni.trim(),
+        password:     data.password,
+        firstName:    sanitizeHtml(data.firstName),
+        lastName:     sanitizeHtml(data.lastName),
         recaptchaToken
       })
       router.push('/dashboard')
