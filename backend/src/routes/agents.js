@@ -10,8 +10,14 @@ function getEndOfDayUnix() {
 
 export async function agentRoutes(fastify) {
   fastify.get('/', { preHandler: [requireAuth] }, async (request, reply) => {
+    const isPrivileged = request.user.role === 'ADMIN' || request.user.role === 'CLIENT'
+    let clientId = request.user.clientId
+    if (!clientId && isPrivileged) {
+      const c = await fastify.prisma.client.findFirst()
+      clientId = c?.id
+    }
     const agents = await fastify.prisma.iAAgent.findMany({
-      where: { clientId: request.user.clientId, published: true },
+      where: { clientId, published: true },
       select: { id: true, type: true, name: true, description: true, icon: true, published: true, publishedDate: true }
     })
     return agents
@@ -60,8 +66,14 @@ export async function agentRoutes(fastify) {
         }
       }
 
+      let clientId = request.user.clientId
+      if (!clientId && isPrivileged) {
+        const c = await fastify.prisma.client.findFirst()
+        clientId = c?.id
+      }
+
       const agent = await fastify.prisma.iAAgent.findFirst({
-        where: { id: agentId, clientId: request.user.clientId, ...(isPrivileged ? {} : { published: true }) }
+        where: { id: agentId, clientId, ...(isPrivileged ? {} : { published: true }) }
       })
 
       if (!agent) {
