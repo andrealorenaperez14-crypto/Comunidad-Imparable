@@ -34,6 +34,7 @@ export default function ExpiredPage() {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
+        body: '{}',
         credentials: 'include'
       })
       const data = await res.json()

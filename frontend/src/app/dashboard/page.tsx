@@ -61,6 +61,7 @@ function RenewalButton({ daysRemaining }: { daysRemaining: number }) {
           'Content-Type': 'application/json',
           ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
+        body: '{}',
         credentials: 'include'
       })
       const data = await res.json()
