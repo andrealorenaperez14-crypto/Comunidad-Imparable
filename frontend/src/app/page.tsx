@@ -203,13 +203,16 @@ export default function HomePage() {
               onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_skip' }); router.push('/parte-2') }}
               style={{
                 background: 'none',
-                border: 'none',
-                color: 'var(--color-text-muted)',
-                fontSize: 'clamp(0.78rem, 1.6vw, 0.875rem)',
+                border: '1px solid var(--color-gold-border)',
+                borderRadius: '0.5rem',
+                color: 'var(--color-gold)',
+                fontSize: 'clamp(0.9rem, 2vw, 1rem)',
+                fontWeight: 600,
+                padding: '0.75rem 1.5rem',
                 cursor: 'pointer',
-                textDecoration: 'underline',
-                textUnderlineOffset: '3px',
-                letterSpacing: '0.02em'
+                letterSpacing: '0.03em',
+                width: '100%',
+                maxWidth: '420px'
               }}
             >
               Ya conozco el método, quiero el Asesor Elite →
