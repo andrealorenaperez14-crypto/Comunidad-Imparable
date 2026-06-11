@@ -766,13 +766,22 @@ function Parte2Inner() {
         background: 'rgba(196,151,42,0.03)',
         textAlign: 'center'
       }}>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
-          {['Términos', 'Privacidad', 'Contacto'].map((t) => (
-            <Link key={t} href="#" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{t}</Link>
-          ))}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+            <Link href="/terminos" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Términos</Link>
+            <Link href="/privacidad" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>Privacidad</Link>
+          </div>
+          <a href="https://www.instagram.com/escueladeasesoresmps?igsh=MWw3a3I1dHp6ZG9wOQ==" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.8"/>
+              <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.8"/>
+              <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+            </svg>
+            Contacto
+          </a>
         </div>
-        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.375rem' }}>
-          Certificación Internacional en Neuroventas · Yami Mansilla
+        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
+          © 2026 Escuela de Asesores en el Rubro Salud | Formamos Líderes, No Vendedores
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Desarrollado por: NUCLEO ESTRATEGICO IA
