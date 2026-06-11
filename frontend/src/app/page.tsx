@@ -58,7 +58,7 @@ export default function HomePage() {
     tick()
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
-  })
+  }, [])
 
   return (
     <div
