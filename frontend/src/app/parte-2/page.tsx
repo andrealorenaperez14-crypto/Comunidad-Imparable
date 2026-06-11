@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { trackEvent } from '@/lib/analytics'
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
+import { sanitizeHtml } from '@/lib/sanitize'
 
 const USD_AMOUNT  = 150
 const API_URL     = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
@@ -137,10 +138,17 @@ function Parte2Inner() {
     setFormError('')
     try {
       const recaptchaToken = executeRecaptcha ? await executeRecaptcha('vip_payment') : undefined
+      const safeForm = {
+        nombre:   sanitizeHtml(form.nombre),
+        apellido: sanitizeHtml(form.apellido),
+        dni:      form.dni.trim(),
+        email:    form.email.trim(),
+        whatsapp: sanitizeHtml(form.whatsapp),
+      }
       const res  = await fetch(`${API_URL}/api/payments/vip/create`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ ...form, recaptchaToken })
+        body:    JSON.stringify({ ...safeForm, recaptchaToken })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Error al crear el pago')
@@ -613,14 +621,15 @@ function Parte2Inner() {
                   Completá tus datos — te vamos a redirigir al pago seguro con Mercado Pago:
                 </p>
                 {[
-                  { field: 'nombre'   as const, placeholder: 'Nombre' },
-                  { field: 'apellido' as const, placeholder: 'Apellido' },
-                  { field: 'dni'      as const, placeholder: 'DNI (sin puntos)' },
-                  { field: 'email'    as const, placeholder: 'Tu email', type: 'email' },
-                  { field: 'whatsapp' as const, placeholder: 'Tu WhatsApp (+54...)' },
-                ].map(({ field, placeholder, type }) => (
+                  { field: 'nombre'   as const, placeholder: 'Nombre',            maxLength: 60 },
+                  { field: 'apellido' as const, placeholder: 'Apellido',           maxLength: 60 },
+                  { field: 'dni'      as const, placeholder: 'DNI (sin puntos)',   maxLength: 8 },
+                  { field: 'email'    as const, placeholder: 'Tu email',           maxLength: 100, type: 'email' },
+                  { field: 'whatsapp' as const, placeholder: 'Tu WhatsApp (+54...)', maxLength: 30 },
+                ].map(({ field, placeholder, type, maxLength }) => (
                   <input
                     key={field} type={type || 'text'} placeholder={placeholder}
+                    maxLength={maxLength}
                     value={form[field]}
                     onChange={e => setForm(f => ({ ...f, [field]: e.target.value }))}
                     style={{

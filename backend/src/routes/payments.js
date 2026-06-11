@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import { sendVIPWelcomeEmail } from '../services/email.js'
 import { sanitizeFields } from '../middleware/sanitizeInput.js'
 import { makeVerifyRecaptcha } from '../middleware/verifyRecaptcha.js'
+import { promptGuard } from '../middleware/promptGuard.js'
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
@@ -42,15 +43,25 @@ export async function paymentRoutes(fastify) {
 
   fastify.post('/vip/create', {
     config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
-    preHandler: makeVerifyRecaptcha('vip_payment')
+    preHandler: [makeVerifyRecaptcha('vip_payment'), promptGuard]
   }, async (req, reply) => {
-    const { nombre, apellido, dni, email, whatsapp } = req.body
-    if (!nombre || !apellido || !dni || !email || !whatsapp) {
+    const raw = req.body
+    if (!raw.nombre || !raw.apellido || !raw.dni || !raw.email || !raw.whatsapp) {
       return reply.code(400).send({ error: 'Faltan datos' })
     }
-    if (!/^\d{7,8}$/.test(dni)) {
+    if (!/^\d{7,8}$/.test(raw.dni)) {
       return reply.code(400).send({ error: 'DNI inválido' })
     }
+    // Longitud máxima por campo
+    if (raw.nombre.length > 60 || raw.apellido.length > 60 || raw.whatsapp.length > 30) {
+      return reply.code(400).send({ error: 'Datos inválidos' })
+    }
+    const clean = sanitizeFields(
+      { nombre: raw.nombre, apellido: raw.apellido, whatsapp: raw.whatsapp },
+      ['nombre', 'apellido', 'whatsapp']
+    )
+    const { nombre, apellido, whatsapp } = clean
+    const { dni, email } = raw
 
     const mepRate = await getMepRate()
     if (!mepRate) return reply.code(503).send({ error: 'No se pudo obtener la cotización MEP' })

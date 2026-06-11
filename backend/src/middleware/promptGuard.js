@@ -6,11 +6,15 @@ const PATTERNS = {
 }
 
 export async function promptGuard(request, reply) {
-  const { message } = request.body || {}
-  if (!message || typeof message !== 'string') return
+  const body = request.body || {}
+  const fieldsToCheck = ['message', 'nombre', 'apellido', 'whatsapp', 'firstName', 'lastName']
+  const combined = fieldsToCheck
+    .map(f => (typeof body[f] === 'string' ? body[f] : ''))
+    .join(' ')
+  if (!combined.trim()) return
 
   for (const [category, pattern] of Object.entries(PATTERNS)) {
-    if (pattern.test(message)) {
+    if (pattern.test(combined)) {
       const redis = request.server.redis
       const userId = request.user?.id
 
