@@ -98,7 +98,7 @@ Certificación → Trabajo en campo → [IA Consultiva activa] + [IA Mentalidad 
 ## USUARIOS & SUSCRIPCIÓN
 UID = DNI. Roles: ADMIN | STUDENT | CLIENT.
 
-**Lifecycle:** FREE(5d) → PAID(30d) → aviso día 30 → countdown 31-34 → suspensión día 35 → datos 10d → aviso día 40 → eliminado día 45 → StudentsPrevious. Reingreso: verificar DNI.
+**Lifecycle:** FREE(5d) → acceso vence → página /expired → puede comprar Elite (150 USD, una vez). PAID(30d) → acceso vence → página /expired → puede renovar (20 USD/mes, intercalable, cada pago activa 30 días desde la fecha de pago). No hay suspensión ni eliminación automática de datos. El usuario puede volver cuando quiera pagando la renovación.
 
 ---
 
@@ -107,8 +107,8 @@ Score <60%: email alumno + cliente + dashboard. Inactividad 3d: motivacional + a
 
 ---
 
-## EMAILS (9 vía Resend)
-Welcome | Low perf ×2 | High perf ×2 | Inactividad | Countdown | Suspensión | Semanal. Max 2/día/alumno. Unsubscribe obligatorio.
+## EMAILS (vía Resend)
+Welcome | Low perf ×2 | High perf ×2 | Inactividad | Semanal. Max 2/día/alumno. Unsubscribe obligatorio. No hay emails de countdown ni suspensión — el acceso vence y el usuario renueva por su cuenta desde /expired.
 
 ---
 
