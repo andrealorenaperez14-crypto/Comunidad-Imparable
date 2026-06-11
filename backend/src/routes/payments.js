@@ -80,7 +80,7 @@ export async function paymentRoutes(fastify) {
         payer: { email, name: `${nombre} ${apellido}` },
         external_reference: JSON.stringify({ nombre, apellido, dni, email, whatsapp, mepRate, pesoAmount }),
         back_urls: {
-          success: `${FRONTEND_URL}/parte-2?pago=exitoso`,
+          success: `${FRONTEND_URL}/register`,
           failure: `${FRONTEND_URL}/parte-2?pago=fallido`,
           pending: `${FRONTEND_URL}/parte-2?pago=pendiente`
         },
@@ -155,17 +155,15 @@ export async function paymentRoutes(fastify) {
         }).catch(() => {})
       }
 
-      // 3 — Crear o actualizar alumno en DB
+      // 3 — Si ya tiene cuenta, actualizar su suscripción a 30_DAYS
       if (dni) {
-        const prisma    = fastify.prisma
-        const now       = new Date()
-        const activeUntil     = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
-        const suspensionDate  = new Date(now.getTime() + 35 * 24 * 60 * 60 * 1000)
+        const prisma   = fastify.prisma
+        const now      = new Date()
+        const activeUntil    = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000)
+        const suspensionDate = new Date(now.getTime() + 35 * 24 * 60 * 60 * 1000)
 
         const existing = await prisma.user.findUnique({ where: { dni } })
-
         if (existing) {
-          // Expirar suscripciones activas y crear nueva 30_DAYS
           await prisma.subscription.updateMany({
             where: { userId: existing.id, status: { in: ['TRIAL', 'ACTIVE', 'SUSPENDED'] } },
             data:  { status: 'EXPIRED' }
@@ -174,35 +172,8 @@ export async function paymentRoutes(fastify) {
             data: { userId: existing.id, planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now, amountPaid: montoReal || 0 }
           })
           fastify.log.info({ dni, userId: existing.id }, 'VIP: suscripción actualizada a 30_DAYS')
-        } else {
-          // Crear alumno nuevo con plan pago directo
-          const tempPassword   = generateTempPassword()
-          const passwordHash   = await bcrypt.hash(tempPassword, 12)
-          const clientId       = await getDefaultClientId(prisma)
-
-          const newUser = await prisma.user.create({
-            data: {
-              email,
-              dni,
-              passwordHash,
-              role:     'STUDENT',
-              clientId,
-              profile:  { create: { firstName: cleanNombre, lastName: cleanApellido } },
-              subscriptions: {
-                create: { planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate, lastPaymentDate: now, amountPaid: montoReal || 0 }
-              }
-            }
-          })
-
-          await sendVIPWelcomeEmail({
-            email,
-            firstName:    cleanNombre,
-            tempPassword,
-            loginUrl:     `${FRONTEND_URL}/login`
-          })
-
-          fastify.log.info({ dni, userId: newUser.id }, 'VIP: alumno nuevo creado con plan 30_DAYS')
         }
+        // Si no tiene cuenta, la crea al registrarse — la tabla Registro ya tiene sus datos
       }
 
       fastify.log.info({ email, montoReal }, 'Pago VIP confirmado')

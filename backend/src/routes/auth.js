@@ -113,9 +113,26 @@ export async function authRoutes(fastify) {
 
     const previousStudent = await fastify.prisma.studentsPrevious.findUnique({ where: { dni } })
 
+    // Si pagó el Elite, su registro está en la tabla Registro
+    const paidRecord = await fastify.prisma.registro.findUnique({ where: { dni } })
+
     const resolvedClientId = clientId || await getDefaultClientId(fastify)
     const passwordHash = await bcrypt.hash(password, 12)
-    const trialDays = 5
+    const now = new Date()
+
+    const subscriptionData = paidRecord
+      ? {
+          planType:        '30_DAYS',
+          status:          'ACTIVE',
+          activeUntil:     new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000),
+          suspensionDate:  new Date(now.getTime() + 35 * 24 * 60 * 60 * 1000),
+          lastPaymentDate: now
+        }
+      : {
+          planType:    'TRIAL',
+          status:      'TRIAL',
+          activeUntil: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000)
+        }
 
     const user = await fastify.prisma.user.create({
       data: {
@@ -128,11 +145,7 @@ export async function authRoutes(fastify) {
           create: { firstName: cleanFirstName, lastName: cleanLastName }
         },
         subscriptions: {
-          create: {
-            planType: 'TRIAL',
-            status: 'TRIAL',
-            activeUntil: new Date(Date.now() + trialDays * 24 * 60 * 60 * 1000)
-          }
+          create: subscriptionData
         }
       },
       include: { profile: true }

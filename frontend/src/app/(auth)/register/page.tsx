@@ -123,9 +123,6 @@ export default function RegisterPage() {
             <Brain className="w-8 h-8" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
           </div>
           <h1 className="text-3xl font-bold mb-3" style={{ color: 'var(--color-text)' }}>Crea tu cuenta</h1>
-          <p className="text-base leading-relaxed" style={{ color: 'var(--color-text-muted)' }}>
-            <span className="font-medium" style={{ color: 'var(--color-gold)' }}>5 días gratis, por ÚNICA vez</span>
-          </p>
         </div>
 
         <div className="card" style={{ padding: '2.5rem' }}>
