@@ -27,9 +27,13 @@ export default function ExpiredPage() {
     setLoading(true)
     setError('')
     try {
+      const token = localStorage.getItem('token')
       const res  = await fetch(`${API_URL}/api/payments/renewal/create`, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
         credentials: 'include'
       })
       const data = await res.json()
