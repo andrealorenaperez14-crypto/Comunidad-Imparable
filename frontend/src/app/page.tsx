@@ -144,8 +144,8 @@ export default function HomePage() {
             marginBottom: '2rem'
           }}>
             {([
-              { id: 'junior', title: 'Reto 3 Días', desc: 'Asesor Tradicional: Vende copiando y pegando un speech, asistido con la IA de MPS', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
-              { id: 'elite', title: 'En 30 Días', desc: 'Conviértete en Asesor de Elite con aval internacional, con el MÉTODO exclusivo para el Rubro SALUD, de Yami Mansilla', price: '$150 USD', cta: 'QUIERO SABER MÁS', href: '/parte-2', note: '' }
+              { id: 'junior', title: 'Reto 3 Días', desc: 'Probá el método desde adentro: accedé a las IAs coaches, las técnicas de Neuroventas y sentí la diferencia antes de invertir.', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
+              { id: 'elite', title: 'Asesor Elite — 30 Días', desc: 'Neuroventas + PNL aplicados al Rubro Salud. Método exclusivo de Yami Mansilla. 3 IAs coaches disponibles 24/7. Certificación Internacional.', price: '150 USD', cta: 'RESERVAR LUGAR ELITE', href: '/parte-2', note: '⚡ Precio sube a 270 USD el 1 jul' }
             ] as const).map(({ id, title, desc, price, cta, href, note }) => (
               <motion.div
                 key={id}
@@ -179,9 +179,23 @@ export default function HomePage() {
                   {desc}
                 </p>
                 <div style={{ borderTop: '1px solid var(--color-gold-border)', paddingTop: '1rem' }}>
-                  <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1rem' }}>
-                    {price}
-                  </p>
+                  {id === 'elite' ? (
+                    <div style={{ marginBottom: '1rem' }}>
+                      <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textDecoration: 'line-through', marginBottom: '0.15rem' }}>
+                        270 USD
+                      </p>
+                      <p style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2rem)', fontWeight: 700, color: 'var(--color-gold)', lineHeight: 1 }}>
+                        150 USD
+                      </p>
+                      <p style={{ fontSize: '0.75rem', fontWeight: 700, color: '#4ade80', marginTop: '0.25rem', letterSpacing: '0.04em' }}>
+                        56% de AHORRO · Por ÚNICA vez
+                      </p>
+                    </div>
+                  ) : (
+                    <p style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1rem' }}>
+                      {price}
+                    </p>
+                  )}
                   <button
                     onClick={() => { trackEvent('cta_clicked', { cta_type: id }); router.push(href) }}
                     style={{
@@ -201,7 +215,7 @@ export default function HomePage() {
                     {cta}
                   </button>
                   {note ? (
-                    <p style={{ fontSize: '0.75rem', color: 'var(--color-gold)', marginTop: '0.6rem', letterSpacing: '0.04em' }}>
+                    <p style={{ fontSize: '0.75rem', color: '#f87171', marginTop: '0.6rem', letterSpacing: '0.04em', fontWeight: 600 }}>
                       {note}
                     </p>
                   ) : null}
@@ -595,12 +609,15 @@ export default function HomePage() {
               </p>
 
               <div style={{ width: '100%', borderTop: '1px solid var(--color-gold-border)', borderBottom: '1px solid var(--color-gold-border)', padding: '1.5rem 0', marginBottom: '2rem' }}>
-                <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', textDecoration: 'line-through', marginBottom: '0.1rem' }}>
+                  270 USD
+                </p>
+                <p style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', lineHeight: 1 }}>
                   150 USD
                 </p>
-                <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>por UNICA vez</p>
-                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>Inversión LANZAMIENTO -80%</p>
-                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem' }}>20 USD / mes<br />(opcional)</p>
+                <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#4ade80', marginTop: '0.25rem' }}>56% de AHORRO · Por ÚNICA vez</p>
+                <p style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600, marginTop: '0.4rem' }}>⚡ Precio sube a 270 USD el 1 jul</p>
+                <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem', color: 'var(--color-text-muted)' }}>+ 20 USD / mes<br />(membresía opcional)</p>
               </div>
 
               <button
@@ -619,9 +636,9 @@ export default function HomePage() {
                   marginBottom: '1rem'
                 }}
               >
-                QUIERO SABER MÁS
+                RESERVAR MI LUGAR ELITE
               </button>
-              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Ganá +1.000 USD en 30 días</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-gold)' }}>Ganá +1.000 USD en 30 días · Certificación Internacional</p>
             </div>
           </motion.div>
         </div>

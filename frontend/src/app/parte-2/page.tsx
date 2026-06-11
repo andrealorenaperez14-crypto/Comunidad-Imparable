@@ -294,9 +294,9 @@ function Parte2Inner() {
             transition={{ duration: 0.6, delay: 0.7 }}
             style={{ fontSize: 'clamp(0.8rem, 1.6vw, 0.9rem)', color: 'var(--color-text-muted)', lineHeight: 1.7 }}
           >
-            Pre-lanzamiento julio · Lista VIP · Beneficio exclusivo<br />
-            <span style={{ color: 'var(--color-gold)', fontWeight: 600 }}>
-              ↓ Anotate más abajo antes de que cierren los cupos
+            Precio de pre-lanzamiento disponible <strong style={{ color: 'var(--color-gold)' }}>hasta el 1 de julio</strong>.<br />
+            <span style={{ color: '#f87171', fontWeight: 700 }}>
+              ⚡ Después sube a 270 USD. Reservá tu lugar ahora ↓
             </span>
           </motion.p>
 
@@ -443,13 +443,19 @@ function Parte2Inner() {
             {/* Gancho precio */}
             <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.07)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
               <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
-                Quienes estén en la lista de espera recibirán un beneficio exclusivo que no estará disponible para el público general el día del lanzamiento.
+                Accedé ahora al precio de pre-lanzamiento. El <strong style={{ color: 'var(--color-gold)' }}>1 de julio sube a 270 USD</strong> y no habrá excepciones.
               </p>
-              <p style={{ fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.2rem' }}>
-                150 USD <span style={{ fontSize: '0.6em', color: 'var(--color-gold-light)', fontWeight: 600 }}>con 80% dto.</span>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', textDecoration: 'line-through', marginBottom: '0.1rem' }}>
+                270 USD
               </p>
-              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-                Después <strong style={{ color: 'var(--color-text)' }}>270 USD</strong>
+              <p style={{ fontSize: 'clamp(1.3rem, 3.5vw, 1.8rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif', marginBottom: '0.15rem', lineHeight: 1 }}>
+                150 USD
+              </p>
+              <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#4ade80', marginBottom: '0.25rem' }}>
+                56% de AHORRO · Por ÚNICA vez
+              </p>
+              <p style={{ fontSize: '0.75rem', color: '#f87171', fontWeight: 600 }}>
+                ⚡ Precio sube el 1 jul · Quedan pocos cupos
               </p>
             </div>
 
@@ -463,7 +469,7 @@ function Parte2Inner() {
               ) : pesoAmount ? (
                 <>
                   <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>
-                    150 USD · Dólar MEP ${mepRate?.toLocaleString('es-AR')}
+                    150 USD al Dólar MEP (cotización en tiempo real)
                   </p>
                   <p style={{ fontSize: 'clamp(1.6rem, 4vw, 2.2rem)', fontWeight: 700, color: 'var(--color-gold)', fontFamily: 'Cinzel, serif' }}>
                     ${pesoAmount.toLocaleString('es-AR')}
@@ -481,7 +487,7 @@ function Parte2Inner() {
             {pagoStatus === 'exitoso' ? (
               <div style={{ width: '100%', padding: '1.5rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
                 <p style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>¡Pago confirmado!</p>
-                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Tu lugar VIP ELITE está reservado. Te avisamos antes del lanzamiento en julio.</p>
+                <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Tu lugar ELITE está confirmado. Revisá tu email — vas a recibir el acceso en los próximos minutos.</p>
               </div>
             ) : pagoStatus === 'fallido' ? (
               <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', textAlign: 'center' }}>
@@ -489,20 +495,25 @@ function Parte2Inner() {
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>Podés intentarlo de nuevo.</p>
               </div>
             ) : !showForm ? (
-              <button
-                onClick={() => { setShowForm(true); trackEvent('vip_waitlist_clicked') }}
-                style={{
-                  width: '100%', padding: '2rem',
-                  background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                  color: '#000', fontWeight: 700, borderRadius: '0.75rem',
-                  fontSize: 'clamp(0.95rem, 2vw, 1.1rem)', letterSpacing: '0.05em',
-                  boxShadow: '0 8px 28px rgba(196,151,42,0.45)',
-                  cursor: 'pointer', border: 'none', lineHeight: 1.4
-                }}
-              >
-                Unirme a la Lista VIP<br />
-                <span style={{ fontSize: '0.85em', fontWeight: 600, opacity: 0.85 }}>(Pre-lanzamiento julio)</span>
-              </button>
+              <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <button
+                  onClick={() => { setShowForm(true); trackEvent('vip_buy_clicked') }}
+                  style={{
+                    width: '100%', padding: '1.5rem 2rem',
+                    background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                    color: '#000', fontWeight: 700, borderRadius: '0.75rem',
+                    fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', letterSpacing: '0.05em',
+                    boxShadow: '0 8px 28px rgba(196,151,42,0.55)',
+                    cursor: 'pointer', border: 'none', lineHeight: 1.4
+                  }}
+                >
+                  COMPRAR AHORA — 150 USD<br />
+                  <span style={{ fontSize: '0.78em', fontWeight: 600, opacity: 0.85 }}>Acceso inmediato · Pago seguro con Mercado Pago</span>
+                </button>
+                <p style={{ fontSize: '0.75rem', color: '#f87171', fontWeight: 600, textAlign: 'center' }}>
+                  ⚡ El precio sube a 270 USD el 1 de julio
+                </p>
+              </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', textAlign: 'left' }}>
