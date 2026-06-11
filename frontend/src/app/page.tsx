@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -40,7 +40,25 @@ const ConsultivaIcon = () => (
 
 export default function HomePage() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+  const [countdown, setCountdown]     = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const router = useRouter()
+
+  useEffect(() => {
+    const target = new Date('2026-07-01T00:00:00-03:00').getTime()
+    function tick() {
+      const diff = target - Date.now()
+      if (diff <= 0) { setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 }); return }
+      setCountdown({
+        days:    Math.floor(diff / 86400000),
+        hours:   Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000)  / 60000),
+        seconds: Math.floor((diff % 60000)    / 1000),
+      })
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  })
 
   return (
     <div
@@ -145,7 +163,7 @@ export default function HomePage() {
           }}>
             {([
               { id: 'junior', title: 'Reto 3 Días', desc: 'Probá el método desde adentro: accedé a las IAs coaches, las técnicas de Neuroventas y sentí la diferencia antes de invertir.', price: 'GRATIS', cta: 'EMPEZAR RETO GRATIS', href: '/register', note: 'Acceso por ÚNICA vez' },
-              { id: 'elite', title: 'Asesor Elite — 30 Días', desc: 'Neuroventas + PNL aplicados al Rubro Salud. Método exclusivo de Yami Mansilla. 3 IAs coaches disponibles 24/7. Certificación Internacional.', price: '150 USD', cta: 'RESERVAR LUGAR ELITE', href: '/parte-2', note: 'Precio sube a 270 USD el 1 jul' }
+              { id: 'elite', title: 'Asesor Elite — 30 Días', desc: 'Neuroventas + PNL aplicados al Rubro Salud. Método exclusivo de Yami Mansilla. 3 IAs coaches disponibles 24/7. Certificación Internacional.', price: '150 USD', cta: 'RESERVAR LUGAR ELITE', href: '/parte-2', note: '' }
             ] as const).map(({ id, title, desc, price, cta, href, note }) => (
               <motion.div
                 key={id}
@@ -214,11 +232,36 @@ export default function HomePage() {
                   >
                     {cta}
                   </button>
-                  {note ? (
-                    <p style={{ fontSize: '0.75rem', color: '#f87171', marginTop: '0.6rem', letterSpacing: '0.04em', fontWeight: 600 }}>
-                      {note}
-                    </p>
-                  ) : null}
+                  {id === 'elite' && (
+                    <div style={{ marginTop: '0.75rem' }}>
+                      <p style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-text-muted)', marginBottom: '0.4rem' }}>
+                        Precio pre-lanzamiento termina en
+                      </p>
+                      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.4rem' }}>
+                        {[
+                          { v: countdown.days,    l: 'días' },
+                          { v: countdown.hours,   l: 'hs' },
+                          { v: countdown.minutes, l: 'min' },
+                          { v: countdown.seconds, l: 'seg' },
+                        ].map(({ v, l }) => (
+                          <div key={l} style={{
+                            display: 'flex', flexDirection: 'column', alignItems: 'center',
+                            minWidth: '2.5rem', padding: '0.35rem 0.25rem',
+                            borderRadius: '0.375rem',
+                            border: '1px solid var(--color-gold-border)',
+                            background: 'rgba(196,151,42,0.06)',
+                          }}>
+                            <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-gold)', lineHeight: 1 }}>
+                              {String(v).padStart(2, '0')}
+                            </span>
+                            <span style={{ fontSize: '0.55rem', color: 'var(--color-text-muted)', marginTop: '0.15rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                              {l}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
@@ -616,7 +659,33 @@ export default function HomePage() {
                   150 USD
                 </p>
                 <p style={{ fontSize: '0.8rem', fontWeight: 700, color: '#EAB308', marginTop: '0.25rem' }}>56% de AHORRO · Por ÚNICA vez</p>
-                <p style={{ fontSize: '0.8rem', color: '#f87171', fontWeight: 600, marginTop: '0.4rem' }}>Precio sube a 270 USD el 1 jul</p>
+                <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--color-text-muted)', marginTop: '1rem', marginBottom: '0.5rem' }}>
+                  Precio pre-lanzamiento termina en
+                </p>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem' }}>
+                  {[
+                    { v: countdown.days,    l: 'días' },
+                    { v: countdown.hours,   l: 'hs' },
+                    { v: countdown.minutes, l: 'min' },
+                    { v: countdown.seconds, l: 'seg' },
+                  ].map(({ v, l }) => (
+                    <div key={l} style={{
+                      display: 'flex', flexDirection: 'column', alignItems: 'center',
+                      minWidth: 'clamp(2.75rem,8vw,3.5rem)',
+                      padding: '0.5rem 0.4rem',
+                      borderRadius: '0.5rem',
+                      border: '1px solid var(--color-gold-border)',
+                      background: 'rgba(196,151,42,0.06)',
+                    }}>
+                      <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(1rem,3vw,1.4rem)', color: 'var(--color-gold)', lineHeight: 1 }}>
+                        {String(v).padStart(2, '0')}
+                      </span>
+                      <span style={{ fontSize: '0.6rem', color: 'var(--color-text-muted)', marginTop: '0.2rem', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                        {l}
+                      </span>
+                    </div>
+                  ))}
+                </div>
                 <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 600, marginTop: '0.75rem', color: 'var(--color-text-muted)' }}>+ 20 USD / mes<br />(membresía opcional)</p>
               </div>
 
