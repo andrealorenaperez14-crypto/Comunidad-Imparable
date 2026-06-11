@@ -5,6 +5,7 @@ import { sendVIPWelcomeEmail } from '../services/email.js'
 import { sanitizeFields } from '../middleware/sanitizeInput.js'
 import { makeVerifyRecaptcha } from '../middleware/verifyRecaptcha.js'
 import { promptGuard } from '../middleware/promptGuard.js'
+import { requireAuth } from '../middleware/auth.js'
 
 const client = new MercadoPagoConfig({
   accessToken: process.env.MP_ACCESS_TOKEN
@@ -13,7 +14,8 @@ const client = new MercadoPagoConfig({
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_VIP_URL
 const FRONTEND_URL    = process.env.CORS_ORIGIN?.split(',')[0] || 'https://frontend-one-ivory-47.vercel.app'
 const BACKEND_URL     = process.env.BACKEND_URL || 'https://escuela-asesores-backend.onrender.com'
-const USD_AMOUNT      = 150
+const USD_AMOUNT         = 150
+const USD_RENEWAL_AMOUNT = 20
 
 async function getMepRate() {
   try {
@@ -93,6 +95,42 @@ export async function paymentRoutes(fastify) {
     return reply.send({ init_point: result.init_point, mepRate, pesoAmount })
   })
 
+  // ── Renovación mensual 20 USD ─────────────────────────────────────────────
+  fastify.post('/renewal/create', {
+    config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
+    preHandler: [requireAuth, makeVerifyRecaptcha('renewal_payment')]
+  }, async (req, reply) => {
+    const user = req.user
+    const mepRate = await getMepRate()
+    if (!mepRate) return reply.code(503).send({ error: 'No se pudo obtener la cotización MEP' })
+
+    const pesoAmount = Math.round(USD_RENEWAL_AMOUNT * mepRate)
+
+    const preference = new Preference(client)
+    const result = await preference.create({
+      body: {
+        items: [{
+          title:       'Renovación Mensual — Escuela de Asesores Elite',
+          quantity:    1,
+          unit_price:  pesoAmount,
+          currency_id: 'ARS'
+        }],
+        payer: { email: user.email },
+        external_reference: JSON.stringify({ userId: user.id, type: 'renewal', mepRate, pesoAmount }),
+        back_urls: {
+          success: `${FRONTEND_URL}/dashboard`,
+          failure: `${FRONTEND_URL}/dashboard?renovacion=fallida`,
+          pending: `${FRONTEND_URL}/dashboard?renovacion=pendiente`
+        },
+        auto_return:          'approved',
+        notification_url:     `${BACKEND_URL}/api/payments/webhook`,
+        statement_descriptor: 'ESCUELA ASESORES'
+      }
+    })
+
+    return reply.send({ init_point: result.init_point, mepRate, pesoAmount })
+  })
+
   fastify.post('/webhook', async (req, reply) => {
     const webhookSecret = process.env.MP_WEBHOOK_SECRET
     if (webhookSecret) {
@@ -121,16 +159,41 @@ export async function paymentRoutes(fastify) {
       const paymentData = await payment.get({ id: data.id })
       if (paymentData.status !== 'approved') return
 
-      const ref = JSON.parse(paymentData.external_reference || '{}')
+      const ref      = JSON.parse(paymentData.external_reference || '{}')
+      const montoReal = paymentData.transaction_amount
+
+      // ── Renovación mensual ────────────────────────────────────────────────
+      if (ref.type === 'renewal' && ref.userId) {
+        const prisma   = fastify.prisma
+        const now      = new Date()
+        const existing = await prisma.subscription.findFirst({
+          where: { userId: ref.userId },
+          orderBy: { createdAt: 'desc' }
+        })
+        const base         = existing?.activeUntil && existing.activeUntil > now ? existing.activeUntil : now
+        const activeUntil  = new Date(base.getTime() + 30 * 24 * 60 * 60 * 1000)
+        const suspDate     = new Date(activeUntil.getTime() + 5 * 24 * 60 * 60 * 1000)
+
+        await prisma.subscription.updateMany({
+          where: { userId: ref.userId, status: { in: ['ACTIVE', 'SUSPENDED', 'EXPIRED'] } },
+          data:  { status: 'EXPIRED' }
+        })
+        await prisma.subscription.create({
+          data: { userId: ref.userId, planType: '30_DAYS', status: 'ACTIVE', activeUntil, suspensionDate: suspDate, lastPaymentDate: now, amountPaid: montoReal || 0 }
+        })
+        fastify.log.info({ userId: ref.userId }, 'Renovación mensual procesada')
+        return
+      }
+
+      // ── Pago inicial VIP ──────────────────────────────────────────────────
       const { nombre, apellido = '', dni, email, whatsapp } = ref
-      const montoReal  = paymentData.transaction_amount
-      const cleanRef = sanitizeFields({ nombre, apellido, whatsapp }, ['nombre', 'apellido', 'whatsapp'])
-      const cleanNombre = cleanRef.nombre
-      const cleanApellido = cleanRef.apellido
-      const cleanWhatsapp = cleanRef.whatsapp
+      const cleanRef       = sanitizeFields({ nombre, apellido, whatsapp }, ['nombre', 'apellido', 'whatsapp'])
+      const cleanNombre    = cleanRef.nombre
+      const cleanApellido  = cleanRef.apellido
+      const cleanWhatsapp  = cleanRef.whatsapp
       const nombreCompleto = `${cleanNombre} ${cleanApellido}`.trim()
 
-      // 1 — Escribir en Google Sheet (columnas: fecha, nombre, DNI, email, WA, importe)
+      // 1 — Escribir en Google Sheet
       if (APPS_SCRIPT_URL) {
         await fetch(APPS_SCRIPT_URL, {
           method:  'POST',

@@ -747,9 +747,9 @@ function Parte2Inner() {
             {[
               { q: '¿Necesito experiencia previa en ventas?', a: 'No. El programa está diseñado para asesores que están empezando y para los que ya venden pero quieren dar el salto. El método de Yami Mansilla parte desde cero y se adapta a tu nivel.' },
               { q: '¿Puedo cursarlo mientras trabajo?', a: 'Sí. Los 30 días están organizados para que puedas avanzar a tu ritmo. Además tenés las 3 IAs disponibles 24/7 para consultar en cualquier momento, sin depender de un horario fijo.' },
-              { q: '¿Qué pasa si no puedo seguir el ritmo?', a: 'El acceso no vence con los 30 días de formación. Podés repasar los módulos cuando necesites. Las IAs coaches siguen disponibles para acompañarte en cada cierre.' },
+              { q: '¿Qué pasa después de los 30 días?', a: 'Tu acceso vence. Para seguir en la plataforma renovás por 20 USD/mes — podés hacerlo cuando quieras, es intercalado. Cada pago activa 30 días nuevos.' },
               { q: '¿Puedo pagar en cuotas?', a: 'Sí. Mercado Pago acepta tarjeta de crédito con cuotas según tu banco. El monto en pesos se calcula al Dólar MEP del día del pago.' },
-              { q: '¿Qué incluye la membresía de 20 USD/mes?', a: 'Es completamente opcional. Incluye acceso continuo al Club de Asesores VIP ORO, actualizaciones del método y acceso a los nuevos módulos que se vayan sumando. Si no la activás, conservás todo lo del programa principal.' },
+              { q: '¿Para qué sirve la membresía de 20 USD/mes?', a: 'Para seguir con acceso a la plataforma, las 3 IAs coaches y el Club de Asesores VIP ORO una vez que terminan tus 30 días. Si no la activás, perdés el acceso pero podés volver cuando quieras.' },
               { q: '¿La certificación es reconocida internacionalmente?', a: 'Sí. Al completar el módulo 15 recibís la Certificación Internacional en Neuroventas aplicadas al Consumidor de Salud, avalada por el método de Yami Mansilla con más de 13 años de trayectoria y +1.000 asesores formados.' },
             ].map((f, i) => (
               <FaqItem key={i} q={f.q} a={f.a} />
