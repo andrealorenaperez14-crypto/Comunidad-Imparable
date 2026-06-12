@@ -273,20 +273,49 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          {/* CTA secundario */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 1.5 }}>
+          {/* Divisor — camino alternativo */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.6 }}
+            style={{ display: 'flex', alignItems: 'center', gap: '1rem', maxWidth: '440px', margin: '2rem auto 1.75rem' }}
+          >
+            <div style={{ flex: 1, height: '1px', background: 'rgba(196,151,42,0.18)' }} />
+            <span style={{ fontSize: '0.7rem', color: 'rgba(196,151,42,0.45)', letterSpacing: '0.12em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+              ¿Ya estás convencido?
+            </span>
+            <div style={{ flex: 1, height: '1px', background: 'rgba(196,151,42,0.18)' }} />
+          </motion.div>
+
+          {/* CTA secundario — Asesor Elite */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.7 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
+          >
             <button
               onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_skip' }); router.push('/parte-2') }}
               style={{
-                background: 'none', border: '1px solid var(--color-gold-border)',
-                borderRadius: '0.5rem', color: 'var(--color-gold)',
-                fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)', fontWeight: 600,
-                padding: '0.7rem 1.5rem', cursor: 'pointer',
-                letterSpacing: '0.03em', width: '100%', maxWidth: '440px'
+                background: 'linear-gradient(135deg, rgba(196,151,42,0.12), rgba(196,151,42,0.06))',
+                border: '1px solid rgba(196,151,42,0.5)',
+                borderRadius: '0.75rem',
+                color: 'var(--color-gold)',
+                fontSize: 'clamp(0.9rem, 1.8vw, 1rem)',
+                fontWeight: 700,
+                padding: '0.9rem 2rem',
+                cursor: 'pointer',
+                letterSpacing: '0.05em',
+                width: '100%',
+                maxWidth: '440px',
+                textTransform: 'uppercase'
               }}
             >
-              Ya conozco el método, quiero el Asesor Elite →
+              Quiero ser Asesor Elite →
             </button>
+            <p style={{ fontSize: '0.7rem', color: 'rgba(196,151,42,0.4)', letterSpacing: '0.06em' }}>
+              Acceso completo · 150 USD · Certificación Internacional
+            </p>
           </motion.div>
 
         </motion.div>
