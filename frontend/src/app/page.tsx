@@ -380,55 +380,52 @@ export default function HomePage() {
             transition={{ duration: 0.7 }}
           >
             <p style={{
-              fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
+              fontSize: 'clamp(1.1rem, 3vw, 1.6rem)',
               fontWeight: 700,
-              lineHeight: 1.5,
+              lineHeight: 1.45,
               marginBottom: '1.5rem',
               color: 'var(--color-text)'
             }}>
-              El rubro de la salud es de primera necesidad, y hoy, la demanda de{' '}
-              <span style={{ color: 'var(--color-gold)' }}>Asesores de Medicina Prepaga altamente capacitados</span>{' '}
-              está en su punto histórico más alto.
+              Hay personas que llevan meses esperando el momento ideal.<br />
+              <span style={{ color: 'var(--color-gold)' }}>Otras ya cerraron su primera venta.</span>
             </p>
 
             <p style={{
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              fontSize: 'clamp(0.88rem, 2vw, 1.1rem)',
               color: 'var(--color-text-muted)',
-              lineHeight: 1.8,
-              marginBottom: '2.5rem'
+              lineHeight: 1.85,
+              marginBottom: '1.5rem'
             }}>
-              Las familias necesitan respuestas, no vendedores.
+              La diferencia no es el talento. No es la experiencia.<br />
+              <strong style={{ color: 'var(--color-text)' }}>Es tener un método.</strong>
             </p>
 
             <div style={{
               width: '3rem',
               height: '2px',
               background: 'var(--color-gold)',
-              margin: '0 auto 2.5rem'
+              margin: '0 auto 2rem'
             }} />
 
             <p style={{
               fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
               color: 'var(--color-text-muted)',
-              lineHeight: 1.8,
-              marginBottom: '1.5rem'
+              lineHeight: 1.85,
+              marginBottom: '1.25rem'
             }}>
-              A través del{' '}
-              <strong style={{ color: 'var(--color-text)' }}>método exclusivo de Yami Mansilla</strong>,
-              transformamos por completo tu enfoque: dejás de ser un simple "vendedor" persiguiendo comisiones,
-              para convertirte en un{' '}
-              <strong style={{ color: 'var(--color-gold)' }}>verdadero aliado estratégico</strong>.
+              La cobertura médica no es un lujo — es algo que{' '}
+              <strong style={{ color: 'var(--color-text)' }}>todas las familias necesitan</strong> y muy pocas saben cómo elegir.
+              Ahí está tu oportunidad.
             </p>
 
             <p style={{
               fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
               color: 'var(--color-text-muted)',
-              lineHeight: 1.8
+              lineHeight: 1.85
             }}>
-              Aprenderás a guiar a cada cliente/paciente con{' '}
-              <strong style={{ color: 'var(--color-text)' }}>autoridad y empatía</strong>,
-              ayudándole a encontrar la opción de salud perfecta,
-              diseñada exactamente a su medida.
+              El método de Yami no enseña a vender. Enseña a{' '}
+              <strong style={{ color: 'var(--color-gold)' }}>orientar a cada persona hacia la mejor opción para su vida</strong>.
+              Cuando ayudás de verdad, no necesitás convencer a nadie — el cliente recomienda solo.
             </p>
           </motion.div>
         </div>
@@ -611,12 +608,24 @@ export default function HomePage() {
 
             {/* Texto */}
             <motion.div {...fadeUp} style={{ textAlign: 'center' }}>
-              <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.75, marginBottom: '1.25rem' }}>
-                A los 16 años trabajé por primera vez como asesora, vendiendo coberturas médicas. Entendí que ayudaba a la gente con mi servicio.
-                Hoy, después de más de 10.000 clientes, sé exactamente la diferencia entre quien vende y quien es un aliado estratégico de los clientes/pacientes.
+              <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.85, marginBottom: '1rem' }}>
+                A los 16 años, Yami salió a la calle con un folleto en la mano y cero experiencia.
+                Sin guión, sin red de contactos, sin nada. Su primer contacto fue una persona que realmente
+                necesitaba cobertura médica y no sabía cómo elegir.
               </p>
-              <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.1rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
-                La diferencia no es el talento. Es el MÉTODO.
+              <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.85, marginBottom: '1rem', color: 'var(--color-text-muted)' }}>
+                Ahí entendió algo que cambió todo:{' '}
+                <strong style={{ color: 'var(--color-text)' }}>no estaba vendiendo un producto. Estaba ayudando a alguien a cuidar su salud.</strong>{' '}
+                Y cuando lo enfocó así, todo fluyó.
+              </p>
+              <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', lineHeight: 1.85, marginBottom: '1.25rem', color: 'var(--color-text-muted)' }}>
+                Hoy, 13 años después, lidera{' '}
+                <strong style={{ color: 'var(--color-gold)' }}>Medicina Prepaga Salud MPS</strong>,
+                con más de 10.000 clientes que llegaron recomendados — porque Yami nunca cerró una venta,
+                orientó a cada persona hacia la mejor opción para su vida.
+              </p>
+              <p style={{ fontSize: 'clamp(0.9rem, 2vw, 1.05rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '1.5rem' }}>
+                Ese es el método que ahora enseña. Y en 3 días te lo muestra en acción.
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem' }}>
@@ -714,10 +723,10 @@ export default function HomePage() {
         <div style={{ maxWidth: '480px', margin: '0 auto', textAlign: 'center' }}>
           <motion.div {...fadeUp}>
             <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
-              Después de 3 días
+              ¿Listo para ir a fondo?
             </h2>
             <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '2.5rem' }}>
-              Ya intentaste. Ya sabés cómo se siente. Ahora hacelo en serio.
+              Los 3 días gratis te muestran el camino. El programa Elite te lleva hasta el final.
             </p>
 
             <div style={{
@@ -977,7 +986,7 @@ export default function HomePage() {
                 transition: 'opacity 0.2s'
               }}
             >
-              COMIENZA AHORA
+              Quiero mis 3 días gratis →
             </button>
           </motion.div>
         </div>
