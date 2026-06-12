@@ -196,21 +196,65 @@ export default function HomePage() {
               Tenés una fuente de ingresos que todavía no estás usando.
             </p>
 
-            {/* Pills de profesiones */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
-              {['Médicos', 'Contadores', 'Odontólogos', 'Abogados', 'Nutricionistas', 'Coaches', 'Terapeutas', 'Docentes', 'Emprendedores', '+ cualquier profesional'].map((p) => (
-                <span key={p} style={{
-                  fontSize: 'clamp(0.68rem, 1.3vw, 0.78rem)',
-                  padding: '0.3rem 0.75rem',
-                  borderRadius: '9999px',
-                  border: '1px solid rgba(196,151,42,0.3)',
-                  color: 'var(--color-text-muted)',
-                  background: 'rgba(196,151,42,0.05)',
-                  letterSpacing: '0.03em'
-                }}>
-                  {p}
-                </span>
-              ))}
+            {/* Ticker de profesiones */}
+            <div style={{ position: 'relative', overflow: 'hidden', marginBottom: '1rem', maskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)', WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%)' }}>
+              <div className="profession-ticker">
+                {[
+                  { t: 'Médicos',         tipo: 'pill' },
+                  { t: 'Contadores',      tipo: 'pill' },
+                  { t: 'Odontólogos',     tipo: 'pill' },
+                  { t: '¿Trabajás con personas?', tipo: 'gold' },
+                  { t: 'Abogados',        tipo: 'pill' },
+                  { t: 'Nutricionistas',  tipo: 'pill' },
+                  { t: 'Coaches',         tipo: 'pill' },
+                  { t: 'Tu profesión aplica →', tipo: 'gold' },
+                  { t: 'Terapeutas',      tipo: 'pill' },
+                  { t: 'Psicólogos',      tipo: 'pill' },
+                  { t: 'Docentes',        tipo: 'pill' },
+                  { t: 'Cualquier profesional', tipo: 'gold' },
+                  { t: 'Arquitectos',     tipo: 'pill' },
+                  { t: 'Kinesiólogos',    tipo: 'pill' },
+                  { t: 'Emprendedores',   tipo: 'pill' },
+                  { t: '¿Tenés contactos? Ya tenés clientes →', tipo: 'gold' },
+                  // duplicado para loop continuo
+                  { t: 'Médicos',         tipo: 'pill' },
+                  { t: 'Contadores',      tipo: 'pill' },
+                  { t: 'Odontólogos',     tipo: 'pill' },
+                  { t: '¿Trabajás con personas?', tipo: 'gold' },
+                  { t: 'Abogados',        tipo: 'pill' },
+                  { t: 'Nutricionistas',  tipo: 'pill' },
+                  { t: 'Coaches',         tipo: 'pill' },
+                  { t: 'Tu profesión aplica →', tipo: 'gold' },
+                  { t: 'Terapeutas',      tipo: 'pill' },
+                  { t: 'Psicólogos',      tipo: 'pill' },
+                  { t: 'Docentes',        tipo: 'pill' },
+                  { t: 'Cualquier profesional', tipo: 'gold' },
+                  { t: 'Arquitectos',     tipo: 'pill' },
+                  { t: 'Kinesiólogos',    tipo: 'pill' },
+                  { t: 'Emprendedores',   tipo: 'pill' },
+                  { t: '¿Tenés contactos? Ya tenés clientes →', tipo: 'gold' },
+                ].map((item, idx) => (
+                  <span key={idx} style={item.tipo === 'gold' ? {
+                    fontSize: 'clamp(0.7rem, 1.3vw, 0.8rem)',
+                    fontWeight: 700,
+                    color: 'var(--color-gold)',
+                    letterSpacing: '0.04em',
+                    whiteSpace: 'nowrap',
+                    padding: '0 0.25rem'
+                  } : {
+                    fontSize: 'clamp(0.68rem, 1.3vw, 0.78rem)',
+                    padding: '0.3rem 0.85rem',
+                    borderRadius: '9999px',
+                    border: '1px solid rgba(196,151,42,0.28)',
+                    color: 'var(--color-text-muted)',
+                    background: 'rgba(196,151,42,0.05)',
+                    letterSpacing: '0.03em',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    {item.t}
+                  </span>
+                ))}
+              </div>
             </div>
 
             <p style={{ fontSize: 'clamp(0.78rem, 1.5vw, 0.88rem)', color: 'var(--color-text-muted)', lineHeight: 1.65 }}>
