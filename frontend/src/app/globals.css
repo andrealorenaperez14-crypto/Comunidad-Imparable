@@ -12,6 +12,40 @@
   --color-separator:   rgba(196,151,42,0.15);
 }
 
+@keyframes shimmer-sweep {
+  0%   { background-position: -300% center; }
+  100% { background-position: 300% center; }
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 10px 36px rgba(196,151,42,0.45), 0 0 0 0 rgba(196,151,42,0); }
+  50%       { box-shadow: 0 18px 56px rgba(196,151,42,0.75), 0 0 0 6px rgba(196,151,42,0.1); }
+}
+@keyframes float-up {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+.hero-shimmer-badge {
+  background: linear-gradient(90deg,
+    rgba(196,151,42,0.0) 0%,
+    rgba(196,151,42,0.18) 20%,
+    rgba(234,179,8,0.55) 45%,
+    rgba(255,215,80,0.85) 50%,
+    rgba(234,179,8,0.55) 55%,
+    rgba(196,151,42,0.18) 80%,
+    rgba(196,151,42,0.0) 100%
+  );
+  background-size: 300% auto;
+  animation: shimmer-sweep 3.5s linear infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-cta-glow {
+  animation: glow-pulse 2.4s ease-in-out infinite;
+}
+
 @theme {
   --color-gold:        #C4972A;
   --color-gold-light:  #D4A843;

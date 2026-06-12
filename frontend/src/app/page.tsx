@@ -1,9 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue, useTransform, animate as fmAnimate } from 'framer-motion'
 import { trackEvent } from '@/lib/analytics'
 
 
@@ -38,10 +38,34 @@ const ConsultivaIcon = () => (
   </svg>
 )
 
+const lineVariants = {
+  hidden: { opacity: 0, y: 48, filter: 'blur(10px)' },
+  visible: (i: number) => ({
+    opacity: 1, y: 0, filter: 'blur(0px)',
+    transition: { duration: 0.75, delay: 0.35 + i * 0.2, ease: [0.22, 1, 0.36, 1] }
+  })
+}
+
 export default function HomePage() {
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [countdown, setCountdown]     = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-  const router = useRouter()
+  const router    = useRouter()
+  const sectionRef = useRef<HTMLElement>(null)
+  const mouseX    = useMotionValue(0)
+  const mouseY    = useMotionValue(0)
+  const rotateX   = useTransform(mouseY, [-500, 500], [4, -4])
+  const rotateY   = useTransform(mouseX, [-500, 500], [-4, 4])
+
+  function onMouseMove(e: React.MouseEvent) {
+    const rect = sectionRef.current?.getBoundingClientRect()
+    if (!rect) return
+    mouseX.set(e.clientX - rect.left - rect.width / 2)
+    mouseY.set(e.clientY - rect.top - rect.height / 2)
+  }
+  function onMouseLeave() {
+    fmAnimate(mouseX, 0, { duration: 0.9, ease: 'easeOut' } as any)
+    fmAnimate(mouseY, 0, { duration: 0.9, ease: 'easeOut' } as any)
+  }
 
   useEffect(() => {
     const target = new Date('2026-07-01T00:00:00-03:00').getTime()
@@ -61,159 +85,166 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div
-      style={{
-        width: '100%',
-        background: 'var(--color-bg)',
-        color: 'var(--color-text)',
-        textAlign: 'center',
-        overflowX: 'hidden'
-      }}
-    >
+    <div style={{ width: '100%', background: 'var(--color-bg)', color: 'var(--color-text)', textAlign: 'center', overflowX: 'hidden' }}>
 
       {/* Login shortcut */}
       <div style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 100 }}>
         <Link href="/login" style={{
-          display: 'inline-block',
-          background: 'rgba(12,12,12,0.85)',
-          border: '1px solid var(--color-gold-border)',
-          color: 'var(--color-gold)',
-          padding: '0.45rem 1.1rem',
-          borderRadius: '0.5rem',
-          fontSize: '0.8rem',
-          fontWeight: 600,
-          textDecoration: 'none',
-          backdropFilter: 'blur(8px)',
-          letterSpacing: '0.04em'
+          display: 'inline-block', background: 'rgba(12,12,12,0.85)',
+          border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)',
+          padding: '0.45rem 1.1rem', borderRadius: '0.5rem', fontSize: '0.8rem',
+          fontWeight: 600, textDecoration: 'none', backdropFilter: 'blur(8px)', letterSpacing: '0.04em'
         }}>
           Iniciar Sesión
         </Link>
       </div>
 
-      {/* ══════════════════ HERO ══════════════════ */}
-      <section style={{
-        minHeight: '100svh',
-        width: '100%',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)',
-        position: 'relative'
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.09) 0%, transparent 70%)'
-        }} />
+      {/* ══════════════════ HERO CINEMATOGRÁFICO ══════════════════ */}
+      <section
+        ref={sectionRef}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        style={{ minHeight: '100svh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'clamp(5rem,10vw,8rem) clamp(1rem,5vw,3rem)', position: 'relative', perspective: '1200px' }}
+      >
+        {/* Glow de fondo */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(196,151,42,0.13) 0%, transparent 70%)' }} />
+        {/* Líneas decorativas laterales */}
+        <div style={{ position: 'absolute', left: 'clamp(1rem,4vw,3rem)', top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(196,151,42,0.25), transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', right: 'clamp(1rem,4vw,3rem)', top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(196,151,42,0.25), transparent)', pointerEvents: 'none' }} />
 
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{ width: '100%', maxWidth: '820px', margin: '0 auto', position: 'relative', zIndex: 10 }}
+          style={{ rotateX, rotateY, transformStyle: 'preserve-3d', width: '100%', maxWidth: '860px', margin: '0 auto', position: 'relative', zIndex: 10 }}
         >
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
+          {/* Logo pequeño y elegante */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}
+          >
             <Image
               src="/assets/client1/LOGO_cuad_y_nombre_ESCUELA_DE_ASESORES.webp"
               alt="Escuela de Asesores"
-              width={300}
-              height={300}
-              priority
-              style={{ objectFit: 'contain', width: 'clamp(220px, 48vw, 380px)', height: 'auto' }}
+              width={240} height={240} priority
+              style={{ objectFit: 'contain', width: 'clamp(160px, 32vw, 260px)', height: 'auto', opacity: 0.92 }}
             />
-          </div>
-
-          <motion.div {...fadeUp}>
-            <p style={{
-              fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.15em',
-              color: 'var(--color-gold)',
-              marginBottom: '1.25rem'
-            }}>
-              Método exclusivo · Rubro Salud
-            </p>
-            <h1 style={{
-              fontFamily: 'Cinzel, serif',
-              fontSize: 'clamp(1.4rem, 4vw, 2.8rem)',
-              fontWeight: 700,
-              lineHeight: 1.2,
-              marginBottom: '1.25rem'
-            }}>
-              Dejá de vender.<br />
-              <span style={{ color: 'var(--color-gold)' }}>Empezá a cerrar.</span>
-            </h1>
-            <p style={{
-              fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
-              color: 'var(--color-text-muted)',
-              lineHeight: 1.75,
-              maxWidth: '560px',
-              margin: '0 auto 0.75rem'
-            }}>
-              Neuroventas + PNL aplicados al Rubro Salud.<br />
-              3 IAs coaches disponibles <strong style={{ color: 'var(--color-text)' }}>24/7</strong> que te acompañan en cada cierre.<br />
-              Método de <strong style={{ color: 'var(--color-gold)' }}>Yami Mansilla</strong> — 13 años, +1.000 asesores formados.
-            </p>
-            <p style={{
-              fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
-              color: 'var(--color-text-muted)',
-              marginBottom: '2.5rem'
-            }}>
-              En 3 días tenés tu primera conversación real con un prospecto de cobertura médica.<br />
-              Con 3 IAs al lado. Sin tarjeta.
-            </p>
           </motion.div>
 
-          {/* CTA principal — Reto gratis */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '1.75rem' }}
+          {/* Overline */}
+          <motion.p
+            initial={{ opacity: 0, letterSpacing: '0.4em' }}
+            animate={{ opacity: 1, letterSpacing: '0.18em' }}
+            transition={{ duration: 1, delay: 0.1 }}
+            style={{ fontSize: 'clamp(0.6rem, 1.3vw, 0.72rem)', textTransform: 'uppercase', color: 'rgba(196,151,42,0.7)', marginBottom: '1.5rem', letterSpacing: '0.18em' }}
           >
-            <button
-              onClick={() => { trackEvent('cta_clicked', { cta_type: 'junior' }); router.push('/register') }}
-              style={{
-                padding: 'clamp(1rem,3vw,1.25rem) clamp(2.5rem,6vw,4rem)',
-                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
-                color: '#000',
-                fontWeight: 700,
-                borderRadius: '0.75rem',
-                fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
-                letterSpacing: '0.06em',
-                boxShadow: '0 10px 36px rgba(196,151,42,0.5)',
-                cursor: 'pointer',
-                width: '100%',
-                maxWidth: '420px',
-                transition: 'opacity 0.2s'
-              }}
-            >
-              EMPEZAR EL RETO — CONSEGUIR MI PRIMER CLIENTE
-            </button>
-            <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', letterSpacing: '0.04em' }}>
-              Sin tarjeta · Acceso por ÚNICA vez · Entrás directo a las IAs
-            </p>
+            ✦ &nbsp; Rubro Salud · Método Exclusivo · Yami Mansilla &nbsp; ✦
+          </motion.p>
+
+          {/* HEADLINE — 3 líneas con stagger cinematográfico */}
+          <h1 style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, lineHeight: 1.1, marginBottom: '2rem', letterSpacing: '0.02em' }}>
+            {[
+              { text: 'Tu primer cliente', size: 'clamp(2.2rem, 7vw, 5rem)', color: 'var(--color-text)' },
+              { text: 'de cobertura médica', size: 'clamp(1.8rem, 5.5vw, 3.8rem)', color: 'var(--color-text-muted)' },
+              { text: 'en 3 días.', size: 'clamp(2.6rem, 8vw, 5.8rem)', color: 'var(--color-gold)' },
+            ].map((line, i) => (
+              <motion.span
+                key={i}
+                custom={i}
+                variants={lineVariants}
+                initial="hidden"
+                animate="visible"
+                style={{ display: 'block', fontSize: line.size, color: line.color }}
+              >
+                {line.text}
+              </motion.span>
+            ))}
+          </h1>
+
+          {/* BADGE — GRATIS con shimmer */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.75, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.95, ease: [0.22, 1, 0.36, 1] }}
+            style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}
+          >
+            <div style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.75rem',
+              padding: '0.6rem 1.75rem',
+              borderRadius: '9999px',
+              border: '1px solid rgba(196,151,42,0.45)',
+              background: 'rgba(196,151,42,0.07)',
+              backdropFilter: 'blur(8px)',
+            }}>
+              <span className="hero-shimmer-badge" style={{ fontWeight: 800, fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                ✦ &nbsp; COMPLETAMENTE GRATIS &nbsp;·&nbsp; SIN TARJETA &nbsp;·&nbsp; EMPEZÁS HOY &nbsp; ✦
+              </span>
+            </div>
           </motion.div>
 
-          {/* Gancho secundario — Elite para el que ya sabe */}
+          {/* Supporting copy — 2 líneas máximo */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.7, delay: 1.1 }}
+            style={{ marginBottom: '0.75rem' }}
           >
+            <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)', lineHeight: 1.7 }}>
+              Neuroventas · PNL · 3 IAs disponibles <strong style={{ color: 'var(--color-text)' }}>24/7</strong> · Método de <strong style={{ color: 'var(--color-gold)' }}>Yami Mansilla</strong>
+            </p>
+          </motion.div>
+
+          {/* Prueba social micro */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            style={{ fontSize: 'clamp(0.72rem, 1.4vw, 0.82rem)', color: 'rgba(196,151,42,0.55)', marginBottom: '2.5rem', letterSpacing: '0.06em' }}
+          >
+            +1.000 asesores formados · 13 años de método · Acceso en 2 minutos
+          </motion.p>
+
+          {/* CTA principal — glow pulsante */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.3 }}
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}
+          >
+            <button
+              onClick={() => { trackEvent('cta_clicked', { cta_type: 'junior' }); router.push('/register') }}
+              className="hero-cta-glow"
+              style={{
+                padding: 'clamp(1rem,3vw,1.3rem) clamp(2.5rem,6vw,4.5rem)',
+                background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                color: '#000',
+                fontWeight: 800,
+                borderRadius: '0.875rem',
+                fontSize: 'clamp(1rem, 2.5vw, 1.25rem)',
+                letterSpacing: '0.07em',
+                cursor: 'pointer',
+                width: '100%',
+                maxWidth: '440px',
+                border: 'none',
+                textTransform: 'uppercase'
+              }}
+            >
+              Quiero mis 3 días gratis →
+            </button>
+            <p style={{ fontSize: '0.72rem', color: 'rgba(196,151,42,0.5)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Sin compromiso · Acceso inmediato a las 3 IAs
+            </p>
+          </motion.div>
+
+          {/* CTA secundario */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 1.5 }}>
             <button
               onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_skip' }); router.push('/parte-2') }}
               style={{
-                background: 'none',
-                border: '1px solid var(--color-gold-border)',
-                borderRadius: '0.5rem',
-                color: 'var(--color-gold)',
-                fontSize: 'clamp(0.9rem, 2vw, 1rem)',
-                fontWeight: 600,
-                padding: '0.75rem 1.5rem',
-                cursor: 'pointer',
-                letterSpacing: '0.03em',
-                width: '100%',
-                maxWidth: '420px'
+                background: 'none', border: '1px solid var(--color-gold-border)',
+                borderRadius: '0.5rem', color: 'var(--color-gold)',
+                fontSize: 'clamp(0.85rem, 1.8vw, 0.95rem)', fontWeight: 600,
+                padding: '0.7rem 1.5rem', cursor: 'pointer',
+                letterSpacing: '0.03em', width: '100%', maxWidth: '440px'
               }}
             >
               Ya conozco el método, quiero el Asesor Elite →
