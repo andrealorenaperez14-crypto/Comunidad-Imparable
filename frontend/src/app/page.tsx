@@ -175,7 +175,7 @@ export default function HomePage() {
               background: 'rgba(196,151,42,0.07)',
               backdropFilter: 'blur(8px)',
             }}>
-              <span className="hero-shimmer-badge" style={{ fontWeight: 800, fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+              <span className="hero-shimmer-badge" style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                 ✦ &nbsp; COMPLETAMENTE GRATIS &nbsp;·&nbsp; SIN TARJETA &nbsp;·&nbsp; EMPEZÁS HOY &nbsp; ✦
               </span>
             </div>
