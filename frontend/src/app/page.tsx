@@ -528,9 +528,9 @@ export default function HomePage() {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
             {[
-              { d: '1', t: 'PROSPECCIÓN', label: 'Módulo 1' },
-              { d: '2', t: 'DESCUBRIMIENTO', label: 'Módulo 2' },
-              { d: '3', t: 'CIERRE', label: 'Módulo 3' }
+              { d: '1', t: 'PROSPECCIÓN', label: 'Día 1', desc: 'Método "El Fichero": el orden exacto de preguntas para descubrir la mejor opción para tu cliente.' },
+              { d: '2', t: 'DESCUBRIMIENTO', label: 'Día 2', desc: 'Te muestro el chat de un caso real y te explico el paso a paso de cómo se cierra.' },
+              { d: '3', t: 'CIERRE', label: 'Día 3', desc: 'Te enseño a sacarle el máximo provecho a las IAs y cómo te acompañan en cada venta.' }
             ].map((s, i) => (
               <motion.div
                 key={i}
@@ -549,9 +549,12 @@ export default function HomePage() {
               >
                 <p style={{ fontSize: '0.75rem', color: 'var(--color-gold)', marginBottom: '0.5rem' }}>{s.label}</p>
                 <p style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '0.5rem' }}>{s.d}</p>
-                <h4 style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-gold)' }}>
+                <h4 style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
                   {s.t}
                 </h4>
+                <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', lineHeight: 1.6 }}>
+                  {s.desc}
+                </p>
               </motion.div>
             ))}
           </div>
