@@ -723,7 +723,7 @@ function Parte2Inner() {
               </div>
             ) : pagoStatus === 'fallido' ? (
               <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.3)', textAlign: 'center' }}>
-                <p style={{ color: '#F87171', fontWeight: 700, marginBottom: '0.25rem' }}>El pago no se completó</p>
+                <p style={{ color: 'var(--color-gold)', fontWeight: 700, marginBottom: '0.25rem' }}>El pago no se completó</p>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>Podés intentarlo de nuevo.</p>
               </div>
             ) : !showForm ? (
@@ -771,7 +771,7 @@ function Parte2Inner() {
                     }}
                   />
                 ))}
-                {formError && <p style={{ color: '#F87171', fontSize: '0.85rem' }}>{formError}</p>}
+                {formError && <p style={{ color: 'var(--color-gold)', fontSize: '0.85rem' }}>{formError}</p>}
                 <button
                   type="submit" disabled={sending}
                   style={{
