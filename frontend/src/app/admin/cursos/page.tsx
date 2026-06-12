@@ -11,11 +11,12 @@ interface Course {
   description: string
   content: string
   videoUrl?: string
+  pdfUrl?: string
   type: 'FREE' | 'PAID'
   order: number
 }
 
-const empty: Omit<Course, 'id' | 'order'> = { title: '', description: '', content: '', videoUrl: '', type: 'FREE' }
+const empty: Omit<Course, 'id' | 'order'> = { title: '', description: '', content: '', videoUrl: '', pdfUrl: '', type: 'FREE' }
 
 const inputClass = 'w-full rounded-xl px-4 py-3 focus:outline-none transition-all placeholder-shown:text-[var(--color-text-muted)]'
 const inputStyle = {
@@ -245,6 +246,20 @@ export default function CursosPage() {
                   value={modal.course.videoUrl || ''}
                   onChange={e => set('videoUrl', e.target.value)}
                   placeholder="https://youtu.be/... o https://www.youtube.com/watch?v=..."
+                  className={inputClass}
+                  style={inputStyle}
+                  onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}
+                  onBlur={e => e.target.style.borderColor = 'var(--color-separator)'}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1" style={{ color: 'var(--color-text-muted)' }}>URL del PDF descargable</label>
+                <p className="text-xs mb-2" style={{ color: 'var(--color-text-muted)', opacity: 0.7 }}>Subí el PDF a Google Drive → "Compartir" → "Cualquiera con el enlace" → pegá el link acá. Solo lo ven los alumnos con plan de pago.</p>
+                <input
+                  value={(modal.course as any).pdfUrl || ''}
+                  onChange={e => set('pdfUrl', e.target.value)}
+                  placeholder="https://drive.google.com/file/d/..."
                   className={inputClass}
                   style={inputStyle}
                   onFocus={e => e.target.style.borderColor = 'var(--color-gold)'}

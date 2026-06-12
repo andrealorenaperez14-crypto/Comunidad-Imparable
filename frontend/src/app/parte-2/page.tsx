@@ -373,6 +373,135 @@ function Parte2Inner() {
         </div>
       </section>
 
+      {/* ══════════════════ PREVIEW DEL CURSO ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)', background: 'rgba(196,151,42,0.03)', borderTop: '1px solid rgba(196,151,42,0.15)' }}>
+        <div style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}>
+          <motion.div {...fadeUp} style={{ marginBottom: '2.5rem' }}>
+            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
+              Así está diseñado cada módulo
+            </h2>
+            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)' }}>
+              Videos cortos y directos al punto · Material PDF descargable · A tu ritmo
+            </p>
+          </motion.div>
+
+          {/* Mockup del curso */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            style={{
+              borderRadius: '1rem',
+              border: '1px solid var(--color-gold-border)',
+              background: 'rgba(12,12,12,0.9)',
+              overflow: 'hidden',
+              boxShadow: '0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,151,42,0.1)',
+              textAlign: 'left'
+            }}
+          >
+            {/* Barra de título del "navegador" */}
+            <div style={{ padding: '0.75rem 1.25rem', background: 'rgba(20,20,20,0.95)', borderBottom: '1px solid rgba(196,151,42,0.1)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EF4444', opacity: 0.7 }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EAB308', opacity: 0.7 }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22C55E', opacity: 0.7 }} />
+              <span style={{ marginLeft: '0.75rem', fontSize: '0.7rem', color: 'rgba(196,151,42,0.5)', letterSpacing: '0.1em' }}>MÓDULO 08 — PSICOLOGÍA DE OBJECIONES</span>
+            </div>
+
+            <div style={{ padding: 'clamp(1rem,3vw,1.5rem)' }}>
+              {/* Header del módulo */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+                <span style={{ width: '2rem', height: '2rem', borderRadius: '0.4rem', background: 'rgba(196,151,42,0.12)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>8</span>
+                <div>
+                  <p style={{ fontWeight: 700, fontSize: 'clamp(0.9rem, 2vw, 1rem)', color: 'var(--color-text)' }}>Psicología de Objeciones, persuasión</p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.1rem' }}>Video · 18 min · PDF incluido</p>
+                </div>
+              </div>
+
+              {/* Reproductor de video mockup */}
+              <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: '0.625rem', background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a0a 100%)', border: '1px solid rgba(196,151,42,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.07) 0%, transparent 70%)' }} />
+                <div style={{ width: '3.5rem', height: '3.5rem', borderRadius: '50%', background: 'rgba(196,151,42,0.15)', border: '2px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'relative', zIndex: 1 }}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--color-gold)">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+                <div style={{ position: 'absolute', bottom: '0.75rem', left: '1rem', right: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{ flex: 1, height: '3px', borderRadius: '2px', background: 'rgba(196,151,42,0.2)', overflow: 'hidden' }}>
+                    <div style={{ width: '35%', height: '100%', background: 'var(--color-gold)', borderRadius: '2px' }} />
+                  </div>
+                  <span style={{ fontSize: '0.65rem', color: 'rgba(196,151,42,0.6)' }}>6:18 / 18:02</span>
+                </div>
+              </div>
+
+              {/* Botón PDF */}
+              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 1.125rem', borderRadius: '0.5rem', background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', cursor: 'pointer' }}>
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--color-gold)" strokeWidth="2">
+                    <path d="M12 16l-4-4h2.5V4h3v8H16l-4 4z"/><path d="M4 18h16v2H4z"/>
+                  </svg>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-gold)' }}>Descargar PDF del módulo</span>
+                </div>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.625rem 1rem', borderRadius: '0.5rem', background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22C55E', flexShrink: 0 }} />
+                  <span style={{ fontSize: '0.75rem', color: '#22C55E' }}>Exclusivo miembros Elite</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ══════════════════ 3D CARRUSEL ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(3rem,6vw,5rem) clamp(1rem,5vw,3rem) 0', textAlign: 'center' }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <p style={{ fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
+            Tu formación completa
+          </p>
+          {/* Stack de cards 3D */}
+          <div style={{ position: 'relative', width: '280px', height: '170px', margin: '0 auto 1rem', perspective: '800px' }}>
+            {[
+              { num: '15', title: 'Certificación Elite Internacional', rot: '-6deg', ty: '18px', tx: '-14px', z: 0, op: 0.45 },
+              { num: '08', title: 'Psicología de Objeciones', rot: '-3deg', ty: '9px', tx: '-7px', z: 1, op: 0.65 },
+              { num: '01', title: 'Neuroventas en Consumidor de Salud', rot: '0deg', ty: '0px', tx: '0px', z: 2, op: 1 },
+            ].map((c) => (
+              <div
+                key={c.num}
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '0.875rem',
+                  border: '1px solid var(--color-gold-border)',
+                  background: 'linear-gradient(135deg, rgba(20,18,8,0.98) 0%, rgba(12,12,12,0.98) 100%)',
+                  padding: '1.25rem',
+                  transform: `rotate(${c.rot}) translateY(${c.ty}) translateX(${c.tx})`,
+                  opacity: c.op,
+                  zIndex: c.z,
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
+                  <span style={{ width: '1.75rem', height: '1.75rem', borderRadius: '0.3rem', background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', fontSize: '0.7rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{c.num}</span>
+                  <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text)', lineHeight: 1.3 }}>{c.title}</p>
+                </div>
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', borderRadius: '9999px', background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}>▶ Video</span>
+                  <span style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', borderRadius: '9999px', background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)', color: 'var(--color-text-muted)' }}>📄 PDF</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
       {/* ══════════════════ 15 MÓDULOS ══════════════════ */}
       <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
         <div style={{ maxWidth: '960px', margin: '0 auto' }}>
@@ -381,10 +510,12 @@ function Parte2Inner() {
               {...fadeUp}
               style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700 }}
             >
-              15 Módulos Especializados
+              15 Videos Prácticos · Tu ritmo, tus tiempos
             </motion.h2>
-            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.75rem' }}>
-              Certificación Internacional en Neuroventas<br />Aplicadas al consumidor de coberturas médicas
+            <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.875rem)', color: 'var(--color-text-muted)', marginTop: '0.75rem', lineHeight: 1.7 }}>
+              Cortos, directos y aplicables desde el día uno.<br />
+              Cada módulo incluye <strong style={{ color: 'var(--color-gold)' }}>material PDF descargable</strong> para repasar cuando quieras.<br />
+              Certificación Internacional en Neuroventas · Rubro Salud
             </p>
           </div>
 

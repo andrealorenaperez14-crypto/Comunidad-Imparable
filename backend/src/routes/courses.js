@@ -25,7 +25,8 @@ export async function courseRoutes(fastify) {
         content: true,
         type: true,
         order: true,
-        videoUrl: true
+        videoUrl: true,
+        pdfUrl: isPaid ? true : false
       }
     })
 
