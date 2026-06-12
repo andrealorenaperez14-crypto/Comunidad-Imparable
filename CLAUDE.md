@@ -14,6 +14,14 @@ git push origin main
 ```
 La branch `claude/...` queda suelta en remoto — borrarla manualmente en GitHub (Branches → ícono basura). No afecta producción.
 
+## Branding — colores (REGLA ABSOLUTA)
+Todo elemento visual que se agregue al frontend SIEMPRE debe usar la gama del branding:
+- **Primario**: oro `#EAB308` / `#CA8A04` / `rgba(196,151,42,...)` / `var(--color-gold)`
+- **Fondos**: negro `#0C0C0C` / `rgba(20,20,20,...)` / `var(--color-bg)` / `var(--color-bg-card)`
+- **Texto**: `var(--color-text)` / `var(--color-text-muted)`
+- **Bordes**: `var(--color-gold-border)` / `rgba(196,151,42,0.2)`
+- **PROHIBIDO** agregar colores externos: verde, azul, rojo, púrpura, o cualquier color que no sea de la gama oro/negro/blanco. Sin excepciones.
+
 ## Skills Activos
 - consejero: análisis adversarial. Activar con: `Usar skill consejero para [consulta]`
 

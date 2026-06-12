@@ -83,6 +83,120 @@ export default function Parte2() {
   )
 }
 
+const CAROUSEL_MODULES = [
+  { num: '01', title: 'Neuroventas aplicadas al Consumidor de Salud' },
+  { num: '02', title: 'Cerebro Reptiliano del Consumidor de Salud' },
+  { num: '03', title: 'Cerebro Límbico del Consumidor de Salud' },
+  { num: '04', title: 'Neocórtex del Consumidor de Salud' },
+  { num: '05', title: 'Botón de Compra — Adultos Mayores' },
+  { num: '06', title: 'Botón de Compra — Madres' },
+  { num: '07', title: 'Botón de Compra — Familias' },
+  { num: '08', title: 'Psicología de Objeciones, persuasión' },
+  { num: '09', title: 'Cotización Inteligente' },
+  { num: '10', title: 'Persuasión aplicada a la Venta Online' },
+  { num: '11', title: 'Hipnosis Conversacional y PNL' },
+  { num: '12', title: 'Agenda y Organización del Asesor Elite' },
+  { num: '13', title: 'Un oficio que deja herencia' },
+  { num: '14', title: 'Bonus: Preexistencias y Medicamentos' },
+  { num: '15', title: 'Certificación Elite Internacional' },
+]
+
+function ModuleCarousel() {
+  const [active, setActive] = useState(0)
+  const total = CAROUSEL_MODULES.length
+
+  useEffect(() => {
+    const id = setInterval(() => setActive(a => (a + 1) % total), 2800)
+    return () => clearInterval(id)
+  }, [total])
+
+  const getPos = (i: number) => {
+    const diff = ((i - active + total) % total)
+    if (diff === 0) return { scale: 1, x: '0%', z: 10, opacity: 1 }
+    if (diff === 1 || diff === total - 1) {
+      const side = diff === 1 ? 1 : -1
+      return { scale: 0.82, x: `${side * 110}%`, z: 6, opacity: 0.55 }
+    }
+    if (diff === 2 || diff === total - 2) {
+      const side = diff === 2 ? 1 : -1
+      return { scale: 0.68, x: `${side * 195}%`, z: 3, opacity: 0.28 }
+    }
+    return { scale: 0.55, x: diff < total / 2 ? '280%' : '-280%', z: 1, opacity: 0 }
+  }
+
+  return (
+    <section style={{ width: '100%', padding: 'clamp(3rem,6vw,5rem) 0 0', overflow: 'hidden' }}>
+      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
+        <p style={{ textAlign: 'center', fontSize: 'clamp(0.65rem, 1.5vw, 0.78rem)', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--color-gold)', marginBottom: '1.75rem' }}>
+          Tu formación completa · 15 módulos
+        </p>
+
+        {/* Carrusel */}
+        <div style={{ position: 'relative', height: 'clamp(130px, 22vw, 180px)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {CAROUSEL_MODULES.map((mod, i) => {
+            const pos = getPos(i)
+            return (
+              <motion.div
+                key={mod.num}
+                onClick={() => setActive(i)}
+                animate={{ scale: pos.scale, x: pos.x, opacity: pos.opacity, zIndex: pos.z }}
+                transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
+                style={{
+                  position: 'absolute',
+                  width: 'clamp(200px, 32vw, 300px)',
+                  cursor: 'pointer',
+                  borderRadius: '0.875rem',
+                  border: `1px solid ${i === active ? 'var(--color-gold)' : 'rgba(196,151,42,0.25)'}`,
+                  background: i === active
+                    ? 'linear-gradient(135deg, rgba(28,22,4,0.98) 0%, rgba(14,14,14,0.98) 100%)'
+                    : 'rgba(14,14,14,0.9)',
+                  boxShadow: i === active ? '0 16px 48px rgba(196,151,42,0.18), 0 0 0 1px rgba(196,151,42,0.12)' : 'none',
+                  padding: 'clamp(0.875rem,2vw,1.25rem)',
+                  userSelect: 'none'
+                }}
+              >
+                {/* Thumbnail area */}
+                <div style={{ width: '100%', aspectRatio: '16/7', borderRadius: '0.5rem', background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.6) 100%)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(196,151,42,0.1) 0%, transparent 65%)' }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', position: 'relative', zIndex: 1 }}>
+                    <div style={{ width: '1.75rem', height: '1.75rem', borderRadius: '50%', background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg viewBox="0 0 24 24" width="10" height="10" fill="var(--color-gold)"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+                    <span style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(0.9rem,2vw,1.2rem)', fontWeight: 700, color: i === active ? 'var(--color-gold)' : 'rgba(196,151,42,0.45)', letterSpacing: '0.05em' }}>{mod.num}</span>
+                  </div>
+                </div>
+                <p style={{ fontSize: 'clamp(0.7rem, 1.4vw, 0.82rem)', fontWeight: 700, color: i === active ? 'var(--color-text)' : 'var(--color-text-muted)', lineHeight: 1.35, textAlign: 'center' }}>
+                  {mod.title}
+                </p>
+              </motion.div>
+            )
+          })}
+        </div>
+
+        {/* Dots */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.375rem', marginTop: '1.5rem' }}>
+          {CAROUSEL_MODULES.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              style={{
+                width: i === active ? '1.5rem' : '0.375rem',
+                height: '0.375rem',
+                borderRadius: '9999px',
+                background: i === active ? 'var(--color-gold)' : 'rgba(196,151,42,0.25)',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                padding: 0
+              }}
+            />
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  )
+}
+
 function Parte2Inner() {
   const [expandedModule, setExpandedModule] = useState<number | null>(null)
   const [showForm, setShowForm]             = useState(false)
@@ -442,9 +556,9 @@ function Parte2Inner() {
                   </svg>
                   <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-gold)' }}>Descargar PDF del módulo</span>
                 </div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.625rem 1rem', borderRadius: '0.5rem', background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)' }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22C55E', flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.75rem', color: '#22C55E' }}>Exclusivo miembros Elite</span>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.625rem 1rem', borderRadius: '0.5rem', background: 'rgba(196,151,42,0.07)', border: '1px solid var(--color-gold-border)' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-gold)', flexShrink: 0 }} />
+                  <span style={{ fontSize: '0.75rem', color: 'var(--color-gold)' }}>Exclusivo miembros Elite</span>
                 </div>
               </div>
             </div>
@@ -452,55 +566,8 @@ function Parte2Inner() {
         </div>
       </section>
 
-      {/* ══════════════════ 3D CARRUSEL ══════════════════ */}
-      <section style={{ width: '100%', padding: 'clamp(3rem,6vw,5rem) clamp(1rem,5vw,3rem) 0', textAlign: 'center' }}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <p style={{ fontSize: 'clamp(0.65rem, 1.5vw, 0.8rem)', textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
-            Tu formación completa
-          </p>
-          {/* Stack de cards 3D */}
-          <div style={{ position: 'relative', width: '280px', height: '170px', margin: '0 auto 1rem', perspective: '800px' }}>
-            {[
-              { num: '15', title: 'Certificación Elite Internacional', rot: '-6deg', ty: '18px', tx: '-14px', z: 0, op: 0.45 },
-              { num: '08', title: 'Psicología de Objeciones', rot: '-3deg', ty: '9px', tx: '-7px', z: 1, op: 0.65 },
-              { num: '01', title: 'Neuroventas en Consumidor de Salud', rot: '0deg', ty: '0px', tx: '0px', z: 2, op: 1 },
-            ].map((c) => (
-              <div
-                key={c.num}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  borderRadius: '0.875rem',
-                  border: '1px solid var(--color-gold-border)',
-                  background: 'linear-gradient(135deg, rgba(20,18,8,0.98) 0%, rgba(12,12,12,0.98) 100%)',
-                  padding: '1.25rem',
-                  transform: `rotate(${c.rot}) translateY(${c.ty}) translateX(${c.tx})`,
-                  opacity: c.op,
-                  zIndex: c.z,
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-                  <span style={{ width: '1.75rem', height: '1.75rem', borderRadius: '0.3rem', background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', fontSize: '0.7rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{c.num}</span>
-                  <p style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--color-text)', lineHeight: 1.3 }}>{c.title}</p>
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', borderRadius: '9999px', background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}>▶ Video</span>
-                  <span style={{ fontSize: '0.65rem', padding: '0.2rem 0.5rem', borderRadius: '9999px', background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)', color: 'var(--color-text-muted)' }}>📄 PDF</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
+      {/* ══════════════════ CARRUSEL CINEMATOGRÁFICO ══════════════════ */}
+      <ModuleCarousel />
 
       {/* ══════════════════ 15 MÓDULOS ══════════════════ */}
       <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
