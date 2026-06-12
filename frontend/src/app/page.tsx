@@ -158,7 +158,8 @@ export default function HomePage() {
               color: 'var(--color-text-muted)',
               marginBottom: '2.5rem'
             }}>
-              Probalo gratis 3 días. Sin tarjeta.
+              En 3 días tenés tu primera conversación real con un prospecto de cobertura médica.<br />
+              Con 3 IAs al lado. Sin tarjeta.
             </p>
           </motion.div>
 
@@ -186,7 +187,7 @@ export default function HomePage() {
                 transition: 'opacity 0.2s'
               }}
             >
-              EMPEZAR RETO GRATIS — 3 DÍAS
+              EMPEZAR EL RETO — CONSEGUIR MI PRIMER CLIENTE
             </button>
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', letterSpacing: '0.04em' }}>
               Sin tarjeta · Acceso por ÚNICA vez · Entrás directo a las IAs
@@ -574,7 +575,7 @@ export default function HomePage() {
               Después de 3 días
             </h2>
             <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '2.5rem' }}>
-              Si cerraste tu primer cliente, estás listo para Elite
+              Ya intentaste. Ya sabés cómo se siente. Ahora hacelo en serio.
             </p>
 
             <div style={{
@@ -687,7 +688,7 @@ export default function HomePage() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
-              { q: '¿En 3 días puedo cerrar una venta?', a: 'SÍ, aunque todo va a ser NO, buscamos el SÍ.' },
+              { q: '¿En 3 días puedo cerrar una venta de cobertura médica?', a: 'SÍ. El objetivo es que en 3 días hayas tenido al menos una conversación real con un prospecto. Eso ya te pone adelante del 95% de los que están "pensando en arrancar".' },
               { q: '¿Necesito experiencia previa?', a: 'No, sólo ganas de salir de tu zona de confort, fe y visión.' },
               { q: '¿Cuánto puedo ganar?', a: 'Entre 50 y 500 USD por cliente. Tu objetivo es aprender.' },
               { q: '¿Puedo hacerlo mientras trabajo?', a: 'Sí, como VENDEDOR TRADICIONAL: puede ser tu complemento.\nComo ASESOR ELITE: necesitas más dedicación y haces la diferencia.' }
