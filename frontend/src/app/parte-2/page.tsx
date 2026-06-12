@@ -83,6 +83,14 @@ export default function Parte2() {
   )
 }
 
+const CAROUSEL_IMAGES = [
+  '/assets/client1/Yami 3.webp',
+  '/assets/client1/YAmi 4.webp',
+  '/assets/client1/Yami escritorio.webp',
+  '/assets/client1/Yami libros.webp',
+  '/assets/client1/Yami PC parada.webp',
+]
+
 const CAROUSEL_MODULES = [
   { num: '01', title: 'Neuroventas aplicadas al Consumidor de Salud' },
   { num: '02', title: 'Cerebro Reptiliano del Consumidor de Salud' },
@@ -104,6 +112,8 @@ const CAROUSEL_MODULES = [
 function ModuleCarousel() {
   const [active, setActive] = useState(0)
   const total = CAROUSEL_MODULES.length
+  // assign one image per module slot, distributed across the 5 photos
+  const imgMap = CAROUSEL_MODULES.map((_, i) => CAROUSEL_IMAGES[i % CAROUSEL_IMAGES.length])
 
   useEffect(() => {
     const id = setInterval(() => setActive(a => (a + 1) % total), 2800)
@@ -156,13 +166,15 @@ function ModuleCarousel() {
                 }}
               >
                 {/* Thumbnail area */}
-                <div style={{ width: '100%', aspectRatio: '16/7', borderRadius: '0.5rem', background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.6) 100%)', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(196,151,42,0.1) 0%, transparent 65%)' }} />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', position: 'relative', zIndex: 1 }}>
-                    <div style={{ width: '1.75rem', height: '1.75rem', borderRadius: '50%', background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <svg viewBox="0 0 24 24" width="10" height="10" fill="var(--color-gold)"><path d="M8 5v14l11-7z"/></svg>
+                <div style={{ width: '100%', aspectRatio: '16/7', borderRadius: '0.5rem', marginBottom: '0.75rem', position: 'relative', overflow: 'hidden' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={imgMap[i]} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: i !== active ? 'brightness(0.45) saturate(0.6)' : 'brightness(0.75)' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)' }} />
+                  <div style={{ position: 'absolute', bottom: '0.5rem', left: '0.625rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <div style={{ width: '1.4rem', height: '1.4rem', borderRadius: '50%', background: 'rgba(196,151,42,0.25)', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg viewBox="0 0 24 24" width="8" height="8" fill="var(--color-gold)"><path d="M8 5v14l11-7z"/></svg>
                     </div>
-                    <span style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(0.9rem,2vw,1.2rem)', fontWeight: 700, color: i === active ? 'var(--color-gold)' : 'rgba(196,151,42,0.45)', letterSpacing: '0.05em' }}>{mod.num}</span>
+                    <span style={{ fontFamily: 'Cinzel, serif', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-gold)', letterSpacing: '0.05em' }}>{mod.num}</span>
                   </div>
                 </div>
                 <p style={{ fontSize: 'clamp(0.7rem, 1.4vw, 0.82rem)', fontWeight: 700, color: i === active ? 'var(--color-text)' : 'var(--color-text-muted)', lineHeight: 1.35, textAlign: 'center' }}>
@@ -484,85 +496,6 @@ function Parte2Inner() {
             </span>
           </motion.p>
 
-        </div>
-      </section>
-
-      {/* ══════════════════ PREVIEW DEL CURSO ══════════════════ */}
-      <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)', background: 'rgba(196,151,42,0.03)', borderTop: '1px solid rgba(196,151,42,0.15)' }}>
-        <div style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}>
-          <motion.div {...fadeUp} style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
-              Así está diseñado cada módulo
-            </h2>
-            <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)' }}>
-              Videos cortos y directos al punto · Material PDF descargable · A tu ritmo
-            </p>
-          </motion.div>
-
-          {/* Mockup del curso */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            style={{
-              borderRadius: '1rem',
-              border: '1px solid var(--color-gold-border)',
-              background: 'rgba(12,12,12,0.9)',
-              overflow: 'hidden',
-              boxShadow: '0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(196,151,42,0.1)',
-              textAlign: 'left'
-            }}
-          >
-            {/* Barra de título del "navegador" */}
-            <div style={{ padding: '0.75rem 1.25rem', background: 'rgba(20,20,20,0.95)', borderBottom: '1px solid rgba(196,151,42,0.1)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EF4444', opacity: 0.7 }} />
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EAB308', opacity: 0.7 }} />
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22C55E', opacity: 0.7 }} />
-              <span style={{ marginLeft: '0.75rem', fontSize: '0.7rem', color: 'rgba(196,151,42,0.5)', letterSpacing: '0.1em' }}>MÓDULO 08 — PSICOLOGÍA DE OBJECIONES</span>
-            </div>
-
-            <div style={{ padding: 'clamp(1rem,3vw,1.5rem)' }}>
-              {/* Header del módulo */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-                <span style={{ width: '2rem', height: '2rem', borderRadius: '0.4rem', background: 'rgba(196,151,42,0.12)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>8</span>
-                <div>
-                  <p style={{ fontWeight: 700, fontSize: 'clamp(0.9rem, 2vw, 1rem)', color: 'var(--color-text)' }}>Psicología de Objeciones, persuasión</p>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.1rem' }}>Video · 18 min · PDF incluido</p>
-                </div>
-              </div>
-
-              {/* Reproductor de video mockup */}
-              <div style={{ width: '100%', aspectRatio: '16/9', borderRadius: '0.625rem', background: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a0a 100%)', border: '1px solid rgba(196,151,42,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at center, rgba(196,151,42,0.07) 0%, transparent 70%)' }} />
-                <div style={{ width: '3.5rem', height: '3.5rem', borderRadius: '50%', background: 'rgba(196,151,42,0.15)', border: '2px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'relative', zIndex: 1 }}>
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="var(--color-gold)">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                </div>
-                <div style={{ position: 'absolute', bottom: '0.75rem', left: '1rem', right: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{ flex: 1, height: '3px', borderRadius: '2px', background: 'rgba(196,151,42,0.2)', overflow: 'hidden' }}>
-                    <div style={{ width: '35%', height: '100%', background: 'var(--color-gold)', borderRadius: '2px' }} />
-                  </div>
-                  <span style={{ fontSize: '0.65rem', color: 'rgba(196,151,42,0.6)' }}>6:18 / 18:02</span>
-                </div>
-              </div>
-
-              {/* Botón PDF */}
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', padding: '0.625rem 1.125rem', borderRadius: '0.5rem', background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', cursor: 'pointer' }}>
-                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="var(--color-gold)" strokeWidth="2">
-                    <path d="M12 16l-4-4h2.5V4h3v8H16l-4 4z"/><path d="M4 18h16v2H4z"/>
-                  </svg>
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-gold)' }}>Descargar PDF del módulo</span>
-                </div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.625rem 1rem', borderRadius: '0.5rem', background: 'rgba(196,151,42,0.07)', border: '1px solid var(--color-gold-border)' }}>
-                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--color-gold)', flexShrink: 0 }} />
-                  <span style={{ fontSize: '0.75rem', color: 'var(--color-gold)' }}>Exclusivo miembros Elite</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
         </div>
       </section>
 
