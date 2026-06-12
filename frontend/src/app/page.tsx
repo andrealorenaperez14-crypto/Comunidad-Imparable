@@ -181,11 +181,49 @@ export default function HomePage() {
             </div>
           </motion.div>
 
-          {/* Supporting copy — 2 líneas máximo */}
+          {/* ── ¿Esto es para mí? ── */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.0 }}
+            style={{ marginBottom: '1.75rem' }}
+          >
+            {/* Pregunta gancho */}
+            <p style={{ fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', fontWeight: 700, color: 'var(--color-text)', marginBottom: '0.5rem' }}>
+              ¿Trabajás con personas?
+            </p>
+            <p style={{ fontSize: 'clamp(0.82rem, 1.7vw, 0.95rem)', color: 'var(--color-gold)', marginBottom: '1.25rem', fontStyle: 'italic' }}>
+              Tenés una fuente de ingresos que todavía no estás usando.
+            </p>
+
+            {/* Pills de profesiones */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+              {['Médicos', 'Contadores', 'Odontólogos', 'Abogados', 'Nutricionistas', 'Coaches', 'Terapeutas', 'Docentes', 'Emprendedores', '+ cualquier profesional'].map((p) => (
+                <span key={p} style={{
+                  fontSize: 'clamp(0.68rem, 1.3vw, 0.78rem)',
+                  padding: '0.3rem 0.75rem',
+                  borderRadius: '9999px',
+                  border: '1px solid rgba(196,151,42,0.3)',
+                  color: 'var(--color-text-muted)',
+                  background: 'rgba(196,151,42,0.05)',
+                  letterSpacing: '0.03em'
+                }}>
+                  {p}
+                </span>
+              ))}
+            </div>
+
+            <p style={{ fontSize: 'clamp(0.78rem, 1.5vw, 0.88rem)', color: 'var(--color-text-muted)', lineHeight: 1.65 }}>
+              No necesitás experiencia en ventas. Solo saber escuchar.<br />
+              <span style={{ color: 'var(--color-text)' }}>El reto te muestra cómo convertir tu red de contactos en ingresos en dólares.</span>
+            </p>
+          </motion.div>
+
+          {/* Supporting copy */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 1.1 }}
+            transition={{ duration: 0.7, delay: 1.15 }}
             style={{ marginBottom: '0.75rem' }}
           >
             <p style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1rem)', color: 'var(--color-text-muted)', lineHeight: 1.7 }}>
@@ -197,7 +235,7 @@ export default function HomePage() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
+            transition={{ duration: 0.6, delay: 1.25 }}
             style={{ fontSize: 'clamp(0.72rem, 1.4vw, 0.82rem)', color: 'rgba(196,151,42,0.55)', marginBottom: '2.5rem', letterSpacing: '0.06em' }}
           >
             +1.000 asesores formados · 13 años de método · Acceso en 2 minutos
