@@ -39,7 +39,7 @@
 }
 
 .hero-cta-glow {
-  animation: glow-pulse 3.8s ease-in-out infinite;
+  box-shadow: 0 12px 40px rgba(196,151,42,0.55);
 }
 
 @theme {
