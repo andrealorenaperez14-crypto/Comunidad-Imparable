@@ -48,9 +48,15 @@ export async function authRoutes(fastify) {
       return reply.status(401).send({ error: 'Email o contraseña incorrectos.' })
     }
 
-    await fastify.prisma.profile.update({
+    await fastify.prisma.profile.upsert({
       where: { userId: user.id },
-      data: { lastLoginAt: new Date() }
+      update: { lastLoginAt: new Date() },
+      create: {
+        userId: user.id,
+        firstName: '',
+        lastName: '',
+        lastLoginAt: new Date()
+      }
     })
 
     const token = fastify.jwt.sign({
