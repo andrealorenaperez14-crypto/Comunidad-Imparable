@@ -113,6 +113,11 @@ export const metricsApi = {
     })
 }
 
+// Salud del sistema
+export const healthApi = {
+  usage: () => api.get('/health/usage')
+}
+
 // Ranking
 export const rankingApi = {
   top10: () => api.get('/api/ranking'),

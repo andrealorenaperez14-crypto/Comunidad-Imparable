@@ -114,6 +114,48 @@ export async function healthRoutes(fastify) {
     return reply.send(results)
   })
 
+  fastify.get('/health/usage', { preHandler: requireAdmin }, async (request, reply) => {
+    const startOfDay = new Date()
+    startOfDay.setHours(0, 0, 0, 0)
+
+    const GROQ_DAILY_LIMIT = 14400 // free tier llama-3.1-8b-instant, el más restrictivo de los 2 modelos
+    const groqModels = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant']
+
+    const [groqToday, totalInteractionsToday, dbConn] = await Promise.all([
+      fastify.prisma.iAInteraction.count({
+        where: { modelUsed: { in: groqModels }, createdAt: { gte: startOfDay } }
+      }),
+      fastify.prisma.iAInteraction.count({ where: { createdAt: { gte: startOfDay } } }),
+      fastify.prisma.$queryRaw`
+        SELECT count(*)::int AS active, current_setting('max_connections')::int AS max
+        FROM pg_stat_activity WHERE datname = current_database()
+      `.catch(() => null)
+    ])
+
+    let redisStatus = 'no configurado'
+    if (fastify.redis) {
+      try { await fastify.redis.ping(); redisStatus = 'ok' } catch { redisStatus = 'degradado' }
+    }
+
+    return reply.send({
+      timestamp: new Date().toISOString(),
+      groq: {
+        usadoHoy: groqToday,
+        limiteDiario: GROQ_DAILY_LIMIT,
+        porcentaje: Math.round((groqToday / GROQ_DAILY_LIMIT) * 100)
+      },
+      iaInteracciones: { hoy: totalInteractionsToday },
+      database: dbConn?.[0]
+        ? {
+            conexionesActivas: dbConn[0].active,
+            maxConexiones: dbConn[0].max,
+            porcentaje: Math.round((dbConn[0].active / dbConn[0].max) * 100)
+          }
+        : null,
+      redis: redisStatus
+    })
+  })
+
   fastify.post('/health/test-email', { preHandler: requireAdmin }, async (request, reply) => {
     const { type = 'low_performance', to } = request.body || {}
     const email = to || request.user.email

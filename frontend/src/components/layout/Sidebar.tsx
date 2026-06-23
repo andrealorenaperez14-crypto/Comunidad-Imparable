@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   LayoutDashboard, Brain, Target, TrendingUp, Trophy, Award, BookOpen,
   LogOut, Menu, X, ChevronRight, ChevronDown, BarChart2, Users, ClipboardList,
-  ShieldAlert
+  ShieldAlert, Activity
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/hooks/useAuth'
@@ -32,6 +32,7 @@ const adminNav = [
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
   { href: '/admin/registros', icon: ClipboardList, label: 'Registros' },
   { href: '/admin/seguridad', icon: ShieldAlert, label: 'Seguridad' },
+  { href: '/admin/salud', icon: Activity, label: 'Salud del sistema' },
 ]
 
 const clientNav = [
