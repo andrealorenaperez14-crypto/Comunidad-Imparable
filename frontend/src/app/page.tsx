@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion, useMotionValue, useTransform, animate as fmAnimate } from 'framer-motion'
 import { trackEvent } from '@/lib/analytics'
+import { ELITE_LINK } from '@/lib/constants'
 
 
 const fadeUp = {
@@ -339,7 +340,7 @@ export default function HomePage() {
             style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
           >
             <button
-              onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_skip' }); router.push('/parte-2') }}
+              onClick={() => { trackEvent('cta_clicked', { cta_type: 'elite_skip' }); router.push(ELITE_LINK) }}
               style={{
                 background: 'linear-gradient(135deg, rgba(196,151,42,0.12), rgba(196,151,42,0.06))',
                 border: '1px solid rgba(196,151,42,0.5)',
@@ -798,7 +799,7 @@ export default function HomePage() {
               </div>
 
               <button
-                onClick={() => { trackEvent('final_cta_clicked'); router.push('/parte-2') }}
+                onClick={() => { trackEvent('final_cta_clicked'); router.push(ELITE_LINK) }}
                 style={{
                   width: '100%',
                   padding: '1rem 2rem',

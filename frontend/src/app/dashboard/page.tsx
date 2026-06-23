@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { metricsApi, subscriptionApi, rankingApi } from '@/lib/api'
 import { formatPercent, getDaysRemaining, getStatusBg, getSubscriptionStatusLabel } from '@/lib/utils'
+import { ELITE_LINK } from '@/lib/constants'
 import type { IAMetric } from '@/types'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
@@ -258,7 +259,7 @@ export default function DashboardPage() {
             {!subData.isVitalicio && subData.planType !== '30_DAYS' && (
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
-                  href="/parte-2"
+                  href={ELITE_LINK}
                   className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
                   style={{ background: 'var(--color-gold)', color: '#0C0C0C', textDecoration: 'none' }}
                 >

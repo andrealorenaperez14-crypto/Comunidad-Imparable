@@ -5,6 +5,7 @@ import { MessageCircle, Star, RefreshCw, Loader2 } from 'lucide-react'
 import { subscriptionApi } from '@/lib/api'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/hooks/useAuth'
+import { ELITE_LINK } from '@/lib/constants'
 
 const WHATSAPP_LINK = 'https://chat.whatsapp.com/BkMTtbFbGwjAOsgD8pjUFH'
 const API_URL       = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
@@ -131,7 +132,7 @@ export default function ExpiredPage() {
           ) : (
             /* Trial vencido → ir a Elite */
             <motion.a
-              href="/parte-2"
+              href={ELITE_LINK}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="flex items-center gap-4 p-5 rounded-2xl text-left w-full"
