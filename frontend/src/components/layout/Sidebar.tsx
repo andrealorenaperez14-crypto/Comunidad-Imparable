@@ -205,7 +205,7 @@ export function Sidebar() {
           Cerrar sesión
         </button>
         <p className="text-center text-xs mt-3" style={{ color: 'var(--color-text-muted)', opacity: 0.5 }}>
-          Desarrollado por: Núcleo Estratégico IA
+          Desarrollado por: <a href="https://crm-ia-hazel.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>IA Núcleo Estratégico</a>
         </p>
       </div>
     </div>

@@ -915,7 +915,7 @@ function Parte2Inner() {
           © 2026 Escuela de Asesores en el Rubro Salud | Formamos Líderes, No Vendedores
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-          Desarrollado por: NUCLEO ESTRATEGICO IA
+          Desarrollado por: <a href="https://crm-ia-hazel.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>IA Núcleo Estratégico</a>
         </p>
       </footer>
 
