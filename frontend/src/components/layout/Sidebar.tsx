@@ -13,22 +13,12 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 
-const studentNavTrial = [
+const studentNavBase = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Mi Dashboard' },
   { href: '/dashboard/agente-consultivo', icon: Brain, label: 'IA Coach' },
   { href: '/dashboard/agente-mentor', icon: Target, label: 'IA Mentalidad' },
   { href: '/dashboard/agente-consultiva', icon: TrendingUp, label: 'IA Consultiva' },
   { href: '/dashboard/ranking', icon: Trophy, label: 'Ranking' },
-  { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' }
-]
-
-const studentNavPaid = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Mi Dashboard' },
-  { href: '/dashboard/agente-consultivo', icon: Brain, label: 'IA Coach' },
-  { href: '/dashboard/agente-mentor', icon: Target, label: 'IA Mentalidad' },
-  { href: '/dashboard/agente-consultiva', icon: TrendingUp, label: 'IA Consultiva' },
-  { href: '/dashboard/ranking', icon: Trophy, label: 'Ranking' },
-  { href: '/dashboard/certificados', icon: Award, label: 'Certificados' },
   { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' }
 ]
 
@@ -74,7 +64,10 @@ export function Sidebar() {
   })
 
   const isPaid = subData?.planType === '30_DAYS' || subData?.planType === 'VITALICIO'
-  const navItems = isAdmin ? adminNav : isClient ? clientNav : isPaid ? studentNavPaid : studentNavTrial
+  const studentNav = isPaid
+    ? [...studentNavBase.slice(0, 5), { href: '/dashboard/certificados', icon: Award, label: 'Certificados' }, studentNavBase[5]]
+    : studentNavBase
+  const navItems = isAdmin ? adminNav : isClient ? clientNav : studentNav
 
   const { data: modules = [] } = useQuery({
     queryKey: ['course-content-sidebar'],

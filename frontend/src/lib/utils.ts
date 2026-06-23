@@ -19,15 +19,6 @@ export function getDaysRemaining(activeUntil: string): number {
   return Math.max(0, Math.ceil((new Date(activeUntil).getTime() - Date.now()) / (1000 * 60 * 60 * 24)))
 }
 
-export function getStatusColor(status: string): string {
-  switch (status) {
-    case 'EXCELENTE': return 'text-emerald-400'
-    case 'BUENO': return 'text-blue-400'
-    case 'ALERTA': return 'text-amber-400'
-    default: return 'text-gray-400'
-  }
-}
-
 export function getStatusBg(status: string): string {
   switch (status) {
     case 'EXCELENTE': return 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
@@ -45,8 +36,4 @@ export function getSubscriptionStatusLabel(status: string): string {
     EXPIRED: 'Vencida'
   }
   return labels[status] || status
-}
-
-export function truncate(str: string, length: number): string {
-  return str.length > length ? `${str.slice(0, length)}...` : str
 }

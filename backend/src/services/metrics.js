@@ -23,9 +23,7 @@ export async function updateMetricsAfterChat(prisma, agent, userId, result, dura
     const completionRate = Math.min(1, totalSessions / 20)
     const habitStreak = calcularRacha(existing.habitStreak, existing.updatedAt)
 
-    const status = calcularEstado(agent.type, {
-      engagementScore, completionRate, problemResolutionRate: existing.problemResolutionRate, totalSessions
-    })
+    const status = 'BUENO'
 
     await prisma.iAMetric.update({
       where: { id: existing.id },
@@ -63,11 +61,6 @@ function calcularRacha(currentStreak, lastUpdated) {
   return currentStreak
 }
 
-function calcularEstado(_agentType, _metrics) {
-  // Alertas deshabilitadas — pendiente para parte paga (Asesor Elite)
-  return 'BUENO'
-}
-
 export async function recalcularMetricasEstudiante(prisma, userId) {
   const interactions = await prisma.iAInteraction.findMany({
     where: { userId },
@@ -91,7 +84,7 @@ export async function recalcularMetricasEstudiante(prisma, userId) {
   for (const [agentId, data] of Object.entries(metricsByAgent)) {
     const engagementScore = Math.min(1, data.sessions / 30)
     const completionRate = Math.min(1, data.sessions / 20)
-    const status = calcularEstado(data.agent.type, { engagementScore, completionRate, problemResolutionRate: 0.7, totalSessions: data.sessions })
+    const status = 'BUENO'
 
     await prisma.iAMetric.upsert({
       where: { agentId_userId: { agentId, userId } },
