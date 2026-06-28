@@ -110,6 +110,20 @@ export function startCronJobs(fastify) {
 
   // Lunes 9am: reporte semanal — deshabilitado, pendiente definir con cliente
 
+  // 2am: limpiar interacciones de chat de más de 90 días (mensajes/respuestas)
+  // Las IAMetric (tokens, costo, duración) se conservan para reportes
+  cron.schedule('0 2 * * *', async () => {
+    try {
+      const cutoff = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
+      const result = await prisma.iAInteraction.deleteMany({
+        where: { createdAt: { lt: cutoff } }
+      })
+      fastify.log.info(`Limpieza de chat: ${result.count} interacciones eliminadas (>90 días)`)
+    } catch (err) {
+      fastify.log.error({ err }, 'Error en limpieza de interacciones de chat')
+    }
+  })
+
   startKeepAlive(fastify)
   fastify.log.info('Cron jobs iniciados')
 }
