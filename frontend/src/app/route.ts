@@ -391,9 +391,11 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       <span class="horario-sep">·</span>
       <div class="horario-item"><span class="horario-flag">🇨🇴</span><span class="horario-pais">Colombia</span><span class="horario-hora">16:00 hs</span></div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><span class="horario-flag">🇪🇸</span><span class="horario-pais">España</span><span class="horario-hora">23:00 hs</span></div>
+      <div class="horario-item"><span class="horario-flag">🇵🇪</span><span class="horario-pais">Perú</span><span class="horario-hora">16:00 hs</span></div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><span class="horario-flag">🇺🇸</span><span class="horario-pais">EEUU Este</span><span class="horario-hora">17:00 hs</span></div>
+      <div class="horario-item"><span class="horario-flag">🇺🇸</span><span class="horario-pais">EEUU</span><span class="horario-hora">16:00 hs</span></div>
+      <span class="horario-sep">·</span>
+      <div class="horario-item"><span class="horario-flag">🇪🇸</span><span class="horario-pais">España</span><span class="horario-hora">23:00 hs</span></div>
       <p class="horarios-note">* Puede variar ±1 h según cambio de horario estacional</p>
     </div>
   </div>
