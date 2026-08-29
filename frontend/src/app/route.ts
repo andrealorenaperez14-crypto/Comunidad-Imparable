@@ -11,6 +11,8 @@ const HTML = `<!DOCTYPE html>
 <meta property="og:url" content="https://comunidad-imparables.vercel.app">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/assets/client1/LOGO-comunidad-imparable.jpeg" type="image/jpeg">
+<link rel="apple-touch-icon" href="/assets/client1/LOGO-comunidad-imparable.jpeg">
 <meta name="description" content="Acompañamos a personas a descubrir su propósito, sanar desde la raíz y construir una vida y un negocio alineados con quienes realmente son. By Alejandra Cuello & Cintia Paolucci.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
