@@ -31,7 +31,8 @@ function ResetModal({ user, isAdmin, onClose }: { user: User; isAdmin: boolean; 
   const [fieldError, setFieldError] = useState('')
 
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => user.role === 'STUDENT'
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mutationFn: (): Promise<any> => user.role === 'STUDENT'
       ? adminUserApi.resetStudentPassword(user.id, newPwd, confirmPwd)
       : adminUserApi.resetPassword(user.email, newPwd, confirmPwd),
     onSuccess: () => setDone(true)
