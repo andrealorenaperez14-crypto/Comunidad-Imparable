@@ -267,7 +267,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="logo-mark">
       <img src="/assets/client1/LOGO-comunidad-imparable.jpeg"
            alt="Comunidad Imparables"
-           style="max-height:90px;width:auto;object-fit:contain;"
+           style="width:160px;height:160px;object-fit:cover;border-radius:50%;border:2px solid rgba(212,175,55,0.5);box-shadow:0 0 32px rgba(212,175,55,0.18),0 0 0 6px rgba(212,175,55,0.07);display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div style="display:none;flex-direction:column;align-items:center;">
         <div class="logo-infinity-wrap">
@@ -279,7 +279,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
         <div class="logo-name"><span>Comunidad</span><br><span style="letter-spacing:0.4em;font-size:1.1em;display:block;margin-top:0.1rem">Imparables</span></div>
       </div>
     </div>
-    <h1 class="hero-headline display">No viniste a encajar.<br><em>Viniste a recordar quién sos.</em></h1>
+    <h1 class="hero-headline display">No viniste a encajar<br><em>Viniste a recordar quién sos</em></h1>
     <p class="hero-slogan">De adentro hacia afuera</p>
     <p class="hero-sub">Acompañamos a personas a descubrir su propósito, sanar desde la raíz y construir una vida — y un negocio — alineados con quienes realmente son.</p>
     <div class="hero-cta-wrap">
