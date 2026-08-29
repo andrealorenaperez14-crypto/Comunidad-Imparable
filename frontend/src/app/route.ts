@@ -438,9 +438,9 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2.2rem,5vw,4.5rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;max-width:700px;margin:0 auto;">El proceso empieza adentro.<br><em style="color:var(--gold);font-style:italic;">La transformación se ve afuera.</em></h2>
     <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:520px;margin:1.5rem auto 0;font-size:1rem;">Cada martes que pasa sin decidir es otro martes postergándote. La pregunta no es si podés. La pregunta es cuándo le vas a dar el permiso.</p>
     <div class="cta-price-block reveal reveal-delay-3">
-      <p class="cta-price-label">Acceso a Comunidad Imparables</p>
-      <p class="cta-price">USD 150</p>
-      <p class="cta-price-note">Renovación mensual USD 20 · Acumulable</p>
+      <p class="cta-price-label">LANZAMIENTO</p>
+      <p class="cta-price">OCTUBRE 2026</p>
+      <p class="cta-price-note">Anotate para recibir toda la información antes que nadie</p>
       <hr class="cta-divider">
       <ul class="cta-includes">
         <li>Clases semanales con Alejandra Cuello — espiritualidad y sanación</li>
@@ -449,7 +449,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
         <li>Comunidad privada de acompañamiento y crecimiento</li>
         <li>Acceso a todo el contenido grabado desde el inicio</li>
       </ul>
-      <a href="#" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Quiero unirme a Comunidad Imparables</a>
+      <a href="#" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Quiero anotarme en la lista de espera</a>
       <p class="cta-guarantee">Sin presión. Sin urgencia fabricada. Cuando estés lista/o, acá estamos.</p>
     </div>
     <p class="reveal" style="text-align:center;margin-top:2rem;"><span style="font-family:'Great Vibes',cursive;font-size:1.8rem;color:var(--gold);opacity:0.7;">Imparables hasta el final</span></p>
