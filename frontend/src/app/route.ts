@@ -24,10 +24,10 @@ const HTML = `<!DOCTYPE html>
   --bg-card:   #1F1238;
   --bg-alt:    #2B1B3D;
   --bg-light:  #3A2254;
-  --gold:      #D4AF37;
-  --gold-dim:  rgba(212,175,55,0.12);
-  --gold-mid:  rgba(212,175,55,0.35);
-  --gold-glow: rgba(212,175,55,0.08);
+  --gold:      #C9952C;
+  --gold-dim:  rgba(201,149,44,0.12);
+  --gold-mid:  rgba(201,149,44,0.35);
+  --gold-glow: rgba(201,149,44,0.08);
   --text:      #FAF8F5;
   --text-soft: rgba(250,248,245,0.72);
   --text-dim:  rgba(250,248,245,0.45);
@@ -104,7 +104,7 @@ nav {
 }
 .orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
 .orb-1 { width:400px; height:400px; background:rgba(75,31,95,0.5); top:-10%; left:-10%; }
-.orb-2 { width:350px; height:350px; background:rgba(212,175,55,0.06); bottom:0; right:-5%; }
+.orb-2 { width:350px; height:350px; background:rgba(201,149,44,0.06); bottom:0; right:-5%; }
 .orb-3 { width:250px; height:250px; background:rgba(43,27,61,0.8); top:40%; left:20%; }
 .hero-inner { position: relative; z-index: 1; max-width: 820px; margin: 0 auto; }
 .logo-mark {
@@ -119,7 +119,7 @@ nav {
 }
 .logo-infinity-wrap::before {
   content: ''; position: absolute; inset: 4px;
-  border-radius: 50%; border: 1px solid rgba(212,175,55,0.15);
+  border-radius: 50%; border: 1px solid rgba(201,149,44,0.15);
 }
 .logo-infinity-svg { width: 52px; height: 30px; }
 .logo-dots { display:flex; flex-direction:column; align-items:center; gap:3px; position:absolute; top:6px; left:50%; transform:translateX(-50%); }
@@ -135,7 +135,7 @@ nav {
 .hero-sub { font-size:clamp(1rem,1.8vw,1.2rem); color:var(--text-soft); max-width:560px; margin:1.5rem auto 0; opacity:0; animation:fade-in 1s ease 1s forwards; line-height:1.7; font-weight:300; }
 .hero-slogan { font-family:'Great Vibes',cursive; font-size:clamp(1.6rem,3vw,2.2rem); color:var(--gold); opacity:0; animation:fade-in 1s ease 1.3s forwards; margin-top:1rem; }
 .hero-cta-wrap { display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2.8rem; opacity:0; animation:fade-in 1s ease 1.5s forwards; }
-.btn-primary { font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--bg); background:var(--gold); padding:1.1rem 3rem; border:none; border-radius:var(--radius); cursor:pointer; text-decoration:none; display:inline-block; transition:opacity 0.2s,transform 0.2s; box-shadow:0 4px 24px rgba(212,175,55,0.25); }
+.btn-primary { font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--bg); background:var(--gold); padding:1.1rem 3rem; border:none; border-radius:var(--radius); cursor:pointer; text-decoration:none; display:inline-block; transition:opacity 0.2s,transform 0.2s; box-shadow:0 4px 24px rgba(201,149,44,0.25); }
 .btn-primary:hover { opacity:0.92; transform:translateY(-1px); }
 .btn-ghost { font-family:'Montserrat',sans-serif; font-size:0.68rem; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold); background:transparent; border:1px solid var(--gold-mid); padding:0.9rem 2.5rem; border-radius:var(--radius); cursor:pointer; text-decoration:none; display:inline-block; transition:background 0.2s; }
 .btn-ghost:hover { background:var(--gold-dim); }
@@ -218,12 +218,12 @@ section.alt2 { background: var(--bg-alt); }
 .manifiesto-item { display:flex; gap:1rem; align-items:flex-start; }
 .m-diamond { color:var(--gold); flex-shrink:0; margin-top:0.25rem; font-size:0.7rem; }
 .m-text { font-size:0.95rem; color:var(--text-soft); line-height:1.6; }
-.nunca-title { font-family:'Montserrat',sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(212,175,55,0.5); margin-top:3rem; margin-bottom:1.5rem; }
+.nunca-title { font-family:'Montserrat',sans-serif; font-size:0.65rem; letter-spacing:0.25em; text-transform:uppercase; color:rgba(201,149,44,0.5); margin-top:3rem; margin-bottom:1.5rem; }
 .nunca-list { display:flex; flex-direction:column; gap:1rem; }
-.nunca-item { padding:1rem 1.5rem; background:rgba(212,175,55,0.04); border-left:2px solid rgba(212,175,55,0.3); font-size:0.92rem; color:var(--text-dim); }
+.nunca-item { padding:1rem 1.5rem; background:rgba(201,149,44,0.04); border-left:2px solid rgba(201,149,44,0.3); font-size:0.92rem; color:var(--text-dim); }
 .cta-final { padding:8rem 0; text-align:center; position:relative; overflow:hidden; }
-.cta-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(212,175,55,0.07) 0%,transparent 70%); pointer-events:none; }
-.cta-price-block { margin:3rem auto; max-width:480px; padding:2.5rem; border:1px solid var(--gold-mid); border-radius:var(--radius); background:var(--bg-card); box-shadow:0 0 60px rgba(212,175,55,0.08); }
+.cta-bg { position:absolute; inset:0; background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(201,149,44,0.07) 0%,transparent 70%); pointer-events:none; }
+.cta-price-block { margin:3rem auto; max-width:480px; padding:2.5rem; border:1px solid var(--gold-mid); border-radius:var(--radius); background:var(--bg-card); box-shadow:0 0 60px rgba(201,149,44,0.08); }
 .cta-price-label { font-family:'Montserrat',sans-serif; font-size:0.62rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--text-dim); margin-bottom:0.5rem; }
 .cta-price { font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--gold); line-height:1; }
 .cta-price-note { font-size:0.85rem; color:var(--text-dim); margin-top:0.4rem; }
@@ -318,12 +318,12 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="logo-mark">
       <img src="/assets/client1/LOGO-comunidad-imparable.jpeg"
            alt="Comunidad Imparables"
-           style="width:160px;height:160px;object-fit:cover;border-radius:50%;border:2px solid rgba(212,175,55,0.5);box-shadow:0 0 32px rgba(212,175,55,0.18),0 0 0 6px rgba(212,175,55,0.07);display:block;"
+           style="width:160px;height:160px;object-fit:cover;border-radius:50%;border:2px solid rgba(201,149,44,0.5);box-shadow:0 0 32px rgba(201,149,44,0.18),0 0 0 6px rgba(201,149,44,0.07);display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div style="display:none;flex-direction:column;align-items:center;">
         <div class="logo-infinity-wrap">
           <svg class="logo-infinity-svg" viewBox="0 0 100 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M50,27.5 C50,15 62,6 73,12 C84,18 84,37 73,43 C62,49 50,40 50,27.5 C50,15 38,6 27,12 C16,18 16,37 27,43 C38,49 50,40 50,27.5 Z" stroke="#D4AF37" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M50,27.5 C50,15 62,6 73,12 C84,18 84,37 73,43 C62,49 50,40 50,27.5 C50,15 38,6 27,12 C16,18 16,37 27,43 C38,49 50,40 50,27.5 Z" stroke="#C9952C" stroke-width="3.5" stroke-linecap="round"/>
           </svg>
           <div class="logo-line"></div>
         </div>
@@ -530,7 +530,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <a href="https://youtube.com/@comunidad.imparables" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">YouTube</a>
   </div>
   <p class="footer-copy"><em>"De adentro hacia afuera"</em> &nbsp;·&nbsp; <a href="/terminos" style="color:var(--text-dim);">Términos</a> &nbsp;·&nbsp; <a href="/privacidad" style="color:var(--text-dim);">Privacidad</a></p>
-  <p style="margin-top:1.2rem;font-size:0.7rem;color:rgba(250,248,245,0.2);font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">Desarrollado por <a href="https://crm-ia-hazel.vercel.app/" target="_blank" rel="noopener" style="color:rgba(212,175,55,0.35);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(212,175,55,0.7)'" onmouseout="this.style.color='rgba(212,175,55,0.35)'">IA Núcleo Estratégico</a></p>
+  <p style="margin-top:1.2rem;font-size:0.7rem;color:rgba(250,248,245,0.2);font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">Desarrollado por <a href="https://crm-ia-hazel.vercel.app/" target="_blank" rel="noopener" style="color:rgba(201,149,44,0.35);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(201,149,44,0.7)'" onmouseout="this.style.color='rgba(201,149,44,0.35)'">IA Núcleo Estratégico</a></p>
 </footer>
 
 <script>
