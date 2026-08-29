@@ -530,6 +530,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <a href="https://youtube.com/@comunidad.imparables" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">YouTube</a>
   </div>
   <p class="footer-copy"><em>"De adentro hacia afuera"</em> &nbsp;·&nbsp; <a href="/terminos" style="color:var(--text-dim);">Términos</a> &nbsp;·&nbsp; <a href="/privacidad" style="color:var(--text-dim);">Privacidad</a></p>
+  <p style="margin-top:1.2rem;font-size:0.7rem;color:rgba(250,248,245,0.2);font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">Desarrollado por <a href="https://crm-ia-hazel.vercel.app/" target="_blank" rel="noopener" style="color:rgba(212,175,55,0.35);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='rgba(212,175,55,0.7)'" onmouseout="this.style.color='rgba(212,175,55,0.35)'">IA Núcleo Estratégico</a></p>
 </footer>
 
 <script>
