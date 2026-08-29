@@ -87,19 +87,7 @@ export default function PrivacidadPage() {
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">4. Comunicaciones por correo electrónico</h2>
-            <p className="pr-p">La plataforma envía comunicaciones automáticas al correo registrado, incluyendo:</p>
-            <ul className="pr-ul">
-              <li>Email de bienvenida al registrarse</li>
-              <li>Avisos de inactividad</li>
-              <li>Notificaciones de vencimiento de suscripción</li>
-              <li>Información sobre nuevos contenidos y clases</li>
-            </ul>
-            <p className="pr-p">El/la Usuario/a puede solicitar la baja de comunicaciones no esenciales contactando a la plataforma. Las comunicaciones vinculadas directamente al servicio (vencimientos, recuperación de contraseña) no pueden desactivarse.</p>
-          </div>
-
-          <div className="pr-section">
-            <h2 className="pr-h2">5. Conservación de datos</h2>
+            <h2 className="pr-h2">4. Conservación de datos</h2>
             <p className="pr-p">Los datos se conservan mientras la cuenta esté activa. Ante la suspensión o baja:</p>
             <ul className="pr-ul">
               <li>Los datos permanecen disponibles durante 10 días hábiles adicionales para posible recuperación</li>
@@ -108,7 +96,7 @@ export default function PrivacidadPage() {
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">6. Compartición de datos con terceros</h2>
+            <h2 className="pr-h2">5. Compartición de datos con terceros</h2>
             <p className="pr-p">Los datos personales no se venden ni ceden a terceros con fines comerciales. Se comparten únicamente con:</p>
             <ul className="pr-ul">
               <li><strong>Proveedores de infraestructura</strong> (hosting y base de datos): únicamente los datos necesarios para el funcionamiento técnico</li>
@@ -118,12 +106,12 @@ export default function PrivacidadPage() {
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">7. Seguridad de los datos</h2>
+            <h2 className="pr-h2">6. Seguridad de los datos</h2>
             <p className="pr-p">Implementamos medidas de seguridad técnicas y organizativas para proteger los datos personales contra accesos no autorizados, pérdida o alteración. Las contraseñas se almacenan encriptadas mediante algoritmos de hash seguros. Las comunicaciones se realizan bajo protocolo HTTPS.</p>
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">8. Derechos del usuario (Ley 25.326)</h2>
+            <h2 className="pr-h2">7. Derechos del usuario (Ley 25.326)</h2>
             <p className="pr-p">En virtud de la Ley 25.326, el/la Usuario/a tiene derecho a:</p>
             <div className="pr-grid">
               {[
@@ -142,22 +130,22 @@ export default function PrivacidadPage() {
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">9. Cookies y tecnologías de seguimiento</h2>
+            <h2 className="pr-h2">8. Cookies y tecnologías de seguimiento</h2>
             <p className="pr-p">La plataforma utiliza cookies de sesión necesarias para el funcionamiento técnico del servicio (autenticación y preferencias de usuario). No se utilizan cookies de seguimiento publicitario ni se comparten datos con redes de publicidad.</p>
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">10. Menores de edad</h2>
+            <h2 className="pr-h2">9. Menores de edad</h2>
             <p className="pr-p">El servicio está dirigido a mayores de 18 años. No se recopilan intencionalmente datos de menores. Si se detecta que un/a usuario/a es menor de edad, su cuenta será dada de baja y sus datos eliminados.</p>
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">11. Modificaciones a esta política</h2>
+            <h2 className="pr-h2">10. Modificaciones a esta política</h2>
             <p className="pr-p">Esta política puede actualizarse. Las modificaciones serán notificadas por correo electrónico y publicadas en la plataforma con al menos 15 días de anticipación a su entrada en vigencia.</p>
           </div>
 
           <div className="pr-section">
-            <h2 className="pr-h2">12. Contacto</h2>
+            <h2 className="pr-h2">11. Contacto</h2>
             <p className="pr-p">Para ejercer sus derechos o realizar consultas sobre el tratamiento de sus datos personales, el/la Usuario/a puede contactarse a través de los canales oficiales disponibles en la plataforma.</p>
           </div>
 
