@@ -178,8 +178,8 @@ section.alt2 { background: var(--bg-alt); }
 .founders-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-top:4rem; }
 .founder-card { border:1px solid var(--gold-dim); border-radius:var(--radius); background:var(--bg-card); position:relative; overflow:hidden; }
 .founder-card::after { content:'∞'; position:absolute; top:1.5rem; right:2rem; font-size:1.8rem; color:var(--gold); opacity:0.12; font-family:'Cormorant Garamond',serif; }
-.founder-photo { width:100%; aspect-ratio:3/2; background:var(--bg-alt); overflow:hidden; position:relative; }
-.founder-photo img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; transition:transform 0.5s ease; }
+.founder-photo { width:100%; background:var(--bg-alt); overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; min-height:340px; }
+.founder-photo img { width:100%; height:auto; max-height:500px; object-fit:contain; object-position:center; display:block; transition:transform 0.5s ease; }
 .founder-card:hover .founder-photo img { transform:scale(1.03); }
 .founder-photo-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.8rem; background:linear-gradient(160deg,var(--bg-alt) 0%,#1a0d30 100%); }
 .founder-photo-placeholder span { font-family:'Cormorant Garamond',serif; font-size:4rem; color:var(--gold); opacity:0.2; }
@@ -362,7 +362,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="founders-grid">
       <div class="founder-card reveal reveal-delay-2">
         <div class="founder-photo">
-          <img src="/assets/client1/Cintia1.jpeg" alt="Cintia Paolucci" width="520" height="346" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Cintia Paolucci</p></div>'">
+          <img src="/assets/client1/cintia0.jpeg" alt="Cintia Paolucci" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Cintia Paolucci</p></div>'">
         </div>
         <div class="founder-body">
           <div class="founder-role">Co-fundadora</div>
@@ -375,7 +375,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       </div>
       <div class="founder-card reveal reveal-delay-3">
         <div class="founder-photo">
-          <img src="/assets/client1/Alejandra-1.jpeg" alt="Alejandra Cuello" width="520" height="346" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Alejandra Cuello</p></div>'">
+          <img src="/assets/client1/alenajdra0.jpeg" alt="Alejandra Cuello" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Alejandra Cuello</p></div>'">
         </div>
         <div class="founder-body">
           <div class="founder-role">Co-fundadora</div>
