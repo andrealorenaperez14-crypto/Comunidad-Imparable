@@ -11,10 +11,10 @@ const greatVibes = Great_Vibes({ subsets: ['latin'], variable: '--font-script', 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-body' })
 
 export const metadata: Metadata = {
-  title: 'Escuela de Asesores',
-  description: 'Formamos Líderes, No Vendedores. Transformamos Vidas, No Solo Negocios.',
+  title: 'Comunidad Imparables',
+  description: 'De adentro hacia afuera. Transformamos mujeres, no solo negocios.',
   manifest: '/manifest.json',
-  icons: { icon: '/assets/client1/LOGO_y_nombre_ESCUELA_DE_ASESORES.webp' }
+  icons: { icon: '/assets/client1/LOGO-comunidad-imparable.jpeg' }
 }
 
 export const viewport: Viewport = {
