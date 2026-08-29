@@ -4,16 +4,17 @@ const HTML = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comunidad Imparables — De adentro hacia afuera</title>
-<meta name="description" content="Transformamos mujeres, no solo negocios. Formación, mentoría y comunidad con Cintia Paolucci y Alejandra Cuello.">
+<!-- AUDIENCIA: hombres Y mujeres — nunca escribir solo "mujeres" en descripciones ni textos de sección -->
+<meta name="description" content="Comunidad para hombres y mujeres que quieren transformarse de adentro hacia afuera. Formación, mentoría y comunidad con Cintia Paolucci y Alejandra Cuello.">
 <meta property="og:title" content="Comunidad Imparables — De adentro hacia afuera">
-<meta property="og:description" content="Transformamos mujeres, no solo negocios. Formación, mentoría y comunidad con Cintia Paolucci y Alejandra Cuello. Lanzamiento Octubre 2026.">
+<meta property="og:description" content="Comunidad para hombres y mujeres que quieren transformarse de adentro hacia afuera. Formación, mentoría y propósito. Lanzamiento Octubre 2026.">
 <meta property="og:image" content="https://comunidad-imparables.vercel.app/assets/client1/LOGO-comunidad-imparable.jpeg">
 <meta property="og:url" content="https://comunidad-imparables.vercel.app">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/assets/client1/LOGO-comunidad-imparable.jpeg" type="image/jpeg">
 <link rel="apple-touch-icon" href="/assets/client1/LOGO-comunidad-imparable.jpeg">
-<meta name="description" content="Acompañamos a personas a descubrir su propósito, sanar desde la raíz y construir una vida y un negocio alineados con quienes realmente son. By Alejandra Cuello & Cintia Paolucci.">
+<meta name="description" content="Acompañamos a hombres y mujeres a descubrir su propósito, sanar desde la raíz y construir una vida y un negocio alineados con quienes realmente son. By Alejandra Cuello & Cintia Paolucci.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&family=Great+Vibes&display=swap">
