@@ -130,7 +130,7 @@ nav {
 .logo-name { font-family:'Cormorant Garamond',serif; font-size:0.85rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--text-soft); margin-top:0.5rem; }
 .logo-name span { color:var(--gold); letter-spacing:0.3em; }
 .hero-headline { font-size:clamp(2.8rem,6vw,5.2rem); font-weight:300; letter-spacing:0.04em; margin-bottom:1rem; opacity:0; animation:fade-in 1s ease 0.7s forwards; color:var(--text); line-height:1.08; text-wrap:balance; }
-.hero-headline em { font-style:italic; color:var(--gold); }
+.hero-headline em { font-style:italic; color:var(--gold); white-space:nowrap; }
 .hero-sub { font-size:clamp(1rem,1.8vw,1.2rem); color:var(--text-soft); max-width:560px; margin:1.5rem auto 0; opacity:0; animation:fade-in 1s ease 1s forwards; line-height:1.7; font-weight:300; }
 .hero-slogan { font-family:'Great Vibes',cursive; font-size:clamp(1.6rem,3vw,2.2rem); color:var(--gold); opacity:0; animation:fade-in 1s ease 1.3s forwards; margin-top:1rem; }
 .hero-cta-wrap { display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2.8rem; opacity:0; animation:fade-in 1s ease 1.5s forwards; }
