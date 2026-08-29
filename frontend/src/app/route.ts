@@ -236,14 +236,64 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
 .footer-brand { font-family:'Cormorant Garamond',serif; font-size:0.9rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:0.3rem; }
 .footer-founders { font-family:'Great Vibes',cursive; font-size:1.4rem; color:var(--text-dim); margin-bottom:1rem; }
 .footer-copy { font-size:0.78rem; color:var(--text-dim); }
+@media (min-width:1440px) {
+  .container { max-width:1200px; }
+}
+@media (max-width:1024px) {
+  .founders-grid { gap:2rem; }
+}
 @media (max-width:768px) {
   .promesa-grid,.incluye-grid,.founders-grid,.manifiesto-grid { grid-template-columns:1fr; }
   .pilares-list { flex-direction:column; align-items:center; }
   .pilar { border-right:none; border-bottom:1px solid var(--gold-dim); max-width:100%; width:100%; }
   .pilar:last-child { border-bottom:none; }
   .horarios { flex-direction:column; }
-  nav { padding:1rem; }
+  nav { padding:1rem 1.2rem; }
   .nav-brand span:not(.nav-infinity) { display:none; }
+  .hero { padding:6rem 1.5rem 4rem; }
+  .hero-headline { font-size:clamp(2.2rem,8vw,3.5rem); }
+  .hero-cta-wrap { gap:0.8rem; }
+  .btn-primary { padding:0.9rem 2rem; }
+  .btn-ghost { padding:0.75rem 1.8rem; }
+  .founder-photo { min-height:280px; }
+  .redes-inner { gap:1.5rem; }
+  .red-sep { width:36px; height:1px; }
+  .cta-price-block { padding:1.8rem; }
+  .cta-price { font-size:2.8rem; }
+  section { padding:5rem 0; }
+  .cta-final { padding:5rem 0; }
+  .container { padding:0 1.2rem; }
+  .founders-grid { gap:2rem; }
+}
+@media (max-width:480px) {
+  nav { padding:0.8rem 1rem; }
+  .nav-cta { font-size:0.62rem; padding:0.45rem 1rem; letter-spacing:0.12em; }
+  .hero { padding:5rem 1rem 3rem; min-height:auto; }
+  .logo-mark { margin-bottom:1.6rem; }
+  .hero-headline em { white-space:normal; }
+  .hero-sub { font-size:0.93rem; margin-top:0.8rem; }
+  .hero-slogan { font-size:clamp(1.3rem,5vw,1.7rem); }
+  .hero-cta-wrap { margin-top:1.8rem; width:100%; padding:0 0.5rem; }
+  .btn-primary { width:100%; text-align:center; padding:1rem; box-sizing:border-box; }
+  .btn-ghost { width:100%; text-align:center; padding:0.85rem; box-sizing:border-box; }
+  section { padding:3.5rem 0; }
+  .cta-final { padding:3.5rem 0; }
+  .pilares-section { padding:3.5rem 0; }
+  .container { padding:0 1rem; }
+  .founder-photo { min-height:220px; }
+  .founder-body { padding:1.4rem 1.4rem 1.8rem; }
+  .founder-name { font-size:1.5rem; }
+  .redes-inner { flex-direction:column; gap:1.2rem; }
+  .red-sep { display:none; }
+  .incluye-heading { font-size:clamp(1.6rem,7vw,2.5rem); }
+  .manifiesto-item { gap:0.7rem; }
+  .cta-price-block { padding:1.4rem 1rem; margin:1.5rem 0; max-width:100%; }
+  .cta-price { font-size:2rem; }
+  footer { padding:2rem 1rem; }
+  .horarios { padding:1.2rem; gap:0.8rem; }
+  .horario-sep { display:none; }
+  .dolor-intro { font-size:clamp(1.2rem,5vw,1.6rem); }
+  .promesa-quote { font-size:clamp(1.2rem,4.5vw,1.8rem); }
 }
 </style>
 </head>
@@ -254,7 +304,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <span class="nav-infinity">∞</span>
     <span>Comunidad Imparables</span>
   </a>
-  <a class="nav-cta" href="#unirme">Quiero unirme</a>
+  <a class="nav-cta" href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener">Quiero unirme</a>
 </nav>
 
 <section class="hero">
@@ -284,7 +334,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <p class="hero-slogan">De adentro hacia afuera</p>
     <p class="hero-sub">Acompañamos a personas a descubrir su propósito, sanar desde la raíz y construir una vida — y un negocio — alineados con quienes realmente son.</p>
     <div class="hero-cta-wrap">
-      <a href="#unirme" class="btn-primary">Quiero ser parte</a>
+      <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary">Quiero ser parte</a>
       <a href="#academia" class="btn-ghost">¿Qué incluye?</a>
       <p class="hero-founders">By Alejandra Cuello &amp; Cintia Paolucci</p>
     </div>
@@ -404,7 +454,9 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   <div class="redes-inner container">
     <a class="red-link" href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener"><span class="red-label">Comunidad gratuita</span><span class="red-name">Grupo de WhatsApp</span></a>
     <div class="red-sep"></div>
-    <a class="red-link" href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener"><span class="red-label">Seguinos</span><span class="red-name">@cin.paolucci</span></a>
+    <a class="red-link" href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener"><span class="red-label">Seguí a Cintia</span><span class="red-name">@cin.paolucci</span></a>
+    <div class="red-sep"></div>
+    <a class="red-link" href="https://www.instagram.com/alejandra.cuello28" target="_blank" rel="noopener"><span class="red-label">Seguí a Alejandra</span><span class="red-name">@alejandra.cuello28</span></a>
     <div class="red-sep"></div>
     <a class="red-link" href="https://youtube.com/@comunidad.imparables" target="_blank" rel="noopener"><span class="red-label">Contenido gratuito</span><span class="red-name">YouTube</span></a>
   </div>
@@ -450,7 +502,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="cta-price-block reveal reveal-delay-3">
       <p class="cta-price-label">LANZAMIENTO</p>
       <p class="cta-price">OCTUBRE 2026</p>
-      <p class="cta-price-note">Anotate para recibir toda la información antes que nadie</p>
+      <p class="cta-price-note">Sumate ahora al grupo gratuito de la comunidad</p>
       <hr class="cta-divider">
       <ul class="cta-includes">
         <li>Clases semanales con Alejandra Cuello — espiritualidad y sanación</li>
@@ -459,7 +511,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
         <li>Comunidad privada de acompañamiento y crecimiento</li>
         <li>Acceso a todo el contenido grabado desde el inicio</li>
       </ul>
-      <a href="#" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Quiero anotarme en la lista de espera</a>
+      <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Unirme al grupo de WhatsApp</a>
       <p class="cta-guarantee">Sin presión. Sin urgencia fabricada. Cuando estés lista/o, acá estamos.</p>
     </div>
     <p class="reveal" style="text-align:center;margin-top:2rem;"><span style="font-family:'Great Vibes',cursive;font-size:1.8rem;color:var(--gold);opacity:0.7;">Imparables hasta el final</span></p>
@@ -471,7 +523,8 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   <div class="footer-founders">Alejandra Cuello &amp; Cintia Paolucci</div>
   <div style="display:flex;justify-content:center;gap:2rem;margin:1rem 0;flex-wrap:wrap;">
     <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">WhatsApp</a>
-    <a href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">Instagram</a>
+    <a href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">@cin.paolucci</a>
+    <a href="https://www.instagram.com/alejandra.cuello28" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">@alejandra.cuello28</a>
     <a href="https://youtube.com/@comunidad.imparables" target="_blank" rel="noopener" style="color:var(--text-dim);font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;">YouTube</a>
   </div>
   <p class="footer-copy"><em>"De adentro hacia afuera"</em> &nbsp;·&nbsp; <a href="/terminos" style="color:var(--text-dim);">Términos</a> &nbsp;·&nbsp; <a href="/privacidad" style="color:var(--text-dim);">Privacidad</a></p>

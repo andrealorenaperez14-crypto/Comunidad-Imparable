@@ -8,25 +8,25 @@ export default function PrivacidadPage() {
       <div className="max-w-3xl mx-auto px-4 py-12">
 
         <Link
-          href="/register"
+          href="/"
           className="inline-flex items-center gap-2 text-sm mb-8 transition-opacity hover:opacity-80"
           style={{ color: 'var(--color-text-muted)' }}
         >
           <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-          Volver al registro
+          Volver al inicio
         </Link>
 
         <div className="mb-10">
-          <p className="text-xs uppercase tracking-widest mb-2" style={{ color: 'var(--color-gold)' }}>Escuela de Asesores MPS</p>
+          <p className="text-xs uppercase tracking-widest mb-2" style={{ color: 'var(--color-gold)' }}>Comunidad Imparables</p>
           <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text)' }}>Política de Privacidad</h1>
-          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Última actualización: junio de 2026 · Ciudad Autónoma de Buenos Aires, Argentina</p>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Última actualización: agosto de 2026 · Ciudad Autónoma de Buenos Aires, Argentina</p>
         </div>
 
         <div className="space-y-8 text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
 
           <section>
             <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>1. Responsable del tratamiento de datos</h2>
-            <p><strong>Yamila Mansilla</strong>, bajo la marca "Escuela de Asesores MPS", con domicilio en la Ciudad Autónoma de Buenos Aires, República Argentina, es la responsable del tratamiento de los datos personales recabados a través de esta plataforma digital, en cumplimiento de la <strong>Ley 25.326 de Protección de los Datos Personales</strong> y sus normas reglamentarias.</p>
+            <p><strong>Alejandra Cuello y Cintia Paolucci</strong>, bajo la marca "Comunidad Imparables", con domicilio en la Ciudad Autónoma de Buenos Aires, República Argentina, son responsables del tratamiento de los datos personales recabados a través de esta plataforma digital, en cumplimiento de la <strong>Ley 25.326 de Protección de los Datos Personales</strong> y sus normas reglamentarias.</p>
           </section>
 
           <section>
@@ -39,7 +39,7 @@ export default function PrivacidadPage() {
               </div>
               <div>
                 <p className="font-medium mb-1" style={{ color: 'var(--color-gold)' }}>Datos de uso</p>
-                <p style={{ color: 'var(--color-text-muted)' }}>Historial de interacciones con los agentes IA, progreso en cursos, cantidad y frecuencia de sesiones, posición en el ranking y métricas de rendimiento.</p>
+                <p style={{ color: 'var(--color-text-muted)' }}>Historial de acceso a contenidos, progreso en clases y frecuencia de participación en la comunidad.</p>
               </div>
               <div>
                 <p className="font-medium mb-1" style={{ color: 'var(--color-gold)' }}>Datos de suscripción</p>
@@ -57,10 +57,9 @@ export default function PrivacidadPage() {
             <p className="mb-2">Utilizamos los datos personales para:</p>
             <ul className="list-disc pl-5 space-y-1" style={{ color: 'var(--color-text-muted)' }}>
               <li>Gestionar el acceso y la cuenta del/la Usuario/a</li>
-              <li>Prestar los servicios educativos y de IA contratados</li>
-              <li>Generar métricas de rendimiento y reportes personalizados</li>
-              <li>Enviar comunicaciones relacionadas con el servicio (alertas de rendimiento, vencimientos, certificados)</li>
-              <li>Mejorar la calidad del servicio y los agentes IA</li>
+              <li>Prestar los servicios de formación y mentoría contratados</li>
+              <li>Enviar comunicaciones relacionadas con el servicio (avisos de vencimiento, acceso a clases)</li>
+              <li>Mejorar la calidad del servicio y la experiencia de la comunidad</li>
               <li>Cumplir con obligaciones legales aplicables</li>
             </ul>
           </section>
@@ -70,13 +69,11 @@ export default function PrivacidadPage() {
             <p className="mb-2">La plataforma envía comunicaciones automáticas al correo registrado, incluyendo:</p>
             <ul className="list-disc pl-5 space-y-1 mb-3" style={{ color: 'var(--color-text-muted)' }}>
               <li>Email de bienvenida al registrarse</li>
-              <li>Alertas de rendimiento (bajo o sobresaliente)</li>
               <li>Avisos de inactividad</li>
               <li>Notificaciones de vencimiento de suscripción</li>
-              <li>Reportes semanales de actividad</li>
-              <li>Certificados emitidos</li>
+              <li>Información sobre nuevos contenidos y clases</li>
             </ul>
-            <p>El/la Usuario/a puede solicitar la baja de estas comunicaciones no esenciales contactando a la plataforma. Las comunicaciones vinculadas directamente al servicio contratado (vencimientos, suspensión de cuenta, recuperación de contraseña) no pueden desactivarse.</p>
+            <p>El/la Usuario/a puede solicitar la baja de comunicaciones no esenciales contactando a la plataforma. Las comunicaciones vinculadas directamente al servicio (vencimientos, recuperación de contraseña) no pueden desactivarse.</p>
           </section>
 
           <section>
@@ -85,7 +82,6 @@ export default function PrivacidadPage() {
             <ul className="list-disc pl-5 space-y-1" style={{ color: 'var(--color-text-muted)' }}>
               <li>Los datos permanecen disponibles durante 10 días hábiles adicionales para posible recuperación</li>
               <li>Transcurrido dicho plazo, los datos son eliminados del sistema activo</li>
-              <li>Se mantiene un registro mínimo anonimizado (DNI hasheado, métricas agregadas) por un período de hasta 1 año, con fines estadísticos</li>
             </ul>
           </section>
 
@@ -95,7 +91,6 @@ export default function PrivacidadPage() {
             <ul className="list-disc pl-5 space-y-1" style={{ color: 'var(--color-text-muted)' }}>
               <li><strong>Proveedores de infraestructura</strong> (servicios de hosting y base de datos): únicamente los datos necesarios para el funcionamiento técnico</li>
               <li><strong>Procesadores de pago</strong> (Mercado Pago): para gestionar transacciones, bajo sus propias políticas de privacidad</li>
-              <li><strong>Proveedores de IA</strong> (Anthropic, Google, OpenAI): los mensajes enviados a los agentes IA pueden procesarse en sus plataformas bajo sus respectivas políticas de privacidad</li>
               <li><strong>Servicios de envío de email</strong>: para el envío de comunicaciones transaccionales</li>
             </ul>
           </section>
@@ -150,7 +145,7 @@ export default function PrivacidadPage() {
 
         <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--color-separator)' }}>
           <p className="text-xs" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>
-            © 2026 Escuela de Asesores MPS · Yamila Mansilla · Ciudad Autónoma de Buenos Aires, Argentina<br />
+            © 2026 Comunidad Imparables · Alejandra Cuello y Cintia Paolucci · Ciudad Autónoma de Buenos Aires, Argentina<br />
             Ley 25.326 de Protección de Datos Personales · Agencia de Acceso a la Información Pública
           </p>
         </div>

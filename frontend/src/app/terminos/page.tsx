@@ -8,30 +8,30 @@ export default function TerminosPage() {
       <div className="max-w-3xl mx-auto px-4 py-12">
 
         <Link
-          href="/register"
+          href="/"
           className="inline-flex items-center gap-2 text-sm mb-8 transition-opacity hover:opacity-80"
           style={{ color: 'var(--color-text-muted)' }}
         >
           <ArrowLeft className="w-4 h-4" strokeWidth={1.5} />
-          Volver al registro
+          Volver al inicio
         </Link>
 
         <div className="mb-10">
-          <p className="text-xs uppercase tracking-widest mb-2" style={{ color: 'var(--color-gold)' }}>Escuela de Asesores MPS</p>
+          <p className="text-xs uppercase tracking-widest mb-2" style={{ color: 'var(--color-gold)' }}>Comunidad Imparables</p>
           <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text)' }}>Términos y Condiciones</h1>
-          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Última actualización: junio de 2026 · Ciudad Autónoma de Buenos Aires, Argentina</p>
+          <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>Última actualización: agosto de 2026 · Ciudad Autónoma de Buenos Aires, Argentina</p>
         </div>
 
         <div className="space-y-8 text-sm leading-relaxed" style={{ color: 'var(--color-text)' }}>
 
           <section>
             <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>1. Partes del contrato</h2>
-            <p>El presente acuerdo se celebra entre <strong>Yamila Mansilla</strong> (en adelante "Escuela de Asesores MPS" o "la Plataforma"), con domicilio en la Ciudad Autónoma de Buenos Aires, República Argentina, y toda persona física que se registre como usuario en la plataforma digital disponible en este sitio (en adelante "el/la Usuario/a").</p>
+            <p>El presente acuerdo se celebra entre <strong>Alejandra Cuello y Cintia Paolucci</strong> (en adelante "Comunidad Imparables" o "la Plataforma"), con domicilio en la Ciudad Autónoma de Buenos Aires, República Argentina, y toda persona física que se registre como usuario en la plataforma digital disponible en este sitio (en adelante "el/la Usuario/a").</p>
           </section>
 
           <section>
             <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>2. Objeto del servicio</h2>
-            <p>La Plataforma ofrece servicios de capacitación en ventas y desarrollo personal mediante acceso a contenido educativo digital, agentes de inteligencia artificial de acompañamiento (IA Coach, IA Mentalidad, IA Consultiva), sistema de ranking, emisión de certificados digitales y materiales de formación complementarios.</p>
+            <p>La Plataforma ofrece servicios de formación, mentoría y desarrollo personal mediante acceso a clases en vivo y grabadas, mentoría grupal semanal, comunidad privada de acompañamiento y materiales de formación complementarios orientados al crecimiento personal, la espiritualidad y la construcción de una vida y un negocio alineados con el propósito de cada persona.</p>
           </section>
 
           <section>
@@ -61,50 +61,44 @@ export default function TerminosPage() {
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>7. Uso de inteligencia artificial</h2>
-            <p className="mb-2">La plataforma incorpora agentes de IA como herramientas de acompañamiento educativo. Las respuestas generadas por estos agentes tienen carácter informativo y orientativo, y no constituyen asesoramiento profesional, jurídico, médico ni financiero.</p>
-            <p>El/la Usuario/a acepta que las interacciones con los agentes IA pueden ser registradas con fines de mejora del servicio, en cumplimiento de la política de privacidad vigente.</p>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>7. Propiedad intelectual</h2>
+            <p>Todos los contenidos de la plataforma (textos, videos, materiales de curso, diseño y código) son propiedad exclusiva de Comunidad Imparables o se utilizan bajo licencia. Queda prohibida su reproducción, distribución o comercialización sin autorización expresa y por escrito.</p>
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>8. Propiedad intelectual</h2>
-            <p>Todos los contenidos de la plataforma (textos, videos, materiales de curso, diseño, código y agentes IA) son propiedad exclusiva de Escuela de Asesores MPS o se utilizan bajo licencia. Queda prohibida su reproducción, distribución o comercialización sin autorización expresa y por escrito.</p>
-          </section>
-
-          <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>9. Conducta del usuario</h2>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>8. Conducta del usuario</h2>
             <p className="mb-2">El/la Usuario/a se compromete a no utilizar la plataforma para fines ilícitos, difamatorios, abusivos o contrarios a la normativa vigente. Está expresamente prohibido:</p>
             <ul className="list-disc pl-5 space-y-1 mt-2" style={{ color: 'var(--color-text-muted)' }}>
               <li>Compartir credenciales de acceso con terceros</li>
               <li>Intentar vulnerar la seguridad del sistema</li>
               <li>Reproducir o distribuir contenidos protegidos</li>
-              <li>Usar los agentes IA para generar contenido dañino o ilegal</li>
+              <li>Tratar con falta de respeto a otros miembros de la comunidad</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>10. Suspensión y baja de cuenta</h2>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>9. Suspensión y baja de cuenta</h2>
             <p className="mb-2">La Plataforma podrá suspender o dar de baja una cuenta ante el incumplimiento de estos términos, sin necesidad de notificación previa en casos graves.</p>
             <p>Al vencer la suscripción, la cuenta pasa a estado suspendido. Los datos del usuario se conservan por 10 (diez) días adicionales, tras los cuales son eliminados permanentemente del sistema activo.</p>
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>11. Limitación de responsabilidad</h2>
-            <p>La Plataforma no garantiza la disponibilidad ininterrumpida del servicio y no será responsable por daños derivados de interrupciones técnicas, pérdida de datos o resultados obtenidos a partir del uso de los contenidos y los agentes IA.</p>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>10. Limitación de responsabilidad</h2>
+            <p>La Plataforma no garantiza la disponibilidad ininterrumpida del servicio y no será responsable por daños derivados de interrupciones técnicas, pérdida de datos o resultados obtenidos a partir del uso de los contenidos.</p>
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>12. Modificaciones</h2>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>11. Modificaciones</h2>
             <p>La Plataforma se reserva el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigencia a los 15 días de su publicación. El uso continuado del servicio implica la aceptación de los nuevos términos.</p>
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>13. Ley aplicable y jurisdicción</h2>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>12. Ley aplicable y jurisdicción</h2>
             <p>El presente acuerdo se rige por las leyes de la <strong>República Argentina</strong>. Ante cualquier controversia, las partes se someten a la jurisdicción de los Tribunales Ordinarios de la <strong>Ciudad Autónoma de Buenos Aires</strong>, con renuncia expresa a cualquier otro fuero que pudiera corresponder.</p>
           </section>
 
           <section>
-            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>14. Contacto</h2>
+            <h2 className="font-semibold text-base mb-3" style={{ color: 'var(--color-gold)' }}>13. Contacto</h2>
             <p>Para consultas sobre estos términos, el/la Usuario/a puede comunicarse a través de los canales oficiales disponibles en la plataforma.</p>
           </section>
 
@@ -112,7 +106,7 @@ export default function TerminosPage() {
 
         <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--color-separator)' }}>
           <p className="text-xs" style={{ color: 'var(--color-text-muted)', opacity: 0.6 }}>
-            © 2026 Escuela de Asesores MPS · Yamila Mansilla · Ciudad Autónoma de Buenos Aires, Argentina
+            © 2026 Comunidad Imparables · Alejandra Cuello y Cintia Paolucci · Ciudad Autónoma de Buenos Aires, Argentina
           </p>
         </div>
       </div>
