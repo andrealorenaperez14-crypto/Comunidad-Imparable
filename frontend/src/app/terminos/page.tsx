@@ -1,15 +1,15 @@
 'use client'
 import Link from 'next/link'
 
-const gold = '#C9952C'
-const goldDim = 'rgba(201,149,44,0.15)'
-const goldMid = 'rgba(201,149,44,0.35)'
+const gold = '#C17D1A'
+const goldDim = 'rgba(193,125,26,0.15)'
+const goldMid = 'rgba(193,125,26,0.35)'
 const bg = '#160D28'
 const bgCard = '#1F1238'
 const text = '#FAF8F5'
 const textSoft = 'rgba(250,248,245,0.72)'
 const textDim = 'rgba(250,248,245,0.45)'
-const sep = 'rgba(201,149,44,0.2)'
+const sep = 'rgba(193,125,26,0.2)'
 
 export default function TerminosPage() {
   return (
