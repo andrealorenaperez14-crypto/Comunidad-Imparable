@@ -387,13 +387,13 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="grabado-note reveal"><span class="grabado-note-mark">∞</span><span>Todo el contenido — clases y mentorías — queda grabado y disponible dentro de la academia digital para que puedas verlo cuando quieras, a tu ritmo.</span></div>
     <div class="horarios reveal">
       <div style="width:100%;text-align:center;"><span style="font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);">Mentoría en vivo — cada martes</span></div>
-      <div class="horario-item"><span class="horario-flag">🇦🇷</span><span class="horario-pais">Argentina</span><span class="horario-hora">20:00 hs</span></div>
+      <div class="horario-item"><span class="horario-flag">🇦🇷</span><span class="horario-pais">Argentina</span><span class="horario-hora">18:00 hs</span></div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><span class="horario-flag">🇨🇴</span><span class="horario-pais">Colombia</span><span class="horario-hora">18:00 hs</span></div>
+      <div class="horario-item"><span class="horario-flag">🇨🇴</span><span class="horario-pais">Colombia</span><span class="horario-hora">16:00 hs</span></div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><span class="horario-flag">🇪🇸</span><span class="horario-pais">España</span><span class="horario-hora">00:00 hs<small>siguiente día</small></span></div>
+      <div class="horario-item"><span class="horario-flag">🇪🇸</span><span class="horario-pais">España</span><span class="horario-hora">23:00 hs</span></div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><span class="horario-flag">🇺🇸</span><span class="horario-pais">EEUU Este</span><span class="horario-hora">18:00 hs</span></div>
+      <div class="horario-item"><span class="horario-flag">🇺🇸</span><span class="horario-pais">EEUU Este</span><span class="horario-hora">17:00 hs</span></div>
       <p class="horarios-note">* Puede variar ±1 h según cambio de horario estacional</p>
     </div>
   </div>
@@ -507,7 +507,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       <ul class="cta-includes">
         <li>Clases semanales con Alejandra Cuello — espiritualidad y sanación</li>
         <li>Clases semanales con Cintia Paolucci — mentalidad y marca personal</li>
-        <li>Mentoría grupal en vivo cada martes (20:00 hs Argentina)</li>
+        <li>Mentoría grupal en vivo cada martes (18:00 hs Argentina)</li>
         <li>Comunidad privada de acompañamiento y crecimiento</li>
         <li>Acceso a todo el contenido grabado desde el inicio</li>
       </ul>
