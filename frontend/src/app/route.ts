@@ -132,9 +132,9 @@ nav {
 .logo-name { font-family:'Cormorant Garamond',serif; font-size:0.85rem; letter-spacing:0.35em; text-transform:uppercase; color:var(--text-soft); margin-top:0.5rem; }
 .logo-name span { color:var(--gold); letter-spacing:0.3em; }
 .hero-headline { font-size:clamp(2.8rem,6vw,5.2rem); font-weight:300; letter-spacing:0.04em; margin-bottom:1rem; opacity:0; animation:fade-in 1s ease 0.7s forwards; color:var(--text); line-height:1.08; text-wrap:balance; }
-.hero-headline em { font-style:italic; color:var(--gold); white-space:nowrap; }
+.hero-headline em { font-style:italic; color:var(--gold); font-weight:400; }
 .hero-sub { font-size:clamp(1rem,1.8vw,1.2rem); color:var(--text-soft); max-width:560px; margin:1.5rem auto 0; opacity:0; animation:fade-in 1s ease 1s forwards; line-height:1.7; font-weight:300; }
-.hero-slogan { font-family:'Great Vibes',cursive; font-size:clamp(1.6rem,3vw,2.2rem); color:var(--gold); opacity:0; animation:fade-in 1s ease 1.3s forwards; margin-top:1rem; }
+.hero-slogan { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400; font-size:clamp(1.9rem,3.5vw,2.6rem); color:var(--gold); opacity:0; animation:fade-in 1s ease 1.3s forwards; margin-top:1rem; }
 .hero-cta-wrap { display:flex; flex-direction:column; align-items:center; gap:1rem; margin-top:2.8rem; opacity:0; animation:fade-in 1s ease 1.5s forwards; }
 .btn-primary { font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--bg); background:var(--gold); padding:1.1rem 3rem; border:none; border-radius:var(--radius); cursor:pointer; text-decoration:none; display:inline-block; transition:opacity 0.2s,transform 0.2s; box-shadow:0 4px 24px rgba(193,125,26,0.25); }
 .btn-primary:hover { opacity:0.92; transform:translateY(-1px); }
@@ -144,7 +144,7 @@ nav {
 section { padding: 7rem 0; }
 section.alt  { background: var(--bg-card); }
 section.alt2 { background: var(--bg-alt); }
-.dolor-intro { font-family:'Cormorant Garamond',serif; font-size:clamp(1.4rem,2.5vw,1.9rem); font-weight:300; font-style:italic; color:var(--text-soft); max-width:680px; text-wrap:balance; line-height:1.5; margin-bottom:3rem; }
+.dolor-intro { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,2.5vw,1.9rem); font-weight:400; font-style:italic; color:var(--text-soft); max-width:680px; text-wrap:balance; line-height:1.5; margin-bottom:3rem; }
 .dolor-list { list-style:none; display:grid; gap:1rem; margin:2rem 0 2.5rem; }
 .dolor-item { display:flex; align-items:flex-start; gap:1rem; padding:1.2rem 1.5rem; background:var(--gold-glow); border:1px solid var(--gold-dim); border-left:3px solid var(--gold); border-radius:var(--radius); }
 .dolor-icon { color:var(--gold); font-size:1rem; flex-shrink:0; margin-top:0.1rem; }
@@ -155,7 +155,7 @@ section.alt2 { background: var(--bg-alt); }
 .promesa-card { padding:2rem; background:var(--gold-glow); border:1px solid var(--gold-dim); border-radius:var(--radius); position:relative; }
 .promesa-card-label { font-family:'Montserrat',sans-serif; font-size:0.62rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--gold); margin-bottom:0.8rem; }
 .promesa-card-text { font-size:0.98rem; color:var(--text-soft); line-height:1.7; }
-.promesa-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,2.8vw,2.3rem); font-style:italic; font-weight:300; text-align:center; margin-top:4rem; color:var(--text); line-height:1.35; max-width:700px; margin-inline:auto; }
+.promesa-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,2.8vw,2.3rem); font-style:italic; font-weight:400; text-align:center; margin-top:4rem; color:var(--text); line-height:1.35; max-width:700px; margin-inline:auto; }
 .promesa-quote strong { color:var(--gold); font-style:normal; }
 .incluye-heading { font-size:clamp(2rem,4vw,3.5rem); letter-spacing:0.05em; text-align:center; margin-bottom:0.5rem; text-transform:uppercase; }
 .incluye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3.5rem; }
@@ -198,7 +198,7 @@ section.alt2 { background: var(--bg-alt); }
 .founder-body { padding:2.2rem 2.2rem 2.5rem; }
 .founder-role { font-family:'Montserrat',sans-serif; font-size:0.6rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem; }
 .founder-name { font-family:'Cormorant Garamond',serif; font-size:1.9rem; font-weight:300; margin-bottom:0.3rem; line-height:1.2; }
-.founder-subtitle { font-family:'Great Vibes',cursive; font-size:1.3rem; color:var(--gold); margin-bottom:1.5rem; display:block; }
+.founder-subtitle { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400; font-size:1.5rem; color:var(--gold); margin-bottom:1.5rem; display:block; }
 .founder-story { font-size:0.93rem; color:var(--text-soft); line-height:1.75; border-top:1px solid var(--gold-dim); padding-top:1.5rem; margin-top:0.5rem; }
 .founder-values { display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1.5rem; }
 .founder-val { font-family:'Montserrat',sans-serif; font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); border:1px solid var(--gold-mid); padding:0.2rem 0.6rem; border-radius:20px; }
@@ -235,7 +235,7 @@ section.alt2 { background: var(--bg-alt); }
 .cta-guarantee { margin-top:1.5rem; font-size:0.82rem; color:var(--text-dim); font-style:italic; }
 footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:center; background:var(--bg); }
 .footer-brand { font-family:'Cormorant Garamond',serif; font-size:0.9rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:0.3rem; }
-.footer-founders { font-family:'Great Vibes',cursive; font-size:1.4rem; color:var(--text-dim); margin-bottom:1rem; }
+.footer-founders { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400; font-size:1.3rem; letter-spacing:0.04em; color:var(--text-dim); margin-bottom:1rem; }
 .footer-copy { font-size:0.78rem; color:var(--text-dim); }
 @media (min-width:1440px) {
   .container { max-width:1200px; }
@@ -520,7 +520,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   <div class="cta-bg"></div>
   <div class="container" style="position:relative;z-index:1;">
     <span class="eyebrow reveal" style="display:block;text-align:center;">¿Estás lista/o?</span>
-    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2.2rem,5vw,4.5rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;max-width:700px;margin:0 auto;">El proceso empieza adentro.<br><em style="color:var(--gold);font-style:italic;">La transformación se ve afuera.</em></h2>
+    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2.2rem,5vw,4.5rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;max-width:700px;margin:0 auto;">El proceso empieza adentro.<br><em style="color:var(--gold);font-style:italic;font-weight:400;">La transformación se ve afuera.</em></h2>
     <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:520px;margin:1.5rem auto 0;font-size:1rem;">Cada martes que pasa sin decidir es otro martes postergándote. La pregunta no es si podés. La pregunta es cuándo le vas a dar el permiso.</p>
     <div class="cta-price-block reveal reveal-delay-3">
       <p class="cta-price-label">LANZAMIENTO</p>
@@ -537,7 +537,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Unirme al grupo de WhatsApp</a>
       <p class="cta-guarantee">Sin presión. Sin urgencia fabricada. Cuando estés lista/o, acá estamos.</p>
     </div>
-    <p class="reveal" style="text-align:center;margin-top:2rem;"><span style="font-family:'Great Vibes',cursive;font-size:1.8rem;color:var(--gold);opacity:0.7;">Imparables hasta el final</span></p>
+    <p class="reveal" style="text-align:center;margin-top:2rem;"><span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:2rem;color:var(--gold);opacity:0.7;letter-spacing:0.03em;">Imparables hasta el final</span></p>
   </div>
 </section>
 
