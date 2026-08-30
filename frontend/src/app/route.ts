@@ -170,7 +170,7 @@ section.alt2 { background: var(--bg-alt); }
 .grabado-note-mark { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--gold); flex-shrink:0; }
 .horarios { margin-top:1.5rem; padding:2rem; background:var(--gold-dim); border:1px solid var(--gold-mid); border-radius:var(--radius); display:flex; flex-wrap:wrap; gap:1.5rem; align-items:center; justify-content:center; }
 .horario-item { text-align:center; }
-.horario-flag { display:block; margin-bottom:0.4rem; border-radius:2px; box-shadow:0 1px 4px rgba(0,0,0,0.4); }
+.horario-flag { display:block; margin:0 auto 0.5rem; width:34px; height:22px; border-radius:2px; box-shadow:0 1px 4px rgba(0,0,0,0.5); flex-shrink:0; }
 .horario-pais { font-family:'Montserrat',sans-serif; font-size:0.62rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-dim); }
 .horario-hora { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--gold); display:block; margin-top:0.1rem; line-height:1.2; }
 .horario-hora small { font-size:0.75rem; color:var(--text-dim); display:block; font-family:'Montserrat',sans-serif; letter-spacing:0; margin-top:0.1rem; }
@@ -387,15 +387,35 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="grabado-note reveal"><span class="grabado-note-mark">∞</span><span>Todo el contenido — clases y mentorías — queda grabado y disponible dentro de la academia digital para que puedas verlo cuando quieras, a tu ritmo.</span></div>
     <div class="horarios reveal">
       <div style="width:100%;text-align:center;"><span style="font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);">Mentoría en vivo — cada martes</span></div>
-      <div class="horario-item"><img class="horario-flag" src="https://flagcdn.com/32x24/ar.png" alt="Argentina" width="32" height="24"><span class="horario-pais">Argentina</span><span class="horario-hora">18:00 hs</span></div>
+      <div class="horario-item">
+        <!-- Argentina: celeste/blanco/celeste -->
+        <span class="horario-flag" style="background:linear-gradient(to bottom,#74ACDF 33%,#fff 33%,#fff 67%,#74ACDF 67%);"></span>
+        <span class="horario-pais">Argentina</span><span class="horario-hora">18:00 hs</span>
+      </div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><img class="horario-flag" src="https://flagcdn.com/32x24/co.png" alt="Colombia" width="32" height="24"><span class="horario-pais">Colombia</span><span class="horario-hora">16:00 hs</span></div>
+      <div class="horario-item">
+        <!-- Colombia: amarillo/azul/rojo -->
+        <span class="horario-flag" style="background:linear-gradient(to bottom,#FCD116 50%,#003087 75%,#CE1126 75%);"></span>
+        <span class="horario-pais">Colombia</span><span class="horario-hora">16:00 hs</span>
+      </div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><img class="horario-flag" src="https://flagcdn.com/32x24/pe.png" alt="Perú" width="32" height="24"><span class="horario-pais">Perú</span><span class="horario-hora">16:00 hs</span></div>
+      <div class="horario-item">
+        <!-- Perú: rojo/blanco/rojo -->
+        <span class="horario-flag" style="background:linear-gradient(to right,#D91023 33%,#fff 33%,#fff 67%,#D91023 67%);"></span>
+        <span class="horario-pais">Perú</span><span class="horario-hora">16:00 hs</span>
+      </div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><img class="horario-flag" src="https://flagcdn.com/32x24/us.png" alt="EEUU" width="32" height="24"><span class="horario-pais">EEUU</span><span class="horario-hora">16:00 hs</span></div>
+      <div class="horario-item">
+        <!-- EEUU: rojo/blanco/azul simplificado -->
+        <span class="horario-flag" style="background:linear-gradient(to bottom,#B22234 33%,#fff 33%,#fff 67%,#3C3B6E 67%);"></span>
+        <span class="horario-pais">EEUU</span><span class="horario-hora">16:00 hs</span>
+      </div>
       <span class="horario-sep">·</span>
-      <div class="horario-item"><img class="horario-flag" src="https://flagcdn.com/32x24/es.png" alt="España" width="32" height="24"><span class="horario-pais">España</span><span class="horario-hora">23:00 hs</span></div>
+      <div class="horario-item">
+        <!-- España: rojo/amarillo/rojo -->
+        <span class="horario-flag" style="background:linear-gradient(to bottom,#AA151B 28%,#F1BF00 28%,#F1BF00 72%,#AA151B 72%);"></span>
+        <span class="horario-pais">España</span><span class="horario-hora">23:00 hs</span>
+      </div>
       <p class="horarios-note">* Puede variar ±1 h según cambio de horario estacional</p>
     </div>
   </div>
