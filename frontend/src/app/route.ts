@@ -8,12 +8,13 @@ const HTML = `<!DOCTYPE html>
 <meta name="description" content="Comunidad para hombres y mujeres que quieren transformarse de adentro hacia afuera. Formación, mentoría y comunidad con Cintia Paolucci y Alejandra Cuello.">
 <meta property="og:title" content="Comunidad Imparables — De adentro hacia afuera">
 <meta property="og:description" content="Comunidad para hombres y mujeres que quieren transformarse de adentro hacia afuera. Formación, mentoría y propósito. Lanzamiento Octubre 2026.">
-<meta property="og:image" content="https://comunidad-imparables.vercel.app/assets/client1/LOGO-comunidad-imparable.jpeg">
+<meta property="og:image" content="https://comunidad-imparables.vercel.app/assets/client1/LOGO-comunidad-imparable.webp">
 <meta property="og:url" content="https://comunidad-imparables.vercel.app">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/assets/client1/LOGO-comunidad-imparable.jpeg" type="image/jpeg">
-<link rel="apple-touch-icon" href="/assets/client1/LOGO-comunidad-imparable.jpeg">
+<link rel="icon" href="/assets/client1/LOGO-comunidad-imparable.webp" type="image/webp">
+<link rel="apple-touch-icon" href="/assets/client1/LOGO-comunidad-imparable.webp">
+<link rel="preload" as="image" href="/assets/client1/LOGO-comunidad-imparable.webp">
 <meta name="description" content="Acompañamos a hombres y mujeres a descubrir su propósito, sanar desde la raíz y construir una vida y un negocio alineados con quienes realmente son. By Alejandra Cuello & Cintia Paolucci.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -316,7 +317,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   </div>
   <div class="hero-inner">
     <div class="logo-mark">
-      <img src="/assets/client1/LOGO-comunidad-imparable.jpeg"
+      <img src="/assets/client1/LOGO-comunidad-imparable.webp" fetchpriority="high"
            alt="Comunidad Imparables"
            style="width:160px;height:160px;object-fit:cover;border-radius:50%;border:2px solid rgba(193,125,26,0.5);box-shadow:0 0 32px rgba(193,125,26,0.18),0 0 0 6px rgba(193,125,26,0.07);display:block;"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -444,7 +445,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="founders-grid">
       <div class="founder-card reveal reveal-delay-2">
         <div class="founder-photo">
-          <img src="/assets/client1/cintia0.jpeg" alt="Cintia Paolucci" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Cintia Paolucci</p></div>'">
+          <img src="/assets/client1/cintia0.webp" alt="Cintia Paolucci" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Cintia Paolucci</p></div>'">
         </div>
         <div class="founder-body">
           <div class="founder-role">Co-fundadora</div>
@@ -457,7 +458,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       </div>
       <div class="founder-card reveal reveal-delay-3">
         <div class="founder-photo">
-          <img src="/assets/client1/alenajdra0.jpeg" alt="Alejandra Cuello" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Alejandra Cuello</p></div>'">
+          <img src="/assets/client1/alenajdra0.webp" alt="Alejandra Cuello" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Alejandra Cuello</p></div>'">
         </div>
         <div class="founder-body">
           <div class="founder-role">Co-fundadora</div>
