@@ -331,7 +331,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
         <div class="logo-name"><span>Comunidad</span><br><span style="letter-spacing:0.4em;font-size:1.1em;display:block;margin-top:0.1rem">Imparables</span></div>
       </div>
     </div>
-    <h1 class="hero-headline display">No viniste a encajar<br><em>Viniste a recordar quién sos</em></h1>
+    <h1 class="hero-headline display">No viniste a encajar<br><em>Viniste a recordar<br>quién sos</em></h1>
     <p class="hero-slogan">De adentro hacia afuera</p>
     <p class="hero-sub">Acompañamos a personas a descubrir su propósito, sanar desde la raíz y construir una vida — y un negocio — alineados con quienes realmente son.</p>
     <div class="hero-cta-wrap">
