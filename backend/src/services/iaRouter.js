@@ -270,8 +270,8 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
   // Pipeline: Groq → Gemini → Claude → OpenAI → local
   const pipeline = [
     ...(process.env.GROQ_API_KEY ? [() => callGroq(systemPrompt, instructions, message, kbForGroq, trimmedHistory)] : []),
-    () => callGemini(primaryKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
-    ...(process.env.ANTHROPIC_API_KEY ? [() => callClaude(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
+    () => callGemini(backupKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory),
+    ...(process.env.ANTHROPIC_API_KEY ? [() => callClaude(primaryKey, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
     ...(process.env.OPENAI_API_KEY ? [() => callOpenAI(null, systemPrompt, instructions, message, knowledgeBase, trimmedHistory)] : []),
     localFallback
   ]

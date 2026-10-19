@@ -48,12 +48,13 @@ export const authApi = {
   }) =>
     api.post('/api/auth/register', data),
   me: () => api.get('/api/auth/me'),
-  logout: () => api.post('/api/auth/logout'),
+  logout: () => {
+    const rt = typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null
+    return api.post('/api/auth/logout', rt ? { refreshToken: rt } : {})
+  },
   refresh: (refreshToken: string) => api.post('/api/auth/refresh', { refreshToken }),
   forgotPassword: (email: string, recaptchaToken?: string) =>
     api.post('/api/auth/forgot-password', { email, recaptchaToken }),
-  resetPassword: (email: string, otp: string, newPassword: string) =>
-    api.post('/api/auth/reset-password', { email, otp, newPassword }),
   changePassword: (currentPassword: string, newPassword: string) =>
     api.post('/api/auth/change-password', { currentPassword, newPassword })
 }
