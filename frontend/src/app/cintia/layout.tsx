@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Cintia Paolucci — Método Conecta con tu Ser',
-  description: 'Coaching ontológico, mentalidad e identidad. Módulo II del MÉTODO RAÍZ de la Academia Comunidad Imparable. Descubrí tus métodos: Conecta con tu Ser y Vender desde tu Ser.',
+  description: 'Coaching ontológico para transformar tu mentalidad e identidad. Escucha, Consciencia, Claridad y Acción: el camino para conectar con quien realmente sos y avanzar desde ahí.',
   openGraph: {
     title: 'Cintia Paolucci — Coaching ontológico y Mentalidad',
-    description: 'Módulo II del MÉTODO RAÍZ. Escucha, Consciencia, Claridad y Acción para transformar tu mentalidad e identidad.',
+    description: 'Escucha, Consciencia, Claridad y Acción. Descubrí el Método Conecta con tu Ser y transformá tu mentalidad e identidad desde adentro hacia afuera.',
     url: 'https://comunidad-imparables.vercel.app/cintia',
     siteName: 'Academia Comunidad Imparable',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Cintia Paolucci — Método Conecta con tu Ser',
-    description: 'Coaching ontológico, mentalidad e identidad. Módulo II del MÉTODO RAÍZ.',
+    description: 'Coaching ontológico, mentalidad e identidad. Transformá tu vida con el Método Conecta con tu Ser.',
     images: ['https://comunidad-imparables.vercel.app/assets/client1/og-cintia.jpeg'],
   },
 }

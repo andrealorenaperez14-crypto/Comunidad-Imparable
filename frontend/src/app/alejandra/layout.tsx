@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Alejandra Cuello — Espiritualidad y Sanación',
-  description: 'Módulo I del MÉTODO RAÍZ. Reiki, Metafísica, Gemoterapia, Biodescodificación y Psicomagia para reconocer y sanar desde adentro hacia afuera.',
+  description: 'Sanar desde adentro transforma tu vida. Te acompaño en tu camino espiritual con Reiki, Metafísica, Gemoterapia y Biodescodificación para que reconectes con tu esencia y des pasos concretos.',
   openGraph: {
     title: 'Alejandra Cuello — Reconocer y Sanar',
-    description: 'Módulo I del MÉTODO RAÍZ. Espiritualidad, sanación y expansión de consciencia con Reiki, Metafísica y Biodescodificación.',
+    description: 'Sanar desde adentro transforma tu vida. Acompañamiento espiritual con Reiki, Metafísica, Biodescodificación y Gemoterapia para reconectar con tu esencia.',
     url: 'https://comunidad-imparables.vercel.app/alejandra',
     siteName: 'Academia Comunidad Imparable',
     images: [
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Alejandra Cuello — Espiritualidad y Sanación',
-    description: 'Módulo I del MÉTODO RAÍZ. Reconocer y sanar desde adentro hacia afuera.',
+    description: 'Sanar desde adentro transforma tu vida. Acompañamiento espiritual con Reiki, Metafísica y Biodescodificación.',
     images: ['https://comunidad-imparables.vercel.app/assets/client1/og-alejandra.jpeg'],
   },
 }
