@@ -550,7 +550,40 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   <div class="container">
     <span class="eyebrow reveal" style="display:block;text-align:center;">Testimonios · Alejandra Cuello</span>
     <h2 class="display reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;">Lo que dicen quienes<br>trabajan con Alejandra</h2>
-    <div class="testimonios-placeholder reveal reveal-delay-2"><p>✦ &nbsp; Próximamente &nbsp; ✦</p></div>
+    <div class="carrusel-wrap reveal reveal-delay-2" id="carrusel-alejandra">
+      <div class="carrusel-track">
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/ale-t1.jpg" alt="Testimonio — Nidia · Alejandra Cuello" loading="lazy">
+          </div>
+        </div>
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/ale-t2.jpg" alt="Testimonio — Patricia · Alejandra Cuello" loading="lazy">
+          </div>
+        </div>
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/ale-t3.jpg" alt="Testimonio — Alejandra Cuello" loading="lazy">
+          </div>
+        </div>
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/ale-t4.jpg" alt="Testimonio — Celina · Alejandra Cuello" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="carrusel-nav">
+        <button class="carrusel-btn carrusel-prev" aria-label="Anterior">&#8592;</button>
+        <div class="carrusel-dots">
+          <button class="carrusel-dot" aria-label="1"></button>
+          <button class="carrusel-dot" aria-label="2"></button>
+          <button class="carrusel-dot" aria-label="3"></button>
+          <button class="carrusel-dot" aria-label="4"></button>
+        </div>
+        <button class="carrusel-btn carrusel-next" aria-label="Siguiente">&#8594;</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -647,6 +680,7 @@ function initCarrusel(id) {
   goTo(0);
 }
 initCarrusel('carrusel-cintia');
+initCarrusel('carrusel-alejandra');
 </script>
 </body>
 </html>`
