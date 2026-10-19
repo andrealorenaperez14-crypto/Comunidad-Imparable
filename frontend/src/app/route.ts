@@ -237,6 +237,17 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
 .footer-brand { font-family:'Cormorant Garamond',serif; font-size:0.9rem; letter-spacing:0.25em; text-transform:uppercase; color:var(--gold); margin-bottom:0.3rem; }
 .footer-founders { font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400; font-size:1.3rem; letter-spacing:0.04em; color:var(--text-dim); margin-bottom:1rem; }
 .footer-copy { font-size:0.78rem; color:var(--text-dim); }
+.carrusel-wrap { position:relative; margin-top:2.5rem; overflow:hidden; }
+.carrusel-track { display:flex; transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94); will-change:transform; }
+.carrusel-slide { min-width:100%; display:flex; justify-content:center; align-items:flex-start; padding:0 1rem; }
+.carrusel-img-frame { max-width:400px; width:100%; background:#0d0820; border:1px solid var(--gold-mid); border-radius:12px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,0.45); }
+.carrusel-img-frame img { width:100%; height:auto; display:block; max-height:640px; object-fit:contain; }
+.carrusel-nav { display:flex; justify-content:center; align-items:center; gap:2rem; margin-top:1.8rem; }
+.carrusel-btn { background:none; border:1px solid var(--gold-mid); color:var(--gold); width:38px; height:38px; border-radius:50%; cursor:pointer; font-size:1rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s,border-color 0.2s; flex-shrink:0; }
+.carrusel-btn:hover { background:rgba(193,125,26,0.12); border-color:var(--gold); }
+.carrusel-dots { display:flex; gap:0.6rem; align-items:center; }
+.carrusel-dot { width:7px; height:7px; border-radius:50%; background:var(--gold-mid); border:none; cursor:pointer; transition:background 0.2s,transform 0.2s; padding:0; }
+.carrusel-dot.active { background:var(--gold); transform:scale(1.45); }
 @media (min-width:1440px) {
   .container { max-width:1200px; }
 }
@@ -500,7 +511,50 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   </div>
 </div>
 
-<section class="alt">
+<section class="alt" style="padding:5rem 0;">
+  <div class="container">
+    <span class="eyebrow reveal" style="display:block;text-align:center;">Testimonios · Cintia Paolucci</span>
+    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;">Lo que dicen quienes<br>trabajan con Cintia</h2>
+    <div class="carrusel-wrap reveal reveal-delay-2" id="carrusel-cintia">
+      <div class="carrusel-track">
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/cintia-t1.jpg" alt="Testimonio — Cintia Paolucci" loading="lazy">
+          </div>
+        </div>
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/cintia-t2.jpg" alt="Testimonio — Carmen · Cintia Paolucci" loading="lazy">
+          </div>
+        </div>
+        <div class="carrusel-slide">
+          <div class="carrusel-img-frame">
+            <img src="/assets/client1/testimonios/cintia-t3.jpg" alt="Testimonio — Vero · Cintia Paolucci" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <div class="carrusel-nav">
+        <button class="carrusel-btn carrusel-prev" aria-label="Anterior">&#8592;</button>
+        <div class="carrusel-dots">
+          <button class="carrusel-dot" aria-label="1"></button>
+          <button class="carrusel-dot" aria-label="2"></button>
+          <button class="carrusel-dot" aria-label="3"></button>
+        </div>
+        <button class="carrusel-btn carrusel-next" aria-label="Siguiente">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:5rem 0;">
+  <div class="container">
+    <span class="eyebrow reveal" style="display:block;text-align:center;">Testimonios · Alejandra Cuello</span>
+    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;">Lo que dicen quienes<br>trabajan con Alejandra</h2>
+    <div class="testimonios-placeholder reveal reveal-delay-2"><p>✦ &nbsp; Próximamente &nbsp; ✦</p></div>
+  </div>
+</section>
+
+<section class="alt" style="padding:5rem 0;">
   <div class="container">
     <span class="eyebrow reveal" style="display:block;text-align:center;">Lo que dice la comunidad</span>
     <h2 class="display reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;">Personas reales.<br>Resultados reales.</h2>
@@ -574,6 +628,25 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+function initCarrusel(id) {
+  var wrap = document.getElementById(id);
+  if (!wrap) return;
+  var track = wrap.querySelector('.carrusel-track');
+  var slides = wrap.querySelectorAll('.carrusel-slide');
+  var dots = wrap.querySelectorAll('.carrusel-dot');
+  var cur = 0;
+  function goTo(n) {
+    cur = ((n % slides.length) + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + cur * 100 + '%)';
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === cur); });
+  }
+  wrap.querySelector('.carrusel-prev').addEventListener('click', function() { goTo(cur - 1); });
+  wrap.querySelector('.carrusel-next').addEventListener('click', function() { goTo(cur + 1); });
+  dots.forEach(function(d, i) { d.addEventListener('click', function() { goTo(i); }); });
+  goTo(0);
+}
+initCarrusel('carrusel-cintia');
 </script>
 </body>
 </html>`
