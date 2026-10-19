@@ -465,7 +465,7 @@ function Parte3Inner() {
       <section style={{ width: '100%', padding: 'clamp(3.5rem,7vw,5.5rem) clamp(1rem,5vw,3rem)', background: 'rgba(193,125,26,0.03)' }}>
         <div style={{ maxWidth: '680px', margin: '0 auto', textAlign: 'center' }}>
           <p style={{ fontFamily: 'Cinzel, serif', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: '0.75rem' }}>Lo que dicen quienes ya empezaron</p>
-          <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem,3vw,1.8rem)', fontWeight: 700, marginBottom: '2.5rem', color: 'var(--color-text)' }}>Testimonios reales</h2>
+          <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem,3vw,1.8rem)', fontWeight: 700, marginBottom: '2.5rem', color: 'var(--color-text)' }}>Testimonios</h2>
           <TestimoniosCarrusel images={['/assets/client1/testimonios/ale-t1.jpg', '/assets/client1/testimonios/ale-t2.jpg', '/assets/client1/testimonios/ale-t3.jpg', '/assets/client1/testimonios/ale-t4.jpg']} />
         </div>
       </section>
