@@ -204,32 +204,49 @@ function Parte3Inner() {
 
       {/* ══════════════════ SOBRE ALEJANDRA ══════════════════ */}
       <section style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
-        <div style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'left' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} style={{ fontSize: 'clamp(0.65rem, 1.5vw, 0.78rem)', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--color-gold)', marginBottom: '1rem', textAlign: 'center' }}>
             Mi recorrido
           </motion.p>
-          <motion.h2 {...fadeUp} style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 1.75rem)', fontWeight: 700, marginBottom: '2rem', textAlign: 'center' }}>
+          <motion.h2 {...fadeUp} style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 1.75rem)', fontWeight: 700, marginBottom: '2.5rem', textAlign: 'center' }}>
             Un camino de 16 años junto a otros
           </motion.h2>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-            {[
-              'Mi camino está profundamente conectado con el desarrollo espiritual, el autoconocimiento y la transformación interior. Cuento con 16 años de práctica en las enseñanzas de Metafísica, de los cuales 12 me desempeñé como facilitadora, acompañando a otras personas en su camino espiritual.',
-              'Soy Maestra de Reiki y, a lo largo de mi recorrido, también me formé en Gemoterapia, Biodescodificación, Sincronario Maya y en el abordaje de las heridas de la infancia desde mi formación y experiencia personal.',
-              'Actualmente participo en un grupo de servicio donde acompaño con Reiki a personas que atraviesan situaciones oncológicas y a sus familiares, brindando un espacio de presencia y bienestar espiritual complementario.',
-              'Mi manera de acompañar comienza con la escucha. Creo que cada persona tiene una historia, necesidades y tiempos diferentes. Por eso, no aplico las mismas herramientas a todos — busco comprender qué está viviendo cada persona y cómo puedo acompañarla desde mi experiencia.',
-            ].map((p, i) => (
-              <motion.p key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)', color: 'var(--color-text-muted)', lineHeight: 1.85 }}>
-                {p}
-              </motion.p>
-            ))}
-          </div>
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '3rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+            {/* Foto */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              style={{ flex: '0 0 clamp(200px, 30vw, 280px)', maxWidth: '280px', margin: '0 auto' }}
+            >
+              <img
+                src="/assets/client1/alenajdra0.webp"
+                alt="Alejandra Cuello"
+                style={{ width: '100%', borderRadius: '1.25rem', border: '1px solid rgba(193,125,26,0.2)', objectFit: 'cover', display: 'block' }}
+              />
+            </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', borderRadius: '0.875rem', border: '1px solid var(--color-gold-border)', background: 'rgba(193,125,26,0.06)', textAlign: 'center' }}>
-            <p style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', color: 'var(--color-gold)', fontStyle: 'italic', lineHeight: 1.5 }}>
-              &ldquo;La transformación comienza cuando nos damos permiso para mirar hacia adentro.&rdquo;
-            </p>
-          </motion.div>
+            {/* Texto */}
+            <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              {[
+                'Mi camino está profundamente conectado con el desarrollo espiritual, el autoconocimiento y la transformación interior. Cuento con 16 años de práctica en las enseñanzas de Metafísica, de los cuales 12 me desempeñé como facilitadora, acompañando a otras personas en su camino espiritual.',
+                'Soy Maestra de Reiki y, a lo largo de mi recorrido, también me formé en Gemoterapia, Biodescodificación, Sincronario Maya y en el abordaje de las heridas de la infancia desde mi formación y experiencia personal.',
+                'Actualmente participo en un grupo de servicio donde acompaño con Reiki a personas que atraviesan situaciones oncológicas y a sus familiares, brindando un espacio de presencia y bienestar espiritual complementario.',
+                'Mi manera de acompañar comienza con la escucha. Creo que cada persona tiene una historia, necesidades y tiempos diferentes. Por eso, no aplico las mismas herramientas a todos — busco comprender qué está viviendo cada persona y cómo puedo acompañarla desde mi experiencia.',
+              ].map((p, i) => (
+                <motion.p key={i} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)', color: 'var(--color-text-muted)', lineHeight: 1.85 }}>
+                  {p}
+                </motion.p>
+              ))}
+
+              <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ marginTop: '0.5rem', padding: '1.5rem 2rem', borderRadius: '0.875rem', border: '1px solid var(--color-gold-border)', background: 'rgba(193,125,26,0.06)', textAlign: 'center' }}>
+                <p style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1rem, 2.5vw, 1.2rem)', color: 'var(--color-gold)', fontStyle: 'italic', lineHeight: 1.5 }}>
+                  &ldquo;La transformación comienza cuando nos damos permiso para mirar hacia adentro.&rdquo;
+                </p>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
