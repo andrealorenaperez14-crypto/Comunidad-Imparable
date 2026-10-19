@@ -160,7 +160,7 @@ export async function healthRoutes(fastify) {
     const { type = 'low_performance', to } = request.body || {}
     const email = to || request.user.email
     const firstName = 'Andrea'
-    const schoolName = 'Escuela de Asesores MPS'
+    const schoolName = 'Academia Comunidad Imparable'
 
     try {
       switch (type) {
@@ -168,7 +168,7 @@ export async function healthRoutes(fastify) {
           await sendLowPerformanceEmailStudent({ email, firstName, schoolName, agentName: 'IA Consultiva', score: 0.42 })
           break
         case 'high_performance':
-          await sendHighPerformanceEmailStudent({ email, firstName, schoolName, agentName: 'IA Coach', score: 0.94 })
+          await sendHighPerformanceEmailStudent({ email, firstName, schoolName, agentName: 'IA Consultiva', score: 0.94 })
           break
         case 'no_login':
           await sendNoLoginWarningEmail({ email, firstName, schoolName, daysSinceLogin: 4 })
@@ -178,8 +178,6 @@ export async function healthRoutes(fastify) {
           break
         case 'weekly':
           await sendWeeklyReportEmail({ email, firstName, schoolName, metrics: [
-            { agentName: 'IA Coach', sessions: 8, completion: 0.85, status: 'EXCELENTE' },
-            { agentName: 'IA Mentalidad', sessions: 3, completion: 0.60, status: 'BUENO' },
             { agentName: 'IA Consultiva', sessions: 12, completion: 0.91, status: 'EXCELENTE' }
           ]})
           break
