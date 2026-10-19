@@ -588,10 +588,17 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
 </section>
 
 <section class="alt" style="padding:5rem 0;">
-  <div class="container">
-    <span class="eyebrow reveal" style="display:block;text-align:center;">Lo que dice la comunidad</span>
-    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;">Personas reales.<br>Resultados reales.</h2>
-    <div class="testimonios-placeholder reveal reveal-delay-2"><p>✦ &nbsp; Los testimonios de nuestra comunidad llegan pronto. &nbsp; ✦</p></div>
+  <div class="container" style="text-align:center;">
+    <span class="eyebrow reveal" style="display:block;text-align:center;">Edición lanzamiento</span>
+    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(1.8rem,3.5vw,3rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;">Sé parte de<br>la primera generación</h2>
+    <p class="reveal reveal-delay-2" style="color:var(--text-soft);max-width:540px;margin:1.2rem auto 0;font-size:0.97rem;line-height:1.75;">Este espacio está reservado para los testimonios de quienes elijan empezar ahora.<br>Los primeros en dar el paso son los que escriben la historia de esta comunidad.</p>
+    <div class="reveal reveal-delay-3" style="margin:3rem auto;max-width:560px;padding:2.2rem 2.5rem;border:1px solid var(--gold-mid);border-radius:8px;background:rgba(193,125,26,0.04);position:relative;">
+      <span style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--bg-card);padding:0 1rem;font-family:'Montserrat',sans-serif;font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);">Tu lugar acá</span>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:300;color:var(--text);line-height:1.5;margin-bottom:1.4rem;">"Decidí empezar sin esperar el momento perfecto. Y fue la mejor decisión."</p>
+      <p style="font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-dim);">Así podría ser tu historia &nbsp;·&nbsp; Octubre 2026</p>
+    </div>
+    <p class="reveal reveal-delay-4" style="color:var(--text-dim);font-size:0.88rem;max-width:480px;margin:0 auto 2.5rem;">Los cupos de la primera edición son limitados.<br>Cuando se llenen, el precio sube y el acceso se cierra.</p>
+    <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary reveal reveal-delay-4" style="display:inline-block;">Quiero ser de los primeros</a>
   </div>
 </section>
 
