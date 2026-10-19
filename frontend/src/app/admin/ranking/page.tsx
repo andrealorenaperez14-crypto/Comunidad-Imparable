@@ -81,22 +81,10 @@ function VitalicioRankingTab() {
             <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>días</p>
           </div>
 
-          {/* Coach */}
-          <div className="w-20 text-center hidden md:block">
-            <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{e.interacciones.COACH}</span>
-            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Coach 20%</p>
-          </div>
-
-          {/* Mentalidad */}
-          <div className="w-20 text-center hidden md:block">
-            <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>{e.interacciones.MENTALIDAD}</span>
-            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Mental 10%</p>
-          </div>
-
           {/* Consultiva */}
           <div className="w-24 text-center hidden md:block">
             <span className="font-semibold text-sm" style={{ color: 'var(--color-gold)' }}>{e.interacciones.CONSULTIVA}</span>
-            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consultiva 70%</p>
+            <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consultiva 100%</p>
           </div>
 
           <div className="w-px h-8 hidden md:block" style={{ background: 'var(--color-separator)' }} />
@@ -304,26 +292,7 @@ export default function AdminRankingPage() {
                 {/* Interacciones por IA + score */}
                 <div className="flex items-center gap-3 flex-shrink-0">
                   {/* Coach 20% */}
-                  <div className="text-center hidden sm:block">
-                    <div className="flex items-center gap-1 justify-center">
-                      <MessageSquare className="w-3 h-3" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
-                      <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>
-                        {s.interacciones?.COACH ?? 0}
-                      </span>
-                    </div>
-                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Coach 20%</p>
-                  </div>
-                  {/* Mentalidad 10% */}
-                  <div className="text-center hidden sm:block">
-                    <div className="flex items-center gap-1 justify-center">
-                      <MessageSquare className="w-3 h-3" style={{ color: 'var(--color-text-muted)' }} strokeWidth={1.5} />
-                      <span className="font-semibold text-sm" style={{ color: 'var(--color-text)' }}>
-                        {s.interacciones?.MENTALIDAD ?? 0}
-                      </span>
-                    </div>
-                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Mental 10%</p>
-                  </div>
-                  {/* Consultiva 70% */}
+                  {/* Consultiva 100% */}
                   <div className="text-center hidden sm:block">
                     <div className="flex items-center gap-1 justify-center">
                       <MessageSquare className="w-3 h-3" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
@@ -331,7 +300,7 @@ export default function AdminRankingPage() {
                         {s.interacciones?.CONSULTIVA ?? 0}
                       </span>
                     </div>
-                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consultiva 70%</p>
+                    <p className="text-xs" style={{ color: 'var(--color-text-muted)' }}>Consultiva 100%</p>
                   </div>
                   {/* Separador */}
                   <div className="w-px h-8 hidden sm:block" style={{ background: 'var(--color-separator)' }} />

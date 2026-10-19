@@ -71,7 +71,7 @@ export function generateCertificatePdf(cert) {
       .fontSize(10)
       .text(`Número de serie: ${cert.serialNumber}`, 0, doc.page.height - 80, { align: 'center' })
 
-    doc.text('Verifique la autenticidad en escueladigital.com/verificar', 0, doc.page.height - 60, { align: 'center' })
+    doc.text('Verifique la autenticidad en comunidadimparable.com/verificar', 0, doc.page.height - 60, { align: 'center' })
 
     doc.end()
   })

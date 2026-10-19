@@ -206,7 +206,7 @@ export async function adminUserRoutes(fastify) {
 
   // Admin ranking — all students sorted by weighted IA interactions
   fastify.get('/ranking', { preHandler: requireAdminOrClient }, async (request, reply) => {
-    const WEIGHTS = { COACH: 0.20, MENTALIDAD: 0.10, CONSULTIVA: 0.70 }
+    const WEIGHTS = { CONSULTIVA: 1.0 }
     const { filter = 'all', page = '1' } = request.query
     const take = 50
     const skip = (parseInt(page) - 1) * take
@@ -242,15 +242,15 @@ export async function adminUserRoutes(fastify) {
     const intersByUser = {}
     for (const i of interactions) {
       const type = i.agent.type.toUpperCase()
-      if (!intersByUser[i.userId]) intersByUser[i.userId] = { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+      if (!intersByUser[i.userId]) intersByUser[i.userId] = { CONSULTIVA: 0 }
       if (type in WEIGHTS) intersByUser[i.userId][type]++
     }
 
     const ranked = students
       .map(s => {
-        const inters = intersByUser[s.id] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
-        const totalInters = inters.COACH + inters.MENTALIDAD + inters.CONSULTIVA
-        const score = inters.CONSULTIVA * WEIGHTS.CONSULTIVA + inters.COACH * WEIGHTS.COACH + inters.MENTALIDAD * WEIGHTS.MENTALIDAD
+        const inters = intersByUser[s.id] || { CONSULTIVA: 0 }
+        const totalInters = inters.CONSULTIVA
+        const score = inters.CONSULTIVA * WEIGHTS.CONSULTIVA
 
         // Alertas deshabilitadas — pendiente para parte paga (Asesor Elite)
         const status = 'BUENO'

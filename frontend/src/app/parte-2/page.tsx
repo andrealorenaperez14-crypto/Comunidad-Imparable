@@ -455,7 +455,7 @@ function Parte2Inner() {
               margin: '0 auto 1.5rem',
             }}
           >
-            El programa que convierte asesores en{' '}
+            El programa que transforma personas en{' '}
             <strong style={{ color: 'var(--color-gold)' }}>Profesionales de Alto Valor</strong>{' '}
             en Desarrollo Personal.
           </motion.p>
@@ -479,7 +479,7 @@ function Parte2Inner() {
               Escalá a +1.000 USD en 30 días
             </p>
             <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)' }}>
-              o seguís como asesor tradicional.
+              o seguís en tu camino actual.
             </p>
           </motion.div>
 
@@ -610,14 +610,14 @@ function Parte2Inner() {
         </div>
       </section>
 
-      {/* ══════════════════ ASESORES VIP ══════════════════ */}
-      <section id="asesores-elite" style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
+      {/* ══════════════════ COMUNIDAD VIP ══════════════════ */}
+      <section id="comunidad-elite" style={{ width: '100%', padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)' }}>
         <div style={{ maxWidth: '520px', margin: '0 auto', textAlign: 'center' }}>
           <motion.h2 {...fadeUp} style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '0.75rem' }}>
-            Asesores ELITE
+            Comunidad ELITE
           </motion.h2>
           <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '2.5rem', lineHeight: 1.7 }}>
-            ¿Listo para llevar tus asesorías al siguiente nivel?<br />
+            ¿Listo para llevar tu desarrollo personal al siguiente nivel?<br />
             La versión avanzada de <strong style={{ color: 'var(--color-gold)' }}>Academia Comunidad Imparable</strong>, llega en julio.
           </motion.p>
 
@@ -856,7 +856,7 @@ function Parte2Inner() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
-              { q: '¿Necesito experiencia previa en ventas?', a: 'No. El programa está diseñado para asesores que están empezando y para los que ya venden pero quieren dar el salto. El programa parte desde cero y se adapta a tu nivel.' },
+              { q: '¿Necesito experiencia previa?', a: 'No. El programa está diseñado para personas que están empezando su camino de desarrollo personal y para las que ya avanzaron pero quieren dar el próximo salto. El programa parte desde cero y se adapta a tu nivel.' },
               { q: '¿Puedo cursarlo mientras trabajo?', a: 'Sí. Los 30 días están organizados para que puedas avanzar a tu ritmo. Además tenés la IA Consultiva disponible 24/7 para consultar en cualquier momento, sin depender de un horario fijo.' },
               { q: '¿Qué pasa después de los 30 días?', a: 'Tu acceso vence automáticamente. No hay cobros ni suspensiones automáticas. Para seguir en la plataforma simplemente renovás por 20 USD/mes desde la misma plataforma — podés hacerlo el mes siguiente o cuando quieras. Cada pago activa 30 días nuevos desde ese momento.' },
               { q: '¿Puedo pagar en cuotas?', a: 'Sí. Mercado Pago acepta tarjeta de crédito con cuotas según tu banco. El monto en pesos se calcula al Dólar MEP del día del pago.' },

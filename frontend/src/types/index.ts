@@ -36,7 +36,7 @@ export interface Subscription {
 
 export interface IAAgent {
   id: string
-  type: 'COACH' | 'MENTALIDAD' | 'CONSULTIVA'
+  type: 'CONSULTIVA' | 'COACH' | 'MENTALIDAD'
   name: string
   description: string
   icon: string
@@ -135,7 +135,7 @@ export interface VitalicioRankingEntry {
   email: string
   dni: string
   daysInApp: number
-  interacciones: { COACH: number; MENTALIDAD: number; CONSULTIVA: number }
+  interacciones: { CONSULTIVA: number; COACH?: number; MENTALIDAD?: number }
   weightedInteractions: number
   score: number
 }
@@ -151,7 +151,7 @@ export interface AdminRankingEntry {
   status: 'EXCELENTE' | 'BUENO' | 'ALERTA'
   habitStreak: number
   isActive: boolean
-  interacciones: { COACH: number; MENTALIDAD: number; CONSULTIVA: number }
+  interacciones: { CONSULTIVA: number; COACH?: number; MENTALIDAD?: number }
 }
 
 export interface CommissionStudentSummary {
