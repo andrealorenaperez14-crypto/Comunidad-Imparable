@@ -1,3 +1,3 @@
 'use client'
-import { AgentChatPage } from '@/components/chat/AgentChatPage'
-export default function IaMentalidadPage() { return <AgentChatPage type="MENTALIDAD" label="IA Mentalidad" /> }
+import { redirect } from 'next/navigation'
+export default function IaMentalidadPage() { redirect('/dashboard/agente-consultiva') }

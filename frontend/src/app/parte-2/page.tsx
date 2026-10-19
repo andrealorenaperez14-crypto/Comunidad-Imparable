@@ -573,51 +573,39 @@ function Parte2Inner() {
             Acompañamiento Inteligente
           </motion.h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
-            {[
-              {
-                icon: <CoachIcon />,
-                title: 'IA Coach',
-                desc: 'Mentoría personalizada. Responde dudas 24/7. Guía paso a paso. Acelera tu aprendizaje.'
-              },
-              {
-                icon: <MentalidadIcon />,
-                title: 'IA Mentalidad',
-                desc: 'Trabaja tus Bloqueos y Miedos. La venta es un estado de Ánimo.'
-              }
-            ].map((ia, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                whileHover={{ y: -5 }}
-                viewport={{ once: true }}
-                style={{
-                  padding: 'clamp(1.5rem,3vw,2rem)',
-                  borderRadius: '0.75rem',
-                  border: '1px solid var(--color-gold-border)',
-                  background: 'rgba(20,20,20,0.8)',
-                  textAlign: 'center'
-                }}
-              >
-                <div style={{
-                  width: '2.75rem', height: '2.75rem',
-                  margin: '0 auto 1rem',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  borderRadius: '0.625rem',
-                  background: 'rgba(196,151,42,0.15)',
-                  color: 'var(--color-gold)'
-                }}>
-                  {ia.icon}
-                </div>
-                <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
-                  {ia.title}
-                </h3>
-                <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
-                  {ia.desc}
-                </p>
-              </motion.div>
-            ))}
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5 }}
+              viewport={{ once: true }}
+              style={{
+                padding: 'clamp(1.5rem,3vw,2rem)',
+                borderRadius: '0.75rem',
+                border: '1px solid var(--color-gold-border)',
+                background: 'rgba(20,20,20,0.8)',
+                textAlign: 'center',
+                maxWidth: '360px',
+                width: '100%'
+              }}
+            >
+              <div style={{
+                width: '2.75rem', height: '2.75rem',
+                margin: '0 auto 1rem',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                borderRadius: '0.625rem',
+                background: 'rgba(196,151,42,0.15)',
+                color: 'var(--color-gold)'
+              }}>
+                <CoachIcon />
+              </div>
+              <h3 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', marginBottom: '0.75rem' }}>
+                IA Consultiva
+              </h3>
+              <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+                Tu asistente de desarrollo personal 24/7. Responde dudas, guía tu proceso y acompaña tu crecimiento.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -834,25 +822,17 @@ function Parte2Inner() {
         <div style={{ maxWidth: '480px', margin: '0 auto' }}>
           <motion.div {...fadeUp}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-              <Image
-                src="/assets/client1/YAMI_MANSILLA.jpeg"
-                alt="Yami Mansilla"
-                width={340}
-                height={340}
-                style={{ objectFit: 'contain', borderRadius: '0.75rem', filter: 'drop-shadow(0 12px 28px rgba(196,151,42,0.3))', width: 'clamp(260px, 55vw, 420px)', height: 'auto' }}
-              />
-            </div>
-            <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '0.4rem' }}>
-              Capacitación de Alto Impacto
+              <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.95rem, 2.5vw, 1.25rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '0.4rem' }}>
+              Formación de Alto Impacto en Desarrollo Personal
             </p>
             <p style={{ fontFamily: 'Georgia, serif', fontSize: 'clamp(0.85rem, 2vw, 1rem)', fontWeight: 700, color: 'var(--color-gold)', fontStyle: 'italic', marginBottom: '1rem' }}>
-              Experiencia que Rompe Todos los Esquemas
+              Transformamos vidas, una persona a la vez
             </p>
             <p style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(0.85rem, 2vw, 1rem)' }}>
-              Yami Mansilla
+              Cintia &amp; Alejandra
             </p>
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
-              CEO & Fundadora | Escuela de Asesores en el Rubro Salud
+              Cofundadoras | Academia Comunidad Imparable
             </p>
           </motion.div>
         </div>
@@ -877,10 +857,10 @@ function Parte2Inner() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
               { q: '¿Necesito experiencia previa en ventas?', a: 'No. El programa está diseñado para asesores que están empezando y para los que ya venden pero quieren dar el salto. El método de Yami Mansilla parte desde cero y se adapta a tu nivel.' },
-              { q: '¿Puedo cursarlo mientras trabajo?', a: 'Sí. Los 30 días están organizados para que puedas avanzar a tu ritmo. Además tenés las 3 IAs disponibles 24/7 para consultar en cualquier momento, sin depender de un horario fijo.' },
+              { q: '¿Puedo cursarlo mientras trabajo?', a: 'Sí. Los 30 días están organizados para que puedas avanzar a tu ritmo. Además tenés la IA Consultiva disponible 24/7 para consultar en cualquier momento, sin depender de un horario fijo.' },
               { q: '¿Qué pasa después de los 30 días?', a: 'Tu acceso vence automáticamente. No hay cobros ni suspensiones automáticas. Para seguir en la plataforma simplemente renovás por 20 USD/mes desde la misma plataforma — podés hacerlo el mes siguiente o cuando quieras. Cada pago activa 30 días nuevos desde ese momento.' },
               { q: '¿Puedo pagar en cuotas?', a: 'Sí. Mercado Pago acepta tarjeta de crédito con cuotas según tu banco. El monto en pesos se calcula al Dólar MEP del día del pago.' },
-              { q: '¿Para qué sirve la renovación de 20 USD/mes?', a: 'Para continuar con acceso a la plataforma, las 3 IAs coaches y el Club VIP ORO una vez que vencen tus 30 días. No es un débito automático: vos elegís cuándo pagar. Si no renovás, tu cuenta queda pausada y podés volver en cualquier momento pagando la renovación.' },
+              { q: '¿Para qué sirve la renovación de 20 USD/mes?', a: 'Para continuar con acceso a la plataforma, la IA Consultiva y el Club VIP ORO una vez que vencen tus 30 días. No es un débito automático: vos elegís cuándo pagar. Si no renovás, tu cuenta queda pausada y podés volver en cualquier momento pagando la renovación.' },
               { q: '¿La certificación es reconocida internacionalmente?', a: 'Sí. Al completar el módulo 15 recibís la Certificación Internacional en Neuroventas aplicadas al Consumidor de Salud, avalada por el método de Yami Mansilla con más de 13 años de trayectoria y +1.000 asesores formados.' },
             ].map((f, i) => (
               <FaqItem key={i} q={f.q} a={f.a} />
@@ -912,7 +892,7 @@ function Parte2Inner() {
           </a>
         </div>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>
-          © 2026 Escuela de Asesores en el Rubro Salud | Formamos Líderes, No Vendedores
+          © 2026 Academia Comunidad Imparable | Transformamos vidas a través del Desarrollo Personal
         </p>
         <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
           Desarrollado por: <a href="https://crm-ia-hazel.vercel.app/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>IA Núcleo Estratégico</a>

@@ -97,9 +97,7 @@ function RenewalButton({ daysRemaining }: { daysRemaining: number }) {
 }
 
 const agentCards = [
-  { href: '/dashboard/agente-consultivo', type: 'COACH',      icon: <Brain      className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Coach',      description: 'Acompaña tu aprendizaje 24/7' },
-  { href: '/dashboard/agente-mentor',     type: 'MENTALIDAD', icon: <Target     className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Mentalidad', description: 'Trabaja tus bloqueos y miedos' },
-  { href: '/dashboard/agente-consultiva', type: 'CONSULTIVA', icon: <TrendingUp className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Consultiva', description: 'Te asiste en cada venta y cierre' },
+  { href: '/dashboard/agente-consultiva', type: 'CONSULTIVA', icon: <Brain className="w-7 h-7" strokeWidth={1.5} />, name: 'IA Consultiva', description: 'Tu asistente de desarrollo personal 24/7' },
 ]
 
 export default function DashboardPage() {
@@ -148,7 +146,7 @@ export default function DashboardPage() {
                 <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>1</span>
                 <div>
                   <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Período gratuito — 5 días</p>
-                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Acceso completo a la plataforma y las 3 IAs. Sin tarjeta.</p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Acceso completo a la plataforma y la IA Consultiva. Sin tarjeta.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -274,7 +272,7 @@ export default function DashboardPage() {
                   style={{ background: 'rgba(245,240,232,0.05)', color: '#F5F0E8', border: '1px solid rgba(245,240,232,0.25)', textDecoration: 'none' }}
                 >
                   <MessageCircle className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
-                  WhatsApp — Escuela de Asesores
+                  WhatsApp — Comunidad Imparable
                 </a>
               </div>
             )}
@@ -290,7 +288,7 @@ export default function DashboardPage() {
             <div>
               <p className="font-medium" style={{ color: 'var(--color-gold)' }}>Atención requerida</p>
               <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
-                Tu rendimiento en algunos agentes necesita atención. Consulta con tu IA Mentalidad para mejorar.
+                Tu rendimiento necesita atención. Consulta con la IA Consultiva para mejorar.
               </p>
             </div>
           </div>
@@ -310,7 +308,7 @@ export default function DashboardPage() {
       {/* IA Agents */}
       <section className="overflow-hidden">
         <h2 className="text-lg font-semibold" style={{ color: 'var(--color-text)' }}>Mis Agentes IA</h2>
-        <div className="card-grid card-grid-3">
+        <div className="card-grid card-grid-1">
           {agentCards.map((card) => {
             const agentMetric = metrics.find(m => m.agent?.type === card.type)
             return (
