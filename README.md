@@ -1,20 +1,23 @@
-# Escuela Digital Elite — MVP
+# Academia Comunidad Imparable
 
-Plataforma SaaS educativa multitenant con agentes IA duales para profesionales latinoamericanos.
+Plataforma digital de formación en desarrollo personal. By Cintia Paolucci & Alejandra Cuello.
 
-## Stack Tecnológico
+- **Landing**: https://comunidad-imparables.vercel.app
+- **App**: https://comunidad-imparables.vercel.app/login
+
+---
+
+## Stack
 
 | Componente | Tecnología | Hosting |
 |-----------|-----------|---------|
-| Frontend | Next.js 15 + Tailwind CSS 4 + Framer Motion | Vercel (free) |
-| Backend | Node.js + Fastify | Render (free) |
-| Base de datos | PostgreSQL vía Supabase | Supabase (free 500MB) |
+| Frontend | Next.js 15 + Tailwind CSS 4 + Framer Motion | Vercel |
+| Backend | Node.js + Fastify | Render |
+| Base de datos | PostgreSQL vía Supabase | Supabase |
 | ORM | Prisma | — |
-| Cache | Redis | Render Redis (free) |
-| Emails | Resend | Free tier |
-| Monitoreo | Sentry | Free tier |
-
-**Costo total: $0/mes**
+| Cache / Blacklist JWT | Redis | Render Redis |
+| Emails | Gmail / Nodemailer | — |
+| Pagos | MercadoPago | — |
 
 ---
 
@@ -23,19 +26,16 @@ Plataforma SaaS educativa multitenant con agentes IA duales para profesionales l
 ### Requisitos
 - Node.js 20+
 - Docker + Docker Compose
-- Git
 
 ### 1. Clonar y configurar variables
 
 ```bash
-git clone <tu-repo>
-cd MiNuevoProyecto
+git clone <repo>
+cd Comunidad-Imparable
 
-# Backend
 cp backend/.env.example backend/.env
 # Editar backend/.env con tus claves
 
-# Frontend
 cp frontend/.env.local.example frontend/.env.local
 ```
 
@@ -54,62 +54,43 @@ npx prisma migrate dev --name init
 npx prisma db seed
 ```
 
-### 4. Iniciar en modo desarrollo
+### 4. Modo desarrollo
 
-**Backend:**
 ```bash
-cd backend
-npm run dev
-# Disponible en http://localhost:3001
-```
+# Backend (http://localhost:3001)
+cd backend && npm run dev
 
-**Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-# Disponible en http://localhost:3000
+# Frontend (http://localhost:3000)
+cd frontend && npm run dev
 ```
 
 ---
 
-## Credenciales de Prueba
-
-| Rol | Email | Contraseña |
-|-----|-------|-----------|
-| Admin | admin@escueladigital.com | Admin123! |
-| Estudiante | maria@ejemplo.com | Student123! |
-
----
-
-## Estructura del Proyecto
+## Estructura
 
 ```
-MiNuevoProyecto/
-├── backend/               # API Fastify
+Comunidad-Imparable/
+├── backend/
 │   ├── src/
-│   │   ├── routes/        # Endpoints REST
-│   │   ├── services/      # Lógica de negocio
-│   │   ├── plugins/       # Plugins Fastify
-│   │   ├── middleware/    # Auth + Tenant
-│   │   ├── utils/         # Encriptación, validadores
+│   │   ├── routes/        # Auth, pagos, IA, admin
+│   │   ├── services/      # iaRouter, email, ranking, certificates
+│   │   ├── plugins/       # Fastify plugins (auth, multipart)
+│   │   ├── middleware/    # Auth JWT + tenant
 │   │   └── cron/          # Jobs automáticos
-│   └── prisma/            # Schema + Migrations + Seed
-├── frontend/              # Next.js 15
-│   └── src/
-│       ├── app/           # App Router pages
-│       ├── components/    # Componentes reutilizables
-│       ├── hooks/         # Custom hooks
-│       ├── lib/           # API client, utils
-│       ├── store/         # Zustand state
-│       └── types/         # TypeScript types
-├── .github/workflows/     # CI/CD
-└── docker-compose.yml     # Dev local
+│   └── prisma/            # Schema + migrations + seed
+└── frontend/
+    └── src/
+        ├── app/           # App Router (dashboard, admin, landing)
+        ├── components/    # UI reutilizable
+        ├── hooks/         # Custom hooks
+        ├── lib/           # API client, utils
+        ├── store/         # Zustand
+        └── types/         # TypeScript
 ```
 
 ---
 
-## API Endpoints
+## API — Endpoints principales
 
 ### Auth
 | Método | Endpoint | Descripción |
@@ -119,105 +100,93 @@ MiNuevoProyecto/
 | POST | /api/auth/logout | Cerrar sesión |
 | POST | /api/auth/refresh | Refrescar token |
 | GET | /api/auth/me | Usuario actual |
+| POST | /api/auth/forgot-password | Recuperar contraseña |
 
-### Suscripciones
+### Pagos
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| GET | /api/subscription/status | Estado actual |
-| POST | /api/subscription/upgrade | Actualizar plan |
-| POST | /api/subscription/cancel | Cancelar |
-| GET | /api/subscription/history | Historial |
+| POST | /api/payments/vip/create | Iniciar pago VIP (USD 20) |
+| POST | /api/payments/renewal/create | Iniciar renovación (USD 20/mes) |
+| POST | /api/payments/webhook | Webhook MercadoPago |
 
-### Agentes IA (Estudiante)
+### IA Consultiva
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| POST | /api/agents/:id/chat | Chat con agente |
-| GET | /api/agents/:id/metrics | Métricas personales |
-| GET | /api/agents/:id/reports | Reportes |
+| GET | /api/ia/agents | Listar agentes del cliente |
+| POST | /api/ia/agents/:id/chat | Chat con IA Consultiva |
+| GET | /api/ia/agents/:id/metrics | Métricas del usuario |
 
-### Admin Agentes
+### Admin
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
-| GET | /api/admin/agents | Listar agentes |
-| POST | /api/admin/agents | Crear agente |
-| PUT | /api/admin/agents/:id | Actualizar |
-| POST | /api/admin/agents/:id/knowledge | Subir base conocimiento |
-| GET | /api/admin/agents/:id/interactions | Ver interacciones |
-| POST | /api/admin/agents/:id/publish | Publicar/despublicar |
+| GET | /api/admin/users | Listar alumnos |
+| POST | /api/admin/users/:id/activate | Activar plan (30d o vitalicio) |
+| GET | /api/admin/ranking | Ranking de alumnos |
+| GET | /api/admin/metricas | Métricas globales |
 
 ---
 
-## Despliegue Producción
-
-### Backend → Render
-
-1. Conectar repositorio GitHub en [render.com](https://render.com)
-2. Usar configuración de `backend/render.yaml`
-3. Configurar variables de entorno secretas
-4. Deploy automático en cada push a `main`
-
-### Frontend → Vercel
-
-1. Conectar repositorio en [vercel.com](https://vercel.com)
-2. Root directory: `frontend`
-3. Configurar `NEXT_PUBLIC_API_URL` con la URL del backend
-4. Deploy automático en cada push a `main`
-
-### Base de datos → Supabase
-
-1. Crear proyecto en [supabase.com](https://supabase.com)
-2. Copiar connection string
-3. Configurar `DATABASE_URL` en Render
-
----
-
-## Variables de Entorno Requeridas (Backend)
+## Variables de entorno (Backend)
 
 | Variable | Descripción |
 |----------|-------------|
-| DATABASE_URL | PostgreSQL connection string |
-| REDIS_URL | Redis connection string |
-| JWT_SECRET | Secreto JWT (mín. 32 chars) |
-| JWT_REFRESH_SECRET | Secreto refresh token |
-| RESEND_API_KEY | Clave API de Resend |
-| ENCRYPTION_KEY | Clave AES-256 (exactamente 32 chars) |
-| GEMINI_API_KEY | Google Gemini API key |
-| ANTHROPIC_API_KEY | Anthropic Claude API key |
-| OPENAI_API_KEY | OpenAI API key (fallback) |
-| CORS_ORIGIN | URL del frontend |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `REDIS_URL` | Redis connection string |
+| `JWT_SECRET` | Secreto JWT (mín. 32 chars) |
+| `JWT_REFRESH_SECRET` | Secreto refresh token |
+| `ENCRYPTION_KEY` | Clave AES-256 (exactamente 32 chars) |
+| `GROQ_API_KEY` | Groq (IA principal) |
+| `ANTHROPIC_API_KEY` | Claude (fallback IA) |
+| `OPENAI_API_KEY` | OpenAI (fallback IA) |
+| `MP_ACCESS_TOKEN` | MercadoPago access token |
+| `MP_WEBHOOK_SECRET` | Secreto HMAC webhook MP |
+| `GMAIL_USER` | Gmail sender |
+| `GMAIL_APP_PASSWORD` | Gmail app password |
+| `CORS_ORIGIN` | URL del frontend |
+| `RECAPTCHA_SECRET_KEY` | Google reCAPTCHA v2 |
 
 ---
 
-## Testing
+## IA Consultiva — Pipeline
 
-```bash
-cd backend
-npm test              # Ejecutar tests
-npm run test:coverage # Con cobertura
+```
+Groq → Gemini (backupApiKey del agente) → Claude (primaryApiKey del agente) → OpenAI → fallback local
 ```
 
+- Modo: **tradicional** — carga todos los documentos como contexto plano (sin RAG)
+- Groq recibe solo los primeros 5 chunks por límite de TPM
+- Límites: STUDENT = 15 consultas/día; CLIENT/ADMIN = sin límite
+
 ---
 
-## Cron Jobs Automáticos
+## Roles
+
+| Rol | Acceso |
+|-----|--------|
+| `STUDENT` | Dashboard + IA (15 consultas/día) |
+| `CLIENT` | Sin límite diario, sin check suscripción |
+| `ADMIN` | Todo + panel de administración |
+
+---
+
+## Cron Jobs
 
 | Horario | Tarea |
 |---------|-------|
-| 00:00 diario | Recalcular ranking top 10 |
-| 06:00 diario | Verificar suscripciones y enviar alertas |
-| 08:00 diario | Alertas de inactividad (3 días sin login) |
-| 22:00 diario | Alertas de rendimiento alto/bajo |
-| 09:00 lunes | Reportes semanales a estudiantes |
+| 00:00 diario | Recalcular ranking |
+| 06:00 diario | Verificar suscripciones |
+| 08:00 diario | Alertas de inactividad |
+| 09:00 lunes | Reportes semanales |
 
 ---
 
-## Arquitectura Multitenant
+## Despliegue producción
 
-- Cada cliente (escuela) tiene su propio `clientId`
-- Todos los modelos filtran por `clientId`
-- Agentes IA configurados por cliente
-- Branding y settings personalizables por cliente
-- Agregar nuevo cliente: 30-60 minutos
+Push a `main` → Vercel (frontend) y Render (backend) despliegan automáticamente.
 
----
-
-**Go-live: 17/5/2026** 🚀
+```bash
+# Flujo Claude Code
+git checkout main
+git cherry-pick <hash>
+git push origin main
+```
