@@ -91,8 +91,16 @@ export function startCronJobs(fastify) {
           create: { dni: user.dni, email: user.email, nombreCompleto, whatsapp: '' }
         })
 
-        // Eliminar usuario (cascada borra subscriptions, métricas, interacciones)
-        await prisma.user.delete({ where: { id: user.id } })
+        // Eliminar relaciones antes del usuario (no todas tienen onDelete: Cascade en schema)
+        await prisma.$transaction([
+          prisma.iAInteraction.deleteMany({ where: { userId: user.id } }),
+          prisma.iAMetric.deleteMany({ where: { userId: user.id } }),
+          prisma.certificate.deleteMany({ where: { userId: user.id } }),
+          prisma.saleCommission.deleteMany({ where: { userId: user.id } }),
+          prisma.subscription.deleteMany({ where: { userId: user.id } }),
+          prisma.profile.deleteMany({ where: { userId: user.id } }),
+          prisma.user.delete({ where: { id: user.id } })
+        ])
 
         fastify.log.info({ dni: user.dni }, 'Usuario archivado y eliminado')
       }
