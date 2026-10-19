@@ -22,7 +22,11 @@ Todo elemento visual del frontend de la app SIEMPRE usa esta gama:
 - **Fondos**: negro `#0C0C0C` / `rgba(20,20,20,...)` / `var(--color-bg)` / `var(--color-bg-card)`
 - **Texto**: `var(--color-text)` / `var(--color-text-muted)`
 - **Bordes**: `var(--color-gold-border)` / `rgba(196,151,42,0.2)`
-- **Tipografía**: Tailwind defaults (Inter / sistema) — sin fuentes decorativas
+- **Tipografía app** (vía `next/font/google`, CSS vars definidas en `globals.css`):
+  - `Cinzel` → `var(--font-display)` — títulos, display (weights 400/600/700)
+  - `DM Sans` → `var(--font-body)` — body copy
+  - `Great Vibes` → `var(--font-script)` — decorativa
+- **Oro real en globals.css**: `#C4972A` (ligeramente distinto al `#EAB308` de Tailwind — usar `var(--color-gold)` para consistencia)
 - **PROHIBIDO** verde, azul, rojo, púrpura externo. Sin excepciones.
 
 ### Sistema B — Landing page (`/` y `/parte-2`)
