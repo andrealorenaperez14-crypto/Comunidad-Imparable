@@ -14,13 +14,30 @@ git push origin main
 ```
 La branch `claude/...` queda suelta en remoto — borrarla manualmente en GitHub (Branches → ícono basura). No afecta producción.
 
-## Branding — colores (REGLA ABSOLUTA)
-Todo elemento visual que se agregue al frontend SIEMPRE debe usar la gama del branding:
-- **Primario**: oro `#EAB308` / `#CA8A04` / `rgba(196,151,42,...)` / `var(--color-gold)`
+## Branding — dos sistemas (REGLA ABSOLUTA)
+
+### Sistema A — App / Panel admin / Dashboard
+Todo elemento visual del frontend de la app SIEMPRE usa esta gama:
+- **Oro primario**: `#EAB308` / `#CA8A04` / `rgba(196,151,42,...)` / `var(--color-gold)`
 - **Fondos**: negro `#0C0C0C` / `rgba(20,20,20,...)` / `var(--color-bg)` / `var(--color-bg-card)`
 - **Texto**: `var(--color-text)` / `var(--color-text-muted)`
 - **Bordes**: `var(--color-gold-border)` / `rgba(196,151,42,0.2)`
-- **PROHIBIDO** agregar colores externos: verde, azul, rojo, púrpura, o cualquier color que no sea de la gama oro/negro/blanco. Sin excepciones.
+- **Tipografía**: Tailwind defaults (Inter / sistema) — sin fuentes decorativas
+- **PROHIBIDO** verde, azul, rojo, púrpura externo. Sin excepciones.
+
+### Sistema B — Landing page (`/` y `/parte-2`)
+La landing usa su propio sistema de diseño definido en `frontend/src/app/route.ts`:
+- **Fondo principal**: `#160D28` (púrpura oscuro)
+- **Fondo card**: `#1F1238` / alt `#2B1B3D` / light `#3A2254`
+- **Oro landing**: `#C17D1A` (más cálido/oscuro que el del panel)
+  - dim: `rgba(193,125,26,0.12)` / mid: `rgba(193,125,26,0.35)` / glow: `rgba(193,125,26,0.08)`
+- **Texto**: `#FAF8F5` / soft `rgba(250,248,245,0.72)` / dim `rgba(250,248,245,0.45)`
+- **Tipografía landing**:
+  - `Cormorant Garamond` — títulos, display, nombres (serif elegante, weights 300/400/600, itálica)
+  - `Montserrat` — eyebrows, labels, caps, botones (weights 400/500/600/700)
+  - `DM Sans` — body copy (weights 300/400/500)
+  - `Great Vibes` — decorativa (disponible, uso puntual)
+- Al modificar la landing respetar ESTE sistema, no mezclar con el Sistema A.
 
 ## Skills Activos
 - consejero: análisis adversarial. Activar con: `Usar skill consejero para [consulta]`
