@@ -137,7 +137,7 @@ export async function paymentRoutes(fastify) {
         },
         auto_return:          'approved',
         notification_url:     `${BACKEND_URL}/api/payments/webhook`,
-        statement_descriptor: 'ESCUELA ASESORES'
+        statement_descriptor: 'COMUNIDAD IMPARABLE'
       }
     })
 

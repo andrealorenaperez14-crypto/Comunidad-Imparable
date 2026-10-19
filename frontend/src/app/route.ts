@@ -158,7 +158,7 @@ section.alt2 { background: var(--bg-alt); }
 .promesa-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(1.5rem,2.8vw,2.3rem); font-style:italic; font-weight:400; text-align:center; margin-top:4rem; color:var(--text); line-height:1.35; max-width:700px; margin-inline:auto; }
 .promesa-quote strong { color:var(--gold); font-style:normal; }
 .incluye-heading { font-size:clamp(2rem,4vw,3.5rem); letter-spacing:0.05em; text-align:center; margin-bottom:0.5rem; text-transform:uppercase; }
-.incluye-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-top:3.5rem; }
+.incluye-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3.5rem; }
 .incluye-card { padding:2.2rem 2rem; border:1px solid var(--gold-dim); border-radius:var(--radius); background:var(--bg); position:relative; overflow:hidden; transition:border-color 0.3s; }
 .incluye-card:hover { border-color:var(--gold-mid); }
 .incluye-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:0; transition:opacity 0.3s; }
@@ -376,16 +376,15 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
 
 <section class="alt" id="academia">
   <div class="container">
-    <span class="eyebrow reveal" style="text-align:center;display:block;">La Academia Digital</span>
-    <h2 class="display incluye-heading reveal reveal-delay-1">Tu espacio de transformación</h2>
-    <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:560px;margin:0 auto;">Dentro de Comunidad Imparables encontrás un proceso integral diseñado para que nunca más estés sola/o en tu camino.</p>
+    <span class="eyebrow reveal" style="text-align:center;display:block;">El Método</span>
+    <h2 class="display incluye-heading reveal reveal-delay-1">MÉTODO RAÍZ</h2>
+    <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:580px;margin:0 auto;">Un proceso de tres módulos diseñado para trabajar de adentro hacia afuera — porque el cambio real empieza en la raíz.</p>
     <div class="incluye-grid">
-      <div class="incluye-card reveal reveal-delay-1"><span class="incluye-mark">◆ I</span><h3 class="incluye-title">Clases semanales con Alejandra</h3><p class="incluye-desc">Espiritualidad, sanación desde la raíz, expansión de consciencia y propósito de vida. Para ir más profundo — al origen de tus patrones y bloqueos.</p><span class="incluye-tag">Semanal · Grabadas</span></div>
-      <div class="incluye-card reveal reveal-delay-2"><span class="incluye-mark">◆ II</span><h3 class="incluye-title">Clases semanales con Cintia</h3><p class="incluye-desc">Mentalidad, identidad, marca personal y acción concreta. Para transformar lo que aprendés adentro en resultados reales afuera — en tu negocio y en tu vida.</p><span class="incluye-tag">Semanal · Grabadas</span></div>
-      <div class="incluye-card reveal reveal-delay-3" style="border-color:var(--gold-mid);"><span class="incluye-mark">◆ III</span><h3 class="incluye-title">Mentoría grupal en vivo</h3><p class="incluye-desc">Una vez por semana, en vivo, para trabajar en tiempo real los bloqueos, las dudas y los próximos pasos. Acompañamiento real, no contenido pregrabado.</p><span class="incluye-tag" style="background:var(--gold-dim);border-color:var(--gold);">✦ Miércoles en vivo · Grabada</span></div>
-      <div class="incluye-card reveal reveal-delay-4"><span class="incluye-mark">◆ IV</span><h3 class="incluye-title">Comunidad que te sostiene</h3><p class="incluye-desc">Un espacio donde celebramos tus avances como propios. Porque acá somos espejo — y crecer rodeada/o de personas que también crecen lo cambia todo.</p><span class="incluye-tag">Siempre activa</span></div>
+      <div class="incluye-card reveal reveal-delay-1"><span class="incluye-mark">◆ I</span><h3 class="incluye-title">Reconocer y Sanar</h3><p class="incluye-desc">Trabajo interior profundo. Espiritualidad, sanación desde la raíz, expansión de consciencia y propósito de vida. Para ir al origen de tus patrones y bloqueos y liberarlos.</p><span class="incluye-tag">Con Alejandra · Semanal · Grabadas</span></div>
+      <div class="incluye-card reveal reveal-delay-2"><span class="incluye-mark">◆ II</span><h3 class="incluye-title">Activando tu Potencial</h3><p class="incluye-desc">Transformación exterior. Mentalidad, identidad, marca personal y acción concreta. Para convertir lo que sanás adentro en resultados reales afuera — en tu vida y tu negocio.</p><span class="incluye-tag">Con Cintia · Semanal · Grabadas</span></div>
+      <div class="incluye-card reveal reveal-delay-3" style="border-color:var(--gold-mid);"><span class="incluye-mark">◆ III</span><h3 class="incluye-title">Acción y Práctica</h3><p class="incluye-desc">La integración en tiempo real. Mentoría grupal en vivo cada miércoles para aplicar los módulos, resolver bloqueos y avanzar acompañada/o por la comunidad.</p><span class="incluye-tag" style="background:var(--gold-dim);border-color:var(--gold);">✦ Miércoles en vivo · Grabada</span></div>
     </div>
-    <div class="grabado-note reveal"><span class="grabado-note-mark">∞</span><span>Todo el contenido — clases y mentorías — queda grabado y disponible dentro de la academia digital para que puedas verlo cuando quieras, a tu ritmo.</span></div>
+    <div class="grabado-note reveal"><span class="grabado-note-mark">∞</span><span>Todo el contenido de los tres módulos queda grabado y disponible dentro de la academia digital para que puedas verlo cuando quieras, a tu ritmo.</span></div>
     <div class="horarios reveal">
       <div style="width:100%;text-align:center;"><span style="font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);">Mentoría en vivo — cada miércoles</span></div>
       <div class="horario-item">

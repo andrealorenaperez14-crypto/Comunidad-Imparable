@@ -14,10 +14,10 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/api'
 
 const studentNavBase = [
+  { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' },
   { href: '/dashboard', icon: LayoutDashboard, label: 'Mi Dashboard' },
   { href: '/dashboard/agente-consultiva', icon: Brain, label: 'IA Consultiva' },
   { href: '/dashboard/ranking', icon: Trophy, label: 'Ranking' },
-  { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' }
 ]
 
 const adminNav = [
@@ -49,7 +49,7 @@ export function Sidebar() {
   const pathname   = usePathname()
   const { user, logout, isAdmin, isClient } = useAuth()
   const [mobileOpen, setMobileOpen]   = useState(false)
-  const [cursoOpen, setCursoOpen]     = useState(pathname.startsWith('/dashboard/curso'))
+  const [cursoOpen, setCursoOpen]     = useState(true)
 
   const isStudentArea = !isAdmin && !isClient
 
