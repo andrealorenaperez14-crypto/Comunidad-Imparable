@@ -18,7 +18,7 @@ async function main() {
     where: { domain: 'escueladigital.com' },
     update: {},
     create: {
-      name: 'Escuela de Asesores',
+      name: 'Academia Comunidad Imparable',
       domain: 'escueladigital.com',
       branding: {
         primaryColor: '#C4972A',
@@ -36,7 +36,7 @@ async function main() {
         actualiza_ranking: 'daily',
         X_ranking: 10,
         base_ingreso: 70,
-        nombre_escuela: 'Escuela de Asesores'
+        nombre_escuela: 'Academia Comunidad Imparable'
       },
       subscriptionStatus: 'ACTIVE'
     }
@@ -93,8 +93,6 @@ async function main() {
     return (end === -1 ? content : content.slice(0, end)).trim()
   }
 
-  const coachTxt = readFileSync(join(__dirname, '../../docs/prompt-ia-coach.txt'), 'utf8')
-  const mentalidadTxt = readFileSync(join(__dirname, '../../docs/prompt-ia-mentalidad.txt'), 'utf8')
   const consultivaTxt = readFileSync(join(__dirname, '../../docs/prompt-ia-consultiva.txt'), 'utf8')
 
   const SYSTEM_MARKER = 'SYSTEM PROMPT'
@@ -120,63 +118,9 @@ async function main() {
     return { systemPrompt: systemClean, instructions: instrClean }
   }
 
-  const coachPrompts = parsePromptFile(coachTxt)
-  const mentalidadPrompts = parsePromptFile(mentalidadTxt)
   const consultivaPrompts = parsePromptFile(consultivaTxt)
 
-  // Agente COACH — pipeline: Claude(primary) → Gemini(backup) → OpenAI
-  const consultivo = await prisma.iAAgent.upsert({
-    where: { clientId_type: { clientId: client.id, type: 'COACH' } },
-    update: {
-      systemPrompt: coachPrompts.systemPrompt,
-      instructions: coachPrompts.instructions,
-      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
-      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
-    },
-    create: {
-      clientId: client.id,
-      type: 'COACH',
-      name: 'IA Coach',
-      description: 'Acompaña tu proceso de aprendizaje 24/7',
-      icon: '🔍',
-      systemPrompt: coachPrompts.systemPrompt,
-      instructions: coachPrompts.instructions,
-      knowledgeBase: '[]',
-      metricsConfig: { alertThresholdLow: 0.6, alertThresholdHigh: 0.9, reportingSchedule: 'weekly' },
-      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
-      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
-      published: true,
-      publishedDate: new Date()
-    }
-  })
-
-  // Agente MENTALIDAD — pipeline: Claude(primary) → Gemini(backup) → OpenAI
-  const mentor = await prisma.iAAgent.upsert({
-    where: { clientId_type: { clientId: client.id, type: 'MENTALIDAD' } },
-    update: {
-      systemPrompt: mentalidadPrompts.systemPrompt,
-      instructions: mentalidadPrompts.instructions,
-      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
-      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder')
-    },
-    create: {
-      clientId: client.id,
-      type: 'MENTALIDAD',
-      name: 'IA Mentalidad',
-      description: 'Trabaja tus miedos y bloqueos personales',
-      icon: '🎯',
-      systemPrompt: mentalidadPrompts.systemPrompt,
-      instructions: mentalidadPrompts.instructions,
-      knowledgeBase: '[]',
-      metricsConfig: { alertThresholdLow: 0.6, alertThresholdHigh: 0.9, reportingSchedule: 'weekly' },
-      primaryApiKey: encrypt(process.env.ANTHROPIC_API_KEY || 'placeholder'),
-      backupApiKey: encrypt(process.env.GEMINI_API_KEY || 'placeholder'),
-      published: true,
-      publishedDate: new Date()
-    }
-  })
-
-  // Agente CONSULTIVA (NOVA) — pipeline: Claude(primary) → Gemini(backup) → OpenAI
+  // Agente CONSULTIVA — pipeline: Groq → Gemini(backup) → Claude(primary) → OpenAI
   const consultiva = await prisma.iAAgent.upsert({
     where: { clientId_type: { clientId: client.id, type: 'CONSULTIVA' } },
     update: {
@@ -189,7 +133,7 @@ async function main() {
       clientId: client.id,
       type: 'CONSULTIVA',
       name: 'IA Consultiva',
-      description: 'Consultora experta en obras sociales y prepagas',
+      description: 'Tu asistente de desarrollo personal 24/7',
       icon: '📊',
       systemPrompt: consultivaPrompts.systemPrompt,
       instructions: consultivaPrompts.instructions,
@@ -230,7 +174,7 @@ async function main() {
     console.warn('⚠️  No se pudo cargar knowledge-base:', err.message)
   }
 
-  console.log('✅ Agentes IA creados:', consultivo.name, '|', mentor.name, '|', consultiva.name)
+  console.log('✅ Agente IA creado:', consultiva.name)
 
   // Contenido del curso
   await prisma.courseContent.createMany({
@@ -297,7 +241,7 @@ async function main() {
       }
     })
 
-    for (const agent of [consultivo, mentor, consultiva]) {
+    for (const agent of [consultiva]) {
       await prisma.iAMetric.upsert({
         where: { agentId_userId: { agentId: agent.id, userId: user.id } },
         update: {},

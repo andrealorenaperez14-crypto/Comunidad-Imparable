@@ -15,9 +15,7 @@ import { api } from '@/lib/api'
 
 const studentNavBase = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Mi Dashboard' },
-  { href: '/dashboard/agente-consultivo', icon: Brain, label: 'IA Coach' },
-  { href: '/dashboard/agente-mentor', icon: Target, label: 'IA Mentalidad' },
-  { href: '/dashboard/agente-consultiva', icon: TrendingUp, label: 'IA Consultiva' },
+  { href: '/dashboard/agente-consultiva', icon: Brain, label: 'IA Consultiva' },
   { href: '/dashboard/ranking', icon: Trophy, label: 'Ranking' },
   { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' }
 ]
@@ -44,9 +42,7 @@ const clientNav = [
   { href: '/admin/metricas', icon: BarChart2, label: 'Métricas' },
   { href: '/admin/registros', icon: ClipboardList, label: 'Registros' },
   { href: '/dashboard/curso', icon: BookOpen, label: 'Mi Curso' },
-  { href: '/dashboard/agente-consultivo', icon: Brain, label: 'IA Coach' },
-  { href: '/dashboard/agente-mentor', icon: Target, label: 'IA Mentalidad' },
-  { href: '/dashboard/agente-consultiva', icon: TrendingUp, label: 'IA Consultiva' }
+  { href: '/dashboard/agente-consultiva', icon: Brain, label: 'IA Consultiva' }
 ]
 
 export function Sidebar() {
@@ -83,10 +79,10 @@ export function Sidebar() {
         <div className="flex items-center gap-3">
           <div>
             <p className="font-semibold text-sm" style={{ color: 'var(--color-text)', letterSpacing: '0.08em' }}>
-              Escuela de Asesores Elite for MPS
+              Academia Comunidad Imparable
             </p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--color-gold)' }}>
-              By Yami Mansilla
+              Cintia & Alejandra
             </p>
           </div>
         </div>

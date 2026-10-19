@@ -82,7 +82,7 @@ export default function ExpiredPage() {
           <p className="text-lg" style={{ color: 'var(--color-text)' }}>
             {isPaidExpired
               ? 'Renová tu membresía para seguir en la plataforma.'
-              : 'Esperamos que hayas descubierto todo tu potencial como asesor.'
+              : 'Esperamos que hayas dado los primeros pasos en tu desarrollo personal.'
             }
           </p>
           <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
@@ -176,10 +176,10 @@ export default function ExpiredPage() {
             </div>
             <div>
               <p className="font-bold text-base" style={{ color: 'var(--color-text)' }}>
-                {isPaidExpired ? 'Necesito ayuda' : 'Comenzar como ASESOR Tradicional'}
+                {isPaidExpired ? 'Necesito ayuda' : 'Explorar el camino del Desarrollo Personal'}
               </p>
               <p className="text-sm mt-0.5" style={{ color: 'var(--color-text-muted)' }}>
-                {isPaidExpired ? 'Contactanos por WhatsApp' : 'Medicina Prepaga Salud MPS · Unite al grupo de WhatsApp'}
+                {isPaidExpired ? 'Contactanos por WhatsApp' : 'Comunidad Imparable · Unite al grupo de WhatsApp'}
               </p>
             </div>
           </motion.a>

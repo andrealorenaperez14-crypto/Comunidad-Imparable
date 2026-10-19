@@ -1,3 +1,3 @@
 'use client'
-import { AgentChatPage } from '@/components/chat/AgentChatPage'
-export default function IaCoachPage() { return <AgentChatPage type="COACH" label="IA Coach" /> }
+import { redirect } from 'next/navigation'
+export default function IaCoachPage() { redirect('/dashboard/agente-consultiva') }
