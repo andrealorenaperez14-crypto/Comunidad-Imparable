@@ -223,7 +223,7 @@ function Parte3Inner() {
               <img
                 src="/assets/client1/alenajdra0.webp"
                 alt="Alejandra Cuello"
-                style={{ width: '100%', borderRadius: '1.25rem', border: '1px solid rgba(193,125,26,0.2)', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', aspectRatio: '3/4', borderRadius: '1.25rem', border: '1px solid rgba(193,125,26,0.2)', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
               />
             </motion.div>
 

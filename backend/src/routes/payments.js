@@ -14,7 +14,7 @@ const client = new MercadoPagoConfig({
 const APPS_SCRIPT_URL = process.env.APPS_SCRIPT_VIP_URL
 const FRONTEND_URL    = process.env.CORS_ORIGIN?.split(',')[0] || 'https://frontend-one-ivory-47.vercel.app'
 const BACKEND_URL     = process.env.BACKEND_URL || 'https://escuela-asesores-backend.onrender.com'
-const USD_AMOUNT         = 150
+const USD_AMOUNT         = 83
 const USD_RENEWAL_AMOUNT = 20
 
 async function getMepRate() {
@@ -83,12 +83,12 @@ export async function paymentRoutes(fastify) {
         external_reference: JSON.stringify({ nombre, apellido, dni, email, whatsapp, mepRate, pesoAmount }),
         back_urls: {
           success: `${FRONTEND_URL}/register`,
-          failure: `${FRONTEND_URL}/parte-2?pago=fallido`,
-          pending: `${FRONTEND_URL}/parte-2?pago=pendiente`
+          failure: `${FRONTEND_URL}/cintia?pago=fallido`,
+          pending: `${FRONTEND_URL}/cintia?pago=pendiente`
         },
         auto_return:          'approved',
         notification_url:     `${BACKEND_URL}/api/payments/webhook`,
-        statement_descriptor: 'ESCUELA ASESORES VIP'
+        statement_descriptor: 'COMUNIDAD IMPARABLE'
       }
     })
 

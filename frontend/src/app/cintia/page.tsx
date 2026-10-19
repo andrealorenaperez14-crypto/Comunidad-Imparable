@@ -422,7 +422,7 @@ function Parte2Inner() {
               <img
                 src="/assets/client1/cintia0.webp"
                 alt="Cintia Paolucci"
-                style={{ width: '100%', borderRadius: '1.25rem', border: '1px solid rgba(193,125,26,0.2)', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', aspectRatio: '3/4', borderRadius: '1.25rem', border: '1px solid rgba(193,125,26,0.2)', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
               />
             </motion.div>
 
@@ -990,7 +990,7 @@ function Parte2Inner() {
               )}
             </div>
 
-            <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
+            <div style={{ width: '100%', height: '1px', background: 'var(--color-gold-border)' }} />
 
             {/* Formulario / botón pagar */}
             {pagoStatus === 'exitoso' ? (
