@@ -11,10 +11,32 @@ const greatVibes = Great_Vibes({ subsets: ['latin'], variable: '--font-script', 
 const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-body' })
 
 export const metadata: Metadata = {
-  title: 'Comunidad Imparables',
-  description: 'De adentro hacia afuera. Transformamos personas a través del Desarrollo Personal.',
+  title: 'Academia Comunidad Imparable — MÉTODO RAÍZ',
+  description: 'De adentro hacia afuera. Transformá tu mentalidad, sanás y accionás con el MÉTODO RAÍZ de Cintia Paolucci y Alejandra Cuello.',
   manifest: '/manifest.json',
-  icons: { icon: '/assets/client1/LOGO-comunidad-imparable.jpeg' }
+  icons: { icon: '/assets/client1/LOGO-comunidad-imparable.jpeg' },
+  openGraph: {
+    title: 'Academia Comunidad Imparable — MÉTODO RAÍZ',
+    description: 'De adentro hacia afuera. Transformá tu vida con el MÉTODO RAÍZ: Reconocer y Sanar · Activar tu Potencial · Acción y Práctica.',
+    url: 'https://comunidad-imparables.vercel.app',
+    siteName: 'Academia Comunidad Imparable',
+    images: [
+      {
+        url: 'https://comunidad-imparables.vercel.app/assets/client1/Alejandra y Cintia.jpeg',
+        width: 1200,
+        height: 630,
+        alt: 'Cintia Paolucci y Alejandra Cuello — Academia Comunidad Imparable',
+      }
+    ],
+    locale: 'es_AR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Academia Comunidad Imparable — MÉTODO RAÍZ',
+    description: 'De adentro hacia afuera. MÉTODO RAÍZ con Cintia Paolucci y Alejandra Cuello.',
+    images: ['https://comunidad-imparables.vercel.app/assets/client1/Alejandra y Cintia.jpeg'],
+  },
 }
 
 export const viewport: Viewport = {
