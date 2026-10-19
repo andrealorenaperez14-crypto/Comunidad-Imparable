@@ -834,6 +834,7 @@ function Parte2Inner() {
             <p style={{ fontSize: 'clamp(0.75rem, 1.5vw, 0.85rem)', color: 'var(--color-text-muted)', marginTop: '0.4rem' }}>
               Cofundadoras | Academia Comunidad Imparable
             </p>
+            </div>
           </motion.div>
         </div>
       </section>

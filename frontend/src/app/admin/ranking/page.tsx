@@ -37,9 +37,7 @@ function VitalicioRankingTab() {
         <div className="w-10 flex-shrink-0" />
         <div className="flex-1">Alumno</div>
         <div className="w-20 text-center">Días en app</div>
-        <div className="w-20 text-center">Coach 20%</div>
-        <div className="w-20 text-center">Mental 10%</div>
-        <div className="w-24 text-center">Consultiva 70%</div>
+        <div className="w-24 text-center">Consultiva 100%</div>
         <div className="w-1 mx-2" />
         <div className="w-20 text-right">Score</div>
       </div>
@@ -291,7 +289,6 @@ export default function AdminRankingPage() {
 
                 {/* Interacciones por IA + score */}
                 <div className="flex items-center gap-3 flex-shrink-0">
-                  {/* Coach 20% */}
                   {/* Consultiva 100% */}
                   <div className="text-center hidden sm:block">
                     <div className="flex items-center gap-1 justify-center">
