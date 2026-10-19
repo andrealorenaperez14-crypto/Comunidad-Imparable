@@ -457,7 +457,7 @@ function Parte2Inner() {
           >
             El programa que convierte asesores en{' '}
             <strong style={{ color: 'var(--color-gold)' }}>Profesionales de Alto Valor</strong>{' '}
-            en el rubro Salud.
+            en Desarrollo Personal.
           </motion.p>
 
           {/* Frase de impacto */}
@@ -618,7 +618,7 @@ function Parte2Inner() {
           </motion.h2>
           <motion.p {...fadeUp} style={{ fontSize: 'clamp(0.85rem, 2vw, 1rem)', color: 'var(--color-text-muted)', marginBottom: '2.5rem', lineHeight: 1.7 }}>
             ¿Listo para llevar tus asesorías al siguiente nivel?<br />
-            La versión avanzada de la <strong style={{ color: 'var(--color-gold)' }}>Escuela de Asesores ELITE</strong> en el rubro Salud, llega en julio.
+            La versión avanzada de <strong style={{ color: 'var(--color-gold)' }}>Academia Comunidad Imparable</strong>, llega en julio.
           </motion.p>
 
           <div style={{
@@ -856,12 +856,12 @@ function Parte2Inner() {
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
             {[
-              { q: '¿Necesito experiencia previa en ventas?', a: 'No. El programa está diseñado para asesores que están empezando y para los que ya venden pero quieren dar el salto. El método de Yami Mansilla parte desde cero y se adapta a tu nivel.' },
+              { q: '¿Necesito experiencia previa en ventas?', a: 'No. El programa está diseñado para asesores que están empezando y para los que ya venden pero quieren dar el salto. El programa parte desde cero y se adapta a tu nivel.' },
               { q: '¿Puedo cursarlo mientras trabajo?', a: 'Sí. Los 30 días están organizados para que puedas avanzar a tu ritmo. Además tenés la IA Consultiva disponible 24/7 para consultar en cualquier momento, sin depender de un horario fijo.' },
               { q: '¿Qué pasa después de los 30 días?', a: 'Tu acceso vence automáticamente. No hay cobros ni suspensiones automáticas. Para seguir en la plataforma simplemente renovás por 20 USD/mes desde la misma plataforma — podés hacerlo el mes siguiente o cuando quieras. Cada pago activa 30 días nuevos desde ese momento.' },
               { q: '¿Puedo pagar en cuotas?', a: 'Sí. Mercado Pago acepta tarjeta de crédito con cuotas según tu banco. El monto en pesos se calcula al Dólar MEP del día del pago.' },
               { q: '¿Para qué sirve la renovación de 20 USD/mes?', a: 'Para continuar con acceso a la plataforma, la IA Consultiva y el Club VIP ORO una vez que vencen tus 30 días. No es un débito automático: vos elegís cuándo pagar. Si no renovás, tu cuenta queda pausada y podés volver en cualquier momento pagando la renovación.' },
-              { q: '¿La certificación es reconocida internacionalmente?', a: 'Sí. Al completar el módulo 15 recibís la Certificación Internacional en Neuroventas aplicadas al Consumidor de Salud, avalada por el método de Yami Mansilla con más de 13 años de trayectoria y +1.000 asesores formados.' },
+              { q: '¿La certificación es reconocida internacionalmente?', a: 'Sí. Al completar el módulo 15 recibís la Certificación Internacional en Desarrollo Personal, avalada por Academia Comunidad Imparable.' },
             ].map((f, i) => (
               <FaqItem key={i} q={f.q} a={f.a} />
             ))}

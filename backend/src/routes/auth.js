@@ -305,7 +305,7 @@ export async function authPasswordRoutes(fastify) {
       await sendPasswordResetEmail({
         email: user.email,
         firstName: user.profile?.firstName || 'Usuario',
-        schoolName: user.client?.name || 'Escuela de Asesores',
+        schoolName: user.client?.name || 'Academia Comunidad Imparable',
         otp: tempPassword
       })
     } catch (err) {

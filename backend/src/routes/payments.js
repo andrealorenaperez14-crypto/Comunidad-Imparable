@@ -74,7 +74,7 @@ export async function paymentRoutes(fastify) {
     const result = await preference.create({
       body: {
         items: [{
-          title:       'Lista VIP ELITE — Escuela de Asesores',
+          title:       'Lista VIP ELITE — Academia Comunidad Imparable',
           quantity:    1,
           unit_price:  pesoAmount,
           currency_id: 'ARS'
@@ -123,7 +123,7 @@ export async function paymentRoutes(fastify) {
     const result = await preference.create({
       body: {
         items: [{
-          title:       'Renovación Mensual — Escuela de Asesores Elite',
+          title:       'Renovación Mensual — Academia Comunidad Imparable',
           quantity:    1,
           unit_price:  pesoAmount,
           currency_id: 'ARS'
