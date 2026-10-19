@@ -184,7 +184,7 @@ async function main() {
         clientId: client.id, type: 'FREE', order: 1,
         title: 'Introducción al Curso',
         description: 'Bienvenida y overview del programa',
-        content: '# Bienvenida a Escuela de Asesores\n\nEste curso está diseñado para profesionales que buscan...'
+        content: '# Bienvenida a Academia Comunidad Imparable\n\nEste curso está diseñado para personas que buscan...'
       },
       {
         clientId: client.id, type: 'FREE', order: 2,
@@ -249,7 +249,7 @@ async function main() {
           agentId: agent.id,
           userId: user.id,
           totalSessions: Math.floor(Math.random() * 20) + 1,
-          totalQuestions: agent.type === 'COACH' ? Math.floor(Math.random() * 15) : 0,
+          totalQuestions: Math.floor(Math.random() * 15),
           engagementScore: Math.random() * 0.5 + 0.5,
           completionRate: Math.random() * 0.4 + 0.6,
           habitStreak: Math.floor(Math.random() * 10) + 1,

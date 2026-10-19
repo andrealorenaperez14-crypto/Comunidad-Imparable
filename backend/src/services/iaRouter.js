@@ -3,23 +3,6 @@ import Anthropic from '@anthropic-ai/sdk'
 import OpenAI from 'openai'
 import { decrypt } from '../utils/encryption.js'
 
-async function retrieveRelevantChunksVector(prisma, agentId, query, limit = 8) {
-  try {
-    const rows = await prisma.$queryRaw`
-      SELECT content, filename,
-             word_similarity(${query}, content) AS sim
-      FROM "DocumentChunk"
-      WHERE "agentId" = ${agentId}
-        AND word_similarity(${query}, content) > 0.08
-      ORDER BY sim DESC
-      LIMIT ${limit}
-    `
-    return rows.map(r => `[${r.filename}]\n${r.content}`)
-  } catch {
-    return []
-  }
-}
-
 async function retrieveAllChunks(prisma, agentId) {
   try {
     const chunks = await prisma.documentChunk.findMany({
@@ -33,46 +16,6 @@ async function retrieveAllChunks(prisma, agentId) {
   }
 }
 
-async function retrieveRelevantChunks(prisma, agentId, query, limit = 3) {
-  try {
-    // FTS en español
-    const fts = await prisma.$queryRaw`
-      SELECT content, filename,
-             ts_rank(to_tsvector('spanish', content), plainto_tsquery('spanish', ${query})) AS rank
-      FROM "DocumentChunk"
-      WHERE "agentId" = ${agentId}
-        AND to_tsvector('spanish', content) @@ plainto_tsquery('spanish', ${query})
-      ORDER BY rank DESC
-      LIMIT ${limit}
-    `
-    if (fts.length >= 1) return fts.map(r => `[${r.filename}]\n${r.content}`)
-
-    // Fallback ILIKE con palabras clave usando ORM (seguro contra SQL injection)
-    const keywords = query.split(/\s+/).filter(w => w.length > 3).slice(0, 3)
-    if (keywords.length > 0) {
-      const ilike = await prisma.documentChunk.findMany({
-        where: {
-          agentId,
-          OR: keywords.map(k => ({ content: { contains: k, mode: 'insensitive' } }))
-        },
-        take: limit,
-        select: { content: true, filename: true }
-      })
-      if (ilike.length > 0) return ilike.map(r => `[${r.filename}]\n${r.content}`)
-    }
-
-    // Último recurso: primeros N alfabéticamente
-    const fallback = await prisma.documentChunk.findMany({
-      where: { agentId },
-      orderBy: [{ filename: 'asc' }],
-      take: limit,
-      select: { content: true, filename: true }
-    })
-    return fallback.map(c => `[${c.filename}]\n${c.content}`)
-  } catch {
-    return []
-  }
-}
 
 const TIMEOUT_MS = 30000
 
@@ -234,38 +177,27 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
     console.warn('[IA Router] No se pudo descifrar API key del agente:', agent.type, err.message)
   }
 
-  // Para CONSULTIVA: todos los docs disponibles (el provider limita según su contexto)
+  // Para CONSULTIVA: carga todos los documentos como contexto plano (modo IA tradicional)
   let knowledgeBase = []
-  let knowledgeBaseSmall = []
   if (agent.type === 'CONSULTIVA') {
     if (prisma) {
-      const vectorChunks = await retrieveRelevantChunksVector(prisma, agent.id, message, 8)
-      if (vectorChunks.length > 0) {
-        knowledgeBase = vectorChunks.map(content => ({ content }))
-        knowledgeBaseSmall = vectorChunks.slice(0, 5).map(content => ({ content }))
-      } else {
-        // Fallback a FTS si no hay embeddings todavía
-        const allChunks = await retrieveAllChunks(prisma, agent.id)
+      const allChunks = await retrieveAllChunks(prisma, agent.id)
+      if (allChunks.length > 0) {
         knowledgeBase = allChunks.map(content => ({ content }))
-        const relevantChunks = await retrieveRelevantChunks(prisma, agent.id, message, 5)
-        knowledgeBaseSmall = relevantChunks.map(content => ({ content }))
       }
     }
     if (knowledgeBase.length === 0) {
       knowledgeBase = JSON.parse(agent.knowledgeBase || '[]')
-      knowledgeBaseSmall = knowledgeBase.slice(0, 5)
     }
   }
 
   const { systemPrompt, instructions, type } = agent
   const trimmedHistory = history.slice(-10)
 
-  const localFallback = type === 'CONSULTIVA'
-    ? () => ({ response: buscarEnKnowledgeBase(message, knowledgeBase), modelUsed: 'local', tokens: 0, cost: 0 })
-    : () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
+  const localFallback = () => ({ response: 'En este momento no puedo responderte. Volvé a intentarlo en unos minutos.', modelUsed: 'local', tokens: 0, cost: 0 })
 
-  // Groq recibe KB reducida (límite 6k TPM free tier), Claude/OpenAI reciben todo
-  const kbForGroq = agent.type === 'CONSULTIVA' ? knowledgeBaseSmall : knowledgeBase
+  // Groq recibe KB reducida (límite 6k TPM free tier), resto recibe contexto completo
+  const kbForGroq = agent.type === 'CONSULTIVA' ? knowledgeBase.slice(0, 5) : knowledgeBase
 
   // Pipeline: Groq → Gemini → Claude → OpenAI → local
   const pipeline = [
@@ -293,30 +225,3 @@ export async function routeIaRequest(agent, message, history = [], userId, prism
   }
 }
 
-function buscarEnKnowledgeBase(query, knowledgeBase) {
-  if (!knowledgeBase?.length) {
-    return 'No tengo información suficiente para responder esta consulta. Por favor consulta con tu instructor.'
-  }
-
-  const queryLower = query.toLowerCase()
-  let bestMatch = null
-  let bestScore = 0
-
-  for (const doc of knowledgeBase) {
-    const words = queryLower.split(' ').filter(w => w.length > 3)
-    const score = words.reduce((acc, word) => {
-      return acc + (doc.content.toLowerCase().includes(word) ? 1 : 0)
-    }, 0)
-
-    if (score > bestScore) {
-      bestScore = score
-      bestMatch = doc
-    }
-  }
-
-  if (bestMatch && bestScore > 0) {
-    return `Basado en la documentación disponible:\n\n${bestMatch.content.slice(0, 1000)}`
-  }
-
-  return 'No encontré información específica sobre tu consulta en la base de conocimiento. Te recomiendo revisar el material del curso.'
-}
