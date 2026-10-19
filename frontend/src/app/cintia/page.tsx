@@ -17,6 +17,40 @@ const WA_CLARIDAD  = `${WA_BASE}?text=${encodeURIComponent('Hola Cintia, llegué
 const WA_CONECTA   = `${WA_BASE}?text=${encodeURIComponent('Hola Cintia, llegué desde tu web (Método Conecta con tu Ser) y tengo una consulta antes de inscribirme.')}`
 const WA_VENDER    = `${WA_BASE}?text=${encodeURIComponent('Hola Cintia, llegué desde tu web (Método Vender desde tu Ser) y quiero saber más sobre el programa grupal.')}`
 
+function TestimoniosCarrusel({ images }: { images: string[] }) {
+  const [cur, setCur] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setCur(c => (c + 1) % images.length), 4500)
+    return () => clearInterval(t)
+  }, [images.length])
+  const prev = () => setCur(c => (c - 1 + images.length) % images.length)
+  const next = () => setCur(c => (c + 1) % images.length)
+  return (
+    <div style={{ position: 'relative' }}>
+      <div style={{ overflow: 'hidden' }}>
+        <div style={{ display: 'flex', transition: 'transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94)', transform: `translateX(-${cur * 100}%)` }}>
+          {images.map((src, i) => (
+            <div key={i} style={{ minWidth: '100%', display: 'flex', justifyContent: 'center', padding: '0 1rem' }}>
+              <div style={{ maxWidth: '400px', width: '100%', background: 'rgba(193,125,26,0.04)', border: '1px solid rgba(193,125,26,0.3)', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 8px 32px rgba(0,0,0,0.4)' }}>
+                <img src={src} alt={`Testimonio ${i + 1}`} style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '640px', objectFit: 'contain' }} loading="lazy" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '2rem', marginTop: '1.5rem' }}>
+        <button onClick={prev} aria-label="Anterior" style={{ background: 'none', border: '1px solid rgba(193,125,26,0.35)', color: '#C17D1A', width: '38px', height: '38px', borderRadius: '50%', cursor: 'pointer', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>←</button>
+        <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          {images.map((_, i) => (
+            <button key={i} onClick={() => setCur(i)} aria-label={`Ir al testimonio ${i + 1}`} style={{ width: '7px', height: '7px', borderRadius: '50%', background: i === cur ? '#C17D1A' : 'rgba(193,125,26,0.3)', border: 'none', cursor: 'pointer', padding: 0, transform: i === cur ? 'scale(1.45)' : 'scale(1)', transition: 'all 0.2s' }} />
+          ))}
+        </div>
+        <button onClick={next} aria-label="Siguiente" style={{ background: 'none', border: '1px solid rgba(193,125,26,0.35)', color: '#C17D1A', width: '38px', height: '38px', borderRadius: '50%', cursor: 'pointer', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>→</button>
+      </div>
+    </div>
+  )
+}
+
 const fadeUp = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0 },
@@ -1095,6 +1129,15 @@ function Parte2Inner() {
               <FaqItem key={i} q={f.q} a={f.a} />
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════════ TESTIMONIOS ══════════════════ */}
+      <section style={{ width: '100%', padding: 'clamp(3.5rem,7vw,5.5rem) clamp(1rem,5vw,3rem)', background: 'rgba(193,125,26,0.03)' }}>
+        <div style={{ maxWidth: '680px', margin: '0 auto', textAlign: 'center' }}>
+          <p style={{ fontFamily: 'Cinzel, serif', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: '0.75rem' }}>Lo que dicen quienes ya empezaron</p>
+          <h2 style={{ fontFamily: 'Cinzel, serif', fontSize: 'clamp(1.2rem,3vw,1.8rem)', fontWeight: 700, marginBottom: '2.5rem', color: 'var(--color-text)' }}>Testimonios reales</h2>
+          <TestimoniosCarrusel images={['/assets/client1/testimonios/cintia-t1.jpg', '/assets/client1/testimonios/cintia-t2.jpg', '/assets/client1/testimonios/cintia-t3.jpg']} />
         </div>
       </section>
 

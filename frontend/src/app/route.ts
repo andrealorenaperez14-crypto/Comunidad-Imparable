@@ -693,6 +693,9 @@ function initCarrusel(id) {
   wrap.querySelector('.carrusel-next').addEventListener('click', function() { goTo(cur + 1); });
   dots.forEach(function(d, i) { d.addEventListener('click', function() { goTo(i); }); });
   goTo(0);
+  var timer = setInterval(function() { goTo(cur + 1); }, 4500);
+  wrap.addEventListener('mouseenter', function() { clearInterval(timer); });
+  wrap.addEventListener('mouseleave', function() { timer = setInterval(function() { goTo(cur + 1); }, 4500); });
 }
 initCarrusel('carrusel-cintia');
 initCarrusel('carrusel-alejandra');
