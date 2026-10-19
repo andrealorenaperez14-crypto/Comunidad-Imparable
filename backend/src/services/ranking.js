@@ -1,4 +1,4 @@
-const WEIGHTS = { COACH: 0.20, MENTALIDAD: 0.10, CONSULTIVA: 0.70 }
+const WEIGHTS = { CONSULTIVA: 1.0 }
 const TOP_N = 10
 
 export async function getRankingVitalicio(prisma, clientId) {
@@ -21,7 +21,7 @@ export async function getRankingVitalicio(prisma, clientId) {
   const statsByUser = {}
   for (const i of interactions) {
     const type = i.agent.type.toUpperCase()
-    if (!statsByUser[i.userId]) statsByUser[i.userId] = { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+    if (!statsByUser[i.userId]) statsByUser[i.userId] = { CONSULTIVA: 0 }
     if (type in WEIGHTS) statsByUser[i.userId][type]++
   }
 
@@ -29,8 +29,8 @@ export async function getRankingVitalicio(prisma, clientId) {
 
   return vitalicioSubs
     .map(sub => {
-      const stats = statsByUser[sub.userId] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
-      const weightedInteractions = stats.CONSULTIVA * WEIGHTS.CONSULTIVA + stats.COACH * WEIGHTS.COACH + stats.MENTALIDAD * WEIGHTS.MENTALIDAD
+      const stats = statsByUser[sub.userId] || { CONSULTIVA: 0 }
+      const weightedInteractions = stats.CONSULTIVA * WEIGHTS.CONSULTIVA
       const daysInApp = Math.max(1, Math.floor((now - new Date(sub.createdAt).getTime()) / (1000 * 60 * 60 * 24)))
       // score = interacciones ponderadas × (1 + días/100) — la antigüedad multiplica el uso
       const score = weightedInteractions * (1 + daysInApp / 100)
@@ -64,14 +64,14 @@ export async function recalcularRanking(prisma, clientId) {
   const statsByUser = {}
   for (const i of interactions) {
     const type = i.agent.type.toUpperCase()
-    if (!statsByUser[i.userId]) statsByUser[i.userId] = { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
+    if (!statsByUser[i.userId]) statsByUser[i.userId] = { CONSULTIVA: 0 }
     if (type in WEIGHTS) statsByUser[i.userId][type]++
   }
 
   const userScores = allStudents
     .map(({ id: userId }) => {
-      const s = statsByUser[userId] || { COACH: 0, MENTALIDAD: 0, CONSULTIVA: 0 }
-      const totalScore = s.CONSULTIVA * WEIGHTS.CONSULTIVA + s.COACH * WEIGHTS.COACH + s.MENTALIDAD * WEIGHTS.MENTALIDAD
+      const s = statsByUser[userId] || { CONSULTIVA: 0 }
+      const totalScore = s.CONSULTIVA * WEIGHTS.CONSULTIVA
       return { userId, totalScore, gainPercentage: totalScore }
     })
     .sort((a, b) => b.totalScore - a.totalScore)

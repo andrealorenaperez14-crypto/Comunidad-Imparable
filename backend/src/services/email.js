@@ -35,7 +35,7 @@ async function sendEmail({ to, subject, html, required = false }) {
 
   if (gmailTransport) {
     await gmailTransport.sendMail({
-      from: `"${process.env.GMAIL_FROM_NAME || 'Escuela de Asesores'}" <${process.env.GMAIL_USER}>`,
+      from: `"${process.env.GMAIL_FROM_NAME || 'Academia Comunidad Imparable'}" <${process.env.GMAIL_USER}>`,
       to,
       subject,
       html
@@ -55,16 +55,16 @@ function layout(content) {
   return `
     <div style="font-family:'DM Sans',Arial,sans-serif;max-width:520px;margin:0 auto;background:#0C0C0C;color:#F5F0E8;border-radius:12px;overflow:hidden">
       <div style="background:#0C0C0C;padding:28px 32px 0;border-bottom:1px solid rgba(196,151,42,0.2)">
-        <p style="margin:0 0 4px;font-size:11px;letter-spacing:3px;color:#C4972A;text-transform:uppercase">Escuela de Asesores MPS by Yami Mansilla</p>
-        <p style="margin:0 0 20px;font-size:10px;letter-spacing:1px;color:#8A8A7A">Formamos Líderes, No Vendedores</p>
+        <p style="margin:0 0 4px;font-size:11px;letter-spacing:3px;color:#C4972A;text-transform:uppercase">Academia Comunidad Imparable</p>
+        <p style="margin:0 0 20px;font-size:10px;letter-spacing:1px;color:#8A8A7A">Transformamos vidas a través del Desarrollo Personal</p>
       </div>
       <div style="padding:32px">
         ${content}
         <div style="margin-top:36px;padding-top:20px;border-top:1px solid rgba(196,151,42,0.15)">
           <p style="margin:0 0 2px;font-size:13px;color:#8A8A7A">Con todo mi compromiso,</p>
-          <p style="margin:0;font-size:18px;color:#C4972A;font-style:italic">Yami Mansilla</p>
-          <p style="margin:4px 0 0;font-size:11px;color:#8A8A7A;letter-spacing:1px">VISIONARIA · EMPRESARIA · CAPACITADORA</p>
-          <p style="margin:2px 0 0;font-size:10px;color:#8A8A7A">Escuela de Asesores MPS</p>
+          <p style="margin:0;font-size:18px;color:#C4972A;font-style:italic">Cintia &amp; Alejandra</p>
+          <p style="margin:4px 0 0;font-size:11px;color:#8A8A7A;letter-spacing:1px">Cofundadoras</p>
+          <p style="margin:2px 0 0;font-size:10px;color:#8A8A7A">Academia Comunidad Imparable</p>
         </div>
       </div>
     </div>
@@ -82,15 +82,13 @@ const APP_URL = process.env.FRONTEND_URL || 'http://localhost:3000'
 export async function sendWelcomeEmail({ email, firstName, schoolName, trialDays = 5 }) {
   await sendEmail({
     to: email,
-    subject: `${h(firstName)}, tu acceso a la Escuela de Asesores MPS está listo`,
+    subject: `${h(firstName)}, tu acceso a Academia Comunidad Imparable está listo`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">¡Hola, ${h(firstName)}!</h2>
-      <p style="margin:0 0 12px;line-height:1.6">Bienvenida/o a la <strong>Escuela de Asesores MPS</strong>. Tomaste una decisión que va a cambiar el rumbo de tu carrera — y yo estoy acá para acompañarte en cada paso.</p>
-      <p style="margin:0 0 12px;line-height:1.6">Tenés <strong style="color:#C4972A">${trialDays} días de acceso gratuito</strong> para descubrir todo lo que preparé para vos:</p>
+      <p style="margin:0 0 12px;line-height:1.6">Bienvenida/o a <strong>Academia Comunidad Imparable</strong>. Tomaste una decisión que va a cambiar tu vida — y estamos acá para acompañarte en cada paso.</p>
+      <p style="margin:0 0 12px;line-height:1.6">Tenés <strong style="color:#C4972A">${trialDays} días de acceso gratuito</strong> para descubrir todo lo que preparamos para vos:</p>
       <ul style="margin:0 0 16px;padding-left:20px;line-height:2">
-        <li>IA Coach — tu guía de aprendizaje 24/7</li>
-        <li>IA Mentalidad — para romper los bloqueos que te frenan</li>
-        <li>IA Consultiva — tu asesora de ventas y cierre</li>
+        <li>IA Consultiva — tu asistente de desarrollo personal 24/7</li>
       </ul>
       <p style="margin:0;line-height:1.6">No sigas tendencias. <strong style="color:#C4972A">Creálas.</strong></p>
       ${btn('Ingresar a la plataforma', `${APP_URL}/dashboard`)}
@@ -189,7 +187,7 @@ export async function sendSuspensionCountdownEmail({ email, firstName, schoolNam
     subject: `${h(firstName)}, te quedan ${daysRemaining} día${daysRemaining === 1 ? '' : 's'} de acceso`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">${h(firstName)}, el tiempo corre.</h2>
-      <p style="margin:0 0 12px;line-height:1.6">Tu acceso a la <strong>Escuela de Asesores MPS</strong> vence en <strong style="color:#C4972A">${daysRemaining} día${daysRemaining === 1 ? '' : 's'}</strong>.</p>
+      <p style="margin:0 0 12px;line-height:1.6">Tu acceso a <strong>Academia Comunidad Imparable</strong> vence en <strong style="color:#C4972A">${daysRemaining} día${daysRemaining === 1 ? '' : 's'}</strong>.</p>
       <p style="margin:0 0 16px;line-height:1.6">Todo lo que construiste — tu historial, tu posición en el ranking, tus conversaciones con las IAs — se guarda durante 10 días más. Pero el acceso activo, no.</p>
       <p style="margin:0;line-height:1.6">Si estás comprometida/o con tu crecimiento, este es el momento de renovar.</p>
       ${btn('Renovar mi acceso', `${APP_URL}/dashboard`)}
@@ -200,10 +198,10 @@ export async function sendSuspensionCountdownEmail({ email, firstName, schoolNam
 export async function sendSuspensionExecutedEmail({ email, firstName, schoolName }) {
   await sendEmail({
     to: email,
-    subject: `Tu acceso a Escuela de Asesores MPS fue suspendido`,
+    subject: `Tu acceso a Academia Comunidad Imparable fue suspendido`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">${h(firstName)}, tu acceso está pausado.</h2>
-      <p style="margin:0 0 12px;line-height:1.6">Tu suscripción a la <strong>Escuela de Asesores MPS</strong> venció y tu cuenta fue suspendida.</p>
+      <p style="margin:0 0 12px;line-height:1.6">Tu suscripción a <strong>Academia Comunidad Imparable</strong> venció y tu cuenta fue suspendida.</p>
       <p style="margin:0 0 16px;line-height:1.6">Tus datos y progreso se conservan durante <strong style="color:#C4972A">10 días más</strong>. Si querés reactivar, escribinos y lo resolvemos rápido.</p>
       <p style="margin:0;line-height:1.6">Espero verte de vuelta. Los líderes siempre encuentran la forma.</p>
     `)
@@ -214,7 +212,7 @@ export async function sendPasswordResetEmail({ email, firstName, schoolName, otp
   await sendEmail({
     required: true,
     to: email,
-    subject: `Tu contraseña provisoria — Escuela de Asesores MPS`,
+    subject: `Tu contraseña provisoria — Academia Comunidad Imparable`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">Hola ${h(firstName)},</h2>
       <p style="margin:0 0 16px;line-height:1.6">Recibimos una solicitud para restablecer tu contraseña. Tu clave provisoria es:</p>
@@ -242,7 +240,7 @@ export async function sendWeeklyReportEmail({ email, firstName, schoolName, metr
 
   await sendEmail({
     to: email,
-    subject: `${h(firstName)}, tu reporte semanal en Escuela de Asesores MPS`,
+    subject: `${h(firstName)}, tu reporte semanal en Academia Comunidad Imparable`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">${h(firstName)}, así fue tu semana.</h2>
       <p style="margin:0 0 20px;line-height:1.6">La constancia se mide semana a semana. Acá está tu resumen:</p>
@@ -266,10 +264,10 @@ export async function sendWeeklyReportEmail({ email, firstName, schoolName, metr
 export async function sendVIPWelcomeEmail({ email, firstName, tempPassword, loginUrl }) {
   await sendEmail({
     to: email,
-    subject: `${h(firstName)}, tu acceso VITALICIO está activo — Escuela de Asesores MPS`,
+    subject: `${h(firstName)}, tu acceso VITALICIO está activo — Academia Comunidad Imparable`,
     html: layout(`
       <h2 style="margin:0 0 16px;color:#C4972A;font-size:20px">¡${h(firstName)}, bienvenida/o al nivel que pocos alcanzan!</h2>
-      <p style="margin:0 0 16px;line-height:1.6">Tu acceso <strong style="color:#C4972A">VITALICIO</strong> a la Escuela de Asesores MPS está confirmado. Tomaste la mejor decisión para tu carrera — y yo me comprometo a estar presente en cada etapa.</p>
+      <p style="margin:0 0 16px;line-height:1.6">Tu acceso <strong style="color:#C4972A">VITALICIO</strong> a Academia Comunidad Imparable está confirmado. Tomaste la mejor decisión para tu desarrollo personal — y nos comprometemos a estar presentes en cada etapa.</p>
       <div style="background:#141414;border:1px solid rgba(196,151,42,0.25);border-radius:8px;padding:20px;margin:0 0 20px">
         <p style="margin:0 0 12px;font-size:11px;color:#8A8A7A;letter-spacing:2px;text-transform:uppercase">Tus credenciales de acceso</p>
         <p style="margin:0 0 6px;color:#F5F0E8"><span style="color:#8A8A7A">Email:</span> ${h(email)}</p>
