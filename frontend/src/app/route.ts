@@ -190,7 +190,7 @@ section.alt2 { background: var(--bg-alt); }
 .founder-card { border:1px solid var(--gold-dim); border-radius:var(--radius); background:var(--bg-card); position:relative; overflow:hidden; }
 .founder-card::after { content:'∞'; position:absolute; top:1.5rem; right:2rem; font-size:1.8rem; color:var(--gold); opacity:0.12; font-family:'Cormorant Garamond',serif; }
 .founder-photo { width:100%; background:var(--bg-alt); overflow:hidden; position:relative; display:flex; align-items:center; justify-content:center; min-height:340px; }
-.founder-photo img { width:100%; height:auto; max-height:500px; object-fit:contain; object-position:center; display:block; transition:transform 0.5s ease; }
+.founder-photo img { width:100%; height:100%; min-height:340px; object-fit:cover; object-position:50% 20%; display:block; transition:transform 0.5s ease; }
 .founder-card:hover .founder-photo img { transform:scale(1.03); }
 .founder-photo-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:0.8rem; background:linear-gradient(160deg,var(--bg-alt) 0%,#1a0d30 100%); }
 .founder-photo-placeholder span { font-family:'Cormorant Garamond',serif; font-size:4rem; color:var(--gold); opacity:0.2; }
@@ -454,7 +454,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
           <div class="founder-values"><span class="founder-val">Coaching Ontológico</span><span class="founder-val">Identidad</span><span class="founder-val">Marca Personal</span><span class="founder-val">Acción</span></div>
           <div class="founder-social"><a href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener">Instagram</a></div>
           <a href="/cintia" style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:0.9rem 1.1rem;border:1px solid rgba(193,125,26,0.3);border-radius:12px;background:rgba(193,125,26,0.05);text-decoration:none;transition:border-color 0.25s,background 0.25s;" onmouseover="this.style.borderColor='rgba(193,125,26,0.7)';this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.borderColor='rgba(193,125,26,0.3)';this.style.background='rgba(193,125,26,0.05)'">
-            <img src="/assets/client1/cintia0.webp" alt="Cintia Paolucci" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid rgba(193,125,26,0.5);flex-shrink:0;" onerror="this.style.display='none'">
+            <img src="/assets/client1/cintia0.webp" alt="Cintia Paolucci" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:1.5px solid rgba(193,125,26,0.5);flex-shrink:0;" onerror="this.style.display='none'">
             <div>
               <p style="margin:0 0 0.2rem;font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);">Cintia Paolucci</p>
               <p style="margin:0;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:rgba(250,248,245,0.7);line-height:1.4;">Coaching ontológico · Métodos Conecta con tu Ser y Vender desde tu Ser</p>
@@ -475,7 +475,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
           <div class="founder-values"><span class="founder-val">Reiki</span><span class="founder-val">Metafísica</span><span class="founder-val">Biodescodificación</span><span class="founder-val">Consciencia</span></div>
           <div class="founder-social"><a href="https://www.instagram.com/alejandra.cuello28" target="_blank" rel="noopener">Instagram</a></div>
           <a href="/alejandra" style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:0.9rem 1.1rem;border:1px solid rgba(193,125,26,0.3);border-radius:12px;background:rgba(193,125,26,0.05);text-decoration:none;transition:border-color 0.25s,background 0.25s;" onmouseover="this.style.borderColor='rgba(193,125,26,0.7)';this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.borderColor='rgba(193,125,26,0.3)';this.style.background='rgba(193,125,26,0.05)'">
-            <img src="/assets/client1/alenajdra0.webp" alt="Alejandra Cuello" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid rgba(193,125,26,0.5);flex-shrink:0;" onerror="this.style.display='none'">
+            <img src="/assets/client1/alenajdra0.webp" alt="Alejandra Cuello" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:1.5px solid rgba(193,125,26,0.5);flex-shrink:0;" onerror="this.style.display='none'">
             <div>
               <p style="margin:0 0 0.2rem;font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);">Alejandra Cuello</p>
               <p style="margin:0;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:rgba(250,248,245,0.7);line-height:1.4;">Reiki · Metafísica · Biodescodificación · Gemoterapia · Psicomagia</p>
