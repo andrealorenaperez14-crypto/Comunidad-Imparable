@@ -12,7 +12,7 @@ const USD_CONECTA  = 83
 const API_URL      = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
 
 // WhatsApp con texto pre-cargado según programa
-const WA_BASE = 'https://wa.me/549'  // TODO: completar número de Cintia
+const WA_BASE = 'https://wa.me/5492914708460'
 const WA_CLARIDAD  = `${WA_BASE}?text=${encodeURIComponent('Hola Cintia, llegué desde tu web (Sesión de Claridad) y me gustaría agendar mi sesión gratuita de 20 minutos.')}`
 const WA_CONECTA   = `${WA_BASE}?text=${encodeURIComponent('Hola Cintia, llegué desde tu web (Método Conecta con tu Ser) y tengo una consulta antes de inscribirme.')}`
 const WA_VENDER    = `${WA_BASE}?text=${encodeURIComponent('Hola Cintia, llegué desde tu web (Método Vender desde tu Ser) y quiero saber más sobre el programa grupal.')}`
