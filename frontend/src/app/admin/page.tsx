@@ -16,7 +16,7 @@ function StatCard({ label, value, icon }: {
     >
       <div
         className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-        style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+        style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
       >
         {icon}
       </div>
@@ -75,7 +75,7 @@ export default function AdminPage() {
               <div
                 key={idx}
                 className="flex items-center gap-4 p-4 rounded-xl"
-                style={{ background: 'rgba(196,151,42,0.05)', border: '1px solid var(--color-gold-border)' }}
+                style={{ background: 'rgba(193,125,26,0.05)', border: '1px solid var(--color-gold-border)' }}
               >
                 <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: 'var(--color-gold)' }} />
                 <div className="flex-1">
@@ -86,7 +86,7 @@ export default function AdminPage() {
                 </div>
                 <span
                   className="text-xs px-2 py-1 rounded-full"
-                  style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+                  style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
                 >
                   {alert.status}
                 </span>

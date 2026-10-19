@@ -12,7 +12,7 @@ const dmSans = DM_Sans({ subsets: ['latin'], variable: '--font-body' })
 
 export const metadata: Metadata = {
   title: 'Comunidad Imparables',
-  description: 'De adentro hacia afuera. Transformamos mujeres, no solo negocios.',
+  description: 'De adentro hacia afuera. Transformamos personas a través del Desarrollo Personal.',
   manifest: '/manifest.json',
   icons: { icon: '/assets/client1/LOGO-comunidad-imparable.jpeg' }
 }
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0C0C0C'
+  themeColor: '#160D28'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

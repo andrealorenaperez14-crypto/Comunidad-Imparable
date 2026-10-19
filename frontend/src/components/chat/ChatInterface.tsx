@@ -94,7 +94,7 @@ export function ChatInterface({ agent, agentId }: Props) {
       >
         <div
           className="w-10 h-10 rounded-xl flex items-center justify-center"
-          style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}
+          style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}
         >
           <Bot className="w-5 h-5" strokeWidth={1.5} />
         </div>
@@ -109,8 +109,8 @@ export function ChatInterface({ agent, agentId }: Props) {
               background: dailyRemaining === 0
                 ? 'rgba(239,68,68,0.1)'
                 : dailyRemaining <= 5
-                  ? 'rgba(196,151,42,0.15)'
-                  : 'rgba(196,151,42,0.08)',
+                  ? 'rgba(193,125,26,0.15)'
+                  : 'rgba(193,125,26,0.08)',
               border: `1px solid ${dailyRemaining === 0 ? 'rgba(239,68,68,0.3)' : 'var(--color-gold-border)'}`,
               color: dailyRemaining === 0
                 ? '#ef4444'
@@ -131,7 +131,7 @@ export function ChatInterface({ agent, agentId }: Props) {
           <div className="text-center py-12">
             <div
               className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4"
-              style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}
+              style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}
             >
               <Bot className="w-8 h-8" strokeWidth={1.5} />
             </div>
@@ -155,18 +155,18 @@ export function ChatInterface({ agent, agentId }: Props) {
                 className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
                 style={msg.role === 'user'
                   ? { background: 'var(--color-gold)' }
-                  : { background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }
+                  : { background: 'rgba(193,125,26,0.15)', border: '1px solid var(--color-gold-border)' }
                 }
               >
                 {msg.role === 'user'
-                  ? <User className="w-4 h-4" style={{ color: '#0C0C0C' }} strokeWidth={1.5} />
+                  ? <User className="w-4 h-4" style={{ color: '#160D28' }} strokeWidth={1.5} />
                   : <Bot className="w-4 h-4" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />}
               </div>
 
               <div
                 className="rounded-2xl px-4 py-3"
                 style={msg.role === 'user'
-                  ? { background: 'var(--color-gold)', color: '#0C0C0C', borderTopRightRadius: '4px' }
+                  ? { background: 'var(--color-gold)', color: '#160D28', borderTopRightRadius: '4px' }
                   : { background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)', color: 'var(--color-text)', borderTopLeftRadius: '4px' }
                 }
               >
@@ -195,7 +195,7 @@ export function ChatInterface({ agent, agentId }: Props) {
           <div className="flex gap-3">
             <div
               className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}
+              style={{ background: 'rgba(193,125,26,0.15)', border: '1px solid var(--color-gold-border)' }}
             >
               <Bot className="w-4 h-4" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
             </div>
@@ -242,8 +242,8 @@ export function ChatInterface({ agent, agentId }: Props) {
               aria-label="Enviar mensaje"
             >
               {isLoading
-                ? <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#0C0C0C' }} />
-                : <Send className="w-4 h-4" style={{ color: '#0C0C0C' }} strokeWidth={1.5} />}
+                ? <Loader2 className="w-4 h-4 animate-spin" style={{ color: '#160D28' }} />
+                : <Send className="w-4 h-4" style={{ color: '#160D28' }} strokeWidth={1.5} />}
             </button>
           </div>
         )}

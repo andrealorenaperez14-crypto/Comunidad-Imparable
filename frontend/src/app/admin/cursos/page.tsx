@@ -129,7 +129,7 @@ export default function CursosPage() {
                   <span
                     className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"
                     style={course.type === 'FREE'
-                      ? { color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)', background: 'rgba(196,151,42,0.08)' }
+                      ? { color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)', background: 'rgba(193,125,26,0.08)' }
                       : { color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)', background: 'var(--color-bg)' }
                     }
                   >
@@ -228,7 +228,7 @@ export default function CursosPage() {
                       onClick={() => set('type', t)}
                       className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all"
                       style={modal.course?.type === t
-                        ? { background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold)', color: 'var(--color-gold)' }
+                        ? { background: 'rgba(193,125,26,0.15)', border: '1px solid var(--color-gold)', color: 'var(--color-gold)' }
                         : { background: 'transparent', border: '1px solid var(--color-separator)', color: 'var(--color-text-muted)' }
                       }
                     >
@@ -296,7 +296,7 @@ export default function CursosPage() {
                 onClick={handleSave}
                 disabled={saveMutation.isPending}
                 className="flex-1 py-2.5 rounded-xl text-sm font-medium flex items-center justify-center gap-2 disabled:opacity-50 transition-all"
-                style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}
+                style={{ background: 'var(--color-gold)', color: '#160D28' }}
               >
                 {saveMutation.isPending ? <><Loader2 className="w-4 h-4 animate-spin" /> Guardando...</> : 'Guardar lección'}
               </button>

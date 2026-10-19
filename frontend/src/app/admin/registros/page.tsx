@@ -23,7 +23,7 @@ export default function RegistrosPage() {
       <div className="flex items-center gap-3">
         <Users className="w-6 h-6" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
         <h1 className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>Registros</h1>
-        <span className="ml-auto text-sm px-3 py-1 rounded-full" style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+        <span className="ml-auto text-sm px-3 py-1 rounded-full" style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
           {registros.length} registros
         </span>
       </div>

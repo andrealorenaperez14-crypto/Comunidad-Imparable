@@ -13,8 +13,8 @@ interface UsageData {
 
 function colorFor(pct: number) {
   if (pct >= 85) return 'var(--color-gold)'
-  if (pct >= 60) return 'rgba(196,151,42,0.6)'
-  return 'rgba(196,151,42,0.35)'
+  if (pct >= 60) return 'rgba(193,125,26,0.6)'
+  return 'rgba(193,125,26,0.35)'
 }
 
 function UsageCard({ label, icon, used, total, pct, sub }: {
@@ -24,7 +24,7 @@ function UsageCard({ label, icon, used, total, pct, sub }: {
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="card">
       <div
         className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
-        style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+        style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
       >
         {icon}
       </div>
@@ -34,7 +34,7 @@ function UsageCard({ label, icon, used, total, pct, sub }: {
       <p className="text-sm mt-1" style={{ color: 'var(--color-text-muted)' }}>{label}</p>
       {sub && <p className="text-xs mt-1" style={{ color: 'var(--color-text-muted)' }}>{sub}</p>}
       {pct != null && (
-        <div className="mt-3" style={{ height: 6, borderRadius: 999, background: 'rgba(196,151,42,0.1)', overflow: 'hidden' }}>
+        <div className="mt-3" style={{ height: 6, borderRadius: 999, background: 'rgba(193,125,26,0.1)', overflow: 'hidden' }}>
           <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', background: colorFor(pct), transition: 'width 0.3s' }} />
         </div>
       )}

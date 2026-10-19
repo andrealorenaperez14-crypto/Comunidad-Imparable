@@ -101,12 +101,12 @@ export function Sidebar() {
                   onClick={() => { setCursoOpen(o => !o) }}
                   className="w-full flex items-center gap-3 px-3 py-3 rounded text-sm font-medium transition-all"
                   style={isCursoActive
-                    ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                    ? { background: 'var(--color-gold)', color: '#160D28' }
                     : { color: 'var(--color-text-muted)' }
                   }
                 >
                   <BookOpen className="w-5 h-5 flex-shrink-0" strokeWidth={1.5}
-                    style={isCursoActive ? { color: '#0C0C0C' } : { color: 'var(--color-text-muted)' }} />
+                    style={isCursoActive ? { color: '#160D28' } : { color: 'var(--color-text-muted)' }} />
                   <span className="flex-1 text-left">Mi Curso</span>
                   {cursoOpen
                     ? <ChevronDown className="w-4 h-4 opacity-60" strokeWidth={1.5} />
@@ -160,15 +160,15 @@ export function Sidebar() {
               onClick={() => setMobileOpen(false)}
               className={cn(
                 'flex items-center gap-3 px-3 py-3 rounded text-sm font-medium transition-all group',
-                isActive ? 'text-[#0C0C0C]' : 'hover:opacity-90'
+                isActive ? 'text-[#160D28]' : 'hover:opacity-90'
               )}
               style={isActive
-                ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                ? { background: 'var(--color-gold)', color: '#160D28' }
                 : { color: 'var(--color-text-muted)' }
               }
             >
               <item.icon className="w-5 h-5" strokeWidth={1.5}
-                style={isActive ? { color: '#0C0C0C' } : { color: 'var(--color-text-muted)' }} />
+                style={isActive ? { color: '#160D28' } : { color: 'var(--color-text-muted)' }} />
               <span>{item.label}</span>
               {isActive && <ChevronRight className="w-4 h-4 ml-auto opacity-60" strokeWidth={1.5} />}
             </Link>
@@ -180,7 +180,7 @@ export function Sidebar() {
         <div className="flex items-center gap-3 px-3 py-2 mb-2">
           <div
             className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-            style={{ background: 'rgba(196,151,42,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+            style={{ background: 'rgba(193,125,26,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
           >
             {user?.firstName?.[0] || user?.email?.[0]?.toUpperCase() || 'U'}
           </div>
@@ -222,7 +222,7 @@ export function Sidebar() {
         style={{ background: 'var(--color-gold)' }}
         aria-label="Abrir menú"
       >
-        <Menu className="w-6 h-6" style={{ color: '#0C0C0C' }} strokeWidth={1.5} />
+        <Menu className="w-6 h-6" style={{ color: '#160D28' }} strokeWidth={1.5} />
       </button>
 
       {mobileOpen && (

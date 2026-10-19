@@ -51,7 +51,7 @@ function getStrength(pwd: string): { label: string; score: number } {
 
 const STRENGTH_COLOR: Record<string, string> = {
   'Débil':  '#F87171',
-  'Media':  '#C4972A',
+  'Media':  '#C17D1A',
   'Fuerte': '#4ADE80',
 }
 
@@ -118,7 +118,7 @@ export default function RegisterPage() {
         <div className="text-center mb-12">
           <div
             className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
-            style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}
+            style={{ background: 'rgba(193,125,26,0.15)', border: '1px solid var(--color-gold-border)' }}
           >
             <Brain className="w-8 h-8" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
           </div>

@@ -7,7 +7,7 @@ import type { AdminRankingEntry, VitalicioRankingEntry } from '@/types'
 
 const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }> = {
   EXCELENTE: { bg: 'rgba(74,222,128,0.1)', color: '#4ADE80', label: 'Excelente' },
-  BUENO:     { bg: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', label: 'Bueno' },
+  BUENO:     { bg: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', label: 'Bueno' },
   ALERTA:    { bg: 'rgba(239,68,68,0.1)',  color: '#F87171', label: 'Alerta' }
 }
 
@@ -52,7 +52,7 @@ function VitalicioRankingTab() {
           <div
             className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm font-bold"
             style={e.position <= 3
-              ? { background: 'rgba(196,151,42,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
+              ? { background: 'rgba(193,125,26,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
               : { background: 'var(--color-bg)', color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }
             }
           >
@@ -149,7 +149,7 @@ export default function AdminRankingPage() {
           onClick={() => recalcMutation.mutate()}
           disabled={recalcMutation.isPending}
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all disabled:opacity-50"
-          style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(196,151,42,0.08)' }}
+          style={{ border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', background: 'rgba(193,125,26,0.08)' }}
           title="Actualiza el Top 10 visible para los alumnos"
         >
           {recalcMutation.isPending
@@ -165,7 +165,7 @@ export default function AdminRankingPage() {
           onClick={() => setTab('general')}
           className="flex items-center gap-2 px-5 py-2 text-sm font-medium transition-all"
           style={tab === 'general'
-            ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+            ? { background: 'var(--color-gold)', color: '#160D28' }
             : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}
         >
           <Trophy className="w-4 h-4" strokeWidth={1.5} />
@@ -175,7 +175,7 @@ export default function AdminRankingPage() {
           onClick={() => setTab('vitalicio')}
           className="flex items-center gap-2 px-5 py-2 text-sm font-medium transition-all"
           style={tab === 'vitalicio'
-            ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+            ? { background: 'var(--color-gold)', color: '#160D28' }
             : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}
         >
           <Crown className="w-4 h-4" strokeWidth={1.5} />
@@ -196,7 +196,7 @@ export default function AdminRankingPage() {
               onClick={() => { setFilter(f); setPage(1) }}
               className="px-4 py-2 text-sm font-medium transition-all"
               style={filter === f
-                ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                ? { background: 'var(--color-gold)', color: '#160D28' }
                 : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }
               }
             >
@@ -213,7 +213,7 @@ export default function AdminRankingPage() {
               onClick={() => setStatusFilter(s)}
               className="px-4 py-2 text-sm font-medium transition-all"
               style={statusFilter === s
-                ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                ? { background: 'var(--color-gold)', color: '#160D28' }
                 : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }
               }
             >
@@ -260,7 +260,7 @@ export default function AdminRankingPage() {
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm font-bold"
                   style={s.position <= 3
-                    ? { background: 'rgba(196,151,42,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
+                    ? { background: 'rgba(193,125,26,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
                     : { background: 'var(--color-bg)', color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }
                   }
                 >

@@ -38,7 +38,7 @@ function WelcomeVideo() {
 function MetricCard({ label, value, icon }: { label: string; value: string; icon: React.ReactNode }) {
   return (
     <div className="card">
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)' }}>
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)' }}>
         {icon}
       </div>
       <p className="text-2xl font-bold" style={{ color: 'var(--color-text)' }}>{value}</p>
@@ -80,7 +80,7 @@ function RenewalButton({ daysRemaining }: { daysRemaining: number }) {
         onClick={handleRenewal}
         disabled={loading}
         className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-50"
-        style={{ background: 'rgba(196,151,42,0.12)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+        style={{ background: 'rgba(193,125,26,0.12)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
       >
         {loading
           ? <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" strokeWidth={2} />
@@ -139,25 +139,25 @@ export default function DashboardPage() {
       {/* Subscription lifecycle info */}
       {subData?.isTrial && !subData?.isTrialExpired && (
         <section className="overflow-hidden">
-          <div className="rounded-2xl p-5 space-y-4" style={{ background: 'rgba(196,151,42,0.06)', border: '1px solid var(--color-gold-border)' }}>
+          <div className="rounded-2xl p-5 space-y-4" style={{ background: 'rgba(193,125,26,0.06)', border: '1px solid var(--color-gold-border)' }}>
             <p className="text-sm font-semibold uppercase tracking-widest" style={{ color: 'var(--color-gold)' }}>Cómo funciona tu acceso</p>
             <div className="grid gap-3 sm:grid-cols-3">
               <div className="flex items-start gap-3">
-                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>1</span>
+                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#160D28' }}>1</span>
                 <div>
                   <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Período gratuito — 5 días</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Acceso completo a la plataforma y la IA Consultiva. Sin tarjeta.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>2</span>
+                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#160D28' }}>2</span>
                 <div>
                   <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Asesor ELITE — 30 días</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>150 USD por única vez. Formación completa en Neuroventas + certificación internacional.</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>3</span>
+                <span className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold" style={{ background: 'var(--color-gold)', color: '#160D28' }}>3</span>
                 <div>
                   <p className="text-sm font-semibold" style={{ color: 'var(--color-text)' }}>Renovación mensual</p>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>20 USD/mes para seguir con acceso. Intercalado — pagás cuando querés, cada pago suma 30 días.</p>
@@ -170,7 +170,7 @@ export default function DashboardPage() {
 
       {subData && !subData.isTrial && !subData.isVitalicio && (
         <section className="overflow-hidden">
-          <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: 'rgba(196,151,42,0.06)', border: '1px solid var(--color-gold-border)' }}>
+          <div className="rounded-2xl p-4 flex items-center gap-3" style={{ background: 'rgba(193,125,26,0.06)', border: '1px solid var(--color-gold-border)' }}>
             <Clock className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
             <p className="text-sm" style={{ color: 'var(--color-text-muted)' }}>
               Tu acceso vence en <span style={{ color: 'var(--color-text)', fontWeight: 600 }}>{daysRemaining} día{daysRemaining !== 1 ? 's' : ''}</span>.
@@ -195,7 +195,7 @@ export default function DashboardPage() {
           <div
             className="rounded-2xl p-5"
             style={{
-              background: 'linear-gradient(135deg, rgba(196,151,42,0.15) 0%, rgba(196,151,42,0.05) 100%)',
+              background: 'linear-gradient(135deg, rgba(193,125,26,0.15) 0%, rgba(193,125,26,0.05) 100%)',
               border: '1px solid var(--color-gold-border)'
             }}
           >
@@ -217,7 +217,7 @@ export default function DashboardPage() {
                 {subData.trialDayNumber}/5
               </span>
             </div>
-            <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(196,151,42,0.15)' }}>
+            <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(193,125,26,0.15)' }}>
               <div
                 className="h-full rounded-full transition-all"
                 style={{ width: `${(subData.trialDayNumber / 5) * 100}%`, background: 'var(--color-gold)' }}
@@ -259,7 +259,7 @@ export default function DashboardPage() {
                 <Link
                   href={ELITE_LINK}
                   className="flex items-center justify-center gap-2 flex-1 px-4 py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
-                  style={{ background: 'var(--color-gold)', color: '#0C0C0C', textDecoration: 'none' }}
+                  style={{ background: 'var(--color-gold)', color: '#160D28', textDecoration: 'none' }}
                 >
                   <Star className="w-4 h-4 flex-shrink-0" strokeWidth={2} />
                   Iniciar membresía ASESOR ELITE

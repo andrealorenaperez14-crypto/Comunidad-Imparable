@@ -65,7 +65,7 @@ function ResetPasswordModal({ student, onClose }: { student: Student; onClose: (
         ) : (
           <>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}>
                 <KeyRound className="w-5 h-5" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
               </div>
               <div>
@@ -151,7 +151,7 @@ function Activate30DaysModal({ student, onClose, onDone }: { student: Student; o
                 Cancelar
               </button>
               <button onClick={() => mutate()} disabled={isPending} className="flex-1 py-2.5 rounded-xl text-sm font-medium disabled:opacity-50"
-                style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>
+                style={{ background: 'var(--color-gold)', color: '#160D28' }}>
                 {isPending ? 'Activando...' : 'Confirmar'}
               </button>
             </div>
@@ -197,7 +197,7 @@ function UpgradeVitalicioModal({ student, onClose, onDone }: { student: Student;
                 Cancelar
               </button>
               <button onClick={() => mutate()} disabled={isPending} className="flex-1 py-2.5 rounded-xl text-sm font-medium disabled:opacity-50"
-                style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>
+                style={{ background: 'var(--color-gold)', color: '#160D28' }}>
                 {isPending ? 'Activando...' : 'Confirmar'}
               </button>
             </div>
@@ -234,7 +234,7 @@ function EditEmailModal({ student, onClose, onDone }: { student: Student; onClos
           <X className="w-5 h-5" strokeWidth={1.5} />
         </button>
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}>
             <Mail className="w-5 h-5" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
           </div>
           <div>
@@ -365,7 +365,7 @@ function CommissionsModal({ student, onClose }: { student: Student; onClose: () 
             <p className="text-xl font-bold" style={{ color: '#4ADE80' }}>${totalPaid.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Total pagado</p>
           </div>
-          <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)' }}>
+          <div className="rounded-xl p-3 text-center" style={{ background: 'rgba(193,125,26,0.08)', border: '1px solid var(--color-gold-border)' }}>
             <p className="text-xl font-bold" style={{ color: 'var(--color-gold)' }}>${totalPending.toLocaleString('es-AR', { minimumFractionDigits: 2 })}</p>
             <p className="text-xs mt-0.5" style={{ color: 'var(--color-text-muted)' }}>Pendiente de pago</p>
           </div>
@@ -409,7 +409,7 @@ function CommissionsModal({ student, onClose }: { student: Student; onClose: () 
                   </button>
                   <button onClick={() => addMutation.mutate()} disabled={!amount || addMutation.isPending}
                     className="flex-1 py-2 rounded-xl text-sm font-medium disabled:opacity-50"
-                    style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}>
+                    style={{ background: 'var(--color-gold)', color: '#160D28' }}>
                     {addMutation.isPending ? 'Guardando...' : 'Guardar comisión'}
                   </button>
                 </div>
@@ -446,7 +446,7 @@ function CommissionsModal({ student, onClose }: { student: Student; onClose: () 
                       ? <span className="flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(74,222,128,0.1)', color: '#4ADE80' }}>
                           <BadgeCheck className="w-3 h-3" strokeWidth={2} /> Pagado
                         </span>
-                      : <span className="flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)' }}>
+                      : <span className="flex items-center gap-1 text-xs px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)' }}>
                           <Clock className="w-3 h-3" strokeWidth={2} /> Pendiente
                         </span>
                     }
@@ -584,14 +584,14 @@ export default function AlumnosPage() {
               const isExpired = !isActive && !!sub
               const badgeLabel = isVitalicio ? 'Vitalicio' : isTrial ? 'Prueba' : isActive ? 'Activo' : isExpired ? 'Vencido' : 'Sin plan'
               const badgeColor = isVitalicio ? 'var(--color-gold)' : isTrial ? '#60A5FA' : isActive ? '#4ADE80' : isExpired ? '#F87171' : '#9CA3AF'
-              const badgeBg = isVitalicio ? 'rgba(196,151,42,0.1)' : isTrial ? 'rgba(96,165,250,0.1)' : isActive ? 'rgba(74,222,128,0.1)' : isExpired ? 'rgba(239,68,68,0.1)' : 'rgba(156,163,175,0.1)'
+              const badgeBg = isVitalicio ? 'rgba(193,125,26,0.1)' : isTrial ? 'rgba(96,165,250,0.1)' : isActive ? 'rgba(74,222,128,0.1)' : isExpired ? 'rgba(239,68,68,0.1)' : 'rgba(156,163,175,0.1)'
               const daysLeft = getDaysRemaining(sub?.activeUntil)
               const fechaIngreso = new Date(student.createdAt).toLocaleDateString('es-AR')
               return (
                 <div key={student.id} className="flex items-center gap-4 p-4 rounded-xl"
                   style={{ background: 'var(--color-bg-card)', border: `1px solid ${isExpired ? 'rgba(239,68,68,0.2)' : 'var(--color-separator)'}` }}>
                   <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+                    style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}>
                     <span className="font-bold text-sm" style={{ color: 'var(--color-gold)' }}>{initial}</span>
                   </div>
                   <div className="flex-1 min-w-0">
@@ -635,13 +635,13 @@ export default function AlumnosPage() {
                       <>
                         <button onClick={() => setUpgrade30Target(student)}
                           className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
-                          style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+                          style={{ background: 'rgba(193,125,26,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
                           <CalendarDays className="w-4 h-4" strokeWidth={1.5} />
                           <span className="hidden lg:inline">30 días</span>
                         </button>
                         <button onClick={() => setUpgradeTarget(student)}
                           className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
-                          style={{ background: 'rgba(196,151,42,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+                          style={{ background: 'rgba(193,125,26,0.08)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
                           <Star className="w-4 h-4" strokeWidth={1.5} />
                           <span className="hidden lg:inline">Vitalicio</span>
                         </button>
@@ -659,7 +659,7 @@ export default function AlumnosPage() {
                     </button>
                     <button onClick={() => setSelected(student)}
                       className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium"
-                      style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
+                      style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}>
                       <KeyRound className="w-4 h-4" strokeWidth={1.5} />
                       <span className="hidden sm:inline">Resetear</span>
                     </button>
@@ -691,7 +691,7 @@ export default function AlumnosPage() {
                 <div key={idx} className="flex items-center gap-4 p-4 rounded-xl"
                   style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}>
                   <div className="w-10 h-10 rounded-full flex items-center justify-center"
-                    style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+                    style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}>
                     <span className="font-bold text-sm" style={{ color: 'var(--color-gold)' }}>{alert.studentName[0]?.toUpperCase()}</span>
                   </div>
                   <div className="flex-1">

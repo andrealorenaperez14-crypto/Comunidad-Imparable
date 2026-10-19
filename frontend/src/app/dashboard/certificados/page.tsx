@@ -68,7 +68,7 @@ export default function CertificadosPage() {
               <div className="flex items-start gap-6">
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}
+                  style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}
                 >
                   <Award className="w-6 h-6" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
                 </div>
@@ -84,7 +84,7 @@ export default function CertificadosPage() {
                     <span
                       className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium flex-shrink-0"
                       style={{
-                        background: cert.status === 'ISSUED' ? 'rgba(196,151,42,0.1)' : 'rgba(239,68,68,0.1)',
+                        background: cert.status === 'ISSUED' ? 'rgba(193,125,26,0.1)' : 'rgba(239,68,68,0.1)',
                         color: cert.status === 'ISSUED' ? 'var(--color-gold)' : '#EF4444',
                         border: `1px solid ${cert.status === 'ISSUED' ? 'var(--color-gold-border)' : 'rgba(239,68,68,0.3)'}`
                       }}

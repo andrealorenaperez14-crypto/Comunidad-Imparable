@@ -47,7 +47,7 @@ export default function AgentesAdminPage() {
             <div className="flex items-start gap-4">
               <div
                 className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}
+                style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)' }}
               >
                 <Brain className="w-7 h-7" strokeWidth={1.5} />
               </div>
@@ -59,7 +59,7 @@ export default function AgentesAdminPage() {
                       <h3 className="font-semibold text-lg" style={{ color: 'var(--color-text)' }}>{agent.name}</h3>
                       <span
                         className="text-xs px-2 py-0.5 rounded-full"
-                        style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}
+                        style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}
                       >
                         {agent.type}
                       </span>
@@ -93,7 +93,7 @@ export default function AgentesAdminPage() {
                   <Link
                     href={`/admin/agentes/${agent.id}`}
                     className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
-                    style={{ background: 'var(--color-gold)', color: '#0C0C0C' }}
+                    style={{ background: 'var(--color-gold)', color: '#160D28' }}
                   >
                     <Settings className="w-4 h-4" strokeWidth={1.5} />
                     Configurar

@@ -107,7 +107,7 @@ export default function AgentEditorPage() {
             onClick={() => setActiveTab(tab)}
             className="px-4 py-2 rounded-lg text-sm font-medium transition-all"
             style={activeTab === tab
-              ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+              ? { background: 'var(--color-gold)', color: '#160D28' }
               : { color: 'var(--color-text-muted)' }
             }
           >
@@ -332,7 +332,7 @@ function AgentLogs({ agentId }: { agentId: string }) {
               <span className="flex items-center gap-2">
                 <span
                   className="px-2 py-0.5 rounded"
-                  style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)' }}
+                  style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)' }}
                 >
                   {log.modelUsed}
                 </span>
@@ -341,7 +341,7 @@ function AgentLogs({ agentId }: { agentId: string }) {
             </div>
             <div
               className="rounded-lg px-3 py-2 text-sm"
-              style={{ background: 'rgba(196,151,42,0.05)', color: 'var(--color-text)', border: '1px solid var(--color-gold-border)' }}
+              style={{ background: 'rgba(193,125,26,0.05)', color: 'var(--color-text)', border: '1px solid var(--color-gold-border)' }}
             >
               {log.message}
             </div>

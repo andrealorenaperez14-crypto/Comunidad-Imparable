@@ -10,11 +10,11 @@ import { metricsApi, adminUserApi, adminCommissionApi } from '@/lib/api'
 import { useAuth } from '@/hooks/useAuth'
 import type { AdminRankingEntry, CommissionStudentSummary } from '@/types'
 
-const COLORS = ['#C4972A', '#8B6914', '#D4A843', '#6B4F10']
+const COLORS = ['#C17D1A', '#8B5710', '#D4943A', '#6B4F10']
 
 const STATUS_STYLE: Record<string, { bg: string; color: string; label: string }> = {
   EXCELENTE: { bg: 'rgba(74,222,128,0.1)', color: '#4ADE80', label: 'Excelente' },
-  BUENO:     { bg: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', label: 'Bueno' },
+  BUENO:     { bg: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', label: 'Bueno' },
   ALERTA:    { bg: 'rgba(239,68,68,0.1)',  color: '#F87171', label: 'Alerta' }
 }
 
@@ -124,7 +124,7 @@ export default function MetricasAdminPage() {
           { label: 'Suscripciones activas',   value: stats?.activeSubscriptions || 0,  color: 'var(--color-gold)', fmt: 'n' },
           { label: 'Comisiones pendientes',   value: totalPending,                     color: 'var(--color-gold)', fmt: '$' },
           { label: 'Comisiones pagadas',      value: totalPaid,                        color: '#4ADE80', fmt: '$' },
-          { label: 'Ingresos VIP',            value: stats?.vipRevenue?.total || 0,    color: '#C4972A', fmt: '$' },
+          { label: 'Ingresos VIP',            value: stats?.vipRevenue?.total || 0,    color: '#C17D1A', fmt: '$' },
           { label: 'Alumnos VIP',             value: stats?.vipRevenue?.count || 0,    color: 'var(--color-gold)', fmt: 'n', sublabel: 'pagaron con MP' }
         ].map(item => (
           <div key={item.label} className="rounded-xl p-4 text-center"
@@ -189,7 +189,7 @@ export default function MetricasAdminPage() {
               <button key={f} onClick={() => { setRankFilter(f); setRankPage(1) }}
                 className="px-3 py-2 text-sm font-medium"
                 style={rankFilter === f
-                  ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                  ? { background: 'var(--color-gold)', color: '#160D28' }
                   : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}>
                 {f === 'all' ? 'Todos' : 'Activos'}
               </button>
@@ -201,7 +201,7 @@ export default function MetricasAdminPage() {
               <button key={s} onClick={() => setStatusFilter(s)}
                 className="px-3 py-2 text-sm font-medium"
                 style={statusFilter === s
-                  ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                  ? { background: 'var(--color-gold)', color: '#160D28' }
                   : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}>
                 {s === 'all' ? 'Todos' : STATUS_STYLE[s]?.label || s}
               </button>
@@ -213,7 +213,7 @@ export default function MetricasAdminPage() {
               <button key={v} onClick={() => setCommissionFilter(v)}
                 className="px-3 py-2 text-sm font-medium"
                 style={commissionFilter === v
-                  ? { background: 'var(--color-gold)', color: '#0C0C0C' }
+                  ? { background: 'var(--color-gold)', color: '#160D28' }
                   : { background: 'var(--color-bg-card)', color: 'var(--color-text-muted)' }}>
                 {l}
               </button>
@@ -250,7 +250,7 @@ export default function MetricasAdminPage() {
                   style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}>
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 text-sm font-bold"
                     style={s.position <= 3
-                      ? { background: 'rgba(196,151,42,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
+                      ? { background: 'rgba(193,125,26,0.15)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }
                       : { background: 'var(--color-bg)', color: 'var(--color-text-muted)', border: '1px solid var(--color-separator)' }}>
                     #{s.position}
                   </div>
@@ -384,7 +384,7 @@ export default function MetricasAdminPage() {
           </p>
           {uploadDone ? (
             <div className="flex items-center gap-3 p-4 rounded-xl"
-              style={{ background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)' }}>
+              style={{ background: 'rgba(193,125,26,0.08)', border: '1px solid var(--color-gold-border)' }}>
               <CheckCircle className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium" style={{ color: 'var(--color-text)' }}>Documento cargado</p>
@@ -404,7 +404,7 @@ export default function MetricasAdminPage() {
               />
               <button onClick={() => fileRef.current?.click()} disabled={uploadMutation.isPending}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium disabled:opacity-50"
-                style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', cursor: 'pointer' }}>
+                style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)', color: 'var(--color-gold)', cursor: 'pointer' }}>
                 {uploadMutation.isPending
                   ? <><Loader2 className="w-4 h-4 animate-spin" strokeWidth={1.5} /> Subiendo...</>
                   : <><Upload className="w-4 h-4" strokeWidth={1.5} /> Seleccionar archivo</>

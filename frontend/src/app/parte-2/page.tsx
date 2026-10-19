@@ -50,7 +50,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
           textAlign: 'left', fontWeight: 600,
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           fontSize: 'clamp(0.85rem, 1.8vw, 1rem)',
-          background: open ? 'rgba(196,151,42,0.1)' : 'transparent',
+          background: open ? 'rgba(193,125,26,0.1)' : 'transparent',
           cursor: 'pointer', color: 'var(--color-text)', border: 'none'
         }}
       >
@@ -63,7 +63,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         <div style={{
           padding: '1rem 1.25rem',
           borderTop: '1px solid var(--color-gold-border)',
-          background: 'rgba(196,151,42,0.05)',
+          background: 'rgba(193,125,26,0.05)',
           color: 'var(--color-text-muted)',
           fontSize: 'clamp(0.8rem, 1.8vw, 0.95rem)',
           lineHeight: 1.7, textAlign: 'left'
@@ -156,11 +156,11 @@ function ModuleCarousel() {
                   width: 'clamp(200px, 32vw, 300px)',
                   cursor: 'pointer',
                   borderRadius: '0.875rem',
-                  border: `1px solid ${i === active ? 'var(--color-gold)' : 'rgba(196,151,42,0.25)'}`,
+                  border: `1px solid ${i === active ? 'var(--color-gold)' : 'rgba(193,125,26,0.25)'}`,
                   background: i === active
                     ? 'linear-gradient(135deg, rgba(28,22,4,0.98) 0%, rgba(14,14,14,0.98) 100%)'
                     : 'rgba(14,14,14,0.9)',
-                  boxShadow: i === active ? '0 16px 48px rgba(196,151,42,0.18), 0 0 0 1px rgba(196,151,42,0.12)' : 'none',
+                  boxShadow: i === active ? '0 16px 48px rgba(193,125,26,0.18), 0 0 0 1px rgba(193,125,26,0.12)' : 'none',
                   padding: 'clamp(0.875rem,2vw,1.25rem)',
                   userSelect: 'none'
                 }}
@@ -171,7 +171,7 @@ function ModuleCarousel() {
                   <img src={imgMap[i]} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', filter: i !== active ? 'brightness(0.45) saturate(0.6)' : 'brightness(0.75)' }} />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)' }} />
                   <div style={{ position: 'absolute', bottom: '0.5rem', left: '0.625rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <div style={{ width: '1.4rem', height: '1.4rem', borderRadius: '50%', background: 'rgba(196,151,42,0.25)', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: '1.4rem', height: '1.4rem', borderRadius: '50%', background: 'rgba(193,125,26,0.25)', border: '1px solid var(--color-gold)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg viewBox="0 0 24 24" width="8" height="8" fill="var(--color-gold)"><path d="M8 5v14l11-7z"/></svg>
                     </div>
                     <span style={{ fontFamily: 'Cinzel, serif', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-gold)', letterSpacing: '0.05em' }}>{mod.num}</span>
@@ -195,7 +195,7 @@ function ModuleCarousel() {
                 width: i === active ? '1.5rem' : '0.375rem',
                 height: '0.375rem',
                 borderRadius: '9999px',
-                background: i === active ? 'var(--color-gold)' : 'rgba(196,151,42,0.25)',
+                background: i === active ? 'var(--color-gold)' : 'rgba(193,125,26,0.25)',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
@@ -360,11 +360,11 @@ function Parte2Inner() {
         {/* Fondo radial dorado */}
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'radial-gradient(ellipse at center top, rgba(196,151,42,0.13) 0%, transparent 65%)'
+          background: 'radial-gradient(ellipse at center top, rgba(193,125,26,0.13) 0%, transparent 65%)'
         }} />
         {/* Líneas decorativas laterales */}
-        <div style={{ position: 'absolute', left: 0, top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(196,151,42,0.3), transparent)', pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', right: 0, top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(196,151,42,0.3), transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', left: 0, top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(193,125,26,0.3), transparent)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', right: 0, top: '20%', width: '1px', height: '60%', background: 'linear-gradient(to bottom, transparent, rgba(193,125,26,0.3), transparent)', pointerEvents: 'none' }} />
 
         <div style={{ width: '100%', maxWidth: '680px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
@@ -385,7 +385,7 @@ function Parte2Inner() {
                 objectFit: 'contain',
                 width: 'clamp(160px, 38vw, 260px)',
                 height: 'auto',
-                filter: 'drop-shadow(0 0 18px rgba(196,151,42,0.75)) drop-shadow(0 0 40px rgba(196,151,42,0.45)) drop-shadow(0 0 80px rgba(196,151,42,0.2))',
+                filter: 'drop-shadow(0 0 18px rgba(193,125,26,0.75)) drop-shadow(0 0 40px rgba(193,125,26,0.45)) drop-shadow(0 0 80px rgba(193,125,26,0.2))',
               }}
             />
           </motion.div>
@@ -434,7 +434,7 @@ function Parte2Inner() {
                 padding: '0.5rem 1rem',
                 borderRadius: '2rem',
                 border: '1px solid var(--color-gold-border)',
-                background: 'rgba(196,151,42,0.06)',
+                background: 'rgba(193,125,26,0.06)',
               }}>
                 <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-gold)' }}>{item.num}</span>
                 <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{item.label}</span>
@@ -469,7 +469,7 @@ function Parte2Inner() {
               padding: '1.25rem 2rem',
               borderRadius: '0.875rem',
               border: '1px solid var(--color-gold-border)',
-              background: 'rgba(196,151,42,0.06)',
+              background: 'rgba(193,125,26,0.06)',
               marginBottom: '1.75rem',
               maxWidth: '480px',
               margin: '0 auto 1.75rem'
@@ -532,7 +532,7 @@ function Parte2Inner() {
                   padding: '1.125rem 1.25rem',
                   borderRadius: '0.75rem',
                   border: '1px solid var(--color-gold-border)',
-                  background: expandedModule === i ? 'rgba(196,151,42,0.1)' : 'rgba(20,20,20,0.8)',
+                  background: expandedModule === i ? 'rgba(193,125,26,0.1)' : 'rgba(22,13,40,0.9)',
                   cursor: 'pointer',
                   textAlign: 'left',
                   transition: 'all 0.2s'
@@ -563,7 +563,7 @@ function Parte2Inner() {
       <section style={{
         width: '100%',
         padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
-        background: 'rgba(196,151,42,0.03)'
+        background: 'rgba(193,125,26,0.03)'
       }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
           <motion.h2
@@ -583,7 +583,7 @@ function Parte2Inner() {
                 padding: 'clamp(1.5rem,3vw,2rem)',
                 borderRadius: '0.75rem',
                 border: '1px solid var(--color-gold-border)',
-                background: 'rgba(20,20,20,0.8)',
+                background: 'rgba(22,13,40,0.9)',
                 textAlign: 'center',
                 maxWidth: '360px',
                 width: '100%'
@@ -594,7 +594,7 @@ function Parte2Inner() {
                 margin: '0 auto 1rem',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 borderRadius: '0.625rem',
-                background: 'rgba(196,151,42,0.15)',
+                background: 'rgba(193,125,26,0.15)',
                 color: 'var(--color-gold)'
               }}>
                 <CoachIcon />
@@ -625,7 +625,7 @@ function Parte2Inner() {
             padding: 'clamp(1.75rem,5vw,2.5rem)',
             borderRadius: '0.875rem',
             border: '2px solid var(--color-gold)',
-            background: 'linear-gradient(135deg, rgba(196,151,42,0.08) 0%, rgba(0,0,0,0.4) 100%)',
+            background: 'linear-gradient(135deg, rgba(193,125,26,0.08) 0%, rgba(0,0,0,0.4) 100%)',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem'
           }}>
 
@@ -647,7 +647,7 @@ function Parte2Inner() {
                     padding: '0.625rem 0.5rem',
                     borderRadius: '0.5rem',
                     border: '1px solid var(--color-gold-border)',
-                    background: 'rgba(196,151,42,0.06)',
+                    background: 'rgba(193,125,26,0.06)',
                   }}>
                     <span style={{ fontFamily: 'Cinzel, serif', fontWeight: 700, fontSize: 'clamp(1.25rem,4vw,1.75rem)', color: 'var(--color-gold)', lineHeight: 1 }}>
                       {String(v).padStart(2, '0')}
@@ -661,7 +661,7 @@ function Parte2Inner() {
             </div>
 
             {/* Gancho precio */}
-            <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.07)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
+            <div style={{ width: '100%', padding: '1.25rem', borderRadius: '0.75rem', background: 'rgba(193,125,26,0.07)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
               <p style={{ fontSize: 'clamp(0.8rem, 1.8vw, 0.9rem)', color: 'var(--color-text-muted)', lineHeight: 1.7, marginBottom: '0.75rem' }}>
                 Accedé ahora al precio de pre-lanzamiento. El <strong style={{ color: 'var(--color-gold)' }}>1 de julio sube a 270 USD</strong> y no habrá excepciones.
               </p>
@@ -683,7 +683,7 @@ function Parte2Inner() {
             <div style={{ width: '100%', height: '1px', background: 'var(--color-separator)' }} />
 
             {/* Cotización MEP */}
-            <div style={{ width: '100%', padding: '1rem', borderRadius: '0.75rem', border: '1px solid var(--color-gold-border)', background: 'rgba(196,151,42,0.05)', textAlign: 'center' }}>
+            <div style={{ width: '100%', padding: '1rem', borderRadius: '0.75rem', border: '1px solid var(--color-gold-border)', background: 'rgba(193,125,26,0.05)', textAlign: 'center' }}>
               {mepLoading ? (
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Calculando cotización...</p>
               ) : pesoAmount ? (
@@ -705,7 +705,7 @@ function Parte2Inner() {
 
             {/* Formulario + botón pagar */}
             {pagoStatus === 'exitoso' ? (
-              <div style={{ width: '100%', padding: '1.5rem', borderRadius: '0.75rem', background: 'rgba(196,151,42,0.08)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
+              <div style={{ width: '100%', padding: '1.5rem', borderRadius: '0.75rem', background: 'rgba(193,125,26,0.08)', border: '1px solid var(--color-gold-border)', textAlign: 'center' }}>
                 <p style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>¡Pago confirmado!</p>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Tu lugar ELITE está confirmado. Revisá tu email — vas a recibir el acceso en los próximos minutos.</p>
               </div>
@@ -720,10 +720,10 @@ function Parte2Inner() {
                   onClick={() => { setShowForm(true); trackEvent('vip_buy_clicked') }}
                   style={{
                     width: '100%', padding: '1.5rem 2rem',
-                    background: 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                    background: 'linear-gradient(135deg, #D4943A, #C17D1A)',
                     color: '#000', fontWeight: 700, borderRadius: '0.75rem',
                     fontSize: 'clamp(1rem, 2.2vw, 1.2rem)', letterSpacing: '0.05em',
-                    boxShadow: '0 8px 28px rgba(196,151,42,0.55)',
+                    boxShadow: '0 8px 28px rgba(193,125,26,0.55)',
                     cursor: 'pointer', border: 'none', lineHeight: 1.4
                   }}
                 >
@@ -764,7 +764,7 @@ function Parte2Inner() {
                   type="submit" disabled={sending}
                   style={{
                     width: '100%', padding: '1.25rem',
-                    background: sending ? 'rgba(196,151,42,0.5)' : 'linear-gradient(135deg, #EAB308, #CA8A04)',
+                    background: sending ? 'rgba(193,125,26,0.5)' : 'linear-gradient(135deg, #D4943A, #C17D1A)',
                     color: '#000', fontWeight: 700, borderRadius: '0.75rem',
                     fontSize: '1rem', cursor: sending ? 'not-allowed' : 'pointer', border: 'none',
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem'
@@ -816,7 +816,7 @@ function Parte2Inner() {
       <section style={{
         width: '100%',
         padding: 'clamp(4rem,8vw,7rem) clamp(1rem,5vw,3rem)',
-        background: 'rgba(196,151,42,0.03)',
+        background: 'rgba(193,125,26,0.03)',
         textAlign: 'center'
       }}>
         <div style={{ maxWidth: '480px', margin: '0 auto' }}>
@@ -875,7 +875,7 @@ function Parte2Inner() {
         width: '100%',
         padding: '2rem clamp(1rem,5vw,3rem)',
         borderTop: '1px solid var(--color-gold-border)',
-        background: 'rgba(196,151,42,0.03)',
+        background: 'rgba(193,125,26,0.03)',
         textAlign: 'center'
       }}>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>

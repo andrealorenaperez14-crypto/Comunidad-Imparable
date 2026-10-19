@@ -10,7 +10,7 @@ interface User { id: string; email: string; dni: string; role: string; profile: 
 
 function RoleLabel({ role }: { role: string }) {
   const styles: Record<string, { bg: string; color: string }> = {
-    ADMIN:   { bg: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)' },
+    ADMIN:   { bg: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)' },
     STUDENT: { bg: 'rgba(74,222,128,0.1)', color: '#4ADE80' },
     CLIENT:  { bg: 'rgba(96,165,250,0.1)', color: '#60A5FA' },
   }
@@ -78,7 +78,7 @@ function ResetModal({ user, isAdmin, onClose }: { user: User; isAdmin: boolean; 
         ) : (
           <>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}>
                 <KeyRound className="w-5 h-5" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
               </div>
               <div>
@@ -219,7 +219,7 @@ export default function UsuariosAdminPage() {
               style={{ background: 'var(--color-bg-card)', border: '1px solid var(--color-separator)' }}
             >
               <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}>
+                style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}>
                 <span className="font-bold text-sm" style={{ color: 'var(--color-gold)' }}>
                   {(user.profile?.firstName || user.email)[0].toUpperCase()}
                 </span>
@@ -239,7 +239,7 @@ export default function UsuariosAdminPage() {
                 <button
                   onClick={() => setSelected(user)}
                   className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium flex-shrink-0"
-                  style={{ background: 'rgba(196,151,42,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
+                  style={{ background: 'rgba(193,125,26,0.1)', color: 'var(--color-gold)', border: '1px solid var(--color-gold-border)' }}
                 >
                   <KeyRound className="w-4 h-4" strokeWidth={1.5} />
                   Resetear

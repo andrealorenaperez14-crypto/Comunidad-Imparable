@@ -8,7 +8,7 @@ import { formatPercent } from '@/lib/utils'
 import type { RankingEntry } from '@/types'
 
 const POSITION_STYLES: Record<number, { border: string; color: string; icon: React.ReactNode }> = {
-  1: { border: 'rgba(196,151,42,0.5)', color: 'var(--color-gold)',  icon: <Trophy className="w-5 h-5" style={{ color: 'var(--color-gold)' }}  strokeWidth={1.5} /> },
+  1: { border: 'rgba(193,125,26,0.5)', color: 'var(--color-gold)',  icon: <Trophy className="w-5 h-5" style={{ color: 'var(--color-gold)' }}  strokeWidth={1.5} /> },
   2: { border: 'rgba(156,163,175,0.5)', color: '#9CA3AF',           icon: <Medal  className="w-5 h-5 text-gray-400"                           strokeWidth={1.5} /> },
   3: { border: 'rgba(249,115,22,0.5)',  color: '#F97316',           icon: <Star   className="w-5 h-5 text-orange-400"                         strokeWidth={1.5} /> },
 }
@@ -87,13 +87,13 @@ export default function RankingPage() {
                   className="flex items-center gap-4 rounded-xl transition-all"
                   style={{
                     padding: '1.25rem 1.5rem',
-                    background: isMe ? 'rgba(196,151,42,0.08)' : 'var(--color-bg-card)',
+                    background: isMe ? 'rgba(193,125,26,0.08)' : 'var(--color-bg-card)',
                     border: `1px solid ${isMe ? 'var(--color-gold-border)' : pos ? pos.border : 'var(--color-separator)'}`,
                   }}
                 >
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'rgba(196,151,42,0.1)', border: '1px solid var(--color-gold-border)' }}
+                    style={{ background: 'rgba(193,125,26,0.1)', border: '1px solid var(--color-gold-border)' }}
                   >
                     {pos ? pos.icon : <span className="text-sm font-semibold" style={{ color: 'var(--color-text-muted)' }}>{entry.position}</span>}
                   </div>

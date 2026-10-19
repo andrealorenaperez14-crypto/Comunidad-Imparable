@@ -1,15 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --color-bg:          #0C0C0C;
-  --color-bg-card:     #141414;
-  --color-gold:        #C4972A;
-  --color-gold-light:  #D4A843;
-  --color-gold-dark:   #8B6914;
-  --color-gold-border: rgba(196,151,42,0.25);
-  --color-text:        #F5F0E8;
-  --color-text-muted:  #8A8A7A;
-  --color-separator:   rgba(196,151,42,0.15);
+  --color-bg:          #160D28;
+  --color-bg-card:     #1F1238;
+  --color-bg-alt:      #2B1B3D;
+  --color-bg-light:    #3A2254;
+  --color-gold:        #C17D1A;
+  --color-gold-light:  #D4943A;
+  --color-gold-dark:   #8B5710;
+  --color-gold-border: rgba(193,125,26,0.25);
+  --color-text:        #FAF8F5;
+  --color-text-muted:  rgba(250,248,245,0.55);
+  --color-separator:   rgba(193,125,26,0.15);
 }
 
 @keyframes ticker-scroll {
@@ -29,17 +31,17 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 10px 36px rgba(196,151,42,0.4), 0 0 0 0 rgba(196,151,42,0); }
-  50%       { box-shadow: 0 18px 56px rgba(196,151,42,0.65), 0 0 0 5px rgba(196,151,42,0.08); }
+  0%, 100% { box-shadow: 0 10px 36px rgba(193,125,26,0.4), 0 0 0 0 rgba(193,125,26,0); }
+  50%       { box-shadow: 0 18px 56px rgba(193,125,26,0.65), 0 0 0 5px rgba(193,125,26,0.08); }
 }
 @keyframes gold-breathe {
-  0%, 100% { color: #C4972A; }
-  50%       { color: #F0C040; }
+  0%, 100% { color: #C17D1A; }
+  50%       { color: #E09830; }
 }
 
 .hero-shimmer-badge {
   animation: gold-breathe 5s ease-in-out infinite;
-  color: #C4972A;
+  color: #C17D1A;
   font-weight: 700;
 }
 
@@ -48,11 +50,12 @@
 }
 
 @theme {
-  --color-gold:        #C4972A;
-  --color-gold-light:  #D4A843;
-  --color-gold-dark:   #8B6914;
-  --color-bg:          #0C0C0C;
-  --color-bg-card:     #141414;
+  --color-gold:        #C17D1A;
+  --color-gold-light:  #D4943A;
+  --color-gold-dark:   #8B5710;
+  --color-bg:          #160D28;
+  --color-bg-card:     #1F1238;
+  --color-bg-alt:      #2B1B3D;
 }
 
 /* ─── Reset ─────────────────────────────────────────── */
@@ -132,7 +135,7 @@ h1:last-child, h2:last-child, h3:last-child, p:last-child {
   border: 1px solid var(--color-gold-border);
   border-radius: 6px;
   padding: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(196,151,42,0.15);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 0 1px rgba(193,125,26,0.15);
 }
 @media (min-width: 768px) {
   .card { padding: 32px; }
@@ -159,7 +162,7 @@ h1:last-child, h2:last-child, h3:last-child, p:last-child {
 /* ─── Buttons ───────────────────────────────────────── */
 .btn-primary {
   background: var(--color-gold);
-  color: #0C0C0C;
+  color: #160D28;
   font-family: var(--font-display), serif;
   letter-spacing: 0.1em;
   padding: 12px 32px;
@@ -177,15 +180,15 @@ h1:last-child, h2:last-child, h3:last-child, p:last-child {
 /* ─── Divider ───────────────────────────────────────── */
 .gold-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(196,151,42,0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(193,125,26,0.6), transparent);
   margin: 0;
 }
 
 /* ─── Section alternating backgrounds ───────────────── */
 .section-even {
-  background: #0F0F0F;
-  border-top:    1px solid rgba(196,151,42,0.1);
-  border-bottom: 1px solid rgba(196,151,42,0.1);
+  background: var(--color-bg-alt);
+  border-top:    1px solid rgba(193,125,26,0.1);
+  border-bottom: 1px solid rgba(193,125,26,0.1);
 }
 
 /* ─── Utilities ─────────────────────────────────────── */

@@ -13,7 +13,7 @@ function ResetPasswordContent() {
       <div className="w-full max-w-md text-center space-y-6">
         <div
           className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-2"
-          style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}
+          style={{ background: 'rgba(193,125,26,0.15)', border: '1px solid var(--color-gold-border)' }}
         >
           <KeyRound className="w-7 h-7" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
         </div>

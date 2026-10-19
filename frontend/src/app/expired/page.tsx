@@ -62,7 +62,7 @@ export default function ExpiredPage() {
         <div className="flex justify-center">
           <div
             className="w-24 h-24 rounded-full flex items-center justify-center"
-            style={{ background: 'rgba(196,151,42,0.15)', border: '2px solid var(--color-gold-border)' }}
+            style={{ background: 'rgba(193,125,26,0.15)', border: '2px solid var(--color-gold-border)' }}
           >
             {isPaidExpired
               ? <RefreshCw className="w-12 h-12" style={{ color: 'var(--color-gold)' }} strokeWidth={1.5} />
@@ -107,15 +107,15 @@ export default function ExpiredPage() {
                 whileTap={{ scale: loading ? 1 : 0.98 }}
                 className="flex items-center gap-4 p-5 rounded-2xl text-left w-full disabled:opacity-60"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(196,151,42,0.2) 0%, rgba(196,151,42,0.05) 100%)',
+                  background: 'linear-gradient(135deg, rgba(193,125,26,0.2) 0%, rgba(193,125,26,0.05) 100%)',
                   border: '1px solid var(--color-gold-border)',
                   cursor: loading ? 'not-allowed' : 'pointer'
                 }}
               >
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--color-gold)' }}>
                   {loading
-                    ? <Loader2 className="w-6 h-6 animate-spin" style={{ color: '#0C0C0C' }} />
-                    : <RefreshCw className="w-6 h-6" style={{ color: '#0C0C0C' }} strokeWidth={2} />
+                    ? <Loader2 className="w-6 h-6 animate-spin" style={{ color: '#160D28' }} />
+                    : <RefreshCw className="w-6 h-6" style={{ color: '#160D28' }} strokeWidth={2} />
                   }
                 </div>
                 <div>
@@ -137,13 +137,13 @@ export default function ExpiredPage() {
               whileTap={{ scale: 0.98 }}
               className="flex items-center gap-4 p-5 rounded-2xl text-left w-full"
               style={{
-                background: 'linear-gradient(135deg, rgba(196,151,42,0.2) 0%, rgba(196,151,42,0.05) 100%)',
+                background: 'linear-gradient(135deg, rgba(193,125,26,0.2) 0%, rgba(193,125,26,0.05) 100%)',
                 border: '1px solid var(--color-gold-border)',
                 textDecoration: 'none'
               }}
             >
               <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: 'var(--color-gold)' }}>
-                <Star className="w-6 h-6" style={{ color: '#0C0C0C' }} strokeWidth={2} />
+                <Star className="w-6 h-6" style={{ color: '#160D28' }} strokeWidth={2} />
               </div>
               <div>
                 <p className="font-bold text-base" style={{ color: 'var(--color-gold)' }}>
@@ -165,13 +165,13 @@ export default function ExpiredPage() {
             whileTap={{ scale: 0.98 }}
             className="flex items-center gap-4 p-5 rounded-2xl text-left w-full"
             style={{
-              background: 'rgba(196,151,42,0.08)',
+              background: 'rgba(193,125,26,0.08)',
               border: '1px solid var(--color-gold-border)',
               textDecoration: 'none'
             }}
           >
             <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ background: 'rgba(196,151,42,0.15)', border: '1px solid var(--color-gold-border)' }}>
+              style={{ background: 'rgba(193,125,26,0.15)', border: '1px solid var(--color-gold-border)' }}>
               <MessageCircle className="w-6 h-6" style={{ color: 'var(--color-gold)' }} strokeWidth={2} />
             </div>
             <div>
