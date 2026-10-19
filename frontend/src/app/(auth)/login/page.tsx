@@ -8,7 +8,6 @@ import { z } from 'zod'
 import { motion } from 'framer-motion'
 import { Brain, Eye, EyeOff, Loader2 } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 
 const schema = z.object({
   email: z.string().email('Email inválido'),
@@ -22,7 +21,6 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const router = useRouter()
   const { login } = useAuth()
-  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema)
@@ -31,8 +29,7 @@ export default function LoginPage() {
   const onSubmit = async (data: FormData) => {
     try {
       setError('')
-      const recaptchaToken = executeRecaptcha ? await executeRecaptcha('login') : undefined
-      const result = await login(data.email, data.password, recaptchaToken)
+      const result = await login(data.email, data.password)
       if (result.mustChangePassword) {
         router.push('/cambiar-contrasena')
         return

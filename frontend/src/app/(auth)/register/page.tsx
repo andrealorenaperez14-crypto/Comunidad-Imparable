@@ -8,7 +8,6 @@ import { z } from 'zod'
 import { motion } from 'framer-motion'
 import { Brain, Eye, EyeOff, Loader2, CheckCircle } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'
 import { sanitizeHtml } from '@/lib/sanitize'
 
 const PASSWORD_MSG = 'La contraseña debe tener mínimo 8 caracteres, una mayúscula y un número'
@@ -62,7 +61,6 @@ export default function RegisterPage() {
   const [passwordValue, setPasswordValue] = useState('')
   const router = useRouter()
   const { register: registerUser } = useAuth()
-  const { executeRecaptcha } = useGoogleReCaptcha()
 
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>({
     resolver: zodResolver(schema)
@@ -73,14 +71,12 @@ export default function RegisterPage() {
   const onSubmit = async (data: FormData) => {
     try {
       setError('')
-      const recaptchaToken = executeRecaptcha ? await executeRecaptcha('register') : undefined
       await registerUser({
-        email:        data.email.trim(),
-        dni:          data.dni.trim(),
-        password:     data.password,
-        firstName:    sanitizeHtml(data.firstName),
-        lastName:     sanitizeHtml(data.lastName),
-        recaptchaToken
+        email:     data.email.trim(),
+        dni:       data.dni.trim(),
+        password:  data.password,
+        firstName: sanitizeHtml(data.firstName),
+        lastName:  sanitizeHtml(data.lastName),
       })
       router.push('/dashboard')
     } catch (err: any) {

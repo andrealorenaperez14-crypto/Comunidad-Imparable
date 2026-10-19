@@ -30,8 +30,7 @@ const registerSchema = z.object({
 
 export async function authRoutes(fastify) {
   fastify.post('/login', {
-    config: { rateLimit: { max: 20, timeWindow: '1 minute' } },
-    preHandler: makeVerifyRecaptcha('login')
+    config: { rateLimit: { max: 20, timeWindow: '1 minute' } }
   }, async (request, reply) => {
     const result = loginSchema.safeParse(request.body)
     if (!result.success) {
@@ -95,7 +94,7 @@ export async function authRoutes(fastify) {
 
   fastify.post('/register', {
     config: { rateLimit: { max: 5, timeWindow: '1 minute' } },
-    preHandler: [makeVerifyRecaptcha('register'), promptGuard]
+    preHandler: [promptGuard]
   }, async (request, reply) => {
     const result = registerSchema.safeParse(request.body)
     if (!result.success) {
@@ -283,7 +282,7 @@ export async function authPasswordRoutes(fastify) {
 
   fastify.post('/forgot-password', {
     config: { rateLimit: { max: 5, timeWindow: '10 minutes' } },
-    preHandler: [makeVerifyRecaptcha('forgot_password'), promptGuard]
+    preHandler: [promptGuard]
   }, async (request, reply) => {
     const { email } = request.body || {}
     if (!email || typeof email !== 'string') {
