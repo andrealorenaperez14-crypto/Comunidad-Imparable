@@ -447,12 +447,13 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
           <img src="/assets/client1/cintia0.webp" alt="Cintia Paolucci" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Cintia Paolucci</p></div>'">
         </div>
         <div class="founder-body">
-          <div class="founder-role">Co-fundadora</div>
+          <div class="founder-role">Co-fundadora · Módulo II</div>
           <h3 class="founder-name display">Cintia<br>Paolucci</h3>
-          <span class="founder-subtitle">La que despertó y no volvió atrás</span>
-          <p class="founder-story">Mamá joven, tres hijos, trabajos sin rumbo fijo, y una sensación constante de que algo faltaba — aunque tenía todo. Hasta que llegó su despertar espiritual y eligió escuchar esa voz que siempre supo que estaba llamada a algo más.<br><br>Hoy acompaña a personas a recordar quiénes son, a sacar sus dones al mundo y a ganar dinero sin sacrificarse. Motivadora por naturaleza. Auténtica y firme, porque el amor es firme y acogedor al mismo tiempo.<br><br><em style="color:var(--gold);font-style:normal;">"No me guardo nada de lo que aprendo."</em></p>
-          <div class="founder-values"><span class="founder-val">Mentalidad</span><span class="founder-val">Marca Personal</span><span class="founder-val">Acción</span><span class="founder-val">Identidad</span></div>
+          <span class="founder-subtitle">Activando tu Potencial</span>
+          <p class="founder-story">Se formó en coaching ontológico después de su propio proceso de búsqueda personal. Hoy acompaña desde la comprensión, la experiencia y el compromiso real con la transformación.<br><br>Su metodología trabaja 4 pilares en cada proceso: <strong>Escucha</strong> — <strong>Consciencia</strong> — <strong>Claridad</strong> — <strong>Acción</strong>. Trabaja confianza, identidad, creencias limitantes y marca personal. El resultado es que dejás de postergarte y tomás decisiones alineadas con quien elegís ser.<br><br><em style="color:var(--gold);font-style:normal;">"No me guardo nada de lo que aprendo."</em></p>
+          <div class="founder-values"><span class="founder-val">Coaching Ontológico</span><span class="founder-val">Identidad</span><span class="founder-val">Marca Personal</span><span class="founder-val">Acción</span></div>
           <div class="founder-social"><a href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener">Instagram</a></div>
+          <a href="/cintia" style="display:inline-block;margin-top:1rem;padding:0.6rem 1.4rem;border:1px solid rgba(193,125,26,0.5);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.background='transparent'">Conocer más →</a>
         </div>
       </div>
       <div class="founder-card reveal reveal-delay-3">
@@ -460,12 +461,13 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
           <img src="/assets/client1/alenajdra0.webp" alt="Alejandra Cuello" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'founder-photo-placeholder\\'><span>∞</span><p>foto · Alejandra Cuello</p></div>'">
         </div>
         <div class="founder-body">
-          <div class="founder-role">Co-fundadora</div>
+          <div class="founder-role">Co-fundadora · Módulo I</div>
           <h3 class="founder-name display">Alejandra<br>Cuello</h3>
-          <span class="founder-subtitle">La que sanó desde adentro y enseña el camino</span>
-          <p class="founder-story">Creció mirando el cielo, conectada con algo más grande. Conoció el abandono, la inseguridad económica y la sensación de que quería algo que no sabía cómo nombrar. Se formó en Metafísica, Reiki, Gemoterapia y Biodescodificación — no para ser otra persona, sino para sanar desde la raíz y expandir su consciencia.<br><br>Hoy acompaña a profesionales y emprendedores a construir negocios que reflejen su libertad interior. Sin sacrificar la paz. Sin vender milagros. Con disciplina, empatía y escucha activa.<br><br><em style="color:var(--gold);font-style:normal;">"La gratitud es la puerta de la abundancia."</em></p>
-          <div class="founder-values"><span class="founder-val">Espiritualidad</span><span class="founder-val">Sanación</span><span class="founder-val">Propósito</span><span class="founder-val">Consciencia</span></div>
+          <span class="founder-subtitle">Reconocer y Sanar</span>
+          <p class="founder-story">Maestra de Reiki y facilitadora de Metafísica con más de 16 años de práctica. Se formó también en Gemoterapia, Biodescodificación, Sincronario Maya y el abordaje de heridas de la infancia — no para aplicar recetas, sino para comprender qué está viviendo cada persona y acompañarla desde ahí.<br><br>Sus herramientas: <strong>Reiki</strong> · <strong>Metafísica</strong> · <strong>Biodescodificación</strong> · <strong>Gemoterapia</strong> · <strong>Psicomagia</strong>. Cada proceso es único. Respeta los tiempos de cada persona y no impone resultados milagrosos.<br><br><em style="color:var(--gold);font-style:normal;">"La gratitud es la puerta de la abundancia."</em></p>
+          <div class="founder-values"><span class="founder-val">Reiki</span><span class="founder-val">Metafísica</span><span class="founder-val">Biodescodificación</span><span class="founder-val">Consciencia</span></div>
           <div class="founder-social"><a href="https://www.instagram.com/alejandra.cuello28" target="_blank" rel="noopener">Instagram</a></div>
+          <a href="/alejandra" style="display:inline-block;margin-top:1rem;padding:0.6rem 1.4rem;border:1px solid rgba(193,125,26,0.5);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.background='transparent'">Conocer más →</a>
         </div>
       </div>
     </div>
