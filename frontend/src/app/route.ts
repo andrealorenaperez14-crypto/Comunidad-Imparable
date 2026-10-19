@@ -453,7 +453,14 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
           <p class="founder-story">Se formó en coaching ontológico después de su propio proceso de búsqueda personal. Hoy acompaña desde la comprensión, la experiencia y el compromiso real con la transformación.<br><br>Su metodología trabaja 4 pilares en cada proceso: <strong>Escucha</strong> — <strong>Consciencia</strong> — <strong>Claridad</strong> — <strong>Acción</strong>. Trabaja confianza, identidad, creencias limitantes y marca personal. El resultado es que dejás de postergarte y tomás decisiones alineadas con quien elegís ser.<br><br><em style="color:var(--gold);font-style:normal;">"No me guardo nada de lo que aprendo."</em></p>
           <div class="founder-values"><span class="founder-val">Coaching Ontológico</span><span class="founder-val">Identidad</span><span class="founder-val">Marca Personal</span><span class="founder-val">Acción</span></div>
           <div class="founder-social"><a href="https://www.instagram.com/cin.paolucci" target="_blank" rel="noopener">Instagram</a></div>
-          <a href="/cintia" style="display:inline-block;margin-top:1rem;padding:0.6rem 1.4rem;border:1px solid rgba(193,125,26,0.5);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.background='transparent'">Conocer más →</a>
+          <a href="/cintia" style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:0.9rem 1.1rem;border:1px solid rgba(193,125,26,0.3);border-radius:12px;background:rgba(193,125,26,0.05);text-decoration:none;transition:border-color 0.25s,background 0.25s;" onmouseover="this.style.borderColor='rgba(193,125,26,0.7)';this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.borderColor='rgba(193,125,26,0.3)';this.style.background='rgba(193,125,26,0.05)'">
+            <img src="/assets/client1/cintia0.webp" alt="Cintia Paolucci" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid rgba(193,125,26,0.5);flex-shrink:0;" onerror="this.style.display='none'">
+            <div>
+              <p style="margin:0 0 0.2rem;font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);">Cintia Paolucci</p>
+              <p style="margin:0;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:rgba(250,248,245,0.7);line-height:1.4;">Coaching ontológico · Métodos Conecta con tu Ser y Vender desde tu Ser</p>
+            </div>
+            <span style="margin-left:auto;color:var(--gold);font-size:1rem;flex-shrink:0;">→</span>
+          </a>
         </div>
       </div>
       <div class="founder-card reveal reveal-delay-3">
@@ -467,7 +474,14 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
           <p class="founder-story">Maestra de Reiki y facilitadora de Metafísica con más de 16 años de práctica. Se formó también en Gemoterapia, Biodescodificación, Sincronario Maya y el abordaje de heridas de la infancia — no para aplicar recetas, sino para comprender qué está viviendo cada persona y acompañarla desde ahí.<br><br>Sus herramientas: <strong>Reiki</strong> · <strong>Metafísica</strong> · <strong>Biodescodificación</strong> · <strong>Gemoterapia</strong> · <strong>Psicomagia</strong>. Cada proceso es único. Respeta los tiempos de cada persona y no impone resultados milagrosos.<br><br><em style="color:var(--gold);font-style:normal;">"La gratitud es la puerta de la abundancia."</em></p>
           <div class="founder-values"><span class="founder-val">Reiki</span><span class="founder-val">Metafísica</span><span class="founder-val">Biodescodificación</span><span class="founder-val">Consciencia</span></div>
           <div class="founder-social"><a href="https://www.instagram.com/alejandra.cuello28" target="_blank" rel="noopener">Instagram</a></div>
-          <a href="/alejandra" style="display:inline-block;margin-top:1rem;padding:0.6rem 1.4rem;border:1px solid rgba(193,125,26,0.5);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.background='transparent'">Conocer más →</a>
+          <a href="/alejandra" style="display:flex;align-items:center;gap:1rem;margin-top:1.5rem;padding:0.9rem 1.1rem;border:1px solid rgba(193,125,26,0.3);border-radius:12px;background:rgba(193,125,26,0.05);text-decoration:none;transition:border-color 0.25s,background 0.25s;" onmouseover="this.style.borderColor='rgba(193,125,26,0.7)';this.style.background='rgba(193,125,26,0.1)'" onmouseout="this.style.borderColor='rgba(193,125,26,0.3)';this.style.background='rgba(193,125,26,0.05)'">
+            <img src="/assets/client1/alenajdra0.webp" alt="Alejandra Cuello" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;border:1.5px solid rgba(193,125,26,0.5);flex-shrink:0;" onerror="this.style.display='none'">
+            <div>
+              <p style="margin:0 0 0.2rem;font-family:'Montserrat',sans-serif;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);">Alejandra Cuello</p>
+              <p style="margin:0;font-family:'DM Sans',sans-serif;font-size:0.82rem;color:rgba(250,248,245,0.7);line-height:1.4;">Reiki · Metafísica · Biodescodificación · Gemoterapia · Psicomagia</p>
+            </div>
+            <span style="margin-left:auto;color:var(--gold);font-size:1rem;flex-shrink:0;">→</span>
+          </a>
         </div>
       </div>
     </div>
