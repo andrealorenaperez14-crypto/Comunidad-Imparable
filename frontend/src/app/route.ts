@@ -382,12 +382,12 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
     <div class="incluye-grid">
       <div class="incluye-card reveal reveal-delay-1"><span class="incluye-mark">◆ I</span><h3 class="incluye-title">Clases semanales con Alejandra</h3><p class="incluye-desc">Espiritualidad, sanación desde la raíz, expansión de consciencia y propósito de vida. Para ir más profundo — al origen de tus patrones y bloqueos.</p><span class="incluye-tag">Semanal · Grabadas</span></div>
       <div class="incluye-card reveal reveal-delay-2"><span class="incluye-mark">◆ II</span><h3 class="incluye-title">Clases semanales con Cintia</h3><p class="incluye-desc">Mentalidad, identidad, marca personal y acción concreta. Para transformar lo que aprendés adentro en resultados reales afuera — en tu negocio y en tu vida.</p><span class="incluye-tag">Semanal · Grabadas</span></div>
-      <div class="incluye-card reveal reveal-delay-3" style="border-color:var(--gold-mid);"><span class="incluye-mark">◆ III</span><h3 class="incluye-title">Mentoría grupal en vivo</h3><p class="incluye-desc">Una vez por semana, en vivo, para trabajar en tiempo real los bloqueos, las dudas y los próximos pasos. Acompañamiento real, no contenido pregrabado.</p><span class="incluye-tag" style="background:var(--gold-dim);border-color:var(--gold);">✦ Martes en vivo · Grabada</span></div>
+      <div class="incluye-card reveal reveal-delay-3" style="border-color:var(--gold-mid);"><span class="incluye-mark">◆ III</span><h3 class="incluye-title">Mentoría grupal en vivo</h3><p class="incluye-desc">Una vez por semana, en vivo, para trabajar en tiempo real los bloqueos, las dudas y los próximos pasos. Acompañamiento real, no contenido pregrabado.</p><span class="incluye-tag" style="background:var(--gold-dim);border-color:var(--gold);">✦ Miércoles en vivo · Grabada</span></div>
       <div class="incluye-card reveal reveal-delay-4"><span class="incluye-mark">◆ IV</span><h3 class="incluye-title">Comunidad que te sostiene</h3><p class="incluye-desc">Un espacio donde celebramos tus avances como propios. Porque acá somos espejo — y crecer rodeada/o de personas que también crecen lo cambia todo.</p><span class="incluye-tag">Siempre activa</span></div>
     </div>
     <div class="grabado-note reveal"><span class="grabado-note-mark">∞</span><span>Todo el contenido — clases y mentorías — queda grabado y disponible dentro de la academia digital para que puedas verlo cuando quieras, a tu ritmo.</span></div>
     <div class="horarios reveal">
-      <div style="width:100%;text-align:center;"><span style="font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);">Mentoría en vivo — cada martes</span></div>
+      <div style="width:100%;text-align:center;"><span style="font-family:'Montserrat',sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-dim);">Mentoría en vivo — cada miércoles</span></div>
       <div class="horario-item">
         <!-- Argentina: celeste/blanco/celeste -->
         <span class="horario-flag" style="background:linear-gradient(to bottom,#74ACDF 33%,#fff 33%,#fff 67%,#74ACDF 67%);"></span>
@@ -521,7 +521,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
   <div class="container" style="position:relative;z-index:1;">
     <span class="eyebrow reveal" style="display:block;text-align:center;">¿Estás lista/o?</span>
     <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2.2rem,5vw,4.5rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;max-width:700px;margin:0 auto;">El proceso empieza adentro.<br><em style="color:var(--gold);font-style:italic;font-weight:400;">La transformación se ve afuera.</em></h2>
-    <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:520px;margin:1.5rem auto 0;font-size:1rem;">Cada martes que pasa sin decidir es otro martes postergándote. La pregunta no es si podés. La pregunta es cuándo le vas a dar el permiso.</p>
+    <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:520px;margin:1.5rem auto 0;font-size:1rem;">Cada miércoles que pasa sin decidir es otro miércoles postergándote. La pregunta no es si podés. La pregunta es cuándo le vas a dar el permiso.</p>
     <div class="cta-price-block reveal reveal-delay-3">
       <p class="cta-price-label">LANZAMIENTO</p>
       <p class="cta-price">OCTUBRE 2026</p>
@@ -530,7 +530,7 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       <ul class="cta-includes">
         <li>Clases semanales con Alejandra Cuello — espiritualidad y sanación</li>
         <li>Clases semanales con Cintia Paolucci — mentalidad y marca personal</li>
-        <li>Mentoría grupal en vivo cada martes (18:00 hs Argentina)</li>
+        <li>Mentoría grupal en vivo cada miércoles (18:00 hs Argentina)</li>
         <li>Comunidad privada de acompañamiento y crecimiento</li>
         <li>Acceso a todo el contenido grabado desde el inicio</li>
       </ul>

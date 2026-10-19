@@ -59,10 +59,10 @@ La branch `claude/...` queda suelta en remoto — borrarla manualmente en GitHub
 |--------|-----------|
 | ◆ I — Clases con Alejandra | Espiritualidad, sanación, expansión de consciencia. Semanal, grabadas. |
 | ◆ II — Clases con Cintia | Mentalidad, identidad, marca personal, acción. Semanal, grabadas. |
-| ◆ III — Mentoría grupal en vivo | Martes. Trabajo en tiempo real. Grabada. |
+| ◆ III — Mentoría grupal en vivo | Miércoles. Trabajo en tiempo real. Grabada. |
 | ◆ IV — Comunidad | Espacio de acompañamiento mutuo. |
 
-**Horarios mentoría (martes)**: Argentina 18:00 hs · Colombia/Perú/EEUU 16:00 hs · España 23:00 hs
+**Horarios mentoría (miércoles)**: Argentina 18:00 hs · Colombia/Perú/EEUU 16:00 hs · España 23:00 hs
 
 ### Redes
 - WhatsApp comunidad gratuita: https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg
