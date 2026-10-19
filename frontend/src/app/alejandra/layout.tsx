@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     siteName: 'Academia Comunidad Imparable',
     images: [
       {
-        url: 'https://comunidad-imparables.vercel.app/assets/client1/alenajdra0.jpeg',
+        url: 'https://comunidad-imparables.vercel.app/assets/client1/og-alejandra.jpeg',
         width: 1200,
         height: 630,
         alt: 'Alejandra Cuello — Espiritualidad y Sanación',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Alejandra Cuello — Espiritualidad y Sanación',
     description: 'Módulo I del MÉTODO RAÍZ. Reconocer y sanar desde adentro hacia afuera.',
-    images: ['https://comunidad-imparables.vercel.app/assets/client1/alenajdra0.jpeg'],
+    images: ['https://comunidad-imparables.vercel.app/assets/client1/og-alejandra.jpeg'],
   },
 }
 
