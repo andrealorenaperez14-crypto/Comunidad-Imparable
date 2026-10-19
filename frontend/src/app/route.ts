@@ -332,11 +332,11 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
       </div>
     </div>
     <h1 class="hero-headline display">No viniste a encajar<br><em>Viniste a recordar<br>quién sos</em></h1>
-    <p class="hero-slogan">De adentro hacia afuera</p>
-    <p class="hero-sub">Acompañamos a personas a descubrir su propósito, sanar desde la raíz y construir una vida — y un negocio — alineados con quienes realmente son.</p>
+    <p class="hero-slogan">MÉTODO RAÍZ — De adentro hacia afuera</p>
+    <p class="hero-sub">Un proceso de transformación real. Sanás lo que te frena, activás lo que te define, y lo ponés en práctica — acompañada/o cada semana por Alejandra y Cintia.</p>
     <div class="hero-cta-wrap">
-      <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary">Quiero ser parte</a>
-      <a href="#academia" class="btn-ghost">¿Qué incluye?</a>
+      <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary">Quiero transformarme</a>
+      <a href="#academia" class="btn-ghost">Ver el MÉTODO RAÍZ</a>
       <p class="hero-founders">By Alejandra Cuello &amp; Cintia Paolucci</p>
     </div>
   </div>
@@ -361,16 +361,16 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
 
 <section>
   <div class="container">
-    <span class="eyebrow reveal">La transformación que buscás</span>
-    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2rem,4vw,3.8rem);max-width:700px;letter-spacing:0.03em;">La claridad llega después<br>de la acción.</h2>
-    <p class="reveal reveal-delay-2" style="color:var(--text-soft);max-width:600px;margin-top:1.2rem;font-size:1.05rem;">Comunidad Imparables no es un curso más. Es un proceso de transformación que empieza adentro tuyo y se expande hacia afuera. No prometemos milagros. Prometemos acompañamiento genuino, herramientas concretas y una comunidad que celebra tu proceso.</p>
+    <span class="eyebrow reveal">Lo que el MÉTODO RAÍZ activa en vos</span>
+    <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2rem,4vw,3.8rem);max-width:700px;letter-spacing:0.03em;">La transformación<br>que ya sentís posible.</h2>
+    <p class="reveal reveal-delay-2" style="color:var(--text-soft);max-width:600px;margin-top:1.2rem;font-size:1.05rem;">El MÉTODO RAÍZ no es un curso. Es un proceso de tres módulos que trabaja primero lo que te frena, luego lo que te define, y después lo integra en acción real. Sin bypasses. Sin milagros. Con acompañamiento genuino semana a semana.</p>
     <div class="promesa-grid">
-      <div class="promesa-card reveal reveal-delay-1"><div class="promesa-card-label">Lo que vas a descubrir</div><p class="promesa-card-text">Tus dones, talentos y propósito. La versión de vos misma/o que ya existe adentro tuyo y está esperando que le des permiso de existir.</p></div>
-      <div class="promesa-card reveal reveal-delay-2"><div class="promesa-card-label">Lo que vas a construir</div><p class="promesa-card-text">Confianza en vos. Coherencia entre lo que pensás, decís y hacés. Y un negocio que sea extensión de tu ser — no una jaula disfrazada de libertad.</p></div>
-      <div class="promesa-card reveal reveal-delay-3"><div class="promesa-card-label">Lo que vas a soltar</div><p class="promesa-card-text">La necesidad de aprobación. El miedo a mostrarte. Las creencias que te dicen que no podés. El sacrificio como único camino al éxito.</p></div>
-      <div class="promesa-card reveal reveal-delay-4"><div class="promesa-card-label">Lo que vas a vivir</div><p class="promesa-card-text">Claridad, dirección, pertenencia. La sensación de mirarte y sentir: "Esta persona soy yo y confío en ella."</p></div>
+      <div class="promesa-card reveal reveal-delay-1"><div class="promesa-card-label">Módulo I → Descubrís</div><p class="promesa-card-text">El origen de tus bloqueos, tus patrones y tus heridas. Los reconocés, los nombrás y los sanás desde la raíz — para que dejen de gobernarte.</p></div>
+      <div class="promesa-card reveal reveal-delay-2"><div class="promesa-card-label">Módulo II → Construís</div><p class="promesa-card-text">Tu identidad real. Tu marca personal. La confianza para mostrarte, ganar dinero y crear desde lo que sos — no desde el miedo o la aprobación ajena.</p></div>
+      <div class="promesa-card reveal reveal-delay-3"><div class="promesa-card-label">Módulo III → Aplicás</div><p class="promesa-card-text">Lo que aprendiste y sanaste, en tiempo real, con mentoría en vivo. Resolvés los bloqueos del momento y avanzás acompañada/o por el grupo cada miércoles.</p></div>
+      <div class="promesa-card reveal reveal-delay-4"><div class="promesa-card-label">Al final del proceso</div><p class="promesa-card-text">Claridad, dirección y coherencia. La sensación de mirarte y sentir: "Esto soy yo. Y confío en mí." Eso no se enseña. Se despierta.</p></div>
     </div>
-    <p class="promesa-quote reveal">"No te falta potencial.<br>Te falta <strong>confianza en vos misma/o</strong>."</p>
+    <p class="promesa-quote reveal">"No te falta potencial.<br>Te falta <strong>el proceso correcto</strong>."</p>
   </div>
 </section>
 
@@ -518,22 +518,22 @@ footer { padding:3rem 2rem; border-top:1px solid var(--gold-dim); text-align:cen
 <section class="cta-final alt2" id="unirme">
   <div class="cta-bg"></div>
   <div class="container" style="position:relative;z-index:1;">
-    <span class="eyebrow reveal" style="display:block;text-align:center;">¿Estás lista/o?</span>
+    <span class="eyebrow reveal" style="display:block;text-align:center;">Empezá el MÉTODO RAÍZ</span>
     <h2 class="display reveal reveal-delay-1" style="font-size:clamp(2.2rem,5vw,4.5rem);text-align:center;letter-spacing:0.04em;text-transform:uppercase;max-width:700px;margin:0 auto;">El proceso empieza adentro.<br><em style="color:var(--gold);font-style:italic;font-weight:400;">La transformación se ve afuera.</em></h2>
-    <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:520px;margin:1.5rem auto 0;font-size:1rem;">Cada miércoles que pasa sin decidir es otro miércoles postergándote. La pregunta no es si podés. La pregunta es cuándo le vas a dar el permiso.</p>
+    <p class="reveal reveal-delay-2" style="text-align:center;color:var(--text-soft);max-width:520px;margin:1.5rem auto 0;font-size:1rem;">Cada semana que pasa sin empezar es otra semana en el mismo patrón. El MÉTODO RAÍZ no te pide que estés lista/o — te acompaña a serlo.</p>
     <div class="cta-price-block reveal reveal-delay-3">
-      <p class="cta-price-label">LANZAMIENTO</p>
-      <p class="cta-price">OCTUBRE 2026</p>
-      <p class="cta-price-note">Sumate ahora al grupo gratuito de la comunidad</p>
+      <p class="cta-price-label">ACADEMIA COMUNIDAD IMPARABLE</p>
+      <p class="cta-price">MÉTODO RAÍZ</p>
+      <p class="cta-price-note">Proceso de transformación integral — Lanzamiento Octubre 2026</p>
       <hr class="cta-divider">
       <ul class="cta-includes">
-        <li>Clases semanales con Alejandra Cuello — espiritualidad y sanación</li>
-        <li>Clases semanales con Cintia Paolucci — mentalidad y marca personal</li>
-        <li>Mentoría grupal en vivo cada miércoles (18:00 hs Argentina)</li>
-        <li>Comunidad privada de acompañamiento y crecimiento</li>
-        <li>Acceso a todo el contenido grabado desde el inicio</li>
+        <li>◆ Módulo I: Reconocer y Sanar — Clases semanales con Alejandra (grabadas)</li>
+        <li>◆ Módulo II: Activando tu Potencial — Clases semanales con Cintia (grabadas)</li>
+        <li>◆ Módulo III: Acción y Práctica — Mentoría grupal en vivo cada miércoles</li>
+        <li>✦ Comunidad privada de acompañamiento mutuo</li>
+        <li>✦ Acceso a todo el contenido grabado desde el primer día</li>
       </ul>
-      <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Unirme al grupo de WhatsApp</a>
+      <a href="https://chat.whatsapp.com/ELk2u2CdgaJ1pqMeUhrTVg" target="_blank" rel="noopener" class="btn-primary" style="width:100%;text-align:center;display:block;padding:1.2rem;">Quiero empezar el MÉTODO RAÍZ</a>
       <p class="cta-guarantee">Sin presión. Sin urgencia fabricada. Cuando estés lista/o, acá estamos.</p>
     </div>
     <p class="reveal" style="text-align:center;margin-top:2rem;"><span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;font-size:2rem;color:var(--gold);opacity:0.7;letter-spacing:0.03em;">Imparables hasta el final</span></p>
